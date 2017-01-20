@@ -1,4 +1,4 @@
-package Server;
+package ServerNetworking;
 
 public class ServerVariables
 {

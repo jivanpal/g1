@@ -1,4 +1,4 @@
-package Server;
+package ServerNetworking;
 
 import java.io.PrintStream;
 

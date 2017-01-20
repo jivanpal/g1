@@ -1,5 +1,5 @@
 //Server Class
-package Server;
+package ServerNetworking;
 
 import java.net.*;
 import java.io.*;
