@@ -46,7 +46,7 @@ public class Server
 				// We create and start new threads to read from the
 				// client(this one executes the commands):
 	
-				ServerReceiver clientInput = new ServerReceiver(fromClient,queue);
+				ServerReceiver clientInput = new ServerReceiver(fromClient);
 				clientInput.start();
 				
 				// We create and start a new thread to write to the client:

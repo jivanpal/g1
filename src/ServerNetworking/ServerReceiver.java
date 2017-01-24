@@ -8,12 +8,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ServerReceiver extends Thread
 {
 	private ObjectInputStream clientIN;
-	private LinkedBlockingQueue<Object> queue;
-
-	public ServerReceiver(ObjectInputStream reader, LinkedBlockingQueue<Object> q)
+	public ServerReceiver(ObjectInputStream reader)
 	{
 		clientIN = reader;
-		queue = q;
 	}
 
 	public void run()
@@ -25,16 +22,7 @@ public class ServerReceiver extends Thread
 				try
 				{
 					Object inObject = clientIN.readObject();
-					try
-					{
-						// typecast here or at client side?
-						//if(inObject instanceof String)
-						queue.put(inObject);
-					}
-					catch (InterruptedException e)
-					{
-						e.printStackTrace();
-					}
+					//TODO typecast 
 				}
 				catch (ClassNotFoundException e)
 				{
