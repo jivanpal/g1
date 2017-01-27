@@ -1,10 +1,14 @@
+package Temp;
+
 public class Resource {
     private int level;
     private final int MAX_LEVEL;
+    private final int CHANGE;
     
-    public Resource (int l, int max) {
+    public Resource (int l, int max, int change) {
         level = l;
         MAX_LEVEL = max;
+        CHANGE = change;
     }
     
     public void change(int delta) {
@@ -17,11 +21,11 @@ public class Resource {
     }
     
     public void increase() {
-        this.change(+5);
+        this.change(CHANGE);
     }
     
     public void decrease() {
-        this.change(-5);
+        this.change(-CHANGE);
     }
     
     public int get() {
