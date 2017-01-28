@@ -42,7 +42,7 @@ public class Server
 
 				// This is to print o the server
 				ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
-
+				
 				// We create and start new threads to read from the
 				// client(this one executes the commands):
 	
