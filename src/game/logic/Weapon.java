@@ -13,15 +13,20 @@ public abstract class Weapon {
 	public static final byte TARGETING_TYPE_MANUAL = 1;
 	public static final byte TARGETING_TYPE_AUTOMATIC = 0;
 	
-	private Resource ammo;
-	private int damageToShield;
-	private int damageToShip;
-	private int countdown; 		//how many seconds the player should wait until being able to shoot again
-	private byte loadingType;
-	private byte targetingType; //whether the user has to manually target the weapon at the opponent or not 
+	protected Resource ammo;
+	protected int damageToShield;
+	protected int damageToShip;
+	protected int countdown; 		//how many seconds the player should wait until being able to shoot again
+	protected byte loadingType;
+	protected byte targetingType; //whether the user has to manually target the weapon at the opponent or not 
+	protected boolean isFunctioning;
 	
 	public int getAmmo(){
 		return this.ammo.get();
+	}
+	
+	public boolean getIsFunctioning(){
+		return this.isFunctioning;
 	}
 	
 	public int getDamageToShip(){
@@ -40,7 +45,7 @@ public abstract class Weapon {
 		return this.targetingType;
 	}
 	
-	public void setSupply(Resource supply){
+	/*public void setAmmoFull(Resource supply){
 		this.ammo = supply;
 	}
 	
@@ -50,6 +55,6 @@ public abstract class Weapon {
 	
 	public void setDamageToShield(int damage){
 		this.damageToShield = damage;
-	}
+	}*/
 
 }

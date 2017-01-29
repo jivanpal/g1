@@ -31,4 +31,13 @@ public class Resource {
     public int get() {
         return level;
     }
+    
+    public int getChange(){
+    	return CHANGE;
+    }
+    
+    public int getMaxLevel(){
+    	return MAX_LEVEL;
+    }
+ 
 }
