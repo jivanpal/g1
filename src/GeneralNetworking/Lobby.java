@@ -99,7 +99,6 @@ public class Lobby
 				if(players[i].equals(leaver))
 					players[i]=null;
 				//NOTIFY
-				//UPDATE UI?
 			}
 		}
 	}

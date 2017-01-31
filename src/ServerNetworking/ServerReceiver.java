@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import GeneralNetworking.Invite;
+import GeneralNetworking.Lobby;
+
 public class ServerReceiver extends Thread
 {
 	private ObjectInputStream clientIN;
+
 	public ServerReceiver(ObjectInputStream reader)
 	{
 		clientIN = reader;
@@ -19,18 +23,20 @@ public class ServerReceiver extends Thread
 		{
 			try
 			{
-				try
+				Object inObject = clientIN.readObject();
+				// LOBBY
+				if (inObject instanceof Lobby)
 				{
-					Object inObject = clientIN.readObject();
-					//TODO typecast 
+					
 				}
-				catch (ClassNotFoundException e)
+				// INVITE
+				if (inObject instanceof Invite)
 				{
-					e.printStackTrace();
-				}
 
+				}
 			}
-			catch (IOException e)
+
+			catch (Exception e)
 			{
 				e.printStackTrace();
 			}

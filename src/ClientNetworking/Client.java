@@ -18,60 +18,65 @@ import java.util.ArrayList;
 /**
  * The Class Client.
  */
-class Client {
+class Client
+{
 
-  /**
-   * The main method.
-   *
-   * @param args the arguments
-   */
-  public static void main(String[] args) {
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 */
+	public static void main(String[] args)
+	{
 
-    // Check correct usage:
-    // Initialize information:
-    int port = ClientVariables.PORT;
-    String hostname = ClientVariables.HOSTNAME;
+		int port = ClientVariables.PORT;
+		String hostname = ClientVariables.HOSTNAME;
 
-    // Open sockets:
-    PrintStream toServer = null;
-    BufferedReader fromServer = null;
-    Socket server = null;
+		// Open sockets:
+		ObjectOutputStream toServer = null;
+		ObjectInputStream fromServer = null;
+		Socket server = null;
 
-    //get a socket and the 2 streams
-    try {
-      server = new Socket(hostname, port);
-      toServer = new PrintStream(server.getOutputStream());
-      fromServer = new BufferedReader(new InputStreamReader(server.getInputStream()));
-    } 
-    catch (UnknownHostException e) {
-      System.err.println("Unknown host: " + hostname);
-      System.exit(1); 
-    } 
-    catch (IOException e) {
-      System.err.println("The server doesn't seem to be running " + e.getMessage());
-      System.exit(1);
-    }
+		// get a socket and the 2 streams
+		try
+		{
+			server = new Socket(hostname, port);
+			toServer = new ObjectOutputStream(server.getOutputStream());
+			fromServer = new ObjectInputStream(server.getInputStream());
+		}
+		catch (UnknownHostException e)
+		{
+			System.err.println("Unknown host: " + hostname);
+			System.exit(1);
+		}
+		catch (IOException e)
+		{
+			System.err.println("The server doesn't seem to be running " + e.getMessage());
+			System.exit(1);
+		}
 
-    // ClientSender sender = new ClientSender(toServer);
-    //ClientReceiver receiver = new ClientReceiver(fromServer);
+		ClientSender sender = new ClientSender(toServer);
+		ClientReceiver receiver = new ClientReceiver(fromServer);
 
+		// Start the sender and receiver threads
+		sender.start();
+		receiver.start();
 
-    // Run them in parallel:
-  //  sender.start();
-  //  receiver.start();
-    
-    // Wait for them to end and close sockets.
-    try {
-   //   sender.join();
-      toServer.close();
-   //   receiver.join();
-      fromServer.close();
-      server.close();
-    }
-    catch (Exception e) {
-      System.err.println(e.getMessage());
-      System.exit(1);
-    }
+		// Wait for them to end and close sockets.
+		try
+		{
+			sender.join();
+			toServer.close();
+			receiver.join();
+			fromServer.close();
+			server.close();
+		}
+		catch (Exception e)
+		{
+			System.err.println(e.getMessage());
+			System.exit(1);
+		}
 
-  }
+	}
 }
