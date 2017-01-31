@@ -11,12 +11,12 @@ import javax.swing.JPanel;
 public class Screen extends JPanel implements KeyListener{
 	
 	private double sleepTime = 1000/60, lastRefresh = 0;
-	public static double[] viewFrom = {15, 5, 10};
-	public static double[] viewTo = {0, 0, 0};
+	public static double[] viewFrom = {0, 0, 0};
+	public static double[] viewTo = {1, 0, 0};
 	public static double[] lightDir = {1, 1, 1};
 	private double lightPosition, mapSize = 10;
-	private static double moveSpeed = 0.005, verticalLook = -0.9, horizontalLook = 0;
-	private double verticalLookSpeed = 0.0001, horizontalLookSpeed = 0.0005;
+	private static double moveSpeed = 0.005, verticalLook = 0, horizontalLook = 0;
+	private double verticalLookSpeed = 0.0005, horizontalLookSpeed = 0.002;
 	private double r;
 	
 	public static int nPoly = 0, nPoly3D = 0;
@@ -48,7 +48,7 @@ public class Screen extends JPanel implements KeyListener{
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, (int)GameEngine.screenSize.getWidth(), (int)GameEngine.screenSize.getHeight());
 		
-		controls();
+		camera();
 		Calculations.setInfo();
 		setLight();
 		nPoly = poly3Ds.size();
@@ -67,7 +67,7 @@ public class Screen extends JPanel implements KeyListener{
 		g.setColor(Color.WHITE);
 		g.drawString("x: " + viewFrom[0] + ", y: " + viewFrom[1] + ", z: " + viewFrom[2], 40, 40);
 		g.drawString("x: " + viewTo[0] + ", y: " + viewTo[1] + ", z: " + viewTo[2], 40, 60);
-		g.drawString("r: " + r, 40, 80);
+		g.drawString("r: " + r + " vert: " + verticalLook, 40, 80);
 		
 		sleepAndRefresh();
 	}
@@ -118,13 +118,12 @@ public class Screen extends JPanel implements KeyListener{
 	}
 	
 	private void setLight(){
-		lightPosition += 0.005;
 		lightDir[0] = mapSize/2 - (mapSize/2 + Math.cos(lightPosition) * mapSize * 10);
 		lightDir[1] = mapSize/2 - (mapSize/2 + Math.sin(lightPosition) * mapSize * 10);
 		lightDir[2] = -200;
 	}
 	
-	private void controls(){
+	private void camera(){
 		Vector viewVec = new Vector(viewTo[0] - viewFrom[0], viewTo[1] - viewFrom[1], viewTo[2] - viewFrom[2]);
 		
 		double xMove = 0, yMove = 0, zMove = 0;
@@ -166,11 +165,22 @@ public class Screen extends JPanel implements KeyListener{
 	}
 
 	private void updateView() {
+//		difY *= 6 - Math.abs(VertLook) * 5;
+//		verticalLook -= verticalRotateSpeed;
+//		horizontalLook += horizontalRotateSpeed;
+
+		if(verticalLook>0.999){
+			verticalLook = 0.999;
+		}
+
+		if(verticalLook<-0.999){
+			verticalLook = -0.999;
+		}
+		
 		r = Math.sqrt(1 - (verticalLook * verticalLook));
 		viewTo[0] = viewFrom[0] + r * Math.cos(horizontalLook);
 		viewTo[1] = viewFrom[1] + r * Math.sin(horizontalLook);
-//		viewTo[1] = viewFrom[1] + horizontalLook;
-//		viewTo[2] = viewFrom[2] + verticalLook;
+		viewTo[2] = viewFrom[2] + verticalLook;
 	}
 
 	public void keyTyped(KeyEvent e) {
