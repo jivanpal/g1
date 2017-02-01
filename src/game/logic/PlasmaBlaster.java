@@ -1,7 +1,5 @@
 package game.logic;
 
-import Temp.Resource;
-
 /**
  * Class which represents the Plasma blaster
  */

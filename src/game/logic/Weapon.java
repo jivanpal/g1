@@ -1,7 +1,5 @@
 package game.logic;
 
-import Temp.Resource;
-
 /**
  * Abstract class which lays out the skeleton of a weapon
  */

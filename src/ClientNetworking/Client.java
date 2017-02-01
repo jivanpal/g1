@@ -10,10 +10,6 @@
 // the server dies.
 package ClientNetworking;
 
-import java.io.*;
-import java.net.*;
-import java.util.ArrayList;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class Client.

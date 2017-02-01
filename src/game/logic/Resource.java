@@ -1,4 +1,4 @@
-package Temp;
+package game.logic;
 
 public class Resource {
     private int level;
