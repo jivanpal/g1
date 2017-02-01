@@ -10,7 +10,7 @@ public class ShipModel {
 	
 	private static final int DEFAULT_SPEED = 0;
 	private static final int DEFAULT_MAX_SPEED = 0;
-	private static final int DEFAULT_SPEED_CHANGE = 0; 
+	private static final int DEFAULT_SPEED_CHANGE = 0;
 	
 	private ArrayList<Weapon> weapons;
 	private Engines engines;
@@ -32,9 +32,11 @@ public class ShipModel {
 		//Initialising other parts
 		engines = new Engines();
 		shields = new Shields();
+		shipHealth = new ShipHealth();
 		
 		//initialising speed
 		speed = new Resource(DEFAULT_SPEED, DEFAULT_MAX_SPEED, DEFAULT_SPEED_CHANGE);
+		
 		
 	}
 	
