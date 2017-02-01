@@ -24,4 +24,16 @@ public class Engines {
 	public boolean getIsWorking(){
 		return this.isWorking;
 	}
+	
+	public void increaseFuel(){
+		this.fuel.increase();
+	}
+	
+	public void decreaseFuel(){
+		this.fuel.decrease();
+	}
+	
+	public void customChangeFuel(int change){
+		this.fuel.change(change);
+	}
 }
