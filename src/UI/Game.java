@@ -20,5 +20,4 @@ public class Game {
 		f.add(view);
 		f.setVisible(true);
 	}
-
 }
