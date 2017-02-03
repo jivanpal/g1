@@ -10,6 +10,12 @@
 // the server dies.
 package ClientNetworking;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Client.
