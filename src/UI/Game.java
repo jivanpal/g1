@@ -1,5 +1,7 @@
 package UI;
 
+import Views.EngineerView;
+
 import javax.swing.JFrame;
 
 public class Game {
@@ -7,10 +9,10 @@ public class Game {
 	public static void main(String[] args) {
 		ResourcesModel model = new ResourcesModel(10, 10, 10);
 		ResourcesPresenter presenter = new ResourcesPresenter();
-		ResourcesView view = new ResourcesView();
-		view.setPresenter(presenter);
+		EngineerView view = new EngineerView();
 		presenter.setModel(model);
-		presenter.setView(view);
+		presenter.setView(view.getResourcesView());
+		view.setPresenter(presenter);
 
 		view.makeUI();
 
