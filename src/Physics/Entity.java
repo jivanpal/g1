@@ -4,7 +4,7 @@ import Geometry.*;
 
 public class Entity {
 /// FIELDS
-    private unsigned double m = 1;              // Default mass is 1 kg.
+    private double m        = 1;                // Default mass is 1 kg.
     private Vector s        = Vector.ZERO;      // Default position is the origin.
     private Rotation orient = Rotation.NONE;    // Default orientation is on the x-y plane, pointing along the y-axis.
     
@@ -15,13 +15,20 @@ public class Entity {
     
     /**
      * Create a new entity with the specified parameters.
+     * @param   mass            The entity's mass, in kg.
+     * @param   position        The entity's displacement from the origin, in meters.
+     * @param   orientation     The entity's orientation, given as a rotation from
+     *              the default orientation, which is on the x-y plane, pointing
+     *              along the y-axis.
+     * @param   velocity        The entity's velocity, in meters per second.
+     * @param   angularVelocity The entity's right-handed angular velocity, in radians per second.
      */
     public Entity (
-        double mass,
-        Vector position,
-        Rotation orientation,
-        Vector velocity,
-        Vector angularVelocity
+        double      mass,
+        Vector      position,
+        Rotation    orientation,
+        Vector      velocity,
+        Vector      angularVelocity
     ) {
         setMass(mass);
         setPosition(position);
@@ -32,6 +39,11 @@ public class Entity {
     
     /**
      * Create a new entity with the specified parameters.
+     * @param   mass        The entity's mass, in kg.
+     * @param   position    The entity's displacement from the origin, in meters.
+     * @param   orientation The entity's orientation, given as a rotation from
+     *              the default orientation, which is on the x-y plane, pointing
+     *              along the y-axis.
      */
     public Entity (double mass, Vector position, Rotation orientation) {
         setMass(m);
@@ -41,6 +53,7 @@ public class Entity {
     
     /**
      * Create a new entity with the specified parameters.
+     * @param   mass    The entity's mass, in kg.
      */
     public Entity(double mass) {
         setMass(mass);
@@ -120,29 +133,30 @@ public class Entity {
      * Update the entity's position and orientation,
      * as if a given amount of time has passed.
      *
-     * @param t The amount of time to simulate the passage of.
+     * @param t The amount of time to simulate the passage of, in seconds.
      */
     public void update(double t) {
         // ∆s = v ∆t
         move( v.scale(t) );
         
-        changeOrientation( new Rotation(omega) );
+        // (∆ orient) is proportional to omega and 1/t
+        rotate( new Rotation(omega.scale(1/t)) );
     }
     
     /**
      * Change the change-related parameters of the entity,
      * as if a given force is acting on it.
      *
-     * @param t The amount of time to simulate the passage of.
-     * @param f The force to simulate exertion of.
+     * @param t The amount of time to simulate the passage of, in seconds.
+     * @param f The force to simulate exertion of, in newtons.
      * @param s The displacement of the the point of action of the
-     *   force from the body's barycenter.
+     *   force from the body's barycenter, in meters.
      */
     public void exertForce(double t, Vector f, Vector r) {
         // ∆v = F ∆t / m
         changeVelocity( f.scale(t/m) );
         
         // ∆ omega = (r x F) ∆t / m r^2
-        changeAngularVelocity( r.cross(f).scale( t/(m * r.length()^2) ) );
+        changeAngularVelocity( r.cross(f).scale( t/(m * r.length() * r.length()) ) );
     }
 }

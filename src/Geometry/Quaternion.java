@@ -66,10 +66,10 @@ public class Quaternion {
      *          of the two quaternions are equal.
      */
     public boolean equals(Quaternion q) {
-        return w = q.getW()
-            && x = q.getX()
-            && y = q.getY()
-            && z = q.getZ();
+        return w == q.getW()
+            && x == q.getX()
+            && y == q.getY()
+            && z == q.getZ();
     }
     
 // Getters
@@ -131,7 +131,7 @@ public class Quaternion {
      * @return  Returns the length (magnitude) of the quaternion.
      */
     public double length() {
-        return Math.sqrt(w^2 + x^2 + y^2 + z^2);
+        return Math.sqrt(w*w + x*x + y*y + z*z);
     }
     
     /**
@@ -226,10 +226,11 @@ public class Quaternion {
      * rotations described by quaternions.
      * 
      * @param   q   The quaternion by which to conjugate this one.
-     * @return  Given this quaternion is `p`, and `x*` denotes the conjugation
-     *          of the quaternion `x`, this method returns `q p q*`.
+     * @return  Given this quaternion is `p`, and `x*` denotes the conjugate
+     *          of the quaternion `x` (i.e. the result of `x.conjugate()`),
+     *          this method returns `q p q*`.
      */
     public Quaternion conjugatedBy(Quaternion q) {
-        return q.times(p.times(q.conjugate()));
+        return q.times(this.times(q.conjugate()));
     }
 }

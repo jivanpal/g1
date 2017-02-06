@@ -54,7 +54,7 @@ public class Vector {
     /**
      * Helper method for `sum(Vector[])`.
      */
-    private static _sum(Vector[] v, int n) {
+    private static Vector _sum(Vector[] v, int n) {
         return n == 0   ? Vector.ZERO   : v[n-1].plus(_sum(v, n-1));
     }
     
@@ -105,7 +105,7 @@ public class Vector {
      * @return  Returns the length (magnitude) of the vector.
      */
     public double length() {
-        return Math.sqrt(x^2 + y^2 + z^2);
+        return Math.sqrt(x*x + y*y + z*z);
     }
     
     /**
@@ -209,6 +209,6 @@ public class Vector {
             x % v.getX() + (x % v.getX() < 0 ? v.getX() : 0),
             y % v.getY() + (y % v.getY() < 0 ? v.getY() : 0),
             z % v.getZ() + (z % v.getZ() < 0 ? v.getZ() : 0)
-        )
+        );
     }
 }

@@ -36,26 +36,26 @@ public class Rotation {
      * describes an angle, create an object describing a rotation about that
      * axis by that angle.
      * 
-     * @param   axis-angle  A vector whose direction is the axis of rotation,
+     * @param   axisAngle  A vector whose direction is the axis of rotation,
      *              and whose length is the angle by which to rotate about
      *              that axis, in radians.
      */
-    public Rotation (Vector axis-angle) {
-        this (axis-angle, axis-angle.length());
+    public Rotation (Vector axisAngle) {
+        this (axisAngle, axisAngle.length());
     }
     
     /**
      * Given the "direction cosines" of an axis of rotation, and an angle by
      * which to rotate about that axis, create an object describing that rotation.
      *
-     * @param   x-cos   The cosine of the angle between the axis of rotation and the x-axis.
-     * @param   y-cos   The cosine of the angle between the axis of rotation and the y-axis.
-     * @param   z-cos   The cosine of the angle between the axis of rotation and the z-axis.
+     * @param   xCos   The cosine of the angle between the axis of rotation and the x-axis.
+     * @param   yCos   The cosine of the angle between the axis of rotation and the y-axis.
+     * @param   zCos   The cosine of the angle between the axis of rotation and the z-axis.
      * @param   angle   The angle by which to rotate about the axis counter-clockwise when
      *              viewed top-down, in radians.
      */
-    public Rotation (double x-cos, double y-cos, double z-cos, double angle) {
-        this (new Vector(x-cos, y-cos, z-cos), angle);
+    public Rotation (double xCos, double yCos, double zCos, double angle) {
+        this (new Vector(xCos, yCos, zCos), angle);
     }
     
     /**
