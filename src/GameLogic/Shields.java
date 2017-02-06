@@ -1,4 +1,4 @@
-package game.logic;
+package GameLogic;
 
 public class Shields {
 	

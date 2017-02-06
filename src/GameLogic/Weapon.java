@@ -1,4 +1,4 @@
-package game.logic;
+package GameLogic;
 
 /**
  * Abstract class which lays out the skeleton of a weapon

@@ -4,7 +4,8 @@ import Views.EngineerView;
 import Views.PilotView;
 import com.sun.javafx.geom.Vec3d;
 import com.sun.xml.internal.bind.v2.TODO;
-import game.logic.ShipModel;
+
+import GameLogic.ShipModel;
 
 import java.util.ArrayList;
 

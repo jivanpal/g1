@@ -1,4 +1,4 @@
-package game.logic;
+package GameLogic;
 
 /**
  * Class which represents the laser blaster
