@@ -21,6 +21,7 @@ import javax.swing.event.*;
 public class ButtonPanel extends JPanel {
 	private MainMenu menu;
 	
+	//TODO maybe an animated background image
 	public ButtonPanel (MainMenu menu) {
 		super();
 		this.menu = menu;

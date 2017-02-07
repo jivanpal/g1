@@ -3,11 +3,14 @@ package Menus;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 
 public class SoundPanel extends JPanel {
 	private MainMenu menu;
@@ -32,10 +35,34 @@ public class SoundPanel extends JPanel {
 		JButton resettodefault = new JButton("Reset To Defaults");
 		c.anchor = c.NORTHEAST;
 		add(resettodefault, c);
-		//JPanel bpanel = createButtons();
+		JPanel spanel = createSliders();
 		c.anchor = c.CENTER;
-		//bpanel.setOpaque(false);
-		//add(bpanel, c);
+		spanel.setOpaque(false);
+		add(spanel, c);
 		setBackground(Color.BLACK);
+	}
+	
+	public JPanel createSliders() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(0,2));
+		panel = createSwL(panel, "Master Volume");
+		panel = createSwL(panel, "Music Volume");
+		panel = createSwL(panel, "Sound Effects");
+		return panel;
+	}
+	
+	public JPanel createSwL(JPanel panel, String name) {
+		JLabel label = new JLabel(name);
+		label.setOpaque(false);
+		label.setForeground(Color.WHITE);
+		panel.add(label);
+		JSlider slider = new JSlider(0, 100);
+		//TODO sliders are not white
+		slider.setValue(100);
+		slider.setPaintTicks(true);
+		slider.setForeground(Color.RED);
+		slider.setBackground(Color.YELLOW);
+		panel.add(slider);
+		return panel;
 	}
 }

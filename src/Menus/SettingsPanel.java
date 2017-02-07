@@ -2,6 +2,7 @@ package Menus;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -54,6 +55,9 @@ public class SettingsPanel extends JPanel {
 			}
 		});
 		panel.setLayout(new BorderLayout());
+		Dimension d = new Dimension(300, 50);
+		gotosound.setPreferredSize(d);
+		gotocontrols.setPreferredSize(d);
 		panel.add(gotosound, BorderLayout.NORTH);
 		panel.add(gotocontrols, BorderLayout.CENTER);
 		return panel;
