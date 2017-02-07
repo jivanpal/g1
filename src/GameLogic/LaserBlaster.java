@@ -1,9 +1,9 @@
-package game.logic;
+package GameLogic;
 
 /**
- * Class which represents the Torpedo weapon
+ * Class which represents the laser blaster
  */
-public class TorpedoWeapon extends Weapon {
+public class LaserBlaster extends Weapon {
 	
 	//default values for the specific weapon
 	private static final int DEFAULT_AMMO = 0;
@@ -14,7 +14,10 @@ public class TorpedoWeapon extends Weapon {
 	private static final int DEFAULT_COUNTDOWN = 0;
 	private static final boolean DEFAULT_IS_FUNCTIONING = true;
 	
-	public TorpedoWeapon(){
+
+	
+	
+	public LaserBlaster(){
 		ammo = new Resource(DEFAULT_AMMO, DEFAULT_MAX_AMMO, DEFAULT_AMMO_CHANGE);
 		damageToShield = DEFAULT_DAMAGE_TO_SHIELD;
 		damageToShip = DEFAULT_DAMAGE_TO_SHIP;
