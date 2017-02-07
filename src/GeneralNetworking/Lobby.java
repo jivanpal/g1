@@ -5,6 +5,7 @@ import java.net.InetAddress;
 public class Lobby
 {
 	private int hostPos = 0;
+	public boolean started ;
 	private Player[] players = new Player[8];
 
 	/**
@@ -16,6 +17,7 @@ public class Lobby
 	//
 	public Lobby(String nickname, InetAddress hostAddress)
 	{
+		started = false;
 		players[0] = new Player(nickname, hostAddress, true);
 		for (int i = 1; i < 8; i++)
 		{
@@ -78,11 +80,11 @@ public class Lobby
 	 * @param player
 	 *            the player who pressed the start button
 	 */
-	public void Start(Player p)
+	public void start(Player p)
 	{
 		if (p.isHost)
 		{
-			// start the game
+			started = true;
 		}
 	}
 	/**
@@ -101,5 +103,18 @@ public class Lobby
 				//NOTIFY
 			}
 		}
+	}
+	public Player[] getPlayers()
+	{
+		return players;
+	}
+	public Player getHost()
+	{
+		for(Player player : players )
+		{
+			if(player.isHost)
+				return player;
+		}
+		return null;
 	}
 }

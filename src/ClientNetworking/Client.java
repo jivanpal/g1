@@ -15,31 +15,34 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.concurrent.LinkedBlockingQueue;
+
+import GeneralNetworking.Lobby;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Client.
  */
-class Client
+class Client extends Thread
 {
 
-	/**
-	 * The main method.
-	 *
-	 * @param args
-	 *            the arguments
-	 */
-	public static void main(String[] args)
+	private int port = ClientVariables.PORT;
+	private String hostname = ClientVariables.HOSTNAME;
+	private Lobby lobby = null;
+	private String name;
+
+	public Client(String nickname)
 	{
+		this.name = nickname;
+	}
 
-		int port = ClientVariables.PORT;
-		String hostname = ClientVariables.HOSTNAME;
-
+	public void run()
+	{
 		// Open sockets:
 		ObjectOutputStream toServer = null;
 		ObjectInputStream fromServer = null;
 		Socket server = null;
-
+		LinkedBlockingQueue<Object> clientQueue = new LinkedBlockingQueue<Object>();
 		// get a socket and the 2 streams
 		try
 		{
@@ -58,8 +61,8 @@ class Client
 			System.exit(1);
 		}
 
-		ClientSender sender = new ClientSender(toServer);
-		ClientReceiver receiver = new ClientReceiver(fromServer);
+		ClientSender sender = new ClientSender(toServer, clientQueue);
+		ClientReceiver receiver = new ClientReceiver(fromServer, name, lobby, clientQueue);
 
 		// Start the sender and receiver threads
 		sender.start();

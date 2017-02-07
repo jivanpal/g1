@@ -1,18 +1,18 @@
-package ServerNetworking;
+package ClientNetworking.GameHost;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class ServerSender extends Thread
+public class GameHostSender extends Thread
 {
 	private ObjectOutputStream clientOUT;
 	private LinkedBlockingQueue<Object> queue;
 
-	public ServerSender(ObjectOutputStream sender, LinkedBlockingQueue<Object> q)
+	public GameHostSender(ObjectOutputStream sender, LinkedBlockingQueue<Object> q)
 	{
 		clientOUT = sender;
-		queue = q;
+		queue=q;
 	}
 
 	public void run()
@@ -31,6 +31,7 @@ public class ServerSender extends Thread
 			}
 			try
 			{
+				//check if we got anything to send
 				if (objectOut != null)
 				{
 					clientOUT.writeObject(objectOut);
