@@ -6,13 +6,20 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import GameLogic.KeyBindings;
+
 public class ControlsPanel extends JPanel {
 	private MainMenu menu;
+	private boolean pressed;
 
 	public ControlsPanel(MainMenu menu) {
 		super();
@@ -64,12 +71,41 @@ public class ControlsPanel extends JPanel {
 	}
 
 	public JPanel createBwL(JPanel panel, String name) {
-		//TODO make changing controls work visually
+		// TODO make changing controls work visually
 		JLabel label = new JLabel(name);
 		label.setOpaque(false);
 		label.setForeground(Color.WHITE);
 		panel.add(label);
 		JButton button = new JButton(name);
+		button.addActionListener(ev -> {
+			pressed = true;
+
+		});
+		button.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (pressed) {
+					System.out.println(e.getKeyChar());
+					button.setText("" + Character.toUpperCase(e.getKeyChar()));
+					button.setEnabled(true);
+					pressed = false;
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
 		panel.add(button);
 		return panel;
 	}
