@@ -1,5 +1,8 @@
 package GameLogic;
 
+import Geometry.Rotation;
+import Geometry.Vector;
+
 /**
  * Abstract class which lays out the skeleton of a weapon
  */
@@ -43,16 +46,6 @@ public abstract class Weapon {
 		return this.targetingType;
 	}
 	
-	/*public void setAmmoFull(Resource supply){
-		this.ammo = supply;
-	}
-	
-	public void setDamageToShip(int damage){
-		this.damageToShip = damage;
-	}
-	
-	public void setDamageToShield(int damage){
-		this.damageToShield = damage;
-	}*/
+	public abstract void fire(Vector position, Rotation orientation, Vector velocity, Vector angularVelocity);
 
 }
