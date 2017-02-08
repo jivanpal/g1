@@ -8,16 +8,20 @@ public class Vector {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		
+	}
+	
+	public void normalise(){
 		double length = Math.sqrt(x*x + y*y + z*z);
 		if(length > 0){
-			this.x /= length;
-			this.y /= length;
-			this.z /= length;
+			x /= length;
+			y /= length;
+			z /= length;
 		}
 		else{
-			this.x = 0;
-			this.y = 0;
-			this.z = 0;
+			x = 0;
+			y = 0;
+			z = 0;
 		}
 	}
 	
