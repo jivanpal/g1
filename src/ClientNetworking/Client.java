@@ -30,10 +30,12 @@ class Client extends Thread
 	private String hostname = ClientVariables.HOSTNAME;
 	private Lobby lobby = null;
 	private String name;
+	LinkedBlockingQueue<Object> clientQueue;
 
 	public Client(String nickname)
 	{
 		this.name = nickname;
+		clientQueue = new LinkedBlockingQueue<Object>();
 	}
 
 	public void run()
@@ -42,7 +44,7 @@ class Client extends Thread
 		ObjectOutputStream toServer = null;
 		ObjectInputStream fromServer = null;
 		Socket server = null;
-		LinkedBlockingQueue<Object> clientQueue = new LinkedBlockingQueue<Object>();
+		
 		// get a socket and the 2 streams
 		try
 		{
@@ -83,5 +85,13 @@ class Client extends Thread
 			System.exit(1);
 		}
 
+	}
+	public Lobby getLobby()
+	{
+		return lobby;
+	}
+	public void send(Object obj)
+	{
+		clientQueue.offer(obj);
 	}
 }
