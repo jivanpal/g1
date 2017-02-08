@@ -91,7 +91,7 @@ public class Client extends Thread
 	{
 		return lobby;
 	}
-	public void send(Object obj)
+	public synchronized void send(Object obj)
 	{
 		clientQueue.offer(obj);
 	}
