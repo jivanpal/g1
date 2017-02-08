@@ -27,9 +27,13 @@ public class Poly3D {
 		newY = new double[x.length];
 		draw = true;
 		for(int i = 0; i < x.length; i++){
-			calcPos = Calculations.calcPos(Screen.viewFrom, Screen.viewTo, x[i], y[i], z[i]);
-			newX[i] = (GameEngine.screenSize.getWidth()/2 - Calculations.calcFocusPos[0]) + calcPos[0] * 1000;
-			newY[i] = (GameEngine.screenSize.getHeight()/2 - Calculations.calcFocusPos[1]) + calcPos[1] * 1000;
+			Point p = new Point(x[i], y[i], z[i]);
+			calcPos = Calculations.calcPos(Screen.viewFrom, Screen.viewTo, p);
+//			newX[i] = (GameEngine.screenSize.getWidth()/2 - Calculations.calcFocusPos[0]) + calcPos[0];
+//			newY[i] = (GameEngine.screenSize.getHeight()/2 - Calculations.calcFocusPos[1]) + calcPos[1];
+			newX[i] = calcPos[0] + GameEngine.screenSize.getWidth()/2;
+			newY[i] = calcPos[1] + GameEngine.screenSize.getHeight()/2;
+//			System.out.println(newX[i] + ", " + newY[i]);
 			if(Calculations.t < 0){
 				draw = false;
 			}
@@ -44,9 +48,9 @@ public class Poly3D {
 	
 	private void lighting() {
 		Plane lightPlane = new Plane(this);
-		double angle = Math.acos(((lightPlane.v3.x * Screen.lightDir[2]) +
-				(lightPlane.v3.y * Screen.lightDir[1]) + (lightPlane.v3.z * Screen.lightDir[2]))
-				/(Math.sqrt(Screen.lightDir[0] * Screen.lightDir[0] + Screen.lightDir[1] * Screen.lightDir[1] + Screen.lightDir[2] * Screen.lightDir[2])));
+		double angle = Math.acos(((lightPlane.v3.x * Screen.lightDir.z) +
+				(lightPlane.v3.y * Screen.lightDir.y) + (lightPlane.v3.z * Screen.lightDir.z))
+				/(Math.sqrt(Screen.lightDir.x * Screen.lightDir.x + Screen.lightDir.y * Screen.lightDir.y + Screen.lightDir.z * Screen.lightDir.z)));
 		
 		poly.light = 0.2 + 1 - Math.sqrt(Math.toDegrees(angle)/180);
 		
@@ -67,8 +71,8 @@ public class Poly3D {
 	}
 	
 	private double getDistanceToP(int i){
-		return Math.sqrt((Screen.viewFrom[0] - x[i]) * (Screen.viewFrom[0] - x[i])
-						+ (Screen.viewFrom[1] - y[i]) * (Screen.viewFrom[1] - y[i])
-						+ (Screen.viewFrom[2] - z[i]) * (Screen.viewFrom[2] - z[i]));
+		return Math.sqrt((Screen.viewFrom.x - x[i]) * (Screen.viewFrom.x - x[i])
+						+ (Screen.viewFrom.y - y[i]) * (Screen.viewFrom.y - y[i])
+						+ (Screen.viewFrom.z - z[i]) * (Screen.viewFrom.z - z[i]));
 	}
 }

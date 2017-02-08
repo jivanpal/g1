@@ -1,7 +1,9 @@
 package Graphics;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Polygon;
+import java.awt.Toolkit;
 
 public class PolygonObj {
 	private Polygon p;
@@ -27,12 +29,29 @@ public class PolygonObj {
 		}
 	}
 	
+	private void screenTest(){
+		boolean onScreen = false;
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		for(int i = 0; i < p.xpoints.length; i++){
+			if(p.xpoints[i] >= 0 && p.xpoints[i] < screenSize.getWidth() && p.ypoints[i] >= 0 && p.ypoints[i] < screenSize.getHeight()){
+				onScreen = true;
+			}
+		}
+		if(onScreen){
+			System.out.println("Got one");
+			for(int i = 0; i < p.xpoints.length; i++){
+				System.out.println(p.xpoints[i] + ", " + p.ypoints[i]);
+			}
+		}
+	}
+	
 	void drawPoly(Graphics g){
 		if(draw){
 			g.setColor(new Color((int)(c.getRed() * light), (int)(c.getGreen() * light), (int)(c.getBlue() * light)));
 			g.fillPolygon(p);
 			g.setColor(Color.BLACK);
 			g.drawPolygon(p);
+//			screenTest();
 		}
 	}
 }

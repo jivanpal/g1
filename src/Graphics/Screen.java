@@ -11,12 +11,16 @@ import javax.swing.JPanel;
 public class Screen extends JPanel implements KeyListener{
 	
 	private double sleepTime = 1000/60, lastRefresh = 0;
-	public static double[] viewFrom = {0, 0, 0};
-	public static double[] viewTo = {1, 0, 0};
-	public static double[] lightDir = {1, 1, 1};
+	public static Point viewFrom;
+	public static Point viewTo;
+	public static Vector lightDir;
+	public static double[][] cameraSystem, worldToCamera, CM;
+	public static Vector N, U, V;
+	private Vector moveVec;
+	
 	private double lightPosition, mapSize = 10;
-	private static double moveSpeed = 0.005, verticalLook = 0, horizontalLook = 0;
-	private double verticalLookSpeed = 0.0005, horizontalLookSpeed = 0.002;
+	private static double moveSpeed = 1000, verticalLook = 0, horizontalLook = 0;
+	private double verticalLookSpeed = 0.00001, horizontalLookSpeed = 0.01;
 	private double r;
 	
 	public static int nPoly = 0, nPoly3D = 0;
@@ -26,6 +30,28 @@ public class Screen extends JPanel implements KeyListener{
 	boolean w, a, s, d, e, q;
 	
 	public Screen(){
+		
+		viewFrom = new Point(0, 0, 0);
+		viewTo = new Point(1, 0, 0);
+		lightDir = new Vector(1, 1, 1);
+		
+		N = viewTo.pointMinusPoint(viewFrom);
+		U = new Vector(0, 1, 0);
+		V = U.crossProduct(N);
+		U = N.crossProduct(V);
+		cameraSystem = new double[][] { {U.x,  U.y,  U.z,  0},
+										{V.x,  V.y,  V.z,  0},
+										{N.x, N.y, N.z, 0},
+										{0,    0,    0,    1}};
+										
+		CM = Matrix.getCM(viewFrom, V, U, N, 100);
+		Matrix.printMatrix(CM);
+						
+		Matrix.printMatrix(cameraSystem);
+										
+//		worldToCamera = Matrix.inverse(cameraSystem);
+//		
+//		Matrix.printMatrix(cameraSystem);
 		
 		Poly3D poly1 = new Poly3D(new double[]{0, 0.3, 0.6}, new double[]{0, 0.4, 0}, new double[]{0, 0, 0}, Color.RED);
 		Screen.poly3Ds.add(poly1);
@@ -52,6 +78,12 @@ public class Screen extends JPanel implements KeyListener{
 		Calculations.setInfo();
 		setLight();
 		nPoly = poly3Ds.size();
+//		poly3Ds.remove(nPoly-1);
+//		poly3Ds.remove(nPoly-2);
+//		poly3Ds.remove(nPoly-3);
+//		poly3Ds.remove(nPoly-4);
+//		
+//		Asteroid.createAsteroid(viewTo.x, viewTo.y, viewTo.z);
 		
 		for(int i = 0; i < nPoly; i++){
 			poly3Ds.get(i).update();
@@ -64,10 +96,14 @@ public class Screen extends JPanel implements KeyListener{
 			poly3Ds.get(drawOrder[i]).poly.drawPoly(g);
 		}
 		
+		Vector camCoords = Matrix.multiplyVector2(cameraSystem, new Vector(0, 0, 0));
+		
 		g.setColor(Color.WHITE);
-		g.drawString("x: " + viewFrom[0] + ", y: " + viewFrom[1] + ", z: " + viewFrom[2], 40, 40);
-		g.drawString("x: " + viewTo[0] + ", y: " + viewTo[1] + ", z: " + viewTo[2], 40, 60);
+		g.drawString("x: " + viewFrom.x + ", y: " + viewFrom.y + ", z: " + viewFrom.z + " x: " + camCoords.x + ", y: " + camCoords.y + ", z: " + camCoords.z, 40, 40);
+		g.drawString("x: " + viewTo.x + ", y: " + viewTo.y + ", z: " + viewTo.z, 40, 60);
 		g.drawString("r: " + r + " vert: " + verticalLook, 40, 80);
+		g.drawLine((int)GameEngine.screenSize.getWidth()/2 - 5, (int)GameEngine.screenSize.getHeight()/2, (int)GameEngine.screenSize.getWidth()/2 + 5, (int)GameEngine.screenSize.getHeight()/2);
+		g.drawLine((int)GameEngine.screenSize.getWidth()/2, (int)GameEngine.screenSize.getHeight()/2 - 5, (int)GameEngine.screenSize.getWidth()/2, (int)GameEngine.screenSize.getHeight()/2 + 5);
 		
 		sleepAndRefresh();
 	}
@@ -118,69 +154,106 @@ public class Screen extends JPanel implements KeyListener{
 	}
 	
 	private void setLight(){
-		lightDir[0] = mapSize/2 - (mapSize/2 + Math.cos(lightPosition) * mapSize * 10);
-		lightDir[1] = mapSize/2 - (mapSize/2 + Math.sin(lightPosition) * mapSize * 10);
-		lightDir[2] = -200;
+		lightDir.x = mapSize/2 - (mapSize/2 + Math.cos(lightPosition) * mapSize * 10);
+		lightDir.y = mapSize/2 - (mapSize/2 + Math.sin(lightPosition) * mapSize * 10);
+		lightDir.z = -200;
 	}
 	
 	private void camera(){
-		Vector viewVec = new Vector(viewTo[0] - viewFrom[0], viewTo[1] - viewFrom[1], viewTo[2] - viewFrom[2]);
+//		Vector viewVec = viewTo.pointMinusPoint(viewFrom);
 		
 		double xMove = 0, yMove = 0, zMove = 0;
 		
 		if(e){
-			xMove += viewVec.x;
-			yMove += viewVec.y;
-			zMove += viewVec.z;
+			Vector nScale = Matrix.multiplyVector2(Matrix.getScalingMatrix(moveSpeed, moveSpeed, moveSpeed), N);
+			viewFrom = viewFrom.pointPlusVector(nScale);
+			cameraSystem[0][3] = -U.dotProduct(viewFrom);
+			cameraSystem[1][3] = -V.dotProduct(viewFrom);
+			cameraSystem[2][3] = -N.dotProduct(viewFrom);
 		}
 		if(q){
-			xMove -= viewVec.x;
-			yMove -= viewVec.y;
-			zMove -= viewVec.z;
+			Vector scale = new Vector(-moveSpeed, -moveSpeed, -moveSpeed);
+			viewFrom = viewFrom.pointPlusVector(scale);
+			cameraSystem[0][3] = -U.dotProduct(viewFrom);
+			cameraSystem[1][3] = -V.dotProduct(viewFrom);
+			cameraSystem[2][3] = -N.dotProduct(viewFrom);
 		}
 		if(a){
-			horizontalLook -= horizontalLookSpeed;
+//			horizontalLook -= horizontalLookSpeed;
+			U = Matrix.multiplyVector2(Matrix.getRotationMatrix(horizontalLookSpeed, N), U);
+			V = Matrix.multiplyVector2(Matrix.getRotationMatrix(horizontalLookSpeed, N), V);
+			
+			cameraSystem[0][0] = U.x;
+			cameraSystem[0][1] = U.y;
+			cameraSystem[0][2] = U.z;
+			cameraSystem[1][0] = V.x;
+			cameraSystem[1][1] = V.y;
+			cameraSystem[1][2] = V.z;
+			
+			cameraSystem[0][3] = -U.dotProduct(viewFrom);
+			cameraSystem[1][3] = -V.dotProduct(viewFrom);
 		}
 		if(d){
-			horizontalLook += horizontalLookSpeed;
+//			horizontalLook += horizontalLookSpeed;
+			U = Matrix.multiplyVector2(Matrix.getRotationMatrix(-horizontalLookSpeed, N), U);
+			V = Matrix.multiplyVector2(Matrix.getRotationMatrix(-horizontalLookSpeed, N), V);
+			
+			cameraSystem[0][0] = U.x;
+			cameraSystem[0][1] = U.y;
+			cameraSystem[0][2] = U.z;
+			cameraSystem[1][0] = V.x;
+			cameraSystem[1][1] = V.y;
+			cameraSystem[1][2] = V.z;
+			
+			cameraSystem[0][3] = -U.dotProduct(viewFrom);
+			cameraSystem[1][3] = -V.dotProduct(viewFrom);
 		}
 		if(s){
-			verticalLook += verticalLookSpeed;
+//			verticalLook += verticalLookSpeed;
+			U = Matrix.multiplyVector2(Matrix.getRotationMatrix(verticalLookSpeed, V), U);
+			N = Matrix.multiplyVector2(Matrix.getRotationMatrix(verticalLookSpeed, V), N);
+			
+			cameraSystem[1][0] = V.x;
+			cameraSystem[1][1] = V.y;
+			cameraSystem[1][2] = V.z;
+			cameraSystem[0][0] = U.x;
+			cameraSystem[0][1] = U.y;
+			cameraSystem[0][2] = U.z;
+			
+			cameraSystem[1][3] = -V.dotProduct(viewFrom);
+			cameraSystem[0][3] = -U.dotProduct(viewFrom);
 		}
 		if(w){
-			verticalLook -= verticalLookSpeed;
+//			verticalLook -= verticalLookSpeed;
+			U = Matrix.multiplyVector2(Matrix.getRotationMatrix(-verticalLookSpeed, V), U);
+			N = Matrix.multiplyVector2(Matrix.getRotationMatrix(-verticalLookSpeed, V), N);
+			
+			cameraSystem[2][0] = N.x;
+			cameraSystem[2][1] = N.y;
+			cameraSystem[2][2] = N.z;
+			cameraSystem[0][0] = U.x;
+			cameraSystem[0][1] = U.y;
+			cameraSystem[0][2] = U.z;
+			
+			cameraSystem[1][3] = -V.dotProduct(viewFrom);
+			cameraSystem[0][3] = -U.dotProduct(viewFrom);
 		}
 		
-		Vector moveVec = new Vector(xMove, yMove, zMove);
-		moveTo(viewFrom[0] + moveVec.x * moveSpeed, viewFrom[1] + moveVec.y * moveSpeed, viewFrom[2] + moveVec.z * moveSpeed);
+//		Matrix.printMatrix(cameraSystem);
 		
+		moveVec = new Vector(xMove * moveSpeed, yMove * moveSpeed, zMove * moveSpeed);
+		viewFrom = viewFrom.pointPlusVector(moveVec);
+		viewTo = viewTo.pointPlusVector(moveVec);
+		updateVectors();
 		
+		CM = Matrix.getCM(viewFrom, V, U, N, 2);
+		Matrix.printMatrix(CM);	
 	}
-
-	private void moveTo(double e, double f, double g) {
-		viewFrom[0] = e;
-		viewFrom[1] = f;
-		viewFrom[2] = g;
-		updateView();
-	}
-
-	private void updateView() {
-//		difY *= 6 - Math.abs(VertLook) * 5;
-//		verticalLook -= verticalRotateSpeed;
-//		horizontalLook += horizontalRotateSpeed;
-
-		if(verticalLook>0.999){
-			verticalLook = 0.999;
-		}
-
-		if(verticalLook<-0.999){
-			verticalLook = -0.999;
-		}
-		
-		r = Math.sqrt(1 - (verticalLook * verticalLook));
-		viewTo[0] = viewFrom[0] + r * Math.cos(horizontalLook);
-		viewTo[1] = viewFrom[1] + r * Math.sin(horizontalLook);
-		viewTo[2] = viewFrom[2] + verticalLook;
+	
+	private void updateVectors(){
+		U = new Vector(cameraSystem[0][0], cameraSystem[0][1], cameraSystem[0][2]);
+		V = new Vector(cameraSystem[1][0], cameraSystem[1][1], cameraSystem[1][2]);
+		N = new Vector(cameraSystem[2][0], cameraSystem[2][1], cameraSystem[2][2]);
 	}
 
 	public void keyTyped(KeyEvent e) {
