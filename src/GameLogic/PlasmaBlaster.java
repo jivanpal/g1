@@ -1,5 +1,9 @@
 package GameLogic;
 
+import Geometry.Rotation;
+import Geometry.Vector;
+import Physics.Entity;
+
 /**
  * Class which represents the Plasma blaster
  */
@@ -13,16 +17,17 @@ public class PlasmaBlaster extends Weapon {
 	private static final int DEFAULT_DAMAGE_TO_SHIELD = 0;
 	private static final int DEFAULT_COUNTDOWN = 0;
 	private static final boolean DEFAULT_IS_FUNCTIONING = true;
+	private static final double DEFAULT_PLASMA_BLASTER_BULLET_MASS = 0; 
 	
 
 	public PlasmaBlaster(){
-		ammo = new Resource(DEFAULT_AMMO, DEFAULT_MAX_AMMO, DEFAULT_AMMO_CHANGE);
-		damageToShield = DEFAULT_DAMAGE_TO_SHIELD;
-		damageToShip = DEFAULT_DAMAGE_TO_SHIP;
-		countdown = DEFAULT_COUNTDOWN; 		//how many seconds the player should wait until being able to shoot again
-		loadingType = Weapon.LOADING_TYPE_MANUAL;
-		targetingType = Weapon.TARGETING_TYPE_AUTOMATIC;
-		isFunctioning = DEFAULT_IS_FUNCTIONING;
+		super(new Resource(DEFAULT_AMMO, DEFAULT_MAX_AMMO, DEFAULT_AMMO_CHANGE), DEFAULT_DAMAGE_TO_SHIELD, DEFAULT_DAMAGE_TO_SHIP,
+				DEFAULT_COUNTDOWN, Weapon.LOADING_TYPE_MANUAL, Weapon.TARGETING_TYPE_AUTOMATIC, DEFAULT_IS_FUNCTIONING);
+	}
+
+	public void fire(Vector position, Rotation orientation, Vector velocity, Vector angularVelocity) {
+		Entity bullet = new Bullet(DEFAULT_PLASMA_BLASTER_BULLET_MASS, position, orientation, velocity,
+				angularVelocity, DEFAULT_DAMAGE_TO_SHIP, DEFAULT_DAMAGE_TO_SHIELD);
 	}
 	
 }
