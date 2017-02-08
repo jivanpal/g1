@@ -21,13 +21,8 @@ public class PlasmaBlaster extends Weapon {
 	
 
 	public PlasmaBlaster(){
-		ammo = new Resource(DEFAULT_AMMO, DEFAULT_MAX_AMMO, DEFAULT_AMMO_CHANGE);
-		damageToShield = DEFAULT_DAMAGE_TO_SHIELD;
-		damageToShip = DEFAULT_DAMAGE_TO_SHIP;
-		countdown = DEFAULT_COUNTDOWN; 		//how many seconds the player should wait until being able to shoot again
-		loadingType = Weapon.LOADING_TYPE_MANUAL;
-		targetingType = Weapon.TARGETING_TYPE_AUTOMATIC;
-		isFunctioning = DEFAULT_IS_FUNCTIONING;
+		super(new Resource(DEFAULT_AMMO, DEFAULT_MAX_AMMO, DEFAULT_AMMO_CHANGE), DEFAULT_DAMAGE_TO_SHIELD, DEFAULT_DAMAGE_TO_SHIP,
+				DEFAULT_COUNTDOWN, Weapon.LOADING_TYPE_MANUAL, Weapon.TARGETING_TYPE_AUTOMATIC, DEFAULT_IS_FUNCTIONING);
 	}
 
 	public void fire(Vector position, Rotation orientation, Vector velocity, Vector angularVelocity) {
