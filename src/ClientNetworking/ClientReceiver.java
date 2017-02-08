@@ -5,9 +5,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import GeneralNetworking.Invite;
-import GeneralNetworking.Lobby;
-import GeneralNetworking.Player;
+import GeneralNetworking.*;
 
 public class ClientReceiver extends Thread
 {

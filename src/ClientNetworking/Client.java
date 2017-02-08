@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.LinkedBlockingQueue;
+import ClientNetworking.*;
 
 import GeneralNetworking.Lobby;
 
@@ -23,7 +24,7 @@ import GeneralNetworking.Lobby;
 /**
  * The Class Client.
  */
-class Client extends Thread
+public class Client extends Thread
 {
 
 	private int port = ClientVariables.PORT;
