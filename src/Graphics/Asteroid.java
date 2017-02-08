@@ -8,7 +8,7 @@ public class Asteroid {
 		
 	}
 	
-	public static void createAsteroid(int x, int y, int z){
+	public static void createAsteroid(double x, double y, double z){
 		
 		Random r = new Random();
 		
