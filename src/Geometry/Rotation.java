@@ -2,7 +2,11 @@ package Geometry;
 
 public class Rotation {
 /// CONSTANTS
-    public static final Rotation NONE = new Rotation(Vector.ZERO, 0);
+    /**
+     * The rotation object the describes no rotation; the
+     * rotation that does nothing; the identity rotation.
+     */
+	public static final Rotation NONE = new Rotation(Vector.ZERO, 0);
     
 /// FIELDS
     private Quaternion rotation;
@@ -12,6 +16,8 @@ public class Rotation {
     /**
      * Given a quaternion that describes a rotation by extension of Euler's
      * equation, create an object to describe that rotation.
+     * 
+     * @param   rotation    The quaternion representing this rotation.
      */
     public Rotation (Quaternion rotation) {
         this.rotation = rotation;
@@ -94,18 +100,46 @@ public class Rotation {
     
     /**
      * Get the quaternion that dscribes this rotation.
+     * @return  Returns the quaternion that describes this rotation, as per the
+     *          standard extension of Euler's equation.
      */
     public Quaternion getQuaternion() {
         return rotation;
     }
     
     /**
-     * Get the vector whose direction is the axis of rotation and whose length
-     * is the angle of rotation, in radians, counter-clokwise about the axis
-     * when viewed-top-down.
+     * Get the axis-angle representation of this rotation.
+     *
+     * @return  Returns the vector whose direction is the axis of rotation and
+     *          whose length is the angle of rotation, in radians, counter-clockwise
+     *          about the axis when viewed-top-down.
      */
     public Vector getAxisAngle() {
         return rotation.getVector().normalise().scale( 2 * Math.acos(rotation.getScalar()) );
+    }
+    
+    /**
+     * Get the unit vector in the x-direction with respect to the co-ordinate system
+     * described by this rotation.
+     */
+    public Vector getXAxis() {
+    	return this.rotate(Vector.I);
+    }
+    
+    /**
+     * Get the unit vector in the y-direction with respect to the co-ordinate system
+     * described by this rotation.
+     */
+    public Vector getYAxis() {
+    	return this.rotate(Vector.J);
+    }
+    
+    /**
+     * Get the unit vector in the z-direction with respect to the co-ordinate system
+     * described by this rotation.
+     */
+    public Vector getZAxis() {
+    	return this.rotate(Vector.K);
     }
     
 // Enaction

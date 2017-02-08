@@ -147,10 +147,10 @@ public class Entity {
      * Change the change-related parameters of the entity,
      * as if a given force is acting on it.
      *
-     * @param t The amount of time to simulate the passage of, in seconds.
-     * @param f The force to simulate exertion of, in newtons.
-     * @param s The displacement of the the point of action of the
-     *   force from the body's barycenter, in meters.
+     * @param   t   The amount of time to simulate the passage of, in seconds.
+     * @param   f   The force to simulate exertion of, in newtons.
+     * @param   r   The displacement of the the point of action of the
+     *              force from the body's barycenter, in meters.
      */
     public void exertForce(double t, Vector f, Vector r) {
         // ∆v = F ∆t / m

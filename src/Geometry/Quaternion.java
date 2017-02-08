@@ -110,7 +110,7 @@ public class Quaternion {
      * Get the scalar part of the quaternion.
      * Same as `getW()`.
      * 
-     * @returns Retuns the scalar part of the quaterion.
+     * @return  Retuns the scalar part of the quaterion.
      */
     public double getScalar() {
         return w;
@@ -209,7 +209,8 @@ public class Quaternion {
     }
     
     /**
-     * Multiply theis quaternion by another; get their product.
+     * Multiply this quaternion by another; get their product.
+     * @param   q   The quaternion to multiply this one by.
      * @return  Returns the Hamilton product of the two quaternions.
      */
     public Quaternion times(Quaternion q) {
