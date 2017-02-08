@@ -19,7 +19,7 @@ public class Screen extends JPanel implements KeyListener{
 	private Vector moveVec;
 	
 	private double lightPosition, mapSize = 10;
-	private static double moveSpeed = 1000, verticalLook = 0, horizontalLook = 0;
+	private static double moveSpeed = 1, verticalLook = 0, horizontalLook = 0;
 	private double verticalLookSpeed = 0.00001, horizontalLookSpeed = 0.01;
 	private double r;
 	
@@ -34,11 +34,17 @@ public class Screen extends JPanel implements KeyListener{
 		viewFrom = new Point(0, 0, 0);
 		viewTo = new Point(1, 0, 0);
 		lightDir = new Vector(1, 1, 1);
+		lightDir.normalise();
 		
 		N = viewTo.pointMinusPoint(viewFrom);
+		N.normalise();
 		U = new Vector(0, 1, 0);
+		U.normalise();
 		V = U.crossProduct(N);
+		V.normalise();
 		U = N.crossProduct(V);
+		U.normalise();
+		
 		cameraSystem = new double[][] { {U.x,  U.y,  U.z,  0},
 										{V.x,  V.y,  V.z,  0},
 										{N.x, N.y, N.z, 0},
@@ -180,8 +186,11 @@ public class Screen extends JPanel implements KeyListener{
 		}
 		if(a){
 //			horizontalLook -= horizontalLookSpeed;
-			U = Matrix.multiplyVector2(Matrix.getRotationMatrix(horizontalLookSpeed, N), U);
-			V = Matrix.multiplyVector2(Matrix.getRotationMatrix(horizontalLookSpeed, N), V);
+			U = Matrix.multiplyVector2(Matrix.getRotationMatrix(-horizontalLookSpeed, N), U);
+			V = Matrix.multiplyVector2(Matrix.getRotationMatrix(-horizontalLookSpeed, N), V);
+			
+			U.normalise();
+			V.normalise();
 			
 			cameraSystem[0][0] = U.x;
 			cameraSystem[0][1] = U.y;
@@ -195,8 +204,11 @@ public class Screen extends JPanel implements KeyListener{
 		}
 		if(d){
 //			horizontalLook += horizontalLookSpeed;
-			U = Matrix.multiplyVector2(Matrix.getRotationMatrix(-horizontalLookSpeed, N), U);
-			V = Matrix.multiplyVector2(Matrix.getRotationMatrix(-horizontalLookSpeed, N), V);
+			U = Matrix.multiplyVector2(Matrix.getRotationMatrix(horizontalLookSpeed, N), U);
+			V = Matrix.multiplyVector2(Matrix.getRotationMatrix(horizontalLookSpeed, N), V);
+			
+			U.normalise();
+			V.normalise();
 			
 			cameraSystem[0][0] = U.x;
 			cameraSystem[0][1] = U.y;
@@ -213,20 +225,8 @@ public class Screen extends JPanel implements KeyListener{
 			U = Matrix.multiplyVector2(Matrix.getRotationMatrix(verticalLookSpeed, V), U);
 			N = Matrix.multiplyVector2(Matrix.getRotationMatrix(verticalLookSpeed, V), N);
 			
-			cameraSystem[1][0] = V.x;
-			cameraSystem[1][1] = V.y;
-			cameraSystem[1][2] = V.z;
-			cameraSystem[0][0] = U.x;
-			cameraSystem[0][1] = U.y;
-			cameraSystem[0][2] = U.z;
-			
-			cameraSystem[1][3] = -V.dotProduct(viewFrom);
-			cameraSystem[0][3] = -U.dotProduct(viewFrom);
-		}
-		if(w){
-//			verticalLook -= verticalLookSpeed;
-			U = Matrix.multiplyVector2(Matrix.getRotationMatrix(-verticalLookSpeed, V), U);
-			N = Matrix.multiplyVector2(Matrix.getRotationMatrix(-verticalLookSpeed, V), N);
+			U.normalise();
+			N.normalise();
 			
 			cameraSystem[2][0] = N.x;
 			cameraSystem[2][1] = N.y;
@@ -236,7 +236,25 @@ public class Screen extends JPanel implements KeyListener{
 			cameraSystem[0][2] = U.z;
 			
 			cameraSystem[1][3] = -V.dotProduct(viewFrom);
-			cameraSystem[0][3] = -U.dotProduct(viewFrom);
+			cameraSystem[2][3] = -N.dotProduct(viewFrom);
+		}
+		if(w){
+//			verticalLook -= verticalLookSpeed;
+			U = Matrix.multiplyVector2(Matrix.getRotationMatrix(-verticalLookSpeed, V), U);
+			N = Matrix.multiplyVector2(Matrix.getRotationMatrix(-verticalLookSpeed, V), N);
+			
+			U.normalise();
+			N.normalise();
+			
+			cameraSystem[2][0] = N.x;
+			cameraSystem[2][1] = N.y;
+			cameraSystem[2][2] = N.z;
+			cameraSystem[0][0] = U.x;
+			cameraSystem[0][1] = U.y;
+			cameraSystem[0][2] = U.z;
+			
+			cameraSystem[1][3] = -V.dotProduct(viewFrom);
+			cameraSystem[2][3] = -N.dotProduct(viewFrom);
 		}
 		
 //		Matrix.printMatrix(cameraSystem);
@@ -247,13 +265,16 @@ public class Screen extends JPanel implements KeyListener{
 		updateVectors();
 		
 		CM = Matrix.getCM(viewFrom, V, U, N, 2);
-		Matrix.printMatrix(CM);	
+//		Matrix.printMatrix(CM);	
 	}
 	
 	private void updateVectors(){
 		U = new Vector(cameraSystem[0][0], cameraSystem[0][1], cameraSystem[0][2]);
+		U.normalise();
 		V = new Vector(cameraSystem[1][0], cameraSystem[1][1], cameraSystem[1][2]);
+		V.normalise();
 		N = new Vector(cameraSystem[2][0], cameraSystem[2][1], cameraSystem[2][2]);
+		N.normalise();
 	}
 
 	public void keyTyped(KeyEvent e) {
