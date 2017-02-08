@@ -76,11 +76,7 @@ public class ResourcesView extends JPanel {
      */
     private class ResourceComponent extends JPanel {
         private String resourceName;
-
-        private JLabel resourceNameLabel;
         private JProgressBar resourceProgressBar;
-        private JButton resourceIncrementButton;
-        private JButton resourceDecrementButton;
 
         /**
          * Creates a ResourceComponent which displays info about a particular resource to the player.
@@ -91,8 +87,9 @@ public class ResourcesView extends JPanel {
             super();
 
             this.resourceName = name;
-            this.resourceNameLabel = new JLabel(resourceName + ": ");
             this.resourceProgressBar = new JProgressBar();
+            resourceProgressBar.setString(name);
+            resourceProgressBar.setStringPainted(true);
             resourceProgressBar.setUI(new BasicProgressBarUI());
             resourceProgressBar.setIndeterminate(false);
 
@@ -100,21 +97,7 @@ public class ResourcesView extends JPanel {
             float maxValue = presenter.getMaximumResourceValue(resourceType);
             resourceProgressBar.setMaximum((int) maxValue);
 
-            resourceDecrementButton = new JButton("Decrement");
-            resourceIncrementButton = new JButton("Increment");
-
-            resourceIncrementButton.addActionListener((ActionEvent e) -> {
-                presenter.resourceIncrementButtonPress(resourceType);
-            });
-
-            resourceDecrementButton.addActionListener((ActionEvent e) -> {
-                presenter.resourceDecrementButtonPress(resourceType);
-            });
-
-            add(resourceNameLabel);
             add(resourceProgressBar);
-            add(resourceDecrementButton);
-            add(resourceIncrementButton);
         }
 
         /**

@@ -47,6 +47,11 @@ public class ShipPresenter implements Interfaces.ShipPresenter {
     }
 
     @Override
+    public int getSpeed() {
+        return 10;
+    }
+
+    @Override
     public ArrayList<Vec3d> getOtherShipPositions() {
         // TODO
         return null;
