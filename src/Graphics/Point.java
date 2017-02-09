@@ -1,7 +1,5 @@
 package Graphics;
 
-import java.awt.Graphics;
-
 public class Point {
 	public double x, y, z;
 	public double h = 1;
@@ -31,8 +29,5 @@ public class Point {
 		this.x = p.x;
 		this.y = p.y;
 		this.z = p.z;
-	}
-	
-	void drawPoint(Graphics g){
 	}
 }

@@ -63,7 +63,7 @@ public class Vector {
 	
 	public Vector scale(double sx, double sy, double sz){
 		double[][] m = Matrix.getScalingMatrix(sx, sy, sz);
-		double[][] n = Matrix.multiplyVector(m, this);
+		double[][] n = Matrix.multiplyVector2(m, this);
 		return new Vector(n[0][0], n[1][0], n[2][0]);
 	}
 

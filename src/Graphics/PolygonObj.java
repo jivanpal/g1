@@ -29,6 +29,7 @@ public class PolygonObj {
 		}
 	}
 	
+	//Testing method
 	private void screenTest(){
 		boolean onScreen = false;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
