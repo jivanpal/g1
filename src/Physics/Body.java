@@ -17,7 +17,7 @@ public class Body {
 /// CONSTRUCTORS
 
     /**
-     * Create a new body with given parameters.
+     * Create a body with given parameters.
      * @param   mass            The body's mass, in kg.
      * @param   radius          The body' radius, in meters.
      * @param   position        The body's displacement from the origin, in meters.
@@ -43,7 +43,7 @@ public class Body {
     }
 
     /**
-     * Create a new body with given parameters.
+     * Create a stationary body with given parameters.
      * @param   mass        The body's mass, in kg.
      * @param   radius      The body' radius, in meters.
      * @param   position    The body's displacement from the origin, in meters.
@@ -58,7 +58,7 @@ public class Body {
     }
     
     /**
-     * Create a new stationary body with given parameters.
+     * Create a stationary body with given parameters.
      * @param   mass        The body's mass, in kg.
      * @param   radius      The body' radius, in meters.
      * @param   position    The body's displacement from the origin, in meters.
@@ -70,7 +70,7 @@ public class Body {
     }
     
     /**
-     * Create a new stationary body with given mass and radius, placing it at the origin.
+     * Create a stationary body at the origin with given parameters.
      * @param   mass    The body's mass, in kg.
      * @param   radius  The body' radius, in meters.
      */
@@ -80,11 +80,18 @@ public class Body {
     }
 
     /**
-     * Create a new stationary body with given mass, placing it at the origin.
+     * Create a stationary body of radius 10 m at the origin with given mass.
      * @param   mass    The body's mass, in kg.
      */
     public Body(double mass) {
         setMass(mass);
+    }
+    
+    /**
+     * Create a stationary body of mass 1 kg and radius 10 m at the origin.
+     */
+    public Body() {
+        // Do nothing. Creates an instance with the default field values.
     }
 
 /// INSTANCE METHODS
