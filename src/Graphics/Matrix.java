@@ -82,6 +82,27 @@ public class Matrix {
 		return m;
 	}
 	
+	public static double[][] getCameraMatrix(Point viewFrom, Point viewTo, Vector U){
+		Vector N = viewFrom.pointMinusPoint(viewTo);
+		N.normalise();
+		
+		U = U.crossProduct(N);
+		U.normalise();
+		
+		Vector V = N.crossProduct(U);
+		V.normalise();
+		
+		double tx = U.dotProduct(viewFrom);
+		double ty = V.dotProduct(viewFrom);
+		double tz = N.dotProduct(viewFrom);
+		
+		double[][] m = {{U.x, U.y, U.z, tx},
+						{V.x, V.y, V.z, ty},
+						{N.x, N.y, N.z, tz},
+						{0,   0,   0,   1 }};
+		return m;
+	}
+	
 	public static double[][] multiply(double[][] m1, double[][] m2){
 		if(m1[0].length == m2.length){
 			double[][] ans = new double[m1.length][m2[0].length];
@@ -101,17 +122,17 @@ public class Matrix {
 		}
 	}
 	
-	public static double[][] multiplyVector(double[][] m1, Vector v){
+	public static double[][] multiplyVector2(double[][] m1, Vector v){
 		double[][] m2 = new double[][] {{v.x}, {v.y}, {v.z}, {v.h}};
 		return multiply(m1, m2);
 	}
 	
-	public static Vector multiplyVector2(double[][] m1, Vector v){
-		double[][] m2 = multiplyVector(m1, v);
+	public static Vector multiplyVector(double[][] m1, Vector v){
+		double[][] m2 = multiplyVector2(m1, v);
 		return new Vector(m2[0][0], m2[1][0], m2[2][0]);
 	}
 	
-	public static Point multiplyPoint(Point p, double[][] m1){
+	public static Point multiplyPoint(double[][] m1, Point p){
 		double[][] m2 = new double[][] {{p.x}, {p.y}, {p.z}, {p.h}};
 		double[][] m3 = multiply(m1, m2);
 		return new Point(m3[0][0], m3[1][0], m3[2][0]);
@@ -229,9 +250,13 @@ public class Matrix {
 	}
 	
 	public static double[][] getCM(Point p, Vector V, Vector U, Vector N, double fov){
-		double[][] m = Matrix.multiply(getPper(fov), getSM());
-		m = Matrix.multiply(m, getR(V, U, N));
-		m = Matrix.multiply(m, getTM(p));
+//		double[][] m = Matrix.multiply(getPper(fov), getSM());
+//		m = Matrix.multiply(m, getR(V, U, N));
+//		m = Matrix.multiply(m, getTM(p));
+		
+		double[][] m = multiply(getTM(p), getR(V, U, N));
+		m = multiply(m, getSM());
+//		m = multiply(m, getPper(fov));
 		return m;
 	}
 	
