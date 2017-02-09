@@ -2,7 +2,7 @@ package GameLogic;
 
 import Geometry.Rotation;
 import Geometry.Vector;
-import Physics.Entity;
+import Physics.Body;
 
 /**
  * Class which represents the Torpedo weapon
@@ -26,7 +26,7 @@ public class TorpedoWeapon extends Weapon {
 
 
 	public void fire(Vector position, Rotation orientation, Vector velocity, Vector angularVelocity) {
-		Entity bullet = new Bullet(DEFAULT_TORPEDO_WEAPON_BULLET_MASS, position, orientation, velocity,
+		Body bullet = new Bullet(DEFAULT_TORPEDO_WEAPON_BULLET_MASS, position, orientation, velocity,
 				angularVelocity, DEFAULT_DAMAGE_TO_SHIP, DEFAULT_DAMAGE_TO_SHIELD);
 	}
 }

@@ -2,9 +2,9 @@ package GameLogic;
 
 import Geometry.Rotation;
 import Geometry.Vector;
-import Physics.Entity;
+import Physics.Body;
 
-public class Bullet extends Entity {
+public class Bullet extends Body {
 	
 	private double damageToShip;
 	private double damageToShield; 

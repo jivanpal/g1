@@ -2,7 +2,7 @@ package GameLogic;
 
 import Geometry.Rotation;
 import Geometry.Vector;
-import Physics.Entity;
+import Physics.Body;
 
 /**
  * Class which represents the Plasma blaster
@@ -26,7 +26,7 @@ public class PlasmaBlaster extends Weapon {
 	}
 
 	public void fire(Vector position, Rotation orientation, Vector velocity, Vector angularVelocity) {
-		Entity bullet = new Bullet(DEFAULT_PLASMA_BLASTER_BULLET_MASS, position, orientation, velocity,
+		Body bullet = new Bullet(DEFAULT_PLASMA_BLASTER_BULLET_MASS, position, orientation, velocity,
 				angularVelocity, DEFAULT_DAMAGE_TO_SHIP, DEFAULT_DAMAGE_TO_SHIELD);
 	}
 	
