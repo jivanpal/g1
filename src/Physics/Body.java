@@ -223,6 +223,6 @@ public class Body {
      * @return  whether the two bodies are touching, as either `true` or `false`.
      */
     public boolean isTouching(Body b) {
-        return this.getPosition().minus(b.getPosition()).length() < this.getRadius() - b.getRadius();
+        return this.getPosition().minus(b.getPosition()).length() < this.getRadius() + b.getRadius();
     }
 }
