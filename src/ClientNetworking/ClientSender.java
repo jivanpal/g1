@@ -27,8 +27,12 @@ public class ClientSender extends Thread
 			try
 			{
 				o = clientQueue.take();
-				if (o != null)
+				if (!o.equals(null))
+				{
 					toServer.writeObject(o);
+					toServer.flush();
+				}
+				
 			}
 			catch (InterruptedException e1)
 			{

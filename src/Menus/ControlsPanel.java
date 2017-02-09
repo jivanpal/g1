@@ -88,7 +88,7 @@ public class ControlsPanel extends JPanel {
 		panel = createBwL(panel, "Roll Right");
 		panel = createBwL(panel, "Manual Next");
 		panel = createBwL(panel, "Overdrive");
-
+		panel = repaintbuttons(panel);
 		return panel;
 
 	}
@@ -226,51 +226,11 @@ public class ControlsPanel extends JPanel {
 	 * @return The JPanel which the button and label have been added.
 	 */
 	public JPanel createBwL(JPanel panel, String name) {
-		// TODO make changing controls work visually
 		JLabel label = new JLabel(name);
 		label.setOpaque(false);
 		label.setForeground(Color.WHITE);
 		panel.add(label);
 		JButton button = new JButton();
-		int keybind = 0;
-		switch (name) {
-		case "Thrust Fwd":
-			keybind = KeyBindings.CURRENT_ACCELERATE_BUTTON;
-			button.setText(KeyEvent.getKeyText(keybind));
-			break;
-		case "Fire 1":
-			keybind = KeyBindings.CURRENT_FIRE_WEAPON_1_BUTTON;
-			button.setText(KeyEvent.getKeyText(keybind));
-			break;
-		case "Thrust Rev":
-			keybind = KeyBindings.CURRENT_DECELERATE_BUTTON;
-			button.setText(KeyEvent.getKeyText(keybind));
-			break;
-		case "Fire 2":
-			keybind = KeyBindings.CURRENT_FIRE_WEAPON_2_BUTTON;
-			button.setText(KeyEvent.getKeyText(keybind));
-			break;
-		case "Pitch Down":
-			keybind = KeyBindings.CURRENT_PITCH_DOWN_BUTTON;
-			button.setText(KeyEvent.getKeyText(keybind));
-			break;
-		case "Fire 3":
-			keybind = KeyBindings.CURRENT_FIRE_WEAPON_3_BUTTON;
-			button.setText(KeyEvent.getKeyText(keybind));
-			break;
-		case "Pitch Up":
-			keybind = KeyBindings.CURRENT_PITCH_UP_BUTTON;
-			button.setText(KeyEvent.getKeyText(keybind));
-			break;
-		case "Roll Left":
-			keybind = KeyBindings.CURRENT_ROLL_LEFT_BUTTON;
-			button.setText(KeyEvent.getKeyText(keybind));
-			break;
-		case "Roll Right":
-			keybind = KeyBindings.CURRENT_ROLL_RIGHT_BUTTON;
-			button.setText(KeyEvent.getKeyText(keybind));
-			break;
-		}
 		button.addActionListener(e -> {
 			pressed = true;
 

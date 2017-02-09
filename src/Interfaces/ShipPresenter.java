@@ -12,6 +12,7 @@ public interface ShipPresenter {
     int getShields();
     int getEngineFuel();
     int getAmmo(byte weaponIndex);
+    int getSpeed();
 
     ArrayList<Vec3d> getOtherShipPositions();   // temporary, may want to change the return type
     ArrayList<Vec3d> getAsteroidPositions();    // for these two

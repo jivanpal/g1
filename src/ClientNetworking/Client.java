@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.LinkedBlockingQueue;
+import ClientNetworking.*;
 
 import GeneralNetworking.Lobby;
 
@@ -23,17 +24,19 @@ import GeneralNetworking.Lobby;
 /**
  * The Class Client.
  */
-class Client extends Thread
+public class Client extends Thread
 {
 
 	private int port = ClientVariables.PORT;
 	private String hostname = ClientVariables.HOSTNAME;
 	private Lobby lobby = null;
 	private String name;
+	LinkedBlockingQueue<Object> clientQueue;
 
 	public Client(String nickname)
 	{
 		this.name = nickname;
+		clientQueue = new LinkedBlockingQueue<Object>();
 	}
 
 	public void run()
@@ -42,7 +45,7 @@ class Client extends Thread
 		ObjectOutputStream toServer = null;
 		ObjectInputStream fromServer = null;
 		Socket server = null;
-		LinkedBlockingQueue<Object> clientQueue = new LinkedBlockingQueue<Object>();
+		
 		// get a socket and the 2 streams
 		try
 		{
@@ -83,5 +86,13 @@ class Client extends Thread
 			System.exit(1);
 		}
 
+	}
+	public Lobby getLobby()
+	{
+		return lobby;
+	}
+	public synchronized void send(Object obj)
+	{
+		clientQueue.offer(obj);
 	}
 }

@@ -12,10 +12,14 @@ public class ShipModel {
 	private static final int DEFAULT_MAX_SPEED = 0;
 	private static final int DEFAULT_SPEED_CHANGE = 0;
 	
+	private static final int DEFAULT_HEALTH = 0;
+	private static final int DEFAULT_MAX_HEALTH = 0;
+	private static final int DEFAULT_HEALTH_CHANGE = 0;
+	
 	private ArrayList<Weapon> weapons;
 	private Engines engines;
 	private Shields shields;
-	private ShipHealth shipHealth;
+	private Resource shipHealth;
 	private Resource speed;
 	
 	public ShipModel(){
@@ -32,7 +36,7 @@ public class ShipModel {
 		//Initialising other parts
 		engines = new Engines();
 		shields = new Shields();
-		shipHealth = new ShipHealth();
+		shipHealth = new Resource(DEFAULT_HEALTH, DEFAULT_MAX_HEALTH, DEFAULT_HEALTH_CHANGE);
 		
 		//initialising speed
 		speed = new Resource(DEFAULT_SPEED, DEFAULT_MAX_SPEED, DEFAULT_SPEED_CHANGE);
@@ -41,7 +45,7 @@ public class ShipModel {
 	}
 	
 	public int getShipHealth(){
-		return this.shipHealth.getHealth();
+		return this.shipHealth.get();
 	}
 	
 	public int getShieldLevels(){

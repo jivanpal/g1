@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import ClientNetworking.ClientReceiver;
 import ClientNetworking.ClientSender;
@@ -17,6 +18,7 @@ public class GameClient extends Thread
 {
 	private int port = GameVariables.PORT;
 	private InetAddress hostname = null;
+	private LinkedBlockingQueue<Object> queue = new LinkedBlockingQueue<Object>();
 	public GameClient(Lobby lobby)
 	{
 		for(int i=0;i<8;i++)
@@ -50,7 +52,7 @@ public class GameClient extends Thread
 			System.exit(1);
 		}
 
-		GameClientSender sender = new GameClientSender(toServer);
+		GameClientSender sender = new GameClientSender(toServer,queue);
 		GameClientReceiver receiver = new GameClientReceiver(fromServer);
 
 		// Start the sender and receiver threads
@@ -72,5 +74,9 @@ public class GameClient extends Thread
 			System.exit(1);
 		}
 
+	}
+	public synchronized void send(Object obj)
+	{
+		queue.offer(obj);
 	}
 }

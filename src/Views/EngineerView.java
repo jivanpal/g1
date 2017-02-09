@@ -7,7 +7,7 @@ import UI.ResourcesPresenter;
 import UI.ResourcesView;
 
 /**
- * Created by james on 01/02/17.
+ * Created by James on 01/02/17.
  */
 public class EngineerView extends JPanel {
 
