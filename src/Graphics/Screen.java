@@ -18,8 +18,8 @@ public class Screen extends JPanel implements KeyListener{
 	public static Vector N, U, V;
 	
 	private double lightPosition, mapSize = 10;
-	private static double moveSpeed = 1, verticalLook = 0;
-	private double verticalLookSpeed = 0.00001, horizontalLookSpeed = 0.01;
+	private static double moveSpeed = 0.01, verticalLook = 0;
+	private double verticalLookSpeed = 0.01, horizontalLookSpeed = 0.01;
 	private double r;
 	
 	public static int nPoly = 0, nPoly3D = 0;

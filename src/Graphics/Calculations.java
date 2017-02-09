@@ -4,11 +4,11 @@ public class Calculations {
 	public static double t = 0;
 	public static Vector w1, w2, viewVec, rotateVec, dirVec, planeVec1, planeVec2;
 	public static Plane p;
-	public static double[] calcFocusPos = new double[2];
+	public static Point calcFocusPos;
 	
-	public static double[] calcPos(Point viewFrom, Point viewTo, Point point){
+	public static Point calcPos(Point viewFrom, Point viewTo, Point point){
 		Point pInCamera = Matrix.multiplyPoint(Screen.CM, point);
-		return new double[] {(pInCamera.x/pInCamera.h)*1000, (pInCamera.y/pInCamera.h)*1000};
+		return new Point((pInCamera.x*1000)/pInCamera.z, (pInCamera.y*1000)/pInCamera.z, pInCamera.z);
 	}
 	
 	private static Vector getRotationVector(Point viewFrom, Point viewTo){

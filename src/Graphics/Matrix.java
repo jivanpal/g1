@@ -256,7 +256,7 @@ public class Matrix {
 		
 		double[][] m = multiply(getTM(p), getR(V, U, N));
 		m = multiply(m, getSM());
-		m = multiply(m, getPper(fov));
+//		m = multiply(m, getPper(fov));
 		return m;
 	}
 	
