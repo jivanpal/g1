@@ -43,7 +43,7 @@ public class ShipPresenter implements Interfaces.ShipPresenter {
 
     @Override
     public int getAmmo(byte weaponIndex) {
-        return mModel.getAmmo(weaponIndex);
+        return 0;
     }
 
     @Override
