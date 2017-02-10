@@ -18,8 +18,9 @@ public class Ship extends Body{
 	private Engines engines;
 	private Shields shields;
 	private Resource shipHealth;
+	private Map gameMap;
 	
-	public Ship(){
+	public Ship(Map gameMap){
 		//Initialising weapons
 		torpedoWeapon = new TorpedoWeapon(this);
 		laserBlaster = new LaserBlaster(this);
@@ -55,6 +56,10 @@ public class Ship extends Body{
 	
 	public int getLaserBlasterAmmo(){
 		return this.laserBlaster.getAmmoLevel();
+	}
+	
+	public Map getMap() {
+	    return gameMap;
 	}
 	
 	public void increaseFuel(){

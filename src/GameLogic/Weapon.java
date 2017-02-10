@@ -97,7 +97,9 @@ public abstract class Weapon {
     }
     
     private Bullet getBulletInstance() {
-        return ( (Bullet)bullet.clone() ).setReferenceBody(parent);
+        Bullet instance = (Bullet)bullet.clone();
+        instance.setReferenceBody(parent);
+        return instance;
     }
     
 // Evolution
@@ -111,6 +113,6 @@ public abstract class Weapon {
 // Actions
     public void fire() {
         parent.getMap().add(getBulletInstance());
-        ammo.decrease();
+        ammo.down();
     }
 }

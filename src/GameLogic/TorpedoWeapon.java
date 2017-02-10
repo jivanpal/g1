@@ -1,4 +1,4 @@
-package GameLogic;
+ package GameLogic;
 
 import Geometry.*;
 import Physics.*;
@@ -7,7 +7,6 @@ import Physics.*;
  * A class of objects representing laser blaster weapons attached to some ship.
  */
 public class TorpedoWeapon extends Weapon {
-	
     private static final Bullet     REFERENCE_BULLET = null;
     private static final int        MAX_AMMO        = 30;
     private static final int        INIT_AMMO       = 20;

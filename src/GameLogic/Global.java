@@ -1,3 +1,5 @@
+package GameLogic;
+
 public class Global {
     // frames per second
     public static final int REFRESH_RATE = 30;
