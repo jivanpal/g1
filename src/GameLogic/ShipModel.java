@@ -8,10 +8,6 @@ public class ShipModel {
 	public static final byte PLASMA_BLASTER_INDEX = 1;
 	public static final byte TORPEDO_WEAPON_INDEX = 2;
 	
-	private static final int DEFAULT_SPEED = 0;
-	private static final int DEFAULT_MAX_SPEED = 0;
-	private static final int DEFAULT_SPEED_CHANGE = 0;
-	
 	private static final int DEFAULT_HEALTH = 0;
 	private static final int DEFAULT_MAX_HEALTH = 0;
 	private static final int DEFAULT_HEALTH_CHANGE = 0;
@@ -20,7 +16,6 @@ public class ShipModel {
 	private Engines engines;
 	private Shields shields;
 	private Resource shipHealth;
-	private Resource speed;
 	
 	public ShipModel(){
 		//Initialising weapons
@@ -37,13 +32,10 @@ public class ShipModel {
 		engines = new Engines();
 		shields = new Shields();
 		shipHealth = new Resource(DEFAULT_HEALTH, DEFAULT_MAX_HEALTH, DEFAULT_HEALTH_CHANGE);
-		
-		//initialising speed
-		speed = new Resource(DEFAULT_SPEED, DEFAULT_MAX_SPEED, DEFAULT_SPEED_CHANGE);
-		
-		
+	
 	}
 	
+	//getters and setters
 	public int getShipHealth(){
 		return this.shipHealth.get();
 	}
@@ -83,17 +75,4 @@ public class ShipModel {
 	public void customChangeShieldsLevel(int change){
 		this.shields.cusomChangeShieldsLevel(change);
 	}
-	
-	public void increaseSpeed(){
-		this.speed.increase();
-	}
-	
-	public void decreaseSpeed(){
-		this.speed.decrease();
-	}
-	
-	public void customChangeSpeed(int change){
-		this.speed.change(change);
-	}
-
 }

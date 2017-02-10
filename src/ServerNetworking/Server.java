@@ -6,10 +6,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.UUID;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import GeneralNetworking.Action;
+import GeneralNetworking.Lobby;
 
 public class Server
 {
+	
+	static ArrayList<Lobby> lobbies = new ArrayList<Lobby>();
 
 	/**
 	 * The main method.
@@ -18,7 +25,7 @@ public class Server
 	{
 		//TODO import from somewhere??
 		ClientTable clientTable= new ClientTable();
-		
+
 		// Open a server socket:
 		ServerSocket serverSocket = null;
 		try
@@ -49,7 +56,7 @@ public class Server
 				// We create and start new threads to read from the
 				// client(this one executes the commands):
 	
-				ServerReceiver clientInput = new ServerReceiver(fromClient,clientTable);
+				ServerReceiver clientInput = new ServerReceiver(fromClient,clientTable,lobbies);
 				clientInput.start();
 				
 				// We create and start a new thread to write to the client:
@@ -60,6 +67,18 @@ public class Server
 		catch (IOException e)
 		{
 			System.err.println("IO error " + e.getMessage());
+		}
+	}
+	public synchronized void updateLobby(Action a, Lobby l)
+	{
+		UUID id = l.getID();
+		for(Lobby p : lobbies)
+		{
+			if(p.getID().equals(id))
+			{
+				
+			}
+			
 		}
 	}
 }

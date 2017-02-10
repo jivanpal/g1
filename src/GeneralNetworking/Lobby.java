@@ -1,10 +1,12 @@
 package GeneralNetworking;
 
 import java.net.InetAddress;
+import java.util.UUID;
 
 public class Lobby
 {
 	private int hostPos = 0;
+	private UUID id;
 	public boolean started ;
 	private Player[] players = new Player[8];
 
@@ -18,6 +20,7 @@ public class Lobby
 	public Lobby(String nickname, InetAddress hostAddress)
 	{
 		started = false;
+		id = UUID.randomUUID(); 
 		players[0] = new Player(nickname, hostAddress, true);
 		for (int i = 1; i < 8; i++)
 		{
@@ -116,5 +119,9 @@ public class Lobby
 				return player;
 		}
 		return null;
+	}
+	public UUID getID()
+	{
+		return id;
 	}
 }

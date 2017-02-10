@@ -42,10 +42,9 @@ public class ClientReceiver extends Thread
 					// INVITE
 					if (inObject instanceof Invite)
 					{
-						//if accepted
-						clientLobby.add(new Player(nickname,InetAddress.getLocalHost(),false));
-						clientQueue.offer(clientLobby);
-						//add to queue
+						Invite inv = (Invite) inObject;
+						// the 9 is used for the purpose of adding people
+						clientQueue.offer(new Action(inv.lobby,new Player(nickname,InetAddress.getLocalHost(),false),9));
 					}
 				}
 				catch (ClassNotFoundException e)
