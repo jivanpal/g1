@@ -102,7 +102,7 @@ public abstract class Weapon {
     
 // Evolution
     public void update() {
-        remainingCooldown -= Game.REFRESH_PERIOD;
+        remainingCooldown -= Global.REFRESH_PERIOD;
         if (remainingCooldown < 0) {
             remainingCooldown = 0;
         }
