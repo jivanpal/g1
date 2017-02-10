@@ -9,7 +9,7 @@ public class Shields {
 	private Resource shieldsLevel;
 	
 	public Shields(){
-		shieldsLevel = new Resource(DEFAULT_SHIELDS_LEVEL, DEFAULT_MAX_SHIELDS_LEVEL, DEFAULT_SHIELDS_LEVEL_CHANGE);
+		shieldsLevel = new Resource(DEFAULT_MAX_SHIELDS_LEVEL,DEFAULT_SHIELDS_LEVEL);
 	}
 	
 	public int getShieldsLevel(){
@@ -17,11 +17,11 @@ public class Shields {
 	}
 	
 	public void increaseShieldsLevel(){
-		this.shieldsLevel.increase();
+		this.shieldsLevel.up();
 	}
 
 	public void decreaseShieldsLevel(){
-		this.shieldsLevel.decrease();
+		this.shieldsLevel.down();
 	}
 	
 	public void cusomChangeShieldsLevel(int change){
