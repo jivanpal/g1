@@ -2,7 +2,7 @@ package Physics;
 
 import Geometry.*;
 
-public class Body {
+public class Body implements Cloneable {
 /// FIELDS
     private double m = 1;       // Default mass is 1 kg.
     private double radius = 10; // Defualt radius is 10 m.
@@ -95,7 +95,11 @@ public class Body {
     }
 
 /// INSTANCE METHODS
-
+    
+    public Object clone() {
+        return super.clone();
+    }
+    
 // Getters
 
     public double getMass() {
@@ -175,13 +179,28 @@ public class Body {
     public void rotate(Rotation delta) {
         orient = orient.then(delta);
     }
-
+    
     public void alterVelocity(Vector delta) {
         v = v.plus(delta);
     }
 
     public void alterAngularVelocity(Vector delta) {
         omega = omega.plus(delta);
+    }
+    
+    /**
+     * Given a reference body, alter this body's parameters so that it apparently
+     * moves according to its current parameters from the reference fram of the
+     * reference body.
+     * @param   reference   The reference body.
+     */
+    public void setReferenceBody(Body reference) {
+        move(reference.getPosition());
+        rotate(reference.getOrientation());
+        setVelocity(reference.getOrientation().rotate(v));
+        setAngularVelocity(reference.getOrientation().rotate(omega));
+        alterVelocity(reference.getVelocity());
+        alterAngularVelocity(reference.getAngularVelocity());
     }
 
 // Evolution
