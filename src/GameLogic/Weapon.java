@@ -96,8 +96,14 @@ public abstract class Weapon {
         return remainingCooldown == 0.0;
     }
     
-    private Bullet getBulletInstance() {
-        Bullet instance = (Bullet)bullet.clone();
+    private Bullet getBulletInstance() throws Exception {
+        Bullet instance = null;
+        try {
+            instance = (Bullet)bullet.clone();
+        } catch (CloneNotSupportedException ex) {
+            ex.printStackTrace();
+            throw new Exception("Couldn't get bullet instance");
+        }
         instance.setReferenceBody(parent);
         return instance;
     }
@@ -112,7 +118,12 @@ public abstract class Weapon {
     
 // Actions
     public void fire() {
-        parent.getMap().add(getBulletInstance());
+        try {
+            parent.getMap().add(getBulletInstance());
+        } catch (Exception ex) {
+            System.err.println("EE: Couldn't fire bullet!");
+            ex.printStackTrace();
+        }
         ammo.down();
     }
 }

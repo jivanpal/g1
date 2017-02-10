@@ -96,7 +96,7 @@ public class Body implements Cloneable {
 
 /// INSTANCE METHODS
     
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException{
         return super.clone();
     }
     

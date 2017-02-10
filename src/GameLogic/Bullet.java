@@ -37,7 +37,7 @@ public class Bullet extends Body implements Cloneable {
     
 /// INSTANCE METHODS
     
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
     
