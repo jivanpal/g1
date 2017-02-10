@@ -8,13 +8,12 @@ public class Engines {
 	
 	private static final int DEFAULT_FUEL_LEVEL = 0;
 	private static final int DEFAULT_FUEL_MAX_LEVEL = 0;
-	private static final int DEFAULT_FUEL_CHANGE = 0;
 	
 	private Resource fuel; //amount of fuel left as a percentage between 0.0 and 1.0
 	private boolean isWorking; //whether or not it is working properly 
 	
 	public Engines(){
-		fuel = new Resource(DEFAULT_FUEL_LEVEL, DEFAULT_FUEL_MAX_LEVEL, DEFAULT_FUEL_CHANGE);
+		fuel = new Resource(DEFAULT_FUEL_MAX_LEVEL,DEFAULT_FUEL_LEVEL);
 		isWorking = true; 
 	}
 	
@@ -27,11 +26,11 @@ public class Engines {
 	}
 	
 	public void increaseFuel(){
-		this.fuel.increase();
+		this.fuel.up();
 	}
 	
 	public void decreaseFuel(){
-		this.fuel.decrease();
+		this.fuel.down();
 	}
 	
 	public void customChangeFuel(int change){

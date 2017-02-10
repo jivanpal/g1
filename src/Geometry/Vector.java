@@ -74,6 +74,15 @@ public class Vector {
     public boolean equals(Vector v) {
         return x == v.getX() && y == v.getY() && z == v.getZ();
     }
+    
+    /**
+     * Get a human-readable version of the vector.
+     * @return  the string "(x,y,z)", where 'x', 'y', and 'z' are the
+     *          values of the vector's components.
+     */
+    public String toString() {
+        return "("+x+", "+y+", "+z+")";
+    }
 
 // Getters
 

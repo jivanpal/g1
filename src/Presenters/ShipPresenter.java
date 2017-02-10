@@ -5,7 +5,7 @@ import Views.PilotView;
 import com.sun.javafx.geom.Vec3d;
 import com.sun.xml.internal.bind.v2.TODO;
 
-import GameLogic.ShipModel;
+import GameLogic.Ship;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class ShipPresenter implements Interfaces.ShipPresenter {
 
-    private ShipModel mModel;
+    private Ship mModel;
     private EngineerView mEngineerView;
     private PilotView mPilotView;
 
@@ -22,7 +22,7 @@ public class ShipPresenter implements Interfaces.ShipPresenter {
 
     }
 
-    public void setModel(ShipModel model) {
+    public void setModel(Ship model) {
         this.mModel = model;
     }
 
