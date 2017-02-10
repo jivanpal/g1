@@ -71,6 +71,6 @@ public class Poly3D {
 	private double getDistanceToP(int i){
 		return Math.sqrt((Screen.viewFrom.x - x[i]) * (Screen.viewFrom.x - x[i])
 						+ (Screen.viewFrom.y - y[i]) * (Screen.viewFrom.y - y[i])
-						+ (Screen.viewFrom.z - z[i]) * (Screen.viewFrom.z - z[i]));
+						+ (-Screen.viewFrom.z + z[i]) * (-Screen.viewFrom.z + z[i]));
 	}
 }

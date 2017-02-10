@@ -8,7 +8,7 @@ public class Calculations {
 	
 	public static Point calcPos(Point viewFrom, Point viewTo, Point point){
 		Point pInCamera = Matrix.multiplyPoint(Screen.CM, point);
-		return new Point((pInCamera.x*1000)/pInCamera.z, (pInCamera.y*1000)/pInCamera.z, pInCamera.z);
+		return new Point((pInCamera.x*1000)/pInCamera.z, (pInCamera.y*1000)/pInCamera.z, pInCamera.z * 1000);
 	}
 	
 	private static Vector getRotationVector(Point viewFrom, Point viewTo){

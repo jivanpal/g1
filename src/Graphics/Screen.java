@@ -107,6 +107,23 @@ public class Screen extends JPanel implements KeyListener{
 		g.drawString("r: " + r + " vert: " + verticalLook, 40, 80);
 		g.drawLine((int)GameEngine.screenSize.getWidth()/2 - 5, (int)GameEngine.screenSize.getHeight()/2, (int)GameEngine.screenSize.getWidth()/2 + 5, (int)GameEngine.screenSize.getHeight()/2);
 		g.drawLine((int)GameEngine.screenSize.getWidth()/2, (int)GameEngine.screenSize.getHeight()/2 - 5, (int)GameEngine.screenSize.getWidth()/2, (int)GameEngine.screenSize.getHeight()/2 + 5);
+		g.drawString("V: " + V.x + ", " + V.y + ", " + V.z, 40, 100);
+		g.drawString("U: " + U.x + ", " + U.y + ", " + U.z, 40, 120);
+		g.drawString("N: " + N.x + ", " + N.y + ", " + N.z, 40, 140);
+		
+		g.setColor(Color.RED);
+		Point origin = new Point(GameEngine.screenSize.getWidth() - 40, 40, 1);
+		Point uLine = (new Point(0, 0, 0)).pointPlusVector(U.scale(20, 20, 20));
+		Point uLine2 = Matrix.multiplyPoint(CM, uLine);
+		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (uLine2.x)), (int)(origin.y + (-uLine2.y)));
+		g.setColor(Color.BLUE);
+		Point vLine = (new Point(0, 0, 0)).pointPlusVector(V.scale(20, 20, 20));
+		Point vLine2 = Matrix.multiplyPoint(CM, vLine);
+		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (vLine2.x)), (int)(origin.y + (-vLine2.y)));
+		g.setColor(Color.GREEN);
+		Point nLine = (new Point(0, 0, 0)).pointPlusVector(N.scale(20, 20, 20));
+		Point nLine2 = Matrix.multiplyPoint(CM, nLine);
+		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (nLine2.x)), (int)(origin.y + (-nLine2.y)));
 		
 		sleepAndRefresh();
 	}
@@ -167,50 +184,85 @@ public class Screen extends JPanel implements KeyListener{
 		
 		//Forwards
 		if(e){
-			double[][] translate = Matrix.getTranslationMatrix(N.x * moveSpeed, N.y * moveSpeed, N.z * moveSpeed);
-			cameraSystem = Matrix.multiply(translate, cameraSystem);
+//			double[][] translate = Matrix.getTranslationMatrix(N.x * moveSpeed, N.y * moveSpeed, N.z * moveSpeed);
+//			cameraSystem = Matrix.multiply(translate, cameraSystem);
+			Vector move = N.scale(moveSpeed, moveSpeed, moveSpeed);
+			viewFrom = viewFrom.pointPlusVector(move);
+			viewTo = viewFrom.pointPlusVector(N);
 			
-			viewFrom = new Point(cameraSystem[0][3], cameraSystem[1][3], cameraSystem[2][3]);
+//			updateVectors();
 		}
 		
 		//Backwards
-		if(q){
-			double[][] translate = Matrix.getTranslationMatrix(N.x * -moveSpeed, N.y * -moveSpeed, N.z * -moveSpeed);
-			cameraSystem = Matrix.multiply(translate, cameraSystem);
+		else if(q){
+//			double[][] translate = Matrix.getTranslationMatrix(N.x * -moveSpeed, N.y * -moveSpeed, N.z * -moveSpeed);
+//			cameraSystem = Matrix.multiply(translate, cameraSystem);
+			Vector move = N.scale(-moveSpeed, -moveSpeed, -moveSpeed);
+			viewFrom = viewFrom.pointPlusVector(move);
+			viewTo = viewFrom.pointPlusVector(N);
 			
-			viewFrom = new Point(cameraSystem[0][3], cameraSystem[1][3], cameraSystem[2][3]);
+//			updateVectors();
 		}
 		
 		//Rotate along N-axis anti-clockwise
 		if(a){
+//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z), Matrix.getRotationMatrix(-horizontalLookSpeed, N)), Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z));
 			double[][] rotate = Matrix.getRotationMatrix(-horizontalLookSpeed, N);
-			cameraSystem = Matrix.multiply(rotate, cameraSystem);
+			U = Matrix.multiplyVector(rotate, U);
+			U.normalise();
+			V = Matrix.multiplyVector(rotate, V);
+			V.normalise();
+//			cameraSystem = Matrix.multiply(rotate, cameraSystem);
+			
+//			updateVectors();
 		}
 		
 		//Rotate along N-axis clockwise
-		if(d){
+		else if(d){
+//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z), Matrix.getRotationMatrix(horizontalLookSpeed, N)), Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z));
 			double[][] rotate = Matrix.getRotationMatrix(horizontalLookSpeed, N);
-			cameraSystem = Matrix.multiply(rotate, cameraSystem);
+			U = Matrix.multiplyVector(rotate, U);
+			U.normalise();
+			V = Matrix.multiplyVector(rotate, V);
+			V.normalise();
+//			cameraSystem = Matrix.multiply(rotate, cameraSystem);
+			
+//			updateVectors();
 		}
 		
 		//Rotate along the V-axis upwards
 		if(s){
-			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z), Matrix.getRotationMatrix(verticalLookSpeed, V)), Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z));
-			cameraSystem = Matrix.multiply(rotate, cameraSystem);
+//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z), Matrix.getRotationMatrix(verticalLookSpeed, V)), Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z));
+			double[][] rotate = Matrix.getRotationMatrix(verticalLookSpeed, V);
+			N = Matrix.multiplyVector(rotate, N);
+			N.normalise();
+			U = Matrix.multiplyVector(rotate, U);
+			U.normalise();
+			viewTo = viewFrom.pointPlusVector(N);
+//			cameraSystem = Matrix.multiply(rotate, cameraSystem);
+			
+//			updateVectors();
 		}
 		
 		//Rotate along the V-axis downwards
-		if(w){
-			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z), Matrix.getRotationMatrix(-verticalLookSpeed, V)), Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z));
-			cameraSystem = Matrix.multiply(rotate, cameraSystem);
+		else if(w){
+//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z), Matrix.getRotationMatrix(-verticalLookSpeed, V)), Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z));
+			double[][] rotate = Matrix.getRotationMatrix(-verticalLookSpeed, V);
+			N = Matrix.multiplyVector(rotate, N);
+			N.normalise();
+			U = Matrix.multiplyVector(rotate, U);
+			U.normalise();
+			viewTo = viewFrom.pointPlusVector(N);
+//			cameraSystem = Matrix.multiply(rotate, cameraSystem);
+			
+//			updateVectors();
 		}
 		
 		//Update where the camera is looking at
-//		viewTo = viewFrom.pointPlusVector(N);
 		
 		//Update U, V and N values
-		updateVectors();
-		Matrix.printMatrix(cameraSystem);
+//		updateVectors();
+//		Matrix.printMatrix(cameraSystem);
 		
 		//Generate CM matrix for transforming points from global coordinate system to camera coordinate system
 		CM = Matrix.getCM(viewFrom, V, U, N, 2);
@@ -223,6 +275,7 @@ public class Screen extends JPanel implements KeyListener{
 		U.normalise();
 		N = new Vector(cameraSystem[2][0], cameraSystem[2][1], cameraSystem[2][2]);
 		N.normalise();
+		viewFrom = new Point(cameraSystem[0][3], cameraSystem[1][3], cameraSystem[2][3]);
 		viewTo = viewFrom.pointPlusVector(N);
 	}
 
