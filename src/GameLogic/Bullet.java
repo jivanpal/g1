@@ -2,7 +2,11 @@ package GameLogic;
 
 import Geometry.*;
 import Physics.*;
-
+/**
+ * Class which represents an object fired from any weapon
+ * @author Ivan Panchev
+ *
+ */
 public class Bullet extends Body {
 	
 	private double damageToShip;

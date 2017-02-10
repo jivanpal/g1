@@ -2,6 +2,7 @@ package GameLogic;
 
 /**
  * Class which represents the engines of the ship
+ * @author Ivan Panchev
  */
 public class Engines {
 	

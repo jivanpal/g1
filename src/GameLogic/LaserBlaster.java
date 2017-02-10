@@ -25,7 +25,7 @@ public class LaserBlaster extends Weapon {
 	}
 	
 	public void fire(Vector position, Rotation orientation, Vector velocity, Vector angularVelocity) {
-		Body bullet = new Bullet(DEFAULT_LASER_BLASTER_BULLET_MASS, position, orientation, velocity,
-				angularVelocity, DEFAULT_DAMAGE_TO_SHIP, DEFAULT_DAMAGE_TO_SHIELD);
+		/*Body bullet = new Bullet(DEFAULT_LASER_BLASTER_BULLET_MASS, position, orientation, velocity,
+				angularVelocity, DEFAULT_DAMAGE_TO_SHIP, DEFAULT_DAMAGE_TO_SHIELD);*/
 	}
 }
