@@ -12,6 +12,8 @@ import javax.swing.JSlider;
 
 /**
  * The Sound Menu. Able to change the volume of the game.
+ * 
+ * @author Jaren Chin-Hao Liu
  */
 public class SoundPanel extends JPanel {
 	private MainMenu menu;

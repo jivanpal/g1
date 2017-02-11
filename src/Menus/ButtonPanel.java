@@ -14,11 +14,13 @@ import javax.swing.JLabel;
 
 /**
  * The Main Menu of the game.
+ * 
+ * @author Jaren Chin-Hao Liu
  */
+// TODO Maybe an animated background
 public class ButtonPanel extends JPanel {
 	private MainMenu menu;
 
-	// TODO maybe an animated background image
 	/**
 	 * Constructor for the main menu. Adds the buttons and how it looks in the
 	 * main menu.
@@ -58,6 +60,10 @@ public class ButtonPanel extends JPanel {
 	public JPanel createButtons() {
 		JPanel panel = new JPanel();
 		JButton play = new JButton("Play");
+		play.addActionListener(e -> {
+			PlayPanel ppanel = new PlayPanel(menu);
+			menu.changeFrame(ppanel);
+		});
 		JButton settings = new JButton("Settings");
 		settings.addActionListener(e -> {
 			SettingsPanel spanel = new SettingsPanel(menu);

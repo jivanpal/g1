@@ -18,7 +18,10 @@ import GameLogic.KeyBindings;
 
 /**
  * The Controls Menu. Menu to change key bindings for the game.
+ * 
+ * @author Jaren Chin-Hao Liu
  */
+// TODO Make controls work for Enter & Space button
 public class ControlsPanel extends JPanel {
 	private MainMenu menu;
 	private boolean pressed;
@@ -240,6 +243,7 @@ public class ControlsPanel extends JPanel {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if (pressed) {
+
 					button.setText("" + Character.toUpperCase(e.getKeyChar()));
 					pressed = false;
 				}

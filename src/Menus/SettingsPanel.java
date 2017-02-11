@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 
 /**
  * The menu when Settings is clicked in the Main Menu.
+ * 
+ * @author Jaren Chin-Hao Liu
  */
 public class SettingsPanel extends JPanel {
 	private MainMenu menu;

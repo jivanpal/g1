@@ -5,9 +5,10 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
 /**
  * The Main frame of the game
+ * 
+ * @author Jaren Chin-Hao Liu
  */
 public class MainMenu {
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
