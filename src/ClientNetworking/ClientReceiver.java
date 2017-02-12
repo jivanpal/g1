@@ -42,6 +42,7 @@ public class ClientReceiver extends Thread
 						clientLobby = (Lobby) inObject;
 						if (clientLobby.started)
 							System.out.println("start game");
+						clientLobby.change();
 					}
 					// INVITE
 					else if (inObject instanceof Invite)

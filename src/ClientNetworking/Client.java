@@ -89,7 +89,7 @@ public class Client extends Thread
 */
 	}
 	public Lobby getLobby()
-	{
+	{	
 		return lobby;
 	}
 	public synchronized void send(Object obj)

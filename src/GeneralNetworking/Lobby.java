@@ -1,9 +1,11 @@
 package GeneralNetworking;
 
 import java.net.InetAddress;
+import java.util.Observable;
 import java.util.UUID;
 
-public class Lobby
+
+public class Lobby extends Observable
 {
 	private int hostPos = 0;
 	private UUID id;
@@ -123,5 +125,10 @@ public class Lobby
 	public UUID getID()
 	{
 		return id;
+	}
+	public void change()
+	{
+		setChanged();
+		notifyObservers();
 	}
 }

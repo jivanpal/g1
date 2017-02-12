@@ -45,58 +45,58 @@ public class ServerReceiver extends Thread
 					Lobby lobby = (Lobby) inObject;
 					lobbies.add(lobby);
 				}
-				//Action
-				else if(inObject instanceof Action)
+				// Action
+				else if (inObject instanceof Action)
 				{
 					Action a = (Action) inObject;
-					for(int i=0;i<lobbies.size();i++)
+					for (int i = 0; i < lobbies.size(); i++)
 					{
-						if(lobbies.get(i).getID().equals(a.getID()))
+						if (lobbies.get(i).getID().equals(a.getID()))
 						{
 							Lobby l = lobbies.get(i);
 							int pos = a.getPos();
 							Player p = a.getPlayer();
-							//ADD PLAYER
-							if(pos == 9)
+							// ADD PLAYER
+							if (pos == 9)
 							{
 								l.add(p);
 							}
-							//MOVE PLAYER 
+							// MOVE PLAYER
 							else
 							{
 								l.move(p, pos);
 							}
 							Player[] players = l.getPlayers();
-							for(int j=0;j<8;j++)
+							for (int j = 0; j < 8; j++)
 							{
-								if(players[j] != null)
+								if (players[j] != null)
 									clientTable.getQueue(players[j].nickname).offer(l);
 							}
 							break;
 						}
 					}
 				}
-				//get lobby list
-				else if(inObject instanceof String)
+				// get lobby list
+				else if (inObject instanceof String)
 				{
 					LobbyInfo[] infos = new LobbyInfo[lobbies.size()];
-					int i=0,count=0;
+					int i = 0, count = 0;
 					String hostname = "";
-					for(Lobby l: lobbies)
+					for (Lobby l : lobbies)
 					{
 						Player[] players = l.getPlayers();
-						for(Player p: players)
-							if(p!=null)
-							{	
+						for (Player p : players)
+							if (p != null)
+							{
 								count++;
-								if(p.isHost)
+								if (p.isHost)
 									hostname = p.nickname;
 							}
 						infos[i++] = new LobbyInfo(l.getID(), hostname, count);
 						count = 0;
 					}
 					LobbyList lList = new LobbyList(infos);
-					clientTable.getQueue((String)inObject).offer(lList);
+					clientTable.getQueue((String) inObject).offer(lList);
 				}
 			}
 			catch (Exception e)
