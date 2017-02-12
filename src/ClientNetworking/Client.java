@@ -64,7 +64,14 @@ public class Client extends Thread
 			System.err.println("The server doesn't seem to be running " + e.getMessage());
 			System.exit(1);
 		}
-
+		try
+		{
+			toServer.writeObject(name);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 		ClientSender sender = new ClientSender(toServer, clientQueue);
 		ClientReceiver receiver = new ClientReceiver(fromServer, name, lobby, clientQueue,lobbyList);
 

@@ -53,8 +53,7 @@ public class Server
 				
 				
 				String nickname ="";
-				//UNCOMMENT ONCE ADDED TO CLIENT
-				/*
+				
 				try
 				{
 					nickname = (String)fromClient.readObject();
@@ -62,7 +61,7 @@ public class Server
 				catch (ClassNotFoundException e)
 				{
 					e.printStackTrace();
-				}*/
+				}
 				clientTable.add(nickname);
 				LinkedBlockingQueue<Object> queue = clientTable.getQueue(nickname); 
 
