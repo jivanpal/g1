@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import ClientNetworking.Client;
+import GeneralNetworking.Invite;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 
@@ -63,6 +64,9 @@ public class HostLobbyPanel extends JPanel {
 		add(backtostart, c);
 		c.anchor = GridBagConstraints.NORTHEAST;
 		JButton inviteplayers = new JButton("Invite Players");
+		inviteplayers.addActionListener(e -> {
+
+		});
 		add(inviteplayers, c);
 
 		c.anchor = GridBagConstraints.CENTER;

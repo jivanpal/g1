@@ -16,7 +16,7 @@ import GeneralNetworking.Lobby;
 public class Server
 {
 	
-	static ArrayList<Lobby> lobbies = new ArrayList<Lobby>();
+	public static ArrayList<Lobby> lobbies = new ArrayList<Lobby>();
 
 	/**
 	 * The main method.

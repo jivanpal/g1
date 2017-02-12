@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -116,6 +117,8 @@ public class ControlsPanel extends JPanel {
 					int keybind = KeyBindings.CURRENT_ACCELERATE_BUTTON;
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
+					} else if (keybind == KeyEvent.VK_SPACE) {
+						((JButton) c).setText("Space");
 					} else {
 						((JButton) c).setText(KeyEvent.getKeyText(keybind));
 					}
@@ -124,6 +127,8 @@ public class ControlsPanel extends JPanel {
 					keybind = KeyBindings.CURRENT_FIRE_WEAPON_1_BUTTON;
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
+					} else if (keybind == KeyEvent.VK_SPACE) {
+						((JButton) c).setText("Space");
 					} else {
 						((JButton) c).setText(KeyEvent.getKeyText(keybind));
 					}
@@ -132,6 +137,8 @@ public class ControlsPanel extends JPanel {
 					keybind = KeyBindings.CURRENT_DECELERATE_BUTTON;
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
+					} else if (keybind == KeyEvent.VK_SPACE) {
+						((JButton) c).setText("Space");
 					} else {
 						((JButton) c).setText(KeyEvent.getKeyText(keybind));
 					}
@@ -140,6 +147,8 @@ public class ControlsPanel extends JPanel {
 					keybind = KeyBindings.CURRENT_FIRE_WEAPON_2_BUTTON;
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
+					} else if (keybind == KeyEvent.VK_SPACE) {
+						((JButton) c).setText("Space");
 					} else {
 						((JButton) c).setText(KeyEvent.getKeyText(keybind));
 					}
@@ -148,6 +157,8 @@ public class ControlsPanel extends JPanel {
 					keybind = KeyBindings.CURRENT_PITCH_DOWN_BUTTON;
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
+					} else if (keybind == KeyEvent.VK_SPACE) {
+						((JButton) c).setText("Space");
 					} else {
 						((JButton) c).setText(KeyEvent.getKeyText(keybind));
 					}
@@ -156,6 +167,8 @@ public class ControlsPanel extends JPanel {
 					keybind = KeyBindings.CURRENT_FIRE_WEAPON_3_BUTTON;
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
+					} else if (keybind == KeyEvent.VK_SPACE) {
+						((JButton) c).setText("Space");
 					} else {
 						((JButton) c).setText(KeyEvent.getKeyText(keybind));
 					}
@@ -164,6 +177,8 @@ public class ControlsPanel extends JPanel {
 					keybind = KeyBindings.CURRENT_PITCH_UP_BUTTON;
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
+					} else if (keybind == KeyEvent.VK_SPACE) {
+						((JButton) c).setText("Space");
 					} else {
 						((JButton) c).setText(KeyEvent.getKeyText(keybind));
 					}
@@ -172,6 +187,8 @@ public class ControlsPanel extends JPanel {
 					keybind = KeyBindings.CURRENT_ROLL_LEFT_BUTTON;
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
+					} else if (keybind == KeyEvent.VK_SPACE) {
+						((JButton) c).setText("Space");
 					} else {
 						((JButton) c).setText(KeyEvent.getKeyText(keybind));
 					}
@@ -180,6 +197,8 @@ public class ControlsPanel extends JPanel {
 					keybind = KeyBindings.CURRENT_ROLL_RIGHT_BUTTON;
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
+					} else if (keybind == KeyEvent.VK_SPACE) {
+						((JButton) c).setText("Space");
 					} else {
 						((JButton) c).setText(KeyEvent.getKeyText(keybind));
 					}
@@ -204,14 +223,21 @@ public class ControlsPanel extends JPanel {
 			} else if (c instanceof JButton) {
 				String btext = ((JButton) c).getText();
 				boolean enter = false;
+				boolean space = false;
 				switch (btext) {
 				case "Enter":
 					enter = true;
+					break;
+				case "Space":
+					space = true;
+					break;
 				}
 				switch (button) {
 				case "Thrust Fwd":
 					if (enter) {
 						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ACCELERATE_BUTTON, KeyEvent.VK_ENTER);
+					} else if (space) {
+						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ACCELERATE_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
@@ -222,6 +248,8 @@ public class ControlsPanel extends JPanel {
 					if (enter) {
 						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_1_BUTTON,
 								KeyEvent.VK_ENTER);
+					} else if (space) {
+						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_1_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
@@ -231,6 +259,8 @@ public class ControlsPanel extends JPanel {
 				case "Thrust Rev":
 					if (enter) {
 						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_DECELERATE_BUTTON, KeyEvent.VK_ENTER);
+					} else if (space) {
+						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_DECELERATE_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
@@ -241,6 +271,8 @@ public class ControlsPanel extends JPanel {
 					if (enter) {
 						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_2_BUTTON,
 								KeyEvent.VK_ENTER);
+					} else if (space) {
+						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_2_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
@@ -250,6 +282,8 @@ public class ControlsPanel extends JPanel {
 				case "Pitch Down":
 					if (enter) {
 						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_PITCH_DOWN_BUTTON, KeyEvent.VK_ENTER);
+					} else if (space) {
+						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_PITCH_DOWN_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
@@ -260,6 +294,8 @@ public class ControlsPanel extends JPanel {
 					if (enter) {
 						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_3_BUTTON,
 								KeyEvent.VK_ENTER);
+					} else if (space) {
+						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_3_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
@@ -269,6 +305,8 @@ public class ControlsPanel extends JPanel {
 				case "Pitch Up":
 					if (enter) {
 						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_PITCH_UP_BUTTON, KeyEvent.VK_ENTER);
+					} else if (space) {
+						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_PITCH_UP_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
@@ -278,6 +316,8 @@ public class ControlsPanel extends JPanel {
 				case "Roll Left":
 					if (enter) {
 						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ROLL_LEFT_BUTTON, KeyEvent.VK_ENTER);
+					} else if (space) {
+						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ROLL_LEFT_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
@@ -287,6 +327,8 @@ public class ControlsPanel extends JPanel {
 				case "Roll Right":
 					if (enter) {
 						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ROLL_RIGHT_BUTTON, KeyEvent.VK_ENTER);
+					} else if (space) {
+						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ROLL_RIGHT_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
@@ -314,6 +356,8 @@ public class ControlsPanel extends JPanel {
 		label.setForeground(Color.WHITE);
 		panel.add(label);
 		JButton button = new JButton();
+		button.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "none");
+		button.getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "none");
 		button.addActionListener(e -> {
 			pressed = true;
 
@@ -330,6 +374,9 @@ public class ControlsPanel extends JPanel {
 				if (pressed) {
 					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 						button.setText("Enter");
+						pressed = false;
+					} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+						button.setText("Space");
 						pressed = false;
 					} else {
 						button.setText("" + Character.toUpperCase(e.getKeyChar()));
