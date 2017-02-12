@@ -61,7 +61,7 @@ public class Lobby
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				if (players[i].equals(p))
+				if (players[i]!=null && players[i].equals(p))
 				{
 					if (players[pos] == null)
 					{

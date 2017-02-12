@@ -14,13 +14,4 @@ public class Player
 		nickname = nick;
 		isHost=iH;
 	}
-	public void setName(String name)
-	{
-		nickname = name;
-	}
-
-	public void setAddress(InetAddress add)
-	{
-		address = add;
-	}
 }

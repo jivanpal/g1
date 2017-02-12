@@ -70,7 +70,7 @@ public class Client extends Thread
 		// Start the sender and receiver threads
 		sender.start();
 		receiver.start();
-
+/*
 		// Wait for them to end and close sockets.
 		try
 		{
@@ -85,7 +85,7 @@ public class Client extends Thread
 			System.err.println(e.getMessage());
 			System.exit(1);
 		}
-
+*/
 	}
 	public Lobby getLobby()
 	{

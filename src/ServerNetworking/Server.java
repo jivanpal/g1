@@ -42,16 +42,30 @@ public class Server
 		{
 			while (true)
 			{
-				String nickname ="";
-				LinkedBlockingQueue<Object> queue = clientTable.getQueue(nickname); 
+
 				// Listen to the socket, accepting connections from new clients:
 				Socket socket = serverSocket.accept();
-
 				// This is so that we can use readLine():
 				ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
 
 				// This is to print o the server
 				ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
+				
+				
+				String nickname ="";
+				//UNCOMMENT ONCE ADDED TO CLIENT
+				/*
+				try
+				{
+					nickname = (String)fromClient.readObject();
+				}
+				catch (ClassNotFoundException e)
+				{
+					e.printStackTrace();
+				}*/
+				clientTable.add(nickname);
+				LinkedBlockingQueue<Object> queue = clientTable.getQueue(nickname); 
+
 				
 				// We create and start new threads to read from the
 				// client(this one executes the commands):
