@@ -83,16 +83,4 @@ public class Server
 			System.err.println("IO error " + e.getMessage());
 		}
 	}
-	public synchronized void updateLobby(Action a, Lobby l)
-	{
-		UUID id = l.getID();
-		for(Lobby p : lobbies)
-		{
-			if(p.getID().equals(id))
-			{
-				
-			}
-			
-		}
-	}
 }

@@ -1,19 +1,21 @@
 package GeneralNetworking;
 
+import java.util.UUID;
+
 public class Action {
 
 	private Player player;
 	private int position;
-	private Lobby lobby;
-	public Action(Lobby l, Player p, int pos)
+	private UUID lobbyID;
+	public Action(UUID lID, Player p, int pos)
 	{
 		player =p;
 		position=pos;
-		lobby=l;
+		lobbyID=lID;
 	}
-	public Lobby getLobby()
+	public UUID getID()
 	{
-		return lobby;
+		return lobbyID;
 	}
 	public int getPos()
 	{

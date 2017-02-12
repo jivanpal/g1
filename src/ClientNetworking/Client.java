@@ -19,6 +19,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import ClientNetworking.*;
 
 import GeneralNetworking.Lobby;
+import GeneralNetworking.LobbyList;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -32,7 +33,7 @@ public class Client extends Thread
 	private Lobby lobby = null;
 	private String name;
 	LinkedBlockingQueue<Object> clientQueue;
-
+	private LobbyList lobbyList = null;
 	public Client(String nickname)
 	{
 		this.name = nickname;
@@ -65,7 +66,7 @@ public class Client extends Thread
 		}
 
 		ClientSender sender = new ClientSender(toServer, clientQueue);
-		ClientReceiver receiver = new ClientReceiver(fromServer, name, lobby, clientQueue);
+		ClientReceiver receiver = new ClientReceiver(fromServer, name, lobby, clientQueue,lobbyList);
 
 		// Start the sender and receiver threads
 		sender.start();
@@ -94,5 +95,13 @@ public class Client extends Thread
 	public synchronized void send(Object obj)
 	{
 		clientQueue.offer(obj);
+	}
+	public void updateList()
+	{
+		clientQueue.offer(name);
+	}
+	public LobbyList getLobbyList()
+	{
+		return lobbyList;
 	}
 }

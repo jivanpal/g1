@@ -9,6 +9,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import GeneralNetworking.Action;
 import GeneralNetworking.Invite;
 import GeneralNetworking.Lobby;
+import GeneralNetworking.LobbyInfo;
+import GeneralNetworking.LobbyList;
 import GeneralNetworking.Player;
 
 public class ServerReceiver extends Thread
@@ -17,7 +19,7 @@ public class ServerReceiver extends Thread
 	private ClientTable clientTable;
 	private ArrayList<Lobby> lobbies;
 
-	public ServerReceiver(ObjectInputStream reader, ClientTable cT,ArrayList<Lobby> lobbies)
+	public ServerReceiver(ObjectInputStream reader, ClientTable cT, ArrayList<Lobby> lobbies)
 	{
 		clientIN = reader;
 		clientTable = cT;
@@ -38,18 +40,18 @@ public class ServerReceiver extends Thread
 					clientTable.getQueue(inv.nickname).offer(inv);
 				}
 				// LOBBY
-				if (inObject instanceof Lobby)
+				else if (inObject instanceof Lobby)
 				{
 					Lobby lobby = (Lobby) inObject;
 					lobbies.add(lobby);
 				}
 				//Action
-				if(inObject instanceof Action)
+				else if(inObject instanceof Action)
 				{
 					Action a = (Action) inObject;
 					for(int i=0;i<lobbies.size();i++)
 					{
-						if(lobbies.get(i).getID().equals(a.getLobby().getID()))
+						if(lobbies.get(i).getID().equals(a.getID()))
 						{
 							Lobby l = lobbies.get(i);
 							int pos = a.getPos();
@@ -73,6 +75,28 @@ public class ServerReceiver extends Thread
 							break;
 						}
 					}
+				}
+				//get lobby list
+				else if(inObject instanceof String)
+				{
+					LobbyInfo[] infos = new LobbyInfo[lobbies.size()];
+					int i=0,count=0;
+					String hostname = "";
+					for(Lobby l: lobbies)
+					{
+						Player[] players = l.getPlayers();
+						for(Player p: players)
+							if(p!=null)
+							{	
+								count++;
+								if(p.isHost)
+									hostname = p.nickname;
+							}
+						infos[i++] = new LobbyInfo(l.getID(), hostname, count);
+						count = 0;
+					}
+					LobbyList lList = new LobbyList(infos);
+					clientTable.getQueue((String)inObject).offer(lList);
 				}
 			}
 			catch (Exception e)

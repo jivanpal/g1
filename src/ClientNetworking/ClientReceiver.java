@@ -14,12 +14,16 @@ public class ClientReceiver extends Thread
 	Lobby clientLobby;
 	private String nickname;
 	private LinkedBlockingQueue<Object> clientQueue;
-	ClientReceiver(ObjectInputStream reader,String name, Lobby clLobby, LinkedBlockingQueue<Object> queue)
+	LobbyList lobbyList;
+
+	ClientReceiver(ObjectInputStream reader, String name, Lobby clLobby, LinkedBlockingQueue<Object> queue,
+			LobbyList lList)
 	{
 		nickname = name;
 		fromServer = reader;
 		clientLobby = clLobby;
 		clientQueue = queue;
+		lobbyList = lList;
 	}
 
 	public void run()
@@ -36,15 +40,22 @@ public class ClientReceiver extends Thread
 					if (inObject instanceof Lobby)
 					{
 						clientLobby = (Lobby) inObject;
-						if(clientLobby.started)
+						if (clientLobby.started)
 							System.out.println("start game");
 					}
 					// INVITE
-					if (inObject instanceof Invite)
+					else if (inObject instanceof Invite)
 					{
 						Invite inv = (Invite) inObject;
 						// the 9 is used for the purpose of adding people
-						clientQueue.offer(new Action(inv.lobby,new Player(nickname,InetAddress.getLocalHost(),false),9));
+						clientQueue.offer(new Action(inv.lobby.getID(),
+								new Player(nickname, InetAddress.getLocalHost(), false), 9));
+					}
+					// LobbyList
+					else if (inObject instanceof LobbyList)
+					{
+						lobbyList = (LobbyList) inObject;
+
 					}
 				}
 				catch (ClassNotFoundException e)
