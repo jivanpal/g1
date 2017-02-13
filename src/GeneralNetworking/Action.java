@@ -1,8 +1,10 @@
 package GeneralNetworking;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Action {
+@SuppressWarnings("serial")
+public class Action implements Serializable{
 
 	private Player player,player2=null;	
 	private int position;
