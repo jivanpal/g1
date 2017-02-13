@@ -7,12 +7,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ServerSender extends Thread
 {
 	private ObjectOutputStream clientOUT;
-	private LinkedBlockingQueue<Object> queue;
+	private ClientTable clientTable;
+	private String nickname;
 
-	public ServerSender(ObjectOutputStream sender, LinkedBlockingQueue<Object> q)
+	public ServerSender(ObjectOutputStream sender, ClientTable ct,String nick)
 	{
 		clientOUT = sender;
-		queue = q;
+		clientTable = ct;
+		nickname=nick;
 	}
 
 	public void run()
@@ -22,8 +24,8 @@ public class ServerSender extends Thread
 		{
 			Object objectOut = null;
 			try
-			{
-				objectOut = queue.take();
+			{	
+				objectOut = clientTable.getQueue(nickname).take();
 			}
 			catch (InterruptedException e)
 			{

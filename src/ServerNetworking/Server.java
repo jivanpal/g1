@@ -73,7 +73,7 @@ public class Server
 				clientInput.start();
 				
 				// We create and start a new thread to write to the client:
-				ServerSender clientOutput = new ServerSender(toClient,queue);
+				ServerSender clientOutput = new ServerSender(toClient,clientTable,nickname);
 				clientOutput.start();
 			}
 		}

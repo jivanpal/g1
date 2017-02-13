@@ -23,10 +23,10 @@ public class Client extends Thread
 
 	private int port = ClientVariables.PORT;
 	private String hostname = ClientVariables.HOSTNAME;
-	private Lobby lobby = null;
+	public Lobby lobby = null;
 	private String name;
-	LinkedBlockingQueue<Object> clientQueue;
-	private LobbyList lobbyList = null;
+	public LinkedBlockingQueue<Object> clientQueue;
+	public LobbyList lobbyList = null;
 
 	public Client(String nickname)
 	{
@@ -40,7 +40,7 @@ public class Client extends Thread
 		ObjectOutputStream toServer = null;
 		ObjectInputStream fromServer = null;
 		Socket server = null;
-
+		//lobby.addObserver();
 		// get a socket and the 2 streams
 		try
 		{

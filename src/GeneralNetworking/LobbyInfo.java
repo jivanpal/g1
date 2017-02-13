@@ -1,8 +1,10 @@
 package GeneralNetworking;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class LobbyInfo
+@SuppressWarnings("serial")
+public class LobbyInfo implements Serializable
 {
 	public UUID lobbyID;
 	public String host;
