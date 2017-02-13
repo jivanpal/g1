@@ -25,7 +25,6 @@ import GeneralNetworking.Player;
 public class HostLobbyPanel extends JPanel {
 	private MainMenu menu;
 	private Client client;
-	private Lobby lobby;
 	private Player player;
 	private JPanel lpanel;
 	private GridBagConstraints c;
@@ -44,9 +43,11 @@ public class HostLobbyPanel extends JPanel {
 		this.client = client;
 		setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
-		this.lobby = client.getLobby();
+		Lobby lobby = client.getLobby();
 		try {
+			//maybe need a setlobby method
 			lobby = new Lobby("player1", InetAddress.getLocalHost());
+			client.send(lobby);
 			player = lobby.getPlayers()[0];
 		} catch (Exception e) {
 
@@ -86,7 +87,7 @@ public class HostLobbyPanel extends JPanel {
 		int number = 0;
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 4));
-		Player[] players = this.lobby.getPlayers();
+		Player[] players = client.getLobby().getPlayers();
 		for (Player p : players) {
 			int position = number;
 			number++;
@@ -103,7 +104,7 @@ public class HostLobbyPanel extends JPanel {
 			}
 			JButton move = new JButton("Move");
 			move.addActionListener(e -> {
-				lobby.move(this.player, position);
+				client.getLobby().move(this.player, position);
 				this.remove(lpanel);
 				JPanel newpanel = displayplayers();
 				newpanel.setOpaque(false);

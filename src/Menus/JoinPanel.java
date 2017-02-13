@@ -14,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 
 import ClientNetworking.Client;
 import GeneralNetworking.Lobby;
+import GeneralNetworking.LobbyInfo;
+import GeneralNetworking.LobbyList;
 import ServerNetworking.Server;
 
 /**
@@ -27,7 +29,7 @@ public class JoinPanel extends JPanel {
 	private Client client;
 	private JTable table;
 	private DefaultTableModel model;
-	private ArrayList<Lobby> lobbies;
+	private LobbyInfo[] lobbies;
 
 	/**
 	 * Constructor for the panel.
@@ -42,10 +44,11 @@ public class JoinPanel extends JPanel {
 		this.menu = menu;
 		this.client = client;
 		setLayout(new BorderLayout());
-		lobbies = Server.lobbies;
+		//lobbies = client.getLobbyList().getLobbies();
+		ArrayList<Lobby> lobbies2 = Server.lobbies;
 		model = new DefaultTableModel();
 		model.addColumn("Lobby ID");
-		for (Lobby lobby : lobbies) {
+		for (Lobby lobby : lobbies2) {
 			UUID id = lobby.getID();
 			Object[] row = { id };
 			model.addRow(row);
