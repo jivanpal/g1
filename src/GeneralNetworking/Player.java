@@ -1,9 +1,14 @@
 package GeneralNetworking;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 
-public class Player
+@SuppressWarnings("serial")
+public class Player implements Serializable
 {
+	/**
+	 * 
+	 */
 	public String nickname = "";
 	public InetAddress address = null;
 	public boolean isHost=false;

@@ -79,6 +79,10 @@ public class Client extends Thread
 	{
 		return lobby;
 	}
+	public void setLobby(Lobby l)
+	{
+		lobby = l;
+	}
 
 	public synchronized void send(Object obj)
 	{

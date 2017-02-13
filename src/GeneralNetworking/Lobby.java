@@ -1,13 +1,13 @@
 package GeneralNetworking;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.Observable;
 import java.util.UUID;
 
-
-public class Lobby extends Observable
+@SuppressWarnings("serial")
+public class Lobby extends Observable implements Serializable
 {
-	private int hostPos = 0;
 	private UUID id;
 	public boolean started ;
 	private Player[] players = new Player[8];
