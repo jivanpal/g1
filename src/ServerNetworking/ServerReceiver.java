@@ -61,6 +61,12 @@ public class ServerReceiver extends Thread
 							{
 								l.add(p);
 							}
+							// KICK PLAYER
+							if (pos == 10)
+							{
+								Player kicked = a.getKicked();
+								l.kick(p, kicked);
+							}
 							// MOVE PLAYER
 							else
 							{

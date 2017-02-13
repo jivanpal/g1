@@ -1,13 +1,4 @@
-// Usage:
-//        java Client user-nickname port hostname
-//
-// After initializing and opening appropriate sockets, we start two
-// client threads, one to send messages, and another one to get
-// messages.
-//
-//
-// Another limitation is that there is no provision to terminate when
-// the server dies.
+
 package ClientNetworking;
 
 import java.io.IOException;
@@ -17,13 +8,15 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.LinkedBlockingQueue;
 import ClientNetworking.*;
-
+import GeneralNetworking.Action;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.LobbyList;
+import GeneralNetworking.Player;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class Client.
+ * @author Svetlin © 
  */
 public class Client extends Thread
 {
@@ -34,6 +27,7 @@ public class Client extends Thread
 	private String name;
 	LinkedBlockingQueue<Object> clientQueue;
 	private LobbyList lobbyList = null;
+
 	public Client(String nickname)
 	{
 		this.name = nickname;
@@ -46,7 +40,7 @@ public class Client extends Thread
 		ObjectOutputStream toServer = null;
 		ObjectInputStream fromServer = null;
 		Socket server = null;
-		
+
 		// get a socket and the 2 streams
 		try
 		{
@@ -67,48 +61,41 @@ public class Client extends Thread
 		try
 		{
 			toServer.writeObject(name);
+			toServer.flush();
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
 		ClientSender sender = new ClientSender(toServer, clientQueue);
-		ClientReceiver receiver = new ClientReceiver(fromServer, name, lobby, clientQueue,lobbyList);
+		ClientReceiver receiver = new ClientReceiver(fromServer, name, lobby, clientQueue, lobbyList);
 
 		// Start the sender and receiver threads
 		sender.start();
 		receiver.start();
-/*
-		// Wait for them to end and close sockets.
-		try
-		{
-			sender.join();
-			toServer.close();
-			receiver.join();
-			fromServer.close();
-			server.close();
-		}
-		catch (Exception e)
-		{
-			System.err.println(e.getMessage());
-			System.exit(1);
-		}
-*/
 	}
+
 	public Lobby getLobby()
-	{	
+	{
 		return lobby;
 	}
+
 	public synchronized void send(Object obj)
 	{
 		clientQueue.offer(obj);
 	}
+
 	public void updateList()
 	{
 		clientQueue.offer(name);
 	}
+
 	public LobbyList getLobbyList()
 	{
 		return lobbyList;
+	}
+	public void kick(Player presser,Player kicked)
+	{
+		clientQueue.offer(new Action(lobby.getID(),presser,kicked,10));
 	}
 }
