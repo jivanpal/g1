@@ -118,7 +118,7 @@ public class Vector {
 
     /**
      * Get the unit vector in the same direction as this one.
-     * @return  Returns the quaternion with length 1 whose direction
+     * @return  Returns the vector with length 1 whose direction
      *          is the same as this one. If this vector is the zero
      *          vector, return the zero vector.
      */
