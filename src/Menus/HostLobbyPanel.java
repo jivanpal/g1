@@ -14,6 +14,7 @@ import ClientNetworking.Client;
 import GeneralNetworking.Invite;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
+import ServerNetworking.Server;
 
 /**
  * Panel for the host of the game
@@ -43,10 +44,9 @@ public class HostLobbyPanel extends JPanel {
 		this.client = client;
 		setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
-		Lobby lobby = client.getLobby();
 		try {
-			//maybe need a setlobby method
-			lobby = new Lobby("player1", InetAddress.getLocalHost());
+			Lobby lobby = new Lobby("player1", InetAddress.getLocalHost());
+			client.setLobby(lobby);
 			client.send(lobby);
 			player = lobby.getPlayers()[0];
 		} catch (Exception e) {
