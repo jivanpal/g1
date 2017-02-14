@@ -16,7 +16,7 @@ import GeneralNetworking.Player;
 
 /**
  * The Class Client.
- * @author Svetlin © 
+ * @author Svetlin ï¿½ 
  */
 public class Client extends Thread
 {
@@ -94,10 +94,6 @@ public class Client extends Thread
 		clientQueue.offer(name);
 	}
 
-	public LobbyList getLobbyList()
-	{
-		return lobbyList;
-	}
 	public void kick(Player presser,Player kicked)
 	{
 		clientQueue.offer(new Action(lobby.getID(),presser,kicked,10));
