@@ -75,7 +75,7 @@ public class Map {
         
         // Update each body's state
         for (Body b : mapList) {
-            b.update(Global.REFRESH_PERIOD);
+            b.update();
         }
     }
 }
