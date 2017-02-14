@@ -36,12 +36,13 @@ public class Map {
     
     /**
      * Given a position vector with any components, convert it to the
-     * simplest/smallest positive vector that represents the same position
-     * on the map.
+     * smallest vector with positive components that represents the same
+     * position on the map.
      * 
-     * For example, if the map has dimensions (2,5,7), then applying `normalise`
-     * to the position vector (5, 6, 13) returns the vector (1, 1, 6), and applying it
-     * to (-4, 2, -24) returns (0, 2, 3).
+     * For example, if the map has dimensions (2,5,7), then applying this method
+     * to the position vector (5, 6, 13) returns the vector (1, 1, 6), and applying
+     * it to (-4, 2, -24) returns (0, 2, 3).
+     * 
      * @param   position    The position vector to be normalised.
      * @return  the normalised position vector; the position vector put within the bounds of the map.
      */
