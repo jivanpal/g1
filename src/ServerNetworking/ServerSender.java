@@ -19,8 +19,9 @@ public class ServerSender extends Thread
 
 	public void run()
 	{
+		boolean runs = true;
 		// get the message queue for said client
-		while (true)
+		while (runs)
 		{
 			Object objectOut = null;
 			try
@@ -41,6 +42,7 @@ public class ServerSender extends Thread
 			}
 			catch (IOException e)
 			{
+				runs = false;
 				e.printStackTrace();
 			}
 		}

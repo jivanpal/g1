@@ -26,7 +26,7 @@ public class Client extends Thread
 	public Lobby lobby = null;
 	public String name;
 	public LinkedBlockingQueue<Object> clientQueue;
-	public LobbyList lobbyList = null;
+	public LobbyList lobbyList = new LobbyList();
 
 	public Client(String nickname)
 	{
@@ -82,11 +82,6 @@ public class Client extends Thread
 		}
 		
 	}
-
-	public void printsmth() {
-		System.out.println("smthing");
-	}
-	
 	public Lobby getLobby()
 	{
 		return lobby;
@@ -104,6 +99,7 @@ public class Client extends Thread
 	public void updateList()
 	{
 		clientQueue.offer(name);
+		System.out.println(lobbyList.getLobbies());
 	}
 
 	public void kick(Player presser,Player kicked)

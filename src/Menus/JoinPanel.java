@@ -47,8 +47,6 @@ public class JoinPanel extends JPanel {
 		this.client = client;
 		setLayout(new BorderLayout());
 		client.updateList();
-		client.printsmth();
-		keepupdating();
 		lobbies = client.lobbyList.getLobbies();
 		System.out.println("Updating");
 		System.out.println(Server.lobbies);
@@ -62,6 +60,8 @@ public class JoinPanel extends JPanel {
 		model.addColumn("Host");
 		model.addColumn("Players");
 		for (LobbyInfo lobby : lobbies) {
+			if(lobby==null)
+				break;
 			UUID id = lobby.lobbyID;
 			String host = lobby.host;
 			int number = lobby.playerCount;
@@ -81,6 +81,7 @@ public class JoinPanel extends JPanel {
 		while (client.lobbyList == null) {
 			
 		}
+		System.out.println("done");
 	}
 	/**
 	 * Create the buttons for joining, refreshing, and going back to the play

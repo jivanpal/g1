@@ -28,7 +28,8 @@ public class ServerReceiver extends Thread
 
 	public void run()
 	{
-		while (true)
+		boolean runs = true;
+		while (runs)
 		{
 			try
 			{
@@ -104,11 +105,13 @@ public class ServerReceiver extends Thread
 					}
 					LobbyList lList = new LobbyList(infos);
 					clientTable.getQueue((String) inObject).offer(lList);
-					System.out.println(lList.getLobbies().length);
+					//System.out.println(lList.getLobbies().length);
 				}
 			}
 			catch (Exception e)
 			{
+				System.out.println("client disconnected");
+				runs=false;
 				e.printStackTrace();
 			}
 

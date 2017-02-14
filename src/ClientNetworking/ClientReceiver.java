@@ -11,10 +11,10 @@ public class ClientReceiver extends Thread
 {
 
 	ObjectInputStream fromServer;
-	Lobby clientLobby;
+	public Lobby clientLobby;
 	private String nickname;
-	private LinkedBlockingQueue<Object> clientQueue;
-	LobbyList lobbyList;
+	public LinkedBlockingQueue<Object> clientQueue;
+	public LobbyList lobbyList;
 
 	ClientReceiver(ObjectInputStream reader, String name, Lobby clLobby, LinkedBlockingQueue<Object> queue,
 			LobbyList lList)
@@ -56,8 +56,8 @@ public class ClientReceiver extends Thread
 					else if (inObject instanceof LobbyList)
 					{
 						lobbyList = (LobbyList) inObject;
+						System.out.println("recieved lobbyList" + lobbyList.getLobbies().length);
 						lobbyList.change();
-
 					}
 				}
 				catch (ClassNotFoundException e)
