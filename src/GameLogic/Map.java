@@ -10,10 +10,9 @@ import Physics.*;
  * 3D rather than simply 2D.
  * @author jivan
  */
-public class Map {
+public class Map extends ArrayList<Body> {
 /// FIELDS
     private Vector dimensions;
-    private ArrayList<Body> mapList;
     
 /// CONSTRUCTORS
     
@@ -39,13 +38,6 @@ public class Map {
 /// INSTANCE METHODS
     
     /**
-     * Get an element from the map.
-     */
-    public Body get(int index) {
-        return mapList.get(index);
-    }
-    
-    /**
      * Given a position vector with any components, convert it to the
      * smallest vector with positive components that represents the same
      * position on the map.
@@ -62,31 +54,23 @@ public class Map {
     }
     
     /**
-     * Add a body to the map.
-     * @param b
-     */
-    public void add(Body b) {
-        mapList.add(b);
-    }
-    
-    /**
      * Update the state of the map.
      */
     public void update() {
         // Get rid of destroyed bodies
-        for(int i = mapList.size() - 1; i >= 0; i--) {
-            if(!mapList.get(i).exists()) {
-                mapList.remove(i);
+        for(int i = size() - 1; i >= 0; i--) {
+            if( get(i).isDestroyed() ) {
+                remove(i);
             }
         }
         
         // Normalise each body's position vector
-        for (Body b : mapList) {
+        for (Body b : this) {
             b.setPosition(this.normalise(b.getPosition()));
         }
         
         // Update each body's state
-        for (Body b : mapList) {
+        for (Body b : this) {
             b.update();
         }
     }

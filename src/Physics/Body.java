@@ -5,7 +5,7 @@ import Geometry.*;
 
 public class Body implements Cloneable {
 /// FIELDS
-    private boolean exists = true;
+    private boolean destroyed = false;
     
     private double m = 1;       // Default mass is 1 kg.
     private double radius = 10; // Defualt radius is 10 m.
@@ -108,8 +108,8 @@ public class Body implements Cloneable {
     /**
      * Find out whether this instance still exists in the game.
      */
-    public boolean exists() {
-        return exists;
+    public boolean isDestroyed() {
+        return destroyed;
     }
     
     /**
@@ -173,7 +173,7 @@ public class Body implements Cloneable {
      * need to be removed from the map due to being destroyed in-game.
      */
     public void destroy() {
-        exists = false;
+        destroyed = true;
     }
     
     /**
