@@ -87,19 +87,24 @@ public class Rotation {
 
 /// INSTANCE METHODS
 
-    /**
-     * Check whether a rotation is equal to another rotation.
-     * 
-     * @param   r   The rotation to compare with.
-     * @return  Returns true only when the two rotations have the same result.
-     */
-    public boolean equals(Object o) {
-        if (o instanceof Rotation) {
-            Rotation r = (Rotation) o;
-            return rotation.equals(r.getQuaternion());
-        } else {
+// Overrides
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((rotation == null) ? 0 : rotation.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
             return false;
-        }
+        Rotation r = (Rotation) obj;
+        return rotation.equals(r.getQuaternion());
     }
 
 // Getters
@@ -191,9 +196,4 @@ public class Rotation {
     public Rotation then(Rotation that) {
         return new Rotation(that.getQuaternion().times(rotation));
     }
-
-    /**
-     * 
-     */
-
 }

@@ -39,13 +39,24 @@ public class Basis {
 
 /// INSTANCE METHODS
     
-    public boolean equals(Object o) {
-        if (o instanceof Basis) {
-            Basis b = (Basis) o;
-            return origin.equals(b.getOrigin());
-        } else {
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((orientation == null) ? 0 : orientation.hashCode());
+        result = prime * result + ((origin == null) ? 0 : origin.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
             return false;
-        }
+        Basis b = (Basis) obj;
+        return origin.equals(b.getOrigin())
+            && orientation.equals(b.getOrientation());
     }
 
 // Getters

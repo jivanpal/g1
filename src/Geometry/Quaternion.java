@@ -67,24 +67,35 @@ public class Quaternion {
 
 /// INSTANCE METHODS
 
-    /**
-     * Check whether this quaternion is equal to another quaternion.
-     * 
-     * @param   q   The quaternion to compare with.
-     * @return  Returns true when all corresponding components of the two
-     *          quaternions are equal.
-     */
-    public boolean equals(Object o) {
-        if (o instanceof Quaternion) {
-            Quaternion q = (Quaternion) o;
-            return w == q.getW()
-                && x == q.getX()
-                && y == q.getY()
-                && z == q.getZ();
-        } else {
+// Overrides
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        long temp;
+        temp = Double.doubleToLongBits(w);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(x);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(y);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(z);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
             return false;
-        }
-            
+        Quaternion q = (Quaternion) obj;
+        return w == q.getW()
+            && x == q.getX()
+            && y == q.getY()
+            && z == q.getZ();
     }
 
 // Getters
