@@ -70,7 +70,7 @@ public class Ship extends Body{
 		this.engines.decreaseFuel();
 	}
 	
-	public void customChnageFuel(int change){
+	public void customChangeFuel(int change){
 		this.engines.customChangeFuel(change);
 	}
 	

@@ -70,7 +70,7 @@ public class ShipPresenter implements Interfaces.ShipPresenter {
 
     @Override
     public void updateFuel(int delta) {
-        mModel.customChnageFuel(delta);
+        mModel.customChangeFuel(delta);
     }
 
     @Override
