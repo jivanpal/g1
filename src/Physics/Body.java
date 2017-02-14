@@ -4,6 +4,8 @@ import Geometry.*;
 
 public class Body implements Cloneable {
 /// FIELDS
+    private boolean exists = true;
+    
     private double m = 1;       // Default mass is 1 kg.
     private double radius = 10; // Defualt radius is 10 m.
     
@@ -101,63 +103,143 @@ public class Body implements Cloneable {
     }
     
 // Getters
-
+    
+    /**
+     * Find out whether this instance still exists in the game.
+     */
+    public boolean exists() {
+        return exists;
+    }
+    
+    /**
+     * Get the mass of this instance.
+     */
     public double getMass() {
         return m;
     }
     
+    /**
+     * Get the radius of this instance, in meters.
+     */
     public double getRadius() {
         return radius;
     }
 
+    /**
+     * Get the position vector of this instance, in meters.
+     */
     public Vector getPosition() {
         return s;
     }
 
+    /**
+     * Get the orientation of this instance, as described by
+     * a rotation with respect to the reference basis/orientation.
+     */
     public Rotation getOrientation() {
         return orient;
     }
 
+    /**
+     * Get this instance's velocity, in meters per second.
+     */
     public Vector getVelocity() {
         return v;
     }
 
+    /**
+     * Get this instance's angular velocity as vector describing whose
+     * direction describes the axis of rotation, and whose magnitude
+     * describes the right-handed angular speed about that axis in
+     * radians per second.
+     */
     public Vector getAngularVelocity() {
         return omega;
     }
     
+    /**
+     * Get the local basis of this instance, defined relative to the global basis.
+     */
     public Basis getBasis() {
         return new Basis(s, orient);
     }
 
 // Setters
 
+    /**
+     * Mark this object as having been destroyed / not existing any more.
+     * This is used by the game map to keep track of which game objects
+     * need to be removed from the map due to being destroyed in-game.
+     */
+    public void destroy() {
+        exists = false;
+    }
+    
+    /**
+     * Set the mass of this instance.
+     * @param   mass    The new mass, in kg. The mass may be negative, in which
+     *      case, any forces exerted on the body will affect it negatively
+     *      (that is, if the mass is -<i>m</i>, and a force <i>F</i> is
+     *      exerted on it, it will have the same effect as a force -<i>F</i>
+     *      exerted on the body at the same point of action if it had mass
+     *      <i>m</i>), and gravitational effects due to this body will be
+     *      repulsive rather than attractive. 
+     */
     public void setMass(double mass) {
         m = mass;
     }
     
+    /**
+     * Set the radius of this instance.
+     * @param   radius  The new radius, in meters.
+     */
     public void setRadius(double radius) {
         this.radius = radius;
     }
 
+    /**
+     * Set the position of this instance.
+     * @param   position    The new position vector, in meters.
+     */
     public void setPosition(Vector position) {
         s = position;
     }
 
+    /**
+     * Set the orientation of this instance.
+     * @param   orientation The new orientation, described as a rotation
+     *      from the reference orientation.
+     */
     public void setOrientation(Rotation orientation) {
         orient = orientation;
     }
 
+    /**
+     * Set the velocity of this instance.
+     * @param   velocity    The new velocity vector, in meters per second.
+     */
     public void setVelocity(Vector velocity) {
         v = velocity;
     }
 
+    /**
+     * Set the angular velocity of this instance.
+     * @param   angularVelocity The new angular velocity, given as a
+     *      vector describing whose direction describes the axis of rotation,
+     *      and whose magnitude describes the right-handed angular speed about
+     *      that axis in radians per second.
+     */
     public void setAngularVelocity(Vector angularVelocity) {
         omega = angularVelocity;
     }
 
 // Alterers
 
+    /**
+     * Alter this instance's mass by a given amount.
+     * @param   delta   The amount to alter the mass by. Positive values
+     *              increase the mass, and negative values decrease it.
+     */
     public void alterMass(double delta) {
         m += delta;
     }
