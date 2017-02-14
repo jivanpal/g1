@@ -24,7 +24,7 @@ public class Client extends Thread
 	private int port = ClientVariables.PORT;
 	private String hostname = ClientVariables.HOSTNAME;
 	public Lobby lobby = null;
-	private String name;
+	public String name;
 	public LinkedBlockingQueue<Object> clientQueue;
 	public LobbyList lobbyList = null;
 

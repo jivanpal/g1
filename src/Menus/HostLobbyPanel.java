@@ -45,7 +45,7 @@ public class HostLobbyPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
 		try {
-			Lobby lobby = new Lobby("player1", InetAddress.getLocalHost());
+			Lobby lobby = new Lobby(client.name, InetAddress.getLocalHost());
 			client.setLobby(lobby);
 			client.send(lobby);
 			

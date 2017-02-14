@@ -48,10 +48,10 @@ public class JoinPanel extends JPanel {
 		setLayout(new BorderLayout());
 		client.updateList();
 		client.printsmth();
+		keepupdating();
 		lobbies = client.lobbyList.getLobbies();
 		System.out.println("Updating");
 		System.out.println(Server.lobbies);
-		//keepupdating();
 		System.out.println("Finished updating");
 		System.out.println(Server.lobbies);
 		
