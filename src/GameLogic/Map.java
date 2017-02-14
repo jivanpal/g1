@@ -11,9 +11,11 @@ import Physics.*;
  * @author jivan
  */
 public class Map {
+/// FIELDS
     private Vector dimensions;
     private ArrayList<Body> mapList;
     
+/// CONSTRUCTORS
     
     /**
      * Construct a map with the given dimensions
@@ -32,6 +34,15 @@ public class Map {
      */
     public Map(Vector dimensions) {
         this.dimensions = dimensions;
+    }
+    
+/// INSTANCE METHODS
+    
+    /**
+     * Get an element from the map.
+     */
+    public Body get(int index) {
+        return mapList.get(index);
     }
     
     /**
