@@ -36,7 +36,10 @@ public class Rotation {
      * @param   angle   The angle by which to rotate about the axis, in radians.
      */
     public Rotation(Vector axis, double angle) {
-        rotation = new Quaternion(Math.cos(angle / 2), axis.normalise().scale(Math.sin(angle / 2)));
+        rotation = new Quaternion(
+            Math.cos(angle / 2),
+            axis.normalise().scale(Math.sin(angle / 2))
+        );
     }
 
     /**
@@ -152,6 +155,21 @@ public class Rotation {
      */
     public Vector getZAxis() {
         return this.apply(Vector.K);
+    }
+    
+    /**
+     * Get the inverse of this rotation. That is, the rotation that when performed
+     * after this one is equivalent to performing no rotation. Formally, the rotation
+     * <i>r</i> such that this.then(<i>r</i>) is equal to Rotation.NONE.
+     * @return
+     */
+    public Rotation inverse() {
+        return new Rotation(
+            new Quaternion(
+                rotation.getScalar(),
+                rotation.getVector().negate()
+            )
+        );
     }
 
 // Application
