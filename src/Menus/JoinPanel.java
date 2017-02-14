@@ -24,6 +24,8 @@ import ServerNetworking.Server;
  * @author Jaren Chin-Hao Liu
  *
  */
+
+// TODO JoinPanel still not yet linked with networking. Errors in sending objects over the network.
 public class JoinPanel extends JPanel {
 	private MainMenu menu;
 	private Client client;
@@ -44,13 +46,19 @@ public class JoinPanel extends JPanel {
 		this.menu = menu;
 		this.client = client;
 		setLayout(new BorderLayout());
-		//lobbies = client.getLobbyList().getLobbies();
-		ArrayList<Lobby> lobbies2 = Server.lobbies;
+		client.updateList();
+		keepupdating();
+		lobbies = client.getLobbyList().getLobbies();
+		//ArrayList<Lobby> lobbies2 = Server.lobbies;
 		model = new DefaultTableModel();
 		model.addColumn("Lobby ID");
-		for (Lobby lobby : lobbies2) {
-			UUID id = lobby.getID();
-			Object[] row = { id };
+		model.addColumn("Host");
+		model.addColumn("Players");
+		for (LobbyInfo lobby : lobbies) {
+			UUID id = lobby.lobbyID;
+			String host = lobby.host;
+			int number = lobby.playerCount;
+			Object[] row = { id, host, number+"/8" };
 			model.addRow(row);
 		}
 		table = new JTable(model);
@@ -62,6 +70,12 @@ public class JoinPanel extends JPanel {
 		setBackground(Color.black);
 	}
 
+	public void keepupdating () {
+		while(client.getLobbyList() == null) {
+			
+		}
+	}
+	
 	/**
 	 * Create the buttons for joining, refreshing, and going back to the play
 	 * menu.

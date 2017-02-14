@@ -56,6 +56,7 @@ public class ClientReceiver extends Thread
 					else if (inObject instanceof LobbyList)
 					{
 						lobbyList = (LobbyList) inObject;
+						lobbyList.change();
 
 					}
 				}

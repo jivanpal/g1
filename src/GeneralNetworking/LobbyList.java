@@ -1,9 +1,10 @@
 package GeneralNetworking;
 
 import java.io.Serializable;
+import java.util.Observable;
 
 @SuppressWarnings("serial")
-public class LobbyList implements Serializable
+public class LobbyList extends Observable implements Serializable
 {
 	private LobbyInfo[] lobbyList;
 
@@ -15,5 +16,10 @@ public class LobbyList implements Serializable
 	public LobbyInfo[] getLobbies()
 	{
 		return lobbyList;
+	}
+	public void change()
+	{
+		setChanged();
+		notifyObservers();
 	}
 }
