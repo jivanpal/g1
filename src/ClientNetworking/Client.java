@@ -24,7 +24,7 @@ public class Client extends Thread
 	private int port = ClientVariables.PORT;
 	private String hostname = ClientVariables.HOSTNAME;
 	public Lobby lobby = null;
-	private String name;
+	public String name;
 	public LinkedBlockingQueue<Object> clientQueue;
 	public LobbyList lobbyList = null;
 
@@ -73,8 +73,20 @@ public class Client extends Thread
 		// Start the sender and receiver threads
 		sender.start();
 		receiver.start();
+		try {
+			receiver.join();
+			sender.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
+	public void printsmth() {
+		System.out.println("smthing");
+	}
+	
 	public Lobby getLobby()
 	{
 		return lobby;

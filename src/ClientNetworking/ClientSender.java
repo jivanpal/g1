@@ -11,7 +11,7 @@ public class ClientSender extends Thread
 {
 
 	private ObjectOutputStream toServer;
-	private LinkedBlockingQueue<Object> clientQueue;
+	public LinkedBlockingQueue<Object> clientQueue;
 
 	public ClientSender(ObjectOutputStream server, LinkedBlockingQueue<Object> queue)
 	{
@@ -27,6 +27,8 @@ public class ClientSender extends Thread
 			try
 			{
 				o = clientQueue.take();
+				if(o instanceof String)
+					System.out.println("asd");
 				toServer.writeObject(o);
 				toServer.flush();
 			}

@@ -1,5 +1,6 @@
 package Physics;
 
+import GameLogic.Global;
 import Geometry.*;
 
 public class Body implements Cloneable {
@@ -288,34 +289,31 @@ public class Body implements Cloneable {
 // Evolution
 
     /**
-     * Update the body's position and orientation, as if a given amount of
-     * time has passed.
-     *
-     * @param   t   The amount of time to simulate the passage of, in seconds.
+     * Update the body's position and orientation.
      */
-    public void update(double t) {
+    public void update() {
         // ∆s = v ∆t
-        move(v.scale(t));
+        move(v.scale(Global.REFRESH_PERIOD));
 
         // (∆ orient) is proportional to omega and t
-        rotate(new Rotation(omega.scale(t)));
+        rotate(new Rotation(omega.scale(Global.REFRESH_PERIOD)));
     }
 
     /**
      * Change the rate-related parameters of the body as if a force
-     * of given magnitude acted on it at a given displacement from its barycenter.
+     * of given magnitude has acted on it at a given displacement from
+     * its barycenter.
      *
-     * @param   t   The amount of time to simulate the passage of, in seconds.
-     * @param   f   The force to simulate exertion of, in newtons.
+     * @param   f   The force vector to simulate exertion of, in newtons.
      * @param   r   The displacement of the the point of action of the force from
      *              the body's barycenter, in meters.
      */
-    public void exertForce(double t, Vector f, Vector r) {
+    public void exertForce(Vector f, Vector r) {
         // ∆v = F ∆t / m
-        alterVelocity(f.scale(t / m));
+        alterVelocity(f.scale(Global.REFRESH_PERIOD / m));
 
         // ∆ omega = (r x F) ∆t / m r^2
-        alterAngularVelocity(r.cross(f).scale(t / (m * r.length() * r.length())));
+        alterAngularVelocity(r.cross(f).scale(Global.REFRESH_PERIOD / (m * r.length() * r.length())));
     }
     
     /**

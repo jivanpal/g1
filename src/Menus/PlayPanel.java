@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -19,7 +20,7 @@ import ClientNetworking.Client;
  */
 public class PlayPanel extends JPanel {
 	private MainMenu menu;
-	private Client client;
+	public Client client;
 
 	/**
 	 * Constructor for the Panel. Displays the buttons which can be navigated to
@@ -31,11 +32,13 @@ public class PlayPanel extends JPanel {
 	public PlayPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
+		Scanner scan = new Scanner(System.in);
+		String name = scan.nextLine();
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		Client client = new Client("player1");
+		Client client = new Client(name);
 		client.start();
-		//client.updateList();
+		client.updateList();
 		this.client = client;
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.weightx = 0.5;

@@ -15,6 +15,7 @@ public class LobbyList extends Observable implements Serializable
 
 	public LobbyInfo[] getLobbies()
 	{
+		System.out.println("getting lobbies");
 		return lobbyList;
 	}
 	public void change()
