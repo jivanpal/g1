@@ -45,10 +45,12 @@ public class ServerReceiver extends Thread
 				{
 					Lobby lobby = (Lobby) inObject;
 					lobbies.add(lobby);
+					System.out.println("lobb count "+ lobbies.size());
 				}
 				// Action
 				else if (inObject instanceof Action)
 				{
+					System.out.println("action");
 					Action a = (Action) inObject;
 					for (int i = 0; i < lobbies.size(); i++)
 					{

@@ -16,14 +16,12 @@ public class ClientReceiver extends Thread
 	public LinkedBlockingQueue<Object> clientQueue;
 	public LobbyList lobbyList;
 
-	ClientReceiver(ObjectInputStream reader, String name, Lobby clLobby, LinkedBlockingQueue<Object> queue,
-			LobbyList lList)
+	ClientReceiver(ObjectInputStream reader, String name, LinkedBlockingQueue<Object> queue)
 	{
 		nickname = name;
 		fromServer = reader;
-		clientLobby = clLobby;
 		clientQueue = queue;
-		lobbyList = lList;
+		lobbyList = new LobbyList();
 	}
 
 	public void run()
@@ -55,9 +53,8 @@ public class ClientReceiver extends Thread
 					// LobbyList
 					else if (inObject instanceof LobbyList)
 					{
-						lobbyList = (LobbyList) inObject;
-						System.out.println("recieved lobbyList" + lobbyList.getLobbies().length);
-						lobbyList.change();
+						LobbyList lList = (LobbyList) inObject;
+						lobbyList.change(lList.getLobbies());
 					}
 				}
 				catch (ClassNotFoundException e)
@@ -71,5 +68,17 @@ public class ClientReceiver extends Thread
 			System.out.println("Server seems to have died " + e.getMessage());
 			System.exit(1); // Give up.
 		}
+	}
+	public LobbyList getList()
+	{
+		return lobbyList;
+	}
+	public Lobby getLobby()
+	{
+		return clientLobby;
+	}
+	public void setLobby(Lobby l)
+	{
+		clientLobby = l;
 	}
 }

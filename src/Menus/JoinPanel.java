@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.UUID;
 
 import javax.swing.JButton;
@@ -47,11 +48,13 @@ public class JoinPanel extends JPanel {
 		this.client = client;
 		setLayout(new BorderLayout());
 		client.updateList();
-		lobbies = client.lobbyList.getLobbies();
-		System.out.println("Updating");
-		System.out.println(Server.lobbies);
+		Scanner s = new Scanner(System.in);
+		String r = s.nextLine();
+		lobbies = client.getLobbyList().getLobbies();
+		System.out.println("lobby 1 host" + lobbies[0].host);
+		//System.out.println(Server.lobbies);
 		System.out.println("Finished updating");
-		System.out.println(Server.lobbies);
+		//System.out.println(Server.lobbies);
 		
 		
 		//ArrayList<Lobby> lobbies2 = Server.lobbies;
@@ -75,13 +78,6 @@ public class JoinPanel extends JPanel {
 		bpanel.setOpaque(false);
 		add(bpanel, BorderLayout.SOUTH);
 		setBackground(Color.black);
-	}
-	
-	public void keepupdating() {
-		while (client.lobbyList == null) {
-			
-		}
-		System.out.println("done");
 	}
 	/**
 	 * Create the buttons for joining, refreshing, and going back to the play
