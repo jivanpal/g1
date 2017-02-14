@@ -93,8 +93,13 @@ public class Rotation {
      * @param   r   The rotation to compare with.
      * @return  Returns true only when the two rotations have the same result.
      */
-    public boolean equals(Rotation r) {
-        return rotation.equals(r.getQuaternion());
+    public boolean equals(Object o) {
+        if (o instanceof Rotation) {
+            Rotation r = (Rotation) o;
+            return rotation.equals(r.getQuaternion());
+        } else {
+            return false;
+        }
     }
 
 // Getters

@@ -38,6 +38,15 @@ public class Basis {
     }
 
 /// INSTANCE METHODS
+    
+    public boolean equals(Object o) {
+        if (o instanceof Basis) {
+            Basis b = (Basis) o;
+            return origin.equals(b.getOrigin());
+        } else {
+            return false;
+        }
+    }
 
 // Getters
 

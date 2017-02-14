@@ -71,8 +71,13 @@ public class Vector {
      * @return  Returns true when all corresponding components of the two
      *          vectors are equal.
      */
-    public boolean equals(Vector v) {
-        return x == v.getX() && y == v.getY() && z == v.getZ();
+    public boolean equals(Object o) {
+        if (o instanceof Vector) {
+            Vector v = (Vector) o;
+            return x == v.getX() && y == v.getY() && z == v.getZ();
+        } else {
+            return false;
+        }
     }
     
     /**

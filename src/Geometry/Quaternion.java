@@ -74,11 +74,17 @@ public class Quaternion {
      * @return  Returns true when all corresponding components of the two
      *          quaternions are equal.
      */
-    public boolean equals(Quaternion q) {
-        return w == q.getW()
-            && x == q.getX()
-            && y == q.getY()
-            && z == q.getZ();
+    public boolean equals(Object o) {
+        if (o instanceof Quaternion) {
+            Quaternion q = (Quaternion) o;
+            return w == q.getW()
+                && x == q.getX()
+                && y == q.getY()
+                && z == q.getZ();
+        } else {
+            return false;
+        }
+            
     }
 
 // Getters
