@@ -23,7 +23,6 @@ public class Client extends Thread
 
 	private int port = ClientVariables.PORT;
 	private String hostname = ClientVariables.HOSTNAME;
-	public Lobby lobby = null;
 	public String name;
 	public LinkedBlockingQueue<Object> clientQueue;
 	private ClientReceiver receiver;
@@ -69,7 +68,7 @@ public class Client extends Thread
 			e.printStackTrace();
 		}
 		sender = new ClientSender(toServer, clientQueue);
-		receiver = new ClientReceiver(fromServer, name, lobby, clientQueue);
+		receiver = new ClientReceiver(fromServer, name, clientQueue);
 
 		// Start the sender and receiver threads
 		sender.start();
@@ -85,15 +84,15 @@ public class Client extends Thread
 	}
 	public Lobby getLobby()
 	{
-		return lobby;
+		return receiver.getLobby();
+	}
+	public void setLobby(Lobby lobby)
+	{
+		receiver.setLobby(lobby);	
 	}
 	public LobbyList getLobbyList()
 	{
 		return receiver.getList();
-	}
-	public void setLobby(Lobby l)
-	{
-		lobby = l;
 	}
 	public void check()
 	{
@@ -111,6 +110,8 @@ public class Client extends Thread
 
 	public void kick(Player presser,Player kicked)
 	{
-		clientQueue.offer(new Action(lobby.getID(),presser,kicked,10));
+		clientQueue.offer(new Action(getLobby().getID(),presser,kicked,10));
 	}
+
+
 }

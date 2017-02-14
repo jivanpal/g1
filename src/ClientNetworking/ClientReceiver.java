@@ -16,11 +16,10 @@ public class ClientReceiver extends Thread
 	public LinkedBlockingQueue<Object> clientQueue;
 	public LobbyList lobbyList;
 
-	ClientReceiver(ObjectInputStream reader, String name, Lobby clLobby, LinkedBlockingQueue<Object> queue)
+	ClientReceiver(ObjectInputStream reader, String name, LinkedBlockingQueue<Object> queue)
 	{
 		nickname = name;
 		fromServer = reader;
-		clientLobby = clLobby;
 		clientQueue = queue;
 		lobbyList = new LobbyList();
 	}
@@ -73,5 +72,13 @@ public class ClientReceiver extends Thread
 	public LobbyList getList()
 	{
 		return lobbyList;
+	}
+	public Lobby getLobby()
+	{
+		return clientLobby;
+	}
+	public void setLobby(Lobby l)
+	{
+		clientLobby = l;
 	}
 }
