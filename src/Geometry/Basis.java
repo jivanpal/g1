@@ -62,7 +62,7 @@ public class Basis {
      * global basis.
      */
     public Vector getXAxis() {
-        return orientation.rotate(Vector.I);
+        return orientation.apply(Vector.I);
     }
 
     /**
@@ -70,7 +70,7 @@ public class Basis {
      * global basis.
      */
     public Vector getYAxis() {
-        return orientation.rotate(Vector.J);
+        return orientation.apply(Vector.J);
     }
 
     /**
@@ -78,7 +78,7 @@ public class Basis {
      * global basis.
      */
     public Vector getZAxis() {
-        return orientation.rotate(Vector.K);
+        return orientation.apply(Vector.K);
     }
 
     /**
@@ -101,6 +101,6 @@ public class Basis {
      * <i>this</i> basis.
      */
     public Basis then(Basis b) {
-        return new Basis(origin.plus(orientation.rotate(b.getOrigin())), orientation.then(b.getOrientation()));
+        return new Basis(origin.plus(orientation.apply(b.getOrigin())), orientation.then(b.getOrientation()));
     }
 }

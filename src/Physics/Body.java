@@ -280,8 +280,8 @@ public class Body implements Cloneable {
     public void setReferenceBody(Body reference) {
         move(reference.getPosition());
         rotate(reference.getOrientation());
-        setVelocity(reference.getOrientation().rotate(v));
-        setAngularVelocity(reference.getOrientation().rotate(omega));
+        setVelocity(reference.getOrientation().apply(v));
+        setAngularVelocity(reference.getOrientation().apply(omega));
         alterVelocity(reference.getVelocity());
         alterAngularVelocity(reference.getAngularVelocity());
     }
