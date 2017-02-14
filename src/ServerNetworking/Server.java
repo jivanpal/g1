@@ -45,6 +45,7 @@ public class Server
 
 				// Listen to the socket, accepting connections from new clients:
 				Socket socket = serverSocket.accept();
+				System.out.println("server");
 				// This is so that we can use readLine():
 				ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
 
@@ -64,7 +65,7 @@ public class Server
 				}
 				clientTable.add(nickname);
 				LinkedBlockingQueue<Object> queue = clientTable.getQueue(nickname); 
-
+				System.out.println(nickname);
 				
 				// We create and start new threads to read from the
 				// client(this one executes the commands):

@@ -16,8 +16,8 @@ import GeneralNetworking.Player;
 public class ServerReceiver extends Thread
 {
 	private ObjectInputStream clientIN;
-	private ClientTable clientTable;
-	private ArrayList<Lobby> lobbies;
+	public ClientTable clientTable;
+	public ArrayList<Lobby> lobbies;
 
 	public ServerReceiver(ObjectInputStream reader, ClientTable cT, ArrayList<Lobby> lobbies)
 	{
@@ -86,6 +86,7 @@ public class ServerReceiver extends Thread
 				else if (inObject instanceof String)
 				{
 					LobbyInfo[] infos = new LobbyInfo[lobbies.size()];
+					System.out.println(lobbies.size());
 					int i = 0, count = 0;
 					String hostname = "";
 					for (Lobby l : lobbies)
@@ -103,6 +104,7 @@ public class ServerReceiver extends Thread
 					}
 					LobbyList lList = new LobbyList(infos);
 					clientTable.getQueue((String) inObject).offer(lList);
+					System.out.println(lList.getLobbies().length);
 				}
 			}
 			catch (Exception e)

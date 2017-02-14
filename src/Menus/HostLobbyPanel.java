@@ -25,7 +25,7 @@ import ServerNetworking.Server;
 // TODO Invite function
 public class HostLobbyPanel extends JPanel {
 	private MainMenu menu;
-	private Client client;
+	public Client client;
 	private Player player;
 	private JPanel lpanel;
 	private GridBagConstraints c;
@@ -48,6 +48,7 @@ public class HostLobbyPanel extends JPanel {
 			Lobby lobby = new Lobby("player1", InetAddress.getLocalHost());
 			client.setLobby(lobby);
 			client.send(lobby);
+			
 			player = lobby.getPlayers()[0];
 		} catch (Exception e) {
 
