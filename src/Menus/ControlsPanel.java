@@ -119,7 +119,7 @@ public class ControlsPanel extends JPanel {
 				switch (buttontopaint) {
 				case "Thrust Fwd":
 
-					int keybind = KeyBindings.CURRENT_ACCELERATE_BUTTON;
+					int keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ACCELERATE_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -129,7 +129,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Fire 1":
-					keybind = KeyBindings.CURRENT_FIRE_WEAPON_1_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -139,7 +139,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Thrust Rev":
-					keybind = KeyBindings.CURRENT_DECELERATE_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_DECELERATE_BUTTON);;
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -149,7 +149,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Fire 2":
-					keybind = KeyBindings.CURRENT_FIRE_WEAPON_2_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -159,7 +159,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Pitch Down":
-					keybind = KeyBindings.CURRENT_PITCH_DOWN_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -169,7 +169,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Fire 3":
-					keybind = KeyBindings.CURRENT_FIRE_WEAPON_3_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -179,7 +179,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Pitch Up":
-					keybind = KeyBindings.CURRENT_PITCH_UP_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_UP_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -189,7 +189,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Manual":
-					keybind = KeyBindings.CURRENT_MANUAL_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_MANUAL_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -199,7 +199,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Roll Left":
-					keybind = KeyBindings.CURRENT_ROLL_LEFT_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -209,7 +209,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Manual Prev":
-					keybind = KeyBindings.CURRENT_MANUAL_PREV_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_MANUAL_PREV_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -219,7 +219,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Roll Right":
-					keybind = KeyBindings.CURRENT_ROLL_RIGHT_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -229,7 +229,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Manual Next":
-					keybind = KeyBindings.CURRENT_MANUAL_NEXT_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_MANUAL_NEXT_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -239,7 +239,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Overdrive":
-					keybind = KeyBindings.CURRENT_OVERDRIVE_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_OVERDRIVE_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -255,35 +255,7 @@ public class ControlsPanel extends JPanel {
 	}
 
 	public boolean checkkeys(int keycode) {
-		boolean keytaken = false;
-		if (keycode == KeyBindings.CURRENT_ACCELERATE_BUTTON) {
-
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_FIRE_WEAPON_1_BUTTON) {
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_DECELERATE_BUTTON) {
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_FIRE_WEAPON_2_BUTTON) {
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_PITCH_DOWN_BUTTON) {
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_FIRE_WEAPON_3_BUTTON) {
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_PITCH_UP_BUTTON) {
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_MANUAL_BUTTON) {
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_ROLL_LEFT_BUTTON) {
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_MANUAL_PREV_BUTTON) {
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_ROLL_RIGHT_BUTTON) {
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_MANUAL_NEXT_BUTTON) {
-			keytaken = true;
-		} else if (keycode == KeyBindings.CURRENT_OVERDRIVE_BUTTON) {
-			keytaken = true;
-		}
+		boolean keytaken = KeyBindings.checkIfKeyTaken(keycode);
 		if (keytaken) {
 			JOptionPane.showMessageDialog(this, "Key is already being used. Please use another one!", "Key Bind Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -320,20 +292,20 @@ public class ControlsPanel extends JPanel {
 
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ACCELERATE_BUTTON, KeyEvent.VK_ENTER);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ACCELERATE_BUTTON, KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ACCELERATE_BUTTON, KeyEvent.VK_SPACE);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ACCELERATE_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ACCELERATE_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ACCELERATE_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Fire 1":
@@ -341,13 +313,13 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(KeyEvent.VK_ENTER)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_1_BUTTON,
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON,
 								KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_1_BUTTON,
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON,
 								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
@@ -355,7 +327,8 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_1_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON,
+								ks.getKeyCode());
 					}
 					break;
 				case "Thrust Rev":
@@ -363,19 +336,22 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(KeyEvent.VK_ENTER)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_DECELERATE_BUTTON, KeyEvent.VK_ENTER);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_DECELERATE_BUTTON,
+								KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_DECELERATE_BUTTON, KeyEvent.VK_SPACE);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_DECELERATE_BUTTON,
+								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_DECELERATE_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_DECELERATE_BUTTON,
+								ks.getKeyCode());
 					}
 					break;
 				case "Fire 2":
@@ -383,13 +359,13 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(KeyEvent.VK_ENTER)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_2_BUTTON,
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON,
 								KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_2_BUTTON,
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON,
 								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
@@ -397,7 +373,8 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_2_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON,
+								ks.getKeyCode());
 					}
 					break;
 				case "Pitch Down":
@@ -405,33 +382,13 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(KeyEvent.VK_ENTER)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_PITCH_DOWN_BUTTON, KeyEvent.VK_ENTER);
-					} else if (space) {
-						if (checkkeys(KeyEvent.VK_SPACE)) {
-							break;
-						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_PITCH_DOWN_BUTTON, KeyEvent.VK_SPACE);
-					} else {
-						char changeto = btext.charAt(0);
-						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
-						if (checkkeys(ks.getKeyCode())) {
-							break;
-						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_PITCH_DOWN_BUTTON, ks.getKeyCode());
-					}
-					break;
-				case "Fire 3":
-					if (enter) {
-						if (checkkeys(KeyEvent.VK_ENTER)) {
-							break;
-						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_3_BUTTON,
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON,
 								KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_3_BUTTON,
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON,
 								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
@@ -439,7 +396,31 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_FIRE_WEAPON_3_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON,
+								ks.getKeyCode());
+					}
+					break;
+				case "Fire 3":
+					if (enter) {
+						if (checkkeys(KeyEvent.VK_ENTER)) {
+							break;
+						}
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON,
+								KeyEvent.VK_ENTER);
+					} else if (space) {
+						if (checkkeys(KeyEvent.VK_SPACE)) {
+							break;
+						}
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON,
+								KeyEvent.VK_SPACE);
+					} else {
+						char changeto = btext.charAt(0);
+						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
+						if (checkkeys(ks.getKeyCode())) {
+							break;
+						}
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON,
+								ks.getKeyCode());
 					}
 					break;
 				case "Pitch Up":
@@ -447,19 +428,22 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(KeyEvent.VK_ENTER)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_PITCH_UP_BUTTON, KeyEvent.VK_ENTER);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_UP_BUTTON,
+								KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_PITCH_UP_BUTTON, KeyEvent.VK_SPACE);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_UP_BUTTON,
+								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_PITCH_UP_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_UP_BUTTON,
+								ks.getKeyCode());
 					}
 					break;
 				case "Manual":
@@ -467,19 +451,22 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(KeyEvent.VK_ENTER)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_MANUAL_BUTTON, KeyEvent.VK_ENTER);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_BUTTON,
+								KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_MANUAL_BUTTON, KeyEvent.VK_SPACE);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_BUTTON,
+								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_MANUAL_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_BUTTON,
+								ks.getKeyCode());
 					}
 					break;
 				case "Roll Left":
@@ -487,19 +474,22 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(KeyEvent.VK_ENTER)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ROLL_LEFT_BUTTON, KeyEvent.VK_ENTER);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON,
+								KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ROLL_LEFT_BUTTON, KeyEvent.VK_SPACE);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON,
+								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ROLL_LEFT_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON,
+								ks.getKeyCode());
 					}
 					break;
 				case "Manual Prev":
@@ -507,19 +497,22 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(KeyEvent.VK_ENTER)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_MANUAL_PREV_BUTTON, KeyEvent.VK_ENTER);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_PREV_BUTTON,
+								KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_MANUAL_PREV_BUTTON, KeyEvent.VK_SPACE);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_PREV_BUTTON,
+								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_MANUAL_PREV_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_PREV_BUTTON,
+								ks.getKeyCode());
 					}
 					break;
 				case "Roll Right":
@@ -527,19 +520,22 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(KeyEvent.VK_ENTER)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ROLL_RIGHT_BUTTON, KeyEvent.VK_ENTER);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON,
+								KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ROLL_RIGHT_BUTTON, KeyEvent.VK_SPACE);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON,
+								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_ROLL_RIGHT_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON,
+								ks.getKeyCode());
 					}
 					break;
 				case "Manual Next":
@@ -547,19 +543,22 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(KeyEvent.VK_ENTER)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_MANUAL_NEXT_BUTTON, KeyEvent.VK_ENTER);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_NEXT_BUTTON,
+								KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_MANUAL_NEXT_BUTTON, KeyEvent.VK_SPACE);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_NEXT_BUTTON,
+								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_MANUAL_NEXT_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_NEXT_BUTTON,
+								ks.getKeyCode());
 					}
 					break;
 				case "Overdrive":
@@ -567,19 +566,22 @@ public class ControlsPanel extends JPanel {
 						if (checkkeys(KeyEvent.VK_ENTER)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_OVERDRIVE_BUTTON, KeyEvent.VK_ENTER);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_OVERDRIVE_BUTTON,
+								KeyEvent.VK_ENTER);
 					} else if (space) {
 						if (checkkeys(KeyEvent.VK_SPACE)) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_OVERDRIVE_BUTTON, KeyEvent.VK_SPACE);
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_OVERDRIVE_BUTTON,
+								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 						if (checkkeys(ks.getKeyCode())) {
 							break;
 						}
-						KeyBindings.changeKeyByCurrentvalue(KeyBindings.CURRENT_OVERDRIVE_BUTTON, ks.getKeyCode());
+						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_OVERDRIVE_BUTTON,
+								ks.getKeyCode());
 					}
 					break;
 				}
@@ -656,41 +658,41 @@ public class ControlsPanel extends JPanel {
 				switch (buttontopaint) {
 				case "Thrust Fwd":
 
-					int keybind = KeyBindings.CURRENT_ACCELERATE_BUTTON;
+					int keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ACCELERATE_BUTTON);
 					System.out.println("Accelerate: " + KeyEvent.getKeyText(keybind));
 
 					break;
 				case "Fire 1":
-					keybind = KeyBindings.CURRENT_FIRE_WEAPON_1_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON);
 					System.out.println("Fire 1: " + KeyEvent.getKeyText(keybind));
 
 					break;
 				case "Thrust Rev":
-					keybind = KeyBindings.CURRENT_DECELERATE_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_DECELERATE_BUTTON);
 					System.out.println("Decelerate: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Fire 2":
-					keybind = KeyBindings.CURRENT_FIRE_WEAPON_2_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON);
 					System.out.println("Fire 2: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Pitch Down":
-					keybind = KeyBindings.CURRENT_PITCH_DOWN_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON);
 					System.out.println("Pitch Down: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Fire 3":
-					keybind = KeyBindings.CURRENT_FIRE_WEAPON_3_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON);
 					System.out.println("Fire 3: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Pitch Up":
-					keybind = KeyBindings.CURRENT_PITCH_UP_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_UP_BUTTON);
 					System.out.println("Pitch Up: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Roll Left":
-					keybind = KeyBindings.CURRENT_ROLL_LEFT_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON);
 					System.out.println("Roll Left: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Roll Right":
-					keybind = KeyBindings.CURRENT_ROLL_RIGHT_BUTTON;
+					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON);
 					System.out.println("Roll Right: " + KeyEvent.getKeyText(keybind));
 					break;
 				}
