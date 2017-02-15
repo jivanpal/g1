@@ -11,7 +11,7 @@ public class ClientReceiver extends Thread
 {
 
 	ObjectInputStream fromServer;
-	public LobbyContainer clientLobby;
+	public LobbyContainer clientLobby = new LobbyContainer();
 	private String nickname;
 	public LinkedBlockingQueue<Object> clientQueue;
 	public LobbyList lobbyList;
@@ -54,6 +54,7 @@ public class ClientReceiver extends Thread
 					{
 						LobbyList lList = (LobbyList) inObject;
 						lobbyList.change(lList.getLobbies());
+						System.out.println("clientrec: "+lList.getLobbies().length);
 					}
 				}
 				catch (ClassNotFoundException e)
