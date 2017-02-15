@@ -6,7 +6,7 @@ import java.util.Observable;
 import java.util.UUID;
 
 @SuppressWarnings("serial")
-public class Lobby extends Observable implements Serializable
+public class Lobby implements Serializable
 {
 	private UUID id;
 	public boolean started ;
@@ -125,10 +125,5 @@ public class Lobby extends Observable implements Serializable
 	public UUID getID()
 	{
 		return id;
-	}
-	public void change()
-	{
-		setChanged();
-		notifyObservers();
 	}
 }

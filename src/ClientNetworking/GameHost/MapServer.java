@@ -4,23 +4,27 @@ package ClientNetworking.GameHost;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
+import Geometry.Vector;
+import GameLogic.*;
 
 
-
-public class ClientHost extends Thread
+public class MapServer extends Thread
 {
 	private final int PORT = 1273;
 	private final Lobby lobby;
 	private ServerSocket serverSocket = null;
-	public ClientHost(Lobby l)
+	private Map gameMap = new Map(10000,10000,10000);
+	public MapServer(Lobby l)
 	{
 		lobby = l;
+		
 		// Open a server socket:
 		try
 		{
@@ -36,21 +40,43 @@ public class ClientHost extends Thread
 		try
 		{
 			LinkedBlockingQueue<Object> queue = new LinkedBlockingQueue<Object>();
+			
 			while (true)
 			{
 				// Listen to the socket, accepting connections from new clients:
 				Socket socket = serverSocket.accept();
+				InetAddress address=socket.getInetAddress();
 				boolean flag = false;
+				int pos = 0;
+				String name = "";
 				for(Player player : lobby.getPlayers())
-				{
-					if(player.address == socket.getInetAddress())
+				{	
+					if(player.address == address)
+					{
+						name = player.nickname;
 						flag = true;
+						break;
+					}
+					pos++;
 				}
 				if(!flag)
 				{
 					socket.close();
 				}
 				else{
+					
+					// If the player added is the pilot, put a new ship on the map in a sensible position.
+					if(pos%2 == 0) {
+						gameMap.add(new Ship(name));
+						gameMap.get(pos / 2).setPosition(
+							new Vector (
+								pos % 4 == 0 ? 0 : gameMap.getDimensions().getX()/2 ,
+								pos < 4	     ? 0 : gameMap.getDimensions().getY()/2 ,
+								0
+							)
+						);
+					}
+					
 					// This is so that we can use readLine():
 					ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
 
