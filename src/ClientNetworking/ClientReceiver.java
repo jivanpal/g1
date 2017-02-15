@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import ClientNetworking.GameClient.GameClient;
 import GeneralNetworking.*;
 
 public class ClientReceiver extends Thread
@@ -39,7 +40,9 @@ public class ClientReceiver extends Thread
 					{
 						clientLobby.setLobby((Lobby) inObject);
 						if (clientLobby.getLobby().started)
-							System.out.println("start game");
+						{
+							GameClient gameClient = new GameClient(clientLobby.getLobby())
+						}
 					}
 					// INVITE
 					else if (inObject instanceof Invite)

@@ -63,10 +63,7 @@ public class GameClient extends Thread
 		try
 		{
 			sender.join();
-			toServer.close();
 			receiver.join();
-			fromServer.close();
-			server.close();
 		}
 		catch (Exception e)
 		{

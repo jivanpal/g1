@@ -13,12 +13,12 @@ import GeneralNetworking.Player;
 
 
 
-public class ClientHost extends Thread
+public class MapServer extends Thread
 {
 	private final int PORT = 1273;
 	private final Lobby lobby;
 	private ServerSocket serverSocket = null;
-	public ClientHost(Lobby l)
+	public MapServer(Lobby l)
 	{
 		lobby = l;
 		// Open a server socket:
