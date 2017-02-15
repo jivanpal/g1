@@ -3,6 +3,8 @@ package ClientNetworking;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import ClientNetworking.GameClient.GameClient;
@@ -85,33 +87,26 @@ public class ClientReceiver extends Thread
 	{
 		clientLobby.setLobby(l);
 	}
-	public void addChangeListener(LobbyListener a)
+	public void addObserver(Observer obs)
 	{
-		clientLobby.addChangeListener(a);
+		clientLobby.addObserver(obs);
 	}
 }
 
-class LobbyContainer
+class LobbyContainer extends Observable
 {
 	private Lobby lobby = null;
-	private ArrayList<LobbyListener> listeners = new ArrayList<>();
 	public LobbyContainer()
 	{
 	}
 	public void setLobby(Lobby l)
 	{
 		lobby=l;
-		for(LobbyListener lListener : listeners)
-		{
-			lListener.lobbyChanged();
-		}
+		setChanged();
+		notifyObservers();
 	}
 	public Lobby getLobby()
 	{
 		return lobby;
-	}
-	public void addChangeListener(LobbyListener a)
-	{
-		listeners.add(a);
 	}
 }

@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
 import ClientNetworking.*;
 import GeneralNetworking.Action;
@@ -112,8 +113,8 @@ public class Client extends Thread
 	{
 		clientQueue.offer(new Action(getLobby().getID(),presser,kicked,10));
 	}
-	public void addLobbyListener(LobbyListener a)
+	public void addLobbyObserver(Observer obs)
 	{
-		receiver.addChangeListener(a);
+		receiver.addObserver(obs);
 	}
 } 
