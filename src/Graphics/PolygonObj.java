@@ -32,8 +32,9 @@ public class PolygonObj {
 	//Testing method
 	private void screenTest(){
 		boolean onScreen = false;
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		for(int i = 0; i < p.xpoints.length; i++){
-			if(p.xpoints[i] >= 0 && p.xpoints[i] < Screen.width && p.ypoints[i] >= 0 && p.ypoints[i] < Screen.height){
+			if(p.xpoints[i] >= 0 && p.xpoints[i] < screenSize.getWidth() && p.ypoints[i] >= 0 && p.ypoints[i] < screenSize.getHeight()){
 				onScreen = true;
 			}
 		}

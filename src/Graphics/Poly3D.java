@@ -30,8 +30,8 @@ public class Poly3D {
 		for(int i = 0; i < x.length; i++){
 			Point p = new Point(x[i], y[i], z[i]);
 			calcPos = Calculations.calcPos(Screen.viewFrom, Screen.viewTo, p);
-			newX[i] = calcPos.x + Screen.width/2;
-			newY[i] = calcPos.y + Screen.height/2;
+			newX[i] = calcPos.x + GameEngine.screenSize.getWidth()/2;
+			newY[i] = calcPos.y + GameEngine.screenSize.getHeight()/2;
 			if(calcPos.z < 0 || Calculations.t < 0){
 				draw = false;
 			}
