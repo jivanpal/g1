@@ -112,6 +112,5 @@ public class Client extends Thread
 	{
 		clientQueue.offer(new Action(getLobby().getID(),presser,kicked,10));
 	}
-
-
-}
+	
+} 
