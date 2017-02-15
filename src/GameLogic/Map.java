@@ -37,6 +37,15 @@ public class Map extends ArrayList<Body> {
     
 /// INSTANCE METHODS
     
+// Getters
+    
+    /**
+     * Get the dimensions of the map.
+     */
+    public Vector getDimensions() {
+    	return dimensions;
+    }
+    
     /**
      * Given a position vector with any components, convert it to the
      * smallest vector with positive components that represents the same
