@@ -30,7 +30,7 @@ public class PilotView extends JPanel implements KeyListener{
         WeaponView plasmaBlasterView = new WeaponView("Plasma Blaster", false);
 
         // default plasma blaster to be highlighted, remove at a later date!
-        plasmaBlasterView.toggleHighlightWeapon();
+        plasmaBlasterView.setHighlightWeapon(true);
 
         WeaponView laserBlasterView = new WeaponView("Laser Blaster", false);
         WeaponView torpedosView = new WeaponView("Torpedos", false);
