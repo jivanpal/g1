@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 public class Screen extends JPanel implements KeyListener{
 	
-	private double sleepTime = 1000/60, lastRefresh = 0;
+	private double sleepTime = 1000/GameLogic.Global.REFRESH_RATE, lastRefresh = 0;
 	public static Point viewFrom;
 	public static Point viewTo;
 	public static Vector lightDir;
@@ -56,15 +56,7 @@ public class Screen extends JPanel implements KeyListener{
 		Matrix.printMatrix(cameraSystem);
 		
 		
-		//Create some asteroids
-		Poly3D poly1 = new Poly3D(new double[]{0, 0.3, 0.6}, new double[]{0, 0.4, 0}, new double[]{0, 0, 0}, Color.RED);
-		Screen.poly3Ds.add(poly1);
-		Poly3D poly2 = new Poly3D(new double[]{0, 0.3, 0.3}, new double[]{0, 0.4, 0.2}, new double[]{0, 0, 0.4}, Color.RED);
-		Screen.poly3Ds.add(poly2);
-		Poly3D poly3 = new Poly3D(new double[]{0, 0.6, 0.3}, new double[]{0, 0, 0.2}, new double[]{0, 0, 0.4}, Color.RED);
-		Screen.poly3Ds.add(poly3);
-		Poly3D poly4 = new Poly3D(new double[]{0.3, 0.6, 0.3}, new double[]{0.4, 0, 0.2}, new double[]{0, 0, 0.4}, Color.RED);
-		Screen.poly3Ds.add(poly4);
+		Icosahedron testShip = new Icosahedron(0, 0, 200, 0.01);
 			
 		Random r = new Random();
 		for(int i = 0; i < 100; i++){
@@ -189,8 +181,6 @@ public class Screen extends JPanel implements KeyListener{
 			Vector move = N.scale(moveSpeed, moveSpeed, moveSpeed);
 			viewFrom = viewFrom.pointPlusVector(move);
 			viewTo = viewFrom.pointPlusVector(N);
-			
-//			updateVectors();
 		}
 		
 		//Backwards
@@ -200,8 +190,6 @@ public class Screen extends JPanel implements KeyListener{
 			Vector move = N.scale(-moveSpeed, -moveSpeed, -moveSpeed);
 			viewFrom = viewFrom.pointPlusVector(move);
 			viewTo = viewFrom.pointPlusVector(N);
-			
-//			updateVectors();
 		}
 		
 		//Rotate along N-axis anti-clockwise
@@ -212,9 +200,6 @@ public class Screen extends JPanel implements KeyListener{
 			U.normalise();
 			V = Matrix.multiplyVector(rotate, V);
 			V.normalise();
-//			cameraSystem = Matrix.multiply(rotate, cameraSystem);
-			
-//			updateVectors();
 		}
 		
 		//Rotate along N-axis clockwise
@@ -225,37 +210,28 @@ public class Screen extends JPanel implements KeyListener{
 			U.normalise();
 			V = Matrix.multiplyVector(rotate, V);
 			V.normalise();
-//			cameraSystem = Matrix.multiply(rotate, cameraSystem);
-			
-//			updateVectors();
 		}
 		
 		//Rotate along the V-axis upwards
 		if(s){
-//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z), Matrix.getRotationMatrix(verticalLookSpeed, V)), Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z));
-			double[][] rotate = Matrix.getRotationMatrix(verticalLookSpeed, V);
-			N = Matrix.multiplyVector(rotate, N);
-			N.normalise();
-			U = Matrix.multiplyVector(rotate, U);
-			U.normalise();
-			viewTo = viewFrom.pointPlusVector(N);
-//			cameraSystem = Matrix.multiply(rotate, cameraSystem);
-			
-//			updateVectors();
-		}
-		
-		//Rotate along the V-axis downwards
-		else if(w){
-//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z), Matrix.getRotationMatrix(-verticalLookSpeed, V)), Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z));
+//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z), Matrix.getRotationMatrix(verticalLookSpeed, V)), Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z));
 			double[][] rotate = Matrix.getRotationMatrix(-verticalLookSpeed, V);
 			N = Matrix.multiplyVector(rotate, N);
 			N.normalise();
 			U = Matrix.multiplyVector(rotate, U);
 			U.normalise();
 			viewTo = viewFrom.pointPlusVector(N);
-//			cameraSystem = Matrix.multiply(rotate, cameraSystem);
-			
-//			updateVectors();
+		}
+		
+		//Rotate along the V-axis downwards
+		else if(w){
+//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z), Matrix.getRotationMatrix(-verticalLookSpeed, V)), Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z));
+			double[][] rotate = Matrix.getRotationMatrix(verticalLookSpeed, V);
+			N = Matrix.multiplyVector(rotate, N);
+			N.normalise();
+			U = Matrix.multiplyVector(rotate, U);
+			U.normalise();
+			viewTo = viewFrom.pointPlusVector(N);
 		}
 		
 		//Update where the camera is looking at

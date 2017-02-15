@@ -82,6 +82,14 @@ public class Matrix {
 		return m;
 	}
 	
+//	//TODO: Fix Rotation around an arbitary axis for a given point in space
+//	public static double[][] getRotationMatrix(double angle, Vector v, Point p){
+//		double[][] m = Matrix.multiply(getTranslationMatrix(p.x, p.y, p.z), getRotationMatrixX(angle));
+//		m = Matrix.multiply(m, getRotationMatrixY(angle));
+//		
+//		return m;
+//	}
+	
 	public static double[][] getCameraMatrix(Point viewFrom, Point viewTo, Vector U){
 		Vector N = viewFrom.pointMinusPoint(viewTo);
 		N.normalise();

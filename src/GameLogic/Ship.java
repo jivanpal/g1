@@ -70,7 +70,7 @@ public class Ship extends Body{
 		this.engines.decreaseFuel();
 	}
 	
-	public void customChnageFuel(int change){
+	public void customChangeFuel(int change){
 		this.engines.customChangeFuel(change);
 	}
 	
@@ -84,5 +84,9 @@ public class Ship extends Body{
 	
 	public void customChangeShieldsLevel(int change){
 		this.shields.cusomChangeShieldsLevel(change);
+	}
+	
+	public void fire(int weaponIndex) {
+	    // TODO Implement this method
 	}
 }

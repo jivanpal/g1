@@ -82,13 +82,6 @@ public class JoinPanel extends JPanel {
 		add(bpanel, BorderLayout.SOUTH);
 		setBackground(Color.black);
 	}
-	
-	public void keepupdating() {
-		while (client.lobbyList == null) {
-			
-		}
-		System.out.println("done");
-	}
 	/**
 	 * Create the buttons for joining, refreshing, and going back to the play
 	 * menu.

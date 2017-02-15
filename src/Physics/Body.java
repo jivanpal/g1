@@ -5,7 +5,7 @@ import Geometry.*;
 
 public class Body implements Cloneable {
 /// FIELDS
-    private boolean exists = true;
+    private boolean destroyed = false;
     
     private double m = 1;       // Default mass is 1 kg.
     private double radius = 10; // Defualt radius is 10 m.
@@ -108,8 +108,8 @@ public class Body implements Cloneable {
     /**
      * Find out whether this instance still exists in the game.
      */
-    public boolean exists() {
-        return exists;
+    public boolean isDestroyed() {
+        return destroyed;
     }
     
     /**
@@ -158,11 +158,55 @@ public class Body implements Cloneable {
         return omega;
     }
     
+// Other Useful Getters
+    
     /**
      * Get the local basis of this instance, defined relative to the global basis.
      */
     public Basis getBasis() {
         return new Basis(s, orient);
+    }
+    
+    /**
+     * Get the unit vector pointing in the body's local rightward direction.
+     */
+    public Vector getRightVector() {
+        return getBasis().getXAxis();
+    }
+    
+    /**
+     * Get the unit vector pointing in the body's local forward direction.
+     */
+    public Vector getForwardVector() {
+        return getBasis().getYAxis();
+    }
+    
+    /**
+     * Get the unit vector pointing in the body's local upward direction.
+     */
+    public Vector getUpVector() {
+        return getBasis().getZAxis();
+    }
+    
+    /**
+     * Get the unit vector pointing in the body's local leftward direction.
+     */
+    public Vector getLeftVector() {
+        return getRightVector().negate();
+    }
+    
+    /**
+     * Get the unit vector pointing in the body's local backward direction.
+     */
+    public Vector getBackwardVector() {
+        return getForwardVector().negate();
+    }
+    
+    /**
+     * Get the unit vector pointing in the body's local downward direction.
+     */
+    public Vector getDownVector() {
+        return getUpVector().negate();
     }
 
 // Setters
@@ -173,7 +217,7 @@ public class Body implements Cloneable {
      * need to be removed from the map due to being destroyed in-game.
      */
     public void destroy() {
-        exists = false;
+        destroyed = true;
     }
     
     /**
@@ -280,8 +324,8 @@ public class Body implements Cloneable {
     public void setReferenceBody(Body reference) {
         move(reference.getPosition());
         rotate(reference.getOrientation());
-        setVelocity(reference.getOrientation().rotate(v));
-        setAngularVelocity(reference.getOrientation().rotate(omega));
+        setVelocity(reference.getOrientation().apply(v));
+        setAngularVelocity(reference.getOrientation().apply(omega));
         alterVelocity(reference.getVelocity());
         alterAngularVelocity(reference.getAngularVelocity());
     }

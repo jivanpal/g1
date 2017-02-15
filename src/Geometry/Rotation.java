@@ -3,9 +3,7 @@ package Geometry;
 /**
  * A class of objects that describe rotations with respect to the origin of an
  * initial coordinate system. These are described internally using quaternions.
- * 
  * @author jivan
- *
  */
 public class Rotation {
 /// CONSTANTS
@@ -38,7 +36,10 @@ public class Rotation {
      * @param   angle   The angle by which to rotate about the axis, in radians.
      */
     public Rotation(Vector axis, double angle) {
-        rotation = new Quaternion(Math.cos(angle / 2), axis.normalise().scale(Math.sin(angle / 2)));
+        rotation = new Quaternion(
+            Math.cos(angle / 2),
+            axis.normalise().scale(Math.sin(angle / 2))
+        );
     }
 
     /**
@@ -89,13 +90,23 @@ public class Rotation {
 
 /// INSTANCE METHODS
 
-    /**
-     * Check whether a rotation is equal to another rotation.
-     * 
-     * @param   r   The rotation to compare with.
-     * @return  Returns true only when the two rotations have the same result.
-     */
-    public boolean equals(Rotation r) {
+// Overrides
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((rotation == null) ? 0 : rotation.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Rotation r = (Rotation) obj;
         return rotation.equals(r.getQuaternion());
     }
 
@@ -127,7 +138,7 @@ public class Rotation {
      * system described by this rotation.
      */
     public Vector getXAxis() {
-        return this.rotate(Vector.I);
+        return this.apply(Vector.I);
     }
 
     /**
@@ -135,7 +146,7 @@ public class Rotation {
      * system described by this rotation.
      */
     public Vector getYAxis() {
-        return this.rotate(Vector.J);
+        return this.apply(Vector.J);
     }
 
     /**
@@ -143,36 +154,50 @@ public class Rotation {
      * system described by this rotation.
      */
     public Vector getZAxis() {
-        return this.rotate(Vector.K);
+        return this.apply(Vector.K);
+    }
+    
+    /**
+     * Get the inverse of this rotation. That is, the rotation that when performed
+     * after this one is equivalent to performing no rotation. Formally, the rotation
+     * <i>r</i> such that this.then(<i>r</i>) is equal to Rotation.NONE.
+     * @return
+     */
+    public Rotation inverse() {
+        return new Rotation(
+            new Quaternion(
+                rotation.getScalar(),
+                rotation.getVector().negate()
+            )
+        );
     }
 
 // Application
 
     /**
-     * Get the position vector of a point after being rotated by this rotation.
-     * 
+     * Get the position vector of a point after this rotation is applied to it.
      * @param   point   The position vector of the point to be rotated.
      * @return  Returns the position vector of the point after rotation.
      */
-    public Vector rotate(Vector point) {
+    public Vector apply(Vector point) {
         return new Quaternion(0, point).conjugatedBy(rotation).getVector();
     }
 
     /**
-     * Mutate an array of position vectors by rotating them by this rotation.
+     * Mutate an array of position vectors by applying this rotation to them.
      * @param   points  An array of the position vectors of the points to be rotated.
      */
-    public void rotate(Vector[] points) {
-        _rotate(points, points.length);
+    public void apply(Vector[] points) {
+        _apply(points, points.length);
     }
 
     /**
-     * Helper method for `rotate(Vector[])`.
+     * Helper method for `apply(Vector[])`.
      */
-    private void _rotate(Vector[] point, int n) {
+    private void _apply(Vector[] point, int n) {
         if (n != 0) {
-            point[n - 1] = rotate(point[n - 1]);
-            _rotate(point, n - 1);
+            point[n - 1] = apply(point[n - 1]);
+            _apply(point, n - 1);
         }
     }
 
@@ -189,9 +214,4 @@ public class Rotation {
     public Rotation then(Rotation that) {
         return new Rotation(that.getQuaternion().times(rotation));
     }
-
-    /**
-     * 
-     */
-
 }

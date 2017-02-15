@@ -23,10 +23,10 @@ public class Client extends Thread
 
 	private int port = ClientVariables.PORT;
 	private String hostname = ClientVariables.HOSTNAME;
-	public Lobby lobby = null;
 	public String name;
 	public LinkedBlockingQueue<Object> clientQueue;
-	public LobbyList lobbyList = new LobbyList();
+	private ClientReceiver receiver;
+	private ClientSender sender;
 
 	public Client(String nickname)
 	{
@@ -67,8 +67,8 @@ public class Client extends Thread
 		{
 			e.printStackTrace();
 		}
-		ClientSender sender = new ClientSender(toServer, clientQueue);
-		ClientReceiver receiver = new ClientReceiver(fromServer, name, lobby, clientQueue, lobbyList);
+		sender = new ClientSender(toServer, clientQueue);
+		receiver = new ClientReceiver(fromServer, name, clientQueue);
 
 		// Start the sender and receiver threads
 		sender.start();
@@ -84,13 +84,20 @@ public class Client extends Thread
 	}
 	public Lobby getLobby()
 	{
-		return lobby;
+		return receiver.getLobby();
 	}
-	public void setLobby(Lobby l)
+	public void setLobby(Lobby lobby)
 	{
-		lobby = l;
+		receiver.setLobby(lobby);	
 	}
-
+	public LobbyList getLobbyList()
+	{
+		return receiver.getList();
+	}
+	public void check()
+	{
+		System.out.println("lobby count client"+getLobbyList().getLobbies().length);
+	}
 	public synchronized void send(Object obj)
 	{
 		clientQueue.offer(obj);
@@ -99,11 +106,12 @@ public class Client extends Thread
 	public void updateList()
 	{
 		clientQueue.offer(name);
-		System.out.println(lobbyList.getLobbies());
 	}
 
 	public void kick(Player presser,Player kicked)
 	{
-		clientQueue.offer(new Action(lobby.getID(),presser,kicked,10));
+		clientQueue.offer(new Action(getLobby().getID(),presser,kicked,10));
 	}
+
+
 }

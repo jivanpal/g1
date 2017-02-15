@@ -27,8 +27,6 @@ public class ClientSender extends Thread
 			try
 			{
 				o = clientQueue.take();
-				if(o instanceof String)
-					System.out.println("asd");
 				toServer.writeObject(o);
 				toServer.flush();
 			}
