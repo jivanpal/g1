@@ -1,6 +1,11 @@
 package Graphics;
 import java.awt.Color;
 
+/**
+ * Creates a collection of polygons that resemble a 3D shape
+ * @author Dominic
+ *
+ */
 public class Poly3D {
 	private Color c;
 	public double[] x, y, z, newX, newY;
@@ -10,6 +15,12 @@ public class Poly3D {
 	private boolean draw = true;
 	
 	
+	/**
+	 * @param x Array of all x-coordinates of the object's vertices
+	 * @param y Array of all y-coordinates of the object's vertices
+	 * @param z Array of all z-coordinates of the object's vertices
+	 * @param c Colour of the object
+	 */
 	public Poly3D(double[] x, double[] y, double[] z, Color c){
 //		Screen.nPoly3D++;
 		this.c = c;
@@ -19,10 +30,16 @@ public class Poly3D {
 		createPolygon();
 	}
 	
+	/**
+	 * Creates a new PolygonObj
+	 */
 	public void createPolygon(){
-		poly = new PolygonObj(new double[x.length], new double[x.length], c, Screen.poly3Ds.size());
+		poly = new PolygonObj(new double[x.length], new double[x.length], c);
 	}
 	
+	/**
+	 * Updates the position of the polygon according to the current camera vectors
+	 */
 	public void update(){
 		newX = new double[x.length];
 		newY = new double[x.length];
@@ -44,6 +61,9 @@ public class Poly3D {
 		avgDistance = getDistance();
 	}
 	
+	/**
+	 * Calculates the shading on each side of the polygon
+	 */
 	private void lighting() {
 		Plane lightPlane = new Plane(this);
 		double angle = Math.acos(((lightPlane.v3.x * Screen.lightDir.z) +
@@ -60,6 +80,10 @@ public class Poly3D {
 		}
 	}
 
+	/**
+	 * Calculates the average distance to the object from the camera position
+	 * @return Average distance from the camera position
+	 */
 	public double getDistance(){
 		double total = 0;
 		for(int i = 0; i < x.length; i++){
@@ -68,6 +92,11 @@ public class Poly3D {
 		return total / x.length;
 	}
 	
+	/**
+	 * Calculates the distance from a vertex to the camera position
+	 * @param i The index of the vertex in the x, y and z arrays
+	 * @return Distance from a vertex to the camera
+	 */
 	private double getDistanceToP(int i){
 		return Math.sqrt((Screen.viewFrom.x - x[i]) * (Screen.viewFrom.x - x[i])
 						+ (Screen.viewFrom.y - y[i]) * (Screen.viewFrom.y - y[i])

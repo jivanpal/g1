@@ -8,6 +8,11 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
+/**
+ * The viewport of the ship, contains the camera and all objects to be rendered by it
+ * @author Dominic
+ *
+ */
 public class Screen extends JPanel implements KeyListener{
 	
 	private double sleepTime = 1000/GameLogic.Global.REFRESH_RATE, lastRefresh = 0;
@@ -66,11 +71,14 @@ public class Screen extends JPanel implements KeyListener{
 		setFocusable(true);
 	}
 	
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	public void paintComponent(Graphics g){
 		
 		//Draw the background
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, (int)GameEngine.screenSize.getWidth(), (int)GameEngine.screenSize.getHeight());
+		g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
 		
 		//Perform camera calculations based on current keypresses
 		camera();
@@ -97,14 +105,14 @@ public class Screen extends JPanel implements KeyListener{
 		g.drawString("x: " + viewFrom.x + ", y: " + viewFrom.y + ", z: " + viewFrom.z + " x: " + camCoords.x + ", y: " + camCoords.y + ", z: " + camCoords.z, 40, 40);
 		g.drawString("x: " + viewTo.x + ", y: " + viewTo.y + ", z: " + viewTo.z, 40, 60);
 		g.drawString("r: " + r + " vert: " + verticalLook, 40, 80);
-		g.drawLine((int)GameEngine.screenSize.getWidth()/2 - 5, (int)GameEngine.screenSize.getHeight()/2, (int)GameEngine.screenSize.getWidth()/2 + 5, (int)GameEngine.screenSize.getHeight()/2);
-		g.drawLine((int)GameEngine.screenSize.getWidth()/2, (int)GameEngine.screenSize.getHeight()/2 - 5, (int)GameEngine.screenSize.getWidth()/2, (int)GameEngine.screenSize.getHeight()/2 + 5);
+		g.drawLine((int)getWidth()/2 - 5, (int)getHeight()/2, (int)getWidth()/2 + 5, (int)getHeight()/2);
+		g.drawLine((int)getWidth()/2, (int)getHeight()/2 - 5, (int)getWidth()/2, (int)getHeight()/2 + 5);
 		g.drawString("V: " + V.x + ", " + V.y + ", " + V.z, 40, 100);
 		g.drawString("U: " + U.x + ", " + U.y + ", " + U.z, 40, 120);
 		g.drawString("N: " + N.x + ", " + N.y + ", " + N.z, 40, 140);
 		
 		g.setColor(Color.RED);
-		Point origin = new Point(GameEngine.screenSize.getWidth() - 40, 40, 1);
+		Point origin = new Point(getWidth() - 40, 40, 1);
 		Point uLine = (new Point(0, 0, 0)).pointPlusVector(U.scale(20, 20, 20));
 		Point uLine2 = Matrix.multiplyPoint(CM, uLine);
 		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (uLine2.x)), (int)(origin.y + (-uLine2.y)));
@@ -120,6 +128,9 @@ public class Screen extends JPanel implements KeyListener{
 		sleepAndRefresh();
 	}
 	
+	/**
+	 * If it has been longer than the sleepTime since the last refresh, repaint is called
+	 */
 	public void sleepAndRefresh(){
 		while(true){
 			if(System.currentTimeMillis() - lastRefresh > sleepTime){
@@ -138,7 +149,9 @@ public class Screen extends JPanel implements KeyListener{
 		}
 	}
 	
-	//Create the order that the polygons should be drawn in in order to make sure hidden sides are hidden
+	/**
+	 * Create the order that the polygons should be drawn in in order to make sure hidden sides are hidden
+	 */
 	private void setDrawOrder(){
 		double[] k = new double[nPoly];
 		drawOrder = new int[nPoly];
@@ -166,12 +179,18 @@ public class Screen extends JPanel implements KeyListener{
 		}
 	}
 	
+	/**
+	 * Sets the light position
+	 */
 	private void setLight(){
 		lightDir.x = mapSize/2 - (mapSize/2 + Math.cos(lightPosition) * mapSize * 10);
 		lightDir.y = mapSize/2 - (mapSize/2 + Math.sin(lightPosition) * mapSize * 10);
 		lightDir.z = -200;
 	}
 	
+	/**
+	 * Updates the camera vectors when keys are pressed
+	 */
 	private void camera(){
 		
 		//Forwards
@@ -243,22 +262,17 @@ public class Screen extends JPanel implements KeyListener{
 		//Generate CM matrix for transforming points from global coordinate system to camera coordinate system
 		CM = Matrix.getCM(viewFrom, V, U, N, 2);
 	}
-	
-	private void updateVectors(){
-		V = new Vector(cameraSystem[0][0], cameraSystem[0][1], cameraSystem[0][2]);
-		V.normalise();
-		U = new Vector(cameraSystem[1][0], cameraSystem[1][1], cameraSystem[1][2]);
-		U.normalise();
-		N = new Vector(cameraSystem[2][0], cameraSystem[2][1], cameraSystem[2][2]);
-		N.normalise();
-		viewFrom = new Point(cameraSystem[0][3], cameraSystem[1][3], cameraSystem[2][3]);
-		viewTo = viewFrom.pointPlusVector(N);
-	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
 	public void keyTyped(KeyEvent e) {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
 	public void keyPressed(KeyEvent ev) {
 		if(ev.getKeyCode() == KeyEvent.VK_W){
 			s = false;
@@ -294,6 +308,9 @@ public class Screen extends JPanel implements KeyListener{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
 	public void keyReleased(KeyEvent ev) {
 		if(ev.getKeyCode() == KeyEvent.VK_W){
 			w = false;

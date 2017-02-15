@@ -1,11 +1,23 @@
 package Graphics;
 
+/**
+ * Contains calculations required to calculate the position of points in camera space
+ * @author Dominic
+ *
+ */
 public class Calculations {
 	public static double t = 0;
 	public static Vector w1, w2, viewVec, rotateVec, dirVec, planeVec1, planeVec2;
 	public static Plane p;
 	public static Point calcFocusPos;
 	
+	/**
+	 * Calculates the position of a point in camera space from a given global coordinate
+	 * @param viewFrom The position of the camera
+	 * @param viewTo The position the camera is looking at
+	 * @param point The position of the point to be transformed
+	 * @return
+	 */
 	public static Point calcPos(Point viewFrom, Point viewTo, Point point){
 		Point pInCamera = Matrix.multiplyPoint(Screen.CM, point);
 		return new Point((pInCamera.x*1000)/pInCamera.z, (pInCamera.y*1000)/pInCamera.z, pInCamera.z * 1000);

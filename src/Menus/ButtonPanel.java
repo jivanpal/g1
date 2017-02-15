@@ -2,6 +2,8 @@ package Menus;
 
 import javax.swing.JPanel;
 
+import ClientNetworking.Client;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,6 +13,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  * The Main Menu of the game.
@@ -20,6 +23,7 @@ import javax.swing.JLabel;
 // TODO Maybe an animated background
 public class ButtonPanel extends JPanel {
 	private MainMenu menu;
+	public Client client;
 
 	/**
 	 * Constructor for the main menu. Adds the buttons and how it looks in the
@@ -31,6 +35,14 @@ public class ButtonPanel extends JPanel {
 	public ButtonPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
+		String name = JOptionPane.showInputDialog(this, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
+		while (name.equals("") || name == null) {
+			name = JOptionPane.showInputDialog(this, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
+		}
+		Client client = new Client(name);
+		client.start();
+		client.updateList();
+		this.client = client;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.CENTER;
@@ -41,7 +53,7 @@ public class ButtonPanel extends JPanel {
 		JPanel bpanel = createButtons();
 		bpanel.setOpaque(false);
 		add(bpanel, c);
-		JLabel title = new JLabel("Space Flying 101");
+		JLabel title = new JLabel("<html>Space Flying 101<br><br>Welcome " + name +"</html>");
 		title.setForeground(Color.WHITE);
 		title.setOpaque(false);
 		Font titlefont = title.getFont();
@@ -49,6 +61,7 @@ public class ButtonPanel extends JPanel {
 		c.anchor = GridBagConstraints.NORTH;
 		add(title, c);
 		setBackground(Color.BLACK);
+		
 	}
 
 	/**
@@ -61,7 +74,7 @@ public class ButtonPanel extends JPanel {
 		JPanel panel = new JPanel();
 		JButton play = new JButton("Play");
 		play.addActionListener(e -> {
-			PlayPanel ppanel = new PlayPanel(menu);
+			PlayPanel ppanel = new PlayPanel(menu, client);
 			menu.changeFrame(ppanel);
 		});
 		JButton settings = new JButton("Settings");

@@ -29,17 +29,11 @@ public class PlayPanel extends JPanel {
 	 * @param menu
 	 *            The Main frame of the game
 	 */
-	public PlayPanel(MainMenu menu) {
+	public PlayPanel(MainMenu menu, Client client) {
 		super();
 		this.menu = menu;
-		System.out.print("Enter player name: ");
-		Scanner scan = new Scanner(System.in);
-		String name = scan.nextLine();
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		Client client = new Client(name);
-		client.start();
-		client.updateList();
 		this.client = client;
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.weightx = 0.5;
