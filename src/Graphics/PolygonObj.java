@@ -5,6 +5,11 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.Toolkit;
 
+/**
+ * Creates a polygon for a given side of an object
+ * @author Dominic
+ *
+ */
 public class PolygonObj {
 	private Polygon p;
 	private Color c;
@@ -12,7 +17,13 @@ public class PolygonObj {
 	public double light = 1;
 	public boolean draw = true;
 	
-	public PolygonObj(double[] x, double[] y, Color c, int n){
+	/**
+	 * Creates a polygon from given arrays of x and y coordinates
+	 * @param x An array of all the x-coordinates of the vertices of the polygon
+	 * @param y An array of all the y-coordinates of the vertices of the polygon
+	 * @param c The colour of the polygon
+	 */
+	public PolygonObj(double[] x, double[] y, Color c){
 		p = new Polygon();
 		for(int i = 0; i < x.length; i++){
 			p.addPoint((int)x[i], (int)y[i]);
@@ -20,7 +31,12 @@ public class PolygonObj {
 		this.c = c;
 	}
 	
-	void update(double[] x, double[] y){
+	/**
+	 * Updates the position of the polygon
+	 * @param x The x-coordinates of the polygon
+	 * @param y The y-coordinates of the polygon
+	 */
+	public void update(double[] x, double[] y){
 		p.reset();
 		for(int i = 0; i < x.length; i++){
 			p.xpoints[i] = (int)x[i];
@@ -46,7 +62,11 @@ public class PolygonObj {
 		}
 	}
 	
-	void drawPoly(Graphics g){
+	/**
+	 * Draws the polygon onto the Screen
+	 * @param g The Graphics object
+	 */
+	public void drawPoly(Graphics g){
 		if(draw){
 			g.setColor(new Color((int)(c.getRed() * light), (int)(c.getGreen() * light), (int)(c.getBlue() * light)));
 			g.fillPolygon(p);
