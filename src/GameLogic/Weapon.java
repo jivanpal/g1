@@ -5,10 +5,12 @@ import Physics.*;
 
 /**
  * A class of objects that describe weapons to be added to a ship.
+ * @author Ivan Panchev
+ * @author jivan
  */
 public abstract class Weapon {
 /// FIELDS
-    private Ship        parent;
+  
     private Bullet      bullet;
     private Resource    ammo;
     private int         shieldDamage;
@@ -33,7 +35,6 @@ public abstract class Weapon {
      * @param   cooldown        The cooldown period for the weapon after each use, in seconds.
      */
     public Weapon(
-        Ship        parent,
         Bullet      bullet,
         int         maxAmmo,
         int         initAmmo,
@@ -43,7 +44,6 @@ public abstract class Weapon {
         boolean     autoTarget,
         double      cooldown
     ) {
-        this.parent         = parent;
         this.ammo           = new Resource(maxAmmo, initAmmo);
         this.shieldDamage   = shieldDamage;
         this.shipDamage     = shipDamage;
@@ -55,10 +55,6 @@ public abstract class Weapon {
 /// INSTANCE METHODS
     
 // Getters
-    
-    public Ship getParent() {
-        return parent;
-    }
     
     public Bullet getReferenceBullet() {
         return bullet;

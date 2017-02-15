@@ -1,5 +1,9 @@
 package GameLogic;
-
+/**
+ * A class which represents the shilds of a ship in the game
+ * @author Ivan Panchev
+ *
+ */
 public class Shields {
 	
 	private static final int DEFAULT_SHIELDS_LEVEL = 0;

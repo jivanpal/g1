@@ -15,12 +15,13 @@ import java.util.Set;
 
 /**
  * Class which hold all of the key bindings
- * 
+ * as well as holds thier values on close
  * @author Ivan Panchev
  *
  */
 public class KeyBindings {
-
+	
+	//default values for each action
 	public static final String DEFAULT_FIRE_WEAPON_1_BUTTON = String.valueOf(KeyEvent.VK_1);
 	public static final String DEFAULT_FIRE_WEAPON_2_BUTTON = String.valueOf(KeyEvent.VK_2);
 	public static final String DEFAULT_FIRE_WEAPON_3_BUTTON = String.valueOf(KeyEvent.VK_3);
@@ -34,13 +35,17 @@ public class KeyBindings {
 	public static final String DEFAULT_MANUAL_BUTTON = String.valueOf(KeyEvent.VK_X);
 	public static final String DEFAULT_MANUAL_NEXT_BUTTON = String.valueOf(KeyEvent.VK_Z);
 	public static final String DEFAULT_MANUAL_PREV_BUTTON = String.valueOf(KeyEvent.VK_C);
-
+	
+	//the default filename that the values are saved at 
 	private final static String FILE_NAME = System.getProperty("user.dir") + "\\keybindings.txt";
 	
+	//hashtable which holds the current values
 	private static Properties keyBindings = new Properties();
+	
+	//reader and writer to change and write to the file
 	private static Writer fileWriter;
 	private static Reader fileReader;
-	
+
 	private static void initialiseReader() throws FileNotFoundException{
 		KeyBindings.fileReader = new FileReader(new File(FILE_NAME));
 	}
@@ -49,6 +54,10 @@ public class KeyBindings {
 		KeyBindings.fileWriter = new PrintWriter(new File(FILE_NAME));
 	}
 	
+	//called when the game is started.
+	//if there is a file with key bindings - it sets the current values to those in the file
+	// if there isn't - sets the default values as current and saves them in a file
+	//ideally the defaults are going to be used just once - the first time the game is started
 	public static void setKeyBindings(){
 		
 		try {
@@ -89,50 +98,17 @@ public class KeyBindings {
 		
 	}
 	
-	public static void changeKeyByCurrentValue(String currentValue, int newValue){
-		Set keys = KeyBindings.keyBindings.keySet();
-		Iterator itr = keys.iterator();
-		String key;
-		while(itr.hasNext()){
-			 key = (String) itr.next();
-			 if(keyBindings.getProperty(key).equals(currentValue)){
-				 keyBindings.setProperty(key, String.valueOf(newValue));
-			 }
-		}
-		saveKeyBindingsInFile();
-	}
-	
 	public static void changeKeyByDefaultValue(String defaultValue, int newValue){
 		KeyBindings.keyBindings.setProperty(defaultValue, String.valueOf(newValue));
 	}
 	
 	public static int getCurrentValueByDefault(String defaultValue){
-		Set keys = KeyBindings.keyBindings.keySet();
-		Iterator itr = keys.iterator();
-		String key;
-		int currentKeyCode = -1;
-		while(itr.hasNext()){
-			 key = (String) itr.next();
-			 if(key.equals(defaultValue)){
-				 currentKeyCode = Integer.valueOf(keyBindings.getProperty(key));
-				 break;
-			 }
-		}
-		return currentKeyCode;
-	}
-	
-	public void printKeys(){
-		Set keys = KeyBindings.keyBindings.keySet();
-		Iterator itr = keys.iterator();
-		String key;
-		while(itr.hasNext()){
-			 key = (String) itr.next();
-			 System.out.println(key + "  " + KeyBindings.keyBindings.getProperty(key));
-		}
+		return Integer.valueOf(keyBindings.getProperty(defaultValue));
 	}
 	
 	public static boolean checkIfKeyTaken(int keyCode){
-		return KeyBindings.keyBindings.contains(String.valueOf(keyCode));
+		return keyBindings.containsValue(String.valueOf(keyCode));
+		
 	}
 
 }
