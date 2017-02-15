@@ -80,6 +80,10 @@ public class ClientReceiver extends Thread
 	{
 		clientLobby.setLobby(l);
 	}
+	public void addChangeListener(LobbyListener a)
+	{
+		clientLobby.addChangeListener(a);
+	}
 }
 
 class LobbyContainer
