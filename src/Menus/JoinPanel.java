@@ -63,8 +63,11 @@ public class JoinPanel extends JPanel {
 		model.addColumn("Host");
 		model.addColumn("Players");
 		for (LobbyInfo lobby : lobbies) {
-			if(lobby==null)
+			if(lobby==null) {
+				System.out.println("lobby is null");
 				break;
+			}
+			System.out.println("lobby not null");
 			UUID id = lobby.lobbyID;
 			String host = lobby.host;
 			int number = lobby.playerCount;
