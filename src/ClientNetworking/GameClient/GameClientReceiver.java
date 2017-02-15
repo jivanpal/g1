@@ -2,14 +2,17 @@ package ClientNetworking.GameClient;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class GameClientReceiver extends Thread
 {
 	ObjectInputStream fromServer;
+	private LinkedBlockingQueue<Object> queue;
 
-	GameClientReceiver(ObjectInputStream reader)
+	GameClientReceiver(ObjectInputStream reader, LinkedBlockingQueue<Object> q)
 	{
 		fromServer = reader;
+		queue = q;
 	}
 
 	public void run()
@@ -22,7 +25,7 @@ public class GameClientReceiver extends Thread
 				try
 				{
 					Object inObject = fromServer.readObject();
-					//TYPECAST
+					// TYPECAST
 				}
 				catch (ClassNotFoundException e)
 				{

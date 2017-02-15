@@ -3,6 +3,7 @@ package Menus;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
@@ -15,9 +16,11 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import ClientNetworking.Client;
+import GeneralNetworking.Action;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.LobbyInfo;
 import GeneralNetworking.LobbyList;
+import GeneralNetworking.Player;
 import ServerNetworking.Server;
 
 /**
@@ -123,6 +126,19 @@ public class JoinPanel extends JPanel {
 			menu.changeFrame(ppanel);
 		});
 		JButton join = new JButton("Join");
+		join.addActionListener(e -> {
+			int selected = table.getSelectedRow();
+			LobbyInfo lInfo = lobbies[selected];
+			try
+			{
+				client.send(new Action(lInfo.lobbyID,new Player(client.name,InetAddress.getLocalHost(),false),9));
+			}
+			catch (Exception e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		JButton refresh = new JButton("Refresh");
 		refresh.addActionListener(e -> {
 			//refresh

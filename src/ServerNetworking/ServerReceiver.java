@@ -50,8 +50,8 @@ public class ServerReceiver extends Thread
 				// Action
 				else if (inObject instanceof Action)
 				{
-					System.out.println("action");
 					Action a = (Action) inObject;
+					System.out.println("ACTION "+ a.getPos());
 					for (int i = 0; i < lobbies.size(); i++)
 					{
 						if (lobbies.get(i).getID().equals(a.getID()))
@@ -65,7 +65,7 @@ public class ServerReceiver extends Thread
 								l.add(p);
 							}
 							// KICK PLAYER
-							if (pos == 10)
+							else if (pos == 10)
 							{
 								Player kicked = a.getKicked();
 								l.kick(p, kicked);

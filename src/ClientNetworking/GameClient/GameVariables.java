@@ -1,4 +1,4 @@
-package ClientNetworking.GameHost;
+package ClientNetworking.GameClient;
 
 public class GameVariables
 {

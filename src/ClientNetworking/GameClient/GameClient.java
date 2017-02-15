@@ -8,10 +8,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import ClientNetworking.ClientReceiver;
-import ClientNetworking.ClientSender;
-import ClientNetworking.ClientVariables;
-import ClientNetworking.GameHost.GameVariables;
 import GeneralNetworking.Lobby;
 
 public class GameClient extends Thread
@@ -53,7 +49,7 @@ public class GameClient extends Thread
 		}
 
 		GameClientSender sender = new GameClientSender(toServer,queue);
-		GameClientReceiver receiver = new GameClientReceiver(fromServer);
+		GameClientReceiver receiver = new GameClientReceiver(fromServer,queue);
 
 		// Start the sender and receiver threads
 		sender.start();
