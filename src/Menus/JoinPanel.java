@@ -8,6 +8,7 @@ import java.util.Scanner;
 import java.util.UUID;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,7 +27,7 @@ import ServerNetworking.Server;
  *
  */
 
-// TODO JoinPanel still not yet linked with networking. Errors in sending objects over the network.
+// TODO Joining function
 public class JoinPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
@@ -47,30 +48,23 @@ public class JoinPanel extends JPanel {
 		this.menu = menu;
 		this.client = client;
 		setLayout(new BorderLayout());
-		client.updateList();
-		Scanner s = new Scanner(System.in);
-		String r = s.nextLine();
-		lobbies = client.getLobbyList().getLobbies();
-		System.out.println("lobby 1 host" + lobbies[0].host);
-		//System.out.println(Server.lobbies);
-		System.out.println("Finished updating");
-		//System.out.println(Server.lobbies);
-		
-		
-		//ArrayList<Lobby> lobbies2 = Server.lobbies;
 		model = new DefaultTableModel();
 		model.addColumn("Lobby ID");
 		model.addColumn("Host");
 		model.addColumn("Players");
-		for (LobbyInfo lobby : lobbies) {
-			if(lobby==null)
-				break;
-			UUID id = lobby.lobbyID;
-			String host = lobby.host;
-			int number = lobby.playerCount;
-			Object[] row = { id, host, number+"/8" };
-			model.addRow(row);
+		client.updateList();
+		keepupdating();
+		if (client.getLobbyList().getLobbies().length == 0) {
+			JOptionPane.showMessageDialog(this, "No lobbies are found!", "Lobbies Not Found Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			repaintlobbies();
 		}
+		
+		//System.out.println("lobby 1 host" + lobbies[0].host);
+		//System.out.println(Server.lobbies);
+		System.out.println("Finished updating");
+		//System.out.println(Server.lobbies);
+		//ArrayList<Lobby> lobbies2 = Server.lobbies;
 		table = new JTable(model);
 		JScrollPane pane = new JScrollPane(table);
 		add(pane, BorderLayout.CENTER);
@@ -79,6 +73,39 @@ public class JoinPanel extends JPanel {
 		add(bpanel, BorderLayout.SOUTH);
 		setBackground(Color.black);
 	}
+	
+	public void keepupdating() {
+		long starttime = System.currentTimeMillis();
+		while(client.getLobbyList().getLobbies().length == 0 && (System.currentTimeMillis()-starttime)<3000){
+			
+		}
+	}
+	
+	public void keepupdatingtime() {
+		long starttime = System.currentTimeMillis();
+		while(false || (System.currentTimeMillis()-starttime)<3000){
+			
+		}
+	}
+	
+	public void repaintlobbies() {
+		lobbies = client.getLobbyList().getLobbies();
+		for (int i = model.getRowCount()-1; i > -1; i--) {
+			model.removeRow(i);
+		}
+		for (LobbyInfo lobby : lobbies) {
+			if(lobby==null) {
+				break;
+			}
+			System.out.println("lobby not null");
+			UUID id = lobby.lobbyID;
+			String host = lobby.host;
+			int number = lobby.playerCount;
+			Object[] row = { id, host, number+"/8" };
+			model.addRow(row);
+		}
+	}
+	
 	/**
 	 * Create the buttons for joining, refreshing, and going back to the play
 	 * menu.
@@ -92,11 +119,17 @@ public class JoinPanel extends JPanel {
 
 		JButton backtoplay = new JButton("Back To Play Menu");
 		backtoplay.addActionListener(e -> {
-			PlayPanel ppanel = new PlayPanel(menu);
+			PlayPanel ppanel = new PlayPanel(menu, client);
 			menu.changeFrame(ppanel);
 		});
 		JButton join = new JButton("Join");
 		JButton refresh = new JButton("Refresh");
+		refresh.addActionListener(e -> {
+			//refresh
+			client.updateList();
+			keepupdatingtime();
+			repaintlobbies();
+		});
 		join.setPreferredSize(new Dimension(500, 50));
 		refresh.setPreferredSize(new Dimension(200, 50));
 		backtoplay.setPreferredSize(new Dimension(200, 50));

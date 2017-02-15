@@ -1,7 +1,11 @@
 package GameLogic;
 
 import Physics.Body;
-
+/**
+ * Class which represents the ship object in the game
+ * @author Ivan Panchev
+ *
+ */
 public class Ship extends Body{
 	
 	public static final byte LASER_BLASTER_INDEX = 0;
@@ -10,7 +14,8 @@ public class Ship extends Body{
 	
 	private static final int DEFAULT_HEALTH = 0;
 	private static final int DEFAULT_MAX_HEALTH = 0;
-	private static final int DEFAULT_HEALTH_CHANGE = 0;
+	
+	private String pilotName;
 	
 	private Weapon torpedoWeapon;
 	private Weapon laserBlaster;
@@ -18,9 +23,8 @@ public class Ship extends Body{
 	private Engines engines;
 	private Shields shields;
 	private Resource shipHealth;
-	private Map gameMap;
 	
-	public Ship(Map gameMap){
+	public Ship(String pilotName){
 		//Initialising weapons
 		torpedoWeapon = new TorpedoWeapon(this);
 		laserBlaster = new LaserBlaster(this);
@@ -30,7 +34,14 @@ public class Ship extends Body{
 		engines = new Engines();
 		shields = new Shields();
 		shipHealth = new Resource(DEFAULT_MAX_HEALTH, DEFAULT_HEALTH);
+		
+		//assigning the pilot name to the ship as a way of identifying the ship 
+		this.pilotName = pilotName;
 	
+	}
+	
+	public String getPilotName(){
+		return this.pilotName;
 	}
 	
 	//getters and setters
@@ -58,10 +69,6 @@ public class Ship extends Body{
 		return this.laserBlaster.getAmmoLevel();
 	}
 	
-	public Map getMap() {
-	    return gameMap;
-	}
-	
 	public void increaseFuel(){
 		this.engines.increaseFuel();
 	}
@@ -70,7 +77,7 @@ public class Ship extends Body{
 		this.engines.decreaseFuel();
 	}
 	
-	public void customChnageFuel(int change){
+	public void customChangeFuel(int change){
 		this.engines.customChangeFuel(change);
 	}
 	
@@ -84,5 +91,9 @@ public class Ship extends Body{
 	
 	public void customChangeShieldsLevel(int change){
 		this.shields.cusomChangeShieldsLevel(change);
+	}
+	
+	public void fire(int weaponIndex) {
+	    // TODO Implement this method
 	}
 }

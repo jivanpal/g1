@@ -125,7 +125,7 @@ public class Vector {
         return z;
     }
 
-    // Properties / Nullary Methods
+// Properties / Nullary Methods
 
     /**
      * Get the length/norm/magnitude of the vector.
@@ -220,5 +220,20 @@ public class Vector {
     public Vector modulo(Vector v) {
         return new Vector(x % v.getX() + (x % v.getX() < 0 ? v.getX() : 0),
                 y % v.getY() + (y % v.getY() < 0 ? v.getY() : 0), z % v.getZ() + (z % v.getZ() < 0 ? v.getZ() : 0));
+    }
+    
+    /**
+     * Get the angle that this vector makes with another vector.
+     * @param   v   The other vector.
+     * @return the non-reflex angle spanned in the plane of the two vectors when they
+     *      are placed tip-to-tip with each other, measured in radians. As an example,
+     *      if <i>u</i> = (2, 0, 0), and <i>v</i> = (-5, 5, 0), then <i>u</i>.angleWith(<i>v</i>)
+     *      will return the double-approximation of 3π/4. Since this value is computed
+     *      via the dot product, and the dot product is commutative, this operator is
+     *      also commutative, <i>i.e.</i> order does not matter; for any <i>u</i> and
+     *      <i>v</i>, <i>u</i>.angleWith(<i>v</i>) is equal to <i>v</i>.angleWith(<i>u</i>). 
+     */
+    public double angleWith(Vector v) {
+        return Math.acos(this.dot(v) / ( this.length() * v.length() ));
     }
 }

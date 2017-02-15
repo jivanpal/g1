@@ -1,4 +1,4 @@
-package UI;
+package Views;
 
 import UI.ResourcesModel;
 import UI.ResourcesPresenter;
@@ -6,10 +6,10 @@ import UI.ResourcesPresenter;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 /**
  * Created by James on 27/01/17.
+ * A view which shows all relevant information about the ships resources (health, shields and fuel levels).
  */
 public class ResourcesView extends JPanel {
     private ResourcesPresenter presenter;

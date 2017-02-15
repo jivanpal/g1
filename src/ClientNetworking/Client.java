@@ -112,6 +112,8 @@ public class Client extends Thread
 	{
 		clientQueue.offer(new Action(getLobby().getID(),presser,kicked,10));
 	}
-
-
-}
+	public void addLobbyListener(LobbyListener a)
+	{
+		receiver.addChangeListener(a);
+	}
+} 

@@ -16,11 +16,8 @@ public class LaserBlaster extends Weapon {
     private static final boolean    AUTO_RELOAD     = true;
     private static final double     COOLDOWN        = 0.01;
     
-    public LaserBlaster(
-        Ship parent
-    ) {
+    public LaserBlaster(){
         super(
-            parent,
             REFERENCE_BULLET,
             MAX_AMMO,
             INIT_AMMO,

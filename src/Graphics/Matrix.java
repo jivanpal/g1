@@ -1,17 +1,33 @@
 package Graphics;
 
+/**
+ * Class to access different matrices (represented by double[][]) and calculations involving matrices
+ * @author Dominic
+ *
+ */
 public class Matrix {
-	static int[][] identityMatrix = new int[][]{
+	
+	public static int[][] identityMatrix = new int[][]{
 		{1, 0, 0, 0},
 		{0, 1, 0, 0},
 		{0, 0, 1, 0},
 		{0, 0, 0, 1}
 	};
 	
+	/**
+	 * @return The identity matrix
+	 */
 	public static int[][] getIdentityMatrix(){
 		return identityMatrix;
 	}
 	
+	/**
+	 * Creates a translation matrix for given x, y and z values
+	 * @param x Transformation in the x-direction
+	 * @param y Transformation in the y-direction
+	 * @param z Transformation in the z-direction
+	 * @return Returns the translation matrix
+	 */
 	public static double[][] getTranslationMatrix(double x, double y, double z){
 		return new double[][]{
 			{1, 0, 0, x},
@@ -21,6 +37,13 @@ public class Matrix {
 		};
 	}
 	
+	/**
+	 * Creates a scaling matrix for given x, y and z values
+	 * @param x The scale factor in the x direction
+	 * @param y The scale factor in the y direction
+	 * @param z The scale factor in the z direction
+	 * @return Returns the scaling matrix
+	 */
 	public static double[][] getScalingMatrix(double x, double y, double z){
 		return new double[][]{
 			{x, 0, 0, 0},
@@ -30,6 +53,11 @@ public class Matrix {
 		};
 	}
 	
+	/**
+	 * Creates a rotation matrix around the x axis and the origin
+	 * @param angle The angle of rotation
+	 * @return Returns the rotation matrix
+	 */
 	public static double[][] getRotationMatrixX(double angle){
 		return new double[][]{
 			{1, 0, 0, 0},
@@ -39,6 +67,11 @@ public class Matrix {
 		};
 	}
 	
+	/**
+	 * Creates a rotation matrix around the y axis and the origin
+	 * @param angle The angle of rotation
+	 * @return Returns the rotation matrix
+	 */
 	public static double[][] getRotationMatrixY(double angle){
 		return new double[][]{
 			{Math.cos(angle), 0, Math.sin(angle), 0},
@@ -48,6 +81,11 @@ public class Matrix {
 		};
 	}
 	
+	/**
+	 * Creates a rotation matrix around the z axis and the origin
+	 * @param angle The angle of rotation
+	 * @return Returns the rotation matrix
+	 */
 	public static double[][] getRotationMatrixZ(double angle){
 		return new double[][]{
 			{Math.cos(angle), -Math.sin(angle), 0, 0},
@@ -57,6 +95,12 @@ public class Matrix {
 		};
 	}
 	
+	/**
+	 * Creates a rotation matrix around a given axis and the origin
+	 * @param angle The angle of rotation
+	 * @param v The vector you wish to rotate around
+	 * @return The rotation matrix
+	 */
 	public static double[][] getRotationMatrix(double angle, Vector v){
 		double[][] m = new double[4][4];
 		m[0][0] = Math.cos(angle) + v.x * v.x * (1 - Math.cos(angle));
@@ -82,6 +126,21 @@ public class Matrix {
 		return m;
 	}
 	
+//	//TODO: Fix Rotation around an arbitary axis for a given point in space
+//	public static double[][] getRotationMatrix(double angle, Vector v, Point p){
+//		double[][] m = Matrix.multiply(getTranslationMatrix(p.x, p.y, p.z), getRotationMatrixX(angle));
+//		m = Matrix.multiply(m, getRotationMatrixY(angle));
+//		
+//		return m;
+//	}
+	
+	/**
+	 * Creates the camera matrix from its current position, view position and U vector
+	 * @param viewFrom The position of the camera
+	 * @param viewTo The point the camera is looking at
+	 * @param U The Up vector of the camera
+	 * @return The camera matrix
+	 */
 	public static double[][] getCameraMatrix(Point viewFrom, Point viewTo, Vector U){
 		Vector N = viewFrom.pointMinusPoint(viewTo);
 		N.normalise();
@@ -103,6 +162,12 @@ public class Matrix {
 		return m;
 	}
 	
+	/**
+	 * Returns the product of two matrices
+	 * @param m1 The first matrix to be multiplied
+	 * @param m2 The second matrix to be multiplies
+	 * @return The product of the two matrices
+	 */
 	public static double[][] multiply(double[][] m1, double[][] m2){
 		if(m1[0].length == m2.length){
 			double[][] ans = new double[m1.length][m2[0].length];
@@ -122,22 +187,45 @@ public class Matrix {
 		}
 	}
 	
+	/**
+	 * Returns the matrix that results from a vector being multiplied by a matrix
+	 * @param m1 The matrix to be multiplied
+	 * @param v The vector to be multiplied
+	 * @return The resulting matrix
+	 */
 	public static double[][] multiplyVector2(double[][] m1, Vector v){
 		double[][] m2 = new double[][] {{v.x}, {v.y}, {v.z}, {v.h}};
 		return multiply(m1, m2);
 	}
 	
+	/**
+	 * Returns the vector that results from a matrix being multiplied by a vector
+	 * @param m1 The matrix to be multiplied
+	 * @param v The vector to be multiplied
+	 * @return The resulting vector
+	 */
 	public static Vector multiplyVector(double[][] m1, Vector v){
 		double[][] m2 = multiplyVector2(m1, v);
 		return new Vector(m2[0][0], m2[1][0], m2[2][0]);
 	}
 	
+	/**
+	 * Returns the point that results from a matrix being multiplied by a point
+	 * @param m1 The matrix to be multiplied
+	 * @param p The point to be multiplied
+	 * @return The resulting point
+	 */
 	public static Point multiplyPoint(double[][] m1, Point p){
 		double[][] m2 = new double[][] {{p.x}, {p.y}, {p.z}, {p.h}};
 		double[][] m3 = multiply(m1, m2);
 		return new Point(m3[0][0], m3[1][0], m3[2][0]);
 	}
 	
+	/**
+	 * Calculates the inverse of a given matrix
+	 * @param m Matrix to be inverted
+	 * @return Inverse of the given matrix
+	 */
 	public static double[][] inverse(double[][] m){
 		int n = m.length;
 		double[][] a = new double[n][n];
@@ -217,14 +305,26 @@ public class Matrix {
 //		return m;
 	}
 	
-	public static double[][] getTM(Point p){
+	/**
+	 * Creates the translation matrix for the camera
+	 * @param p The position of the camera
+	 * @return Camera translation matrix
+	 */
+	private static double[][] getTM(Point p){
 		return new double[][]{	{1, 0, 0, 0-p.x},
 								{0, 1, 0, 0-p.y},
 								{0, 0, 1, 0-p.z},
 								{0, 0, 0, 1}};
 	}
 	
-	public static double[][] getR(Vector V, Vector U, Vector N){
+	/**
+	 * Creates the rotation matrix to align the camera with the global xyz axes
+	 * @param V Camera V vector
+	 * @param U Camera U vector
+	 * @param N Camera N vector
+	 * @return Camera rotation matrix
+	 */
+	private static double[][] getR(Vector V, Vector U, Vector N){
 		double lengthV = Math.sqrt(V.x * V.x + V.y * V.y + V.z * V.z);
 		double lengthU = Math.sqrt(U.x * U.x + U.y * U.y + U.z * U.z);
 		double lengthN = Math.sqrt(N.x * N.x + N.y * N.y + N.z * N.z);
@@ -235,24 +335,39 @@ public class Matrix {
 								{0, 0, 0, 1}};
 	}
 	
-	public static double[][] getSM(){
+	/**
+	 * Creates a matrix to convert from the left handed coordinate system to the right handed coordinate system
+	 * @return Camera conversion matrix
+	 */
+	private static double[][] getSM(){
 		return new double[][] { {-1, 0, 0, 0},
 								{0, 1, 0, 0},
 								{0, 0, 1, 0},
 								{0, 0, 0, 1}};
 	}
 	
-	public static double[][] getPper(double fov){
+	/**
+	 * Creates a perspective projection matrix
+	 * @param fov The distance from the camera to the projection plane
+	 * @return
+	 */
+	private static double[][] getPper(double fov){
 		return new double[][] { {1, 0, 0, 0},
 								{0, 1, 0, 0},
 								{0, 0, 1, 0},
 								{0, 0, 1/fov, 0}};
 	}
 	
+	/**
+	 * Creates the matrix to convert from camera space to global coordinates
+	 * @param p The position of the camera
+	 * @param V The camera's V vector
+	 * @param U The camera's U vector
+	 * @param N The camera's N vector
+	 * @param fov The distance from the camera to the projection plane
+	 * @return The cameraToWorld conversion matrix
+	 */
 	public static double[][] getCM(Point p, Vector V, Vector U, Vector N, double fov){
-//		double[][] m = Matrix.multiply(getPper(fov), getSM());
-//		m = Matrix.multiply(m, getR(V, U, N));
-//		m = Matrix.multiply(m, getTM(p));
 		
 		double[][] m = multiply(getTM(p), getR(V, U, N));
 		m = multiply(m, getSM());
@@ -260,6 +375,10 @@ public class Matrix {
 		return m;
 	}
 	
+	/**
+	 * Prints out a given matrix
+	 * @param m The matrix to be printed
+	 */
 	public static void printMatrix(double[][] m){
 		System.out.println("-------");
 		for(int i = 0; i < m.length; i++){

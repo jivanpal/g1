@@ -10,10 +10,9 @@ import Physics.*;
  * 3D rather than simply 2D.
  * @author jivan
  */
-public class Map {
+public class Map extends ArrayList<Body> {
 /// FIELDS
     private Vector dimensions;
-    private ArrayList<Body> mapList;
     
 /// CONSTRUCTORS
     
@@ -38,11 +37,13 @@ public class Map {
     
 /// INSTANCE METHODS
     
+// Getters
+    
     /**
-     * Get an element from the map.
+     * Get the dimensions of the map.
      */
-    public Body get(int index) {
-        return mapList.get(index);
+    public Vector getDimensions() {
+    	return dimensions;
     }
     
     /**
@@ -62,11 +63,41 @@ public class Map {
     }
     
     /**
-     * Add a body to the map.
-     * @param b
+     * Get the direction vector representing the shortest path from one body
+     * on this map to another on this map.
+     * @param   a   The origin body.
+     * @param   b   The destination body.
+     * @return  the shortest vector from <i>a</i> to <i>b</i>. Note that this
+     *      function is anti-commutative; for all <i>a</i> and <i>b</i>, we have
+     *      shortestPath(<i>a</i>, <i>b</i>) = -shortestPath(<i>b</i>, <i>a</i>).
      */
-    public void add(Body b) {
-        mapList.add(b);
+    public Vector shortestPath(Body a, Body b) {
+        if (this.contains(a)) {
+            if (this.contains(b)) {
+                Vector lineWithinBounds = b.getPosition().minus(a.getPosition());
+                return new Vector(
+                    lineWithinBounds.getX() > dimensions.getX() ?
+                        dimensions.getX() - lineWithinBounds.getX():
+                        lineWithinBounds.getX(),
+                    lineWithinBounds.getY() > dimensions.getY() ?
+                        dimensions.getY() - lineWithinBounds.getY():
+                        lineWithinBounds.getY(),
+                    lineWithinBounds.getZ() > dimensions.getZ() ?
+                        dimensions.getZ() - lineWithinBounds.getZ():
+                        lineWithinBounds.getZ()
+                );
+            } else {
+                throw new IllegalArgumentException(
+                    "The second body specified does not reside on this map."
+                + "\nThe body in question is '"+b+"'."
+                );
+            }
+        } else {
+            throw new IllegalArgumentException(
+                "The first body specified does not reside on this map."
+            + "\nThe body in question is '"+a+"'."
+            );
+        }
     }
     
     /**
@@ -74,19 +105,15 @@ public class Map {
      */
     public void update() {
         // Get rid of destroyed bodies
-        for(int i = mapList.size() - 1; i >= 0; i--) {
-            if(!mapList.get(i).exists()) {
-                mapList.remove(i);
+        for(int i = size() - 1; i >= 0; i--) {
+            if( get(i).isDestroyed() ) {
+                remove(i);
             }
         }
         
-        // Normalise each body's position vector
-        for (Body b : mapList) {
+        // Normalise each body's position vector and update its state.
+        for (Body b : this) {
             b.setPosition(this.normalise(b.getPosition()));
-        }
-        
-        // Update each body's state
-        for (Body b : mapList) {
             b.update();
         }
     }

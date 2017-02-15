@@ -15,12 +15,14 @@ import Geometry.Vector;
 import GameLogic.*;
 
 
+
 public class MapServer extends Thread
 {
 	private final int PORT = 1273;
 	private final Lobby lobby;
 	private ServerSocket serverSocket = null;
 	private Map gameMap = new Map(10000,10000,10000);
+
 	public MapServer(Lobby l)
 	{
 		lobby = l;
