@@ -27,7 +27,7 @@ import ServerNetworking.Server;
  *
  */
 
-// TODO JoinPanel still not yet linked with networking. Errors in sending objects over the network.
+// TODO Joining function
 public class JoinPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
@@ -57,18 +57,7 @@ public class JoinPanel extends JPanel {
 		if (client.getLobbyList().getLobbies().length == 0) {
 			JOptionPane.showMessageDialog(this, "No lobbies are found!", "Lobbies Not Found Error", JOptionPane.ERROR_MESSAGE);
 		} else {
-			lobbies = client.getLobbyList().getLobbies();
-			for (LobbyInfo lobby : lobbies) {
-				if(lobby==null) {
-					break;
-				}
-				System.out.println("lobby not null");
-				UUID id = lobby.lobbyID;
-				String host = lobby.host;
-				int number = lobby.playerCount;
-				Object[] row = { id, host, number+"/8" };
-				model.addRow(row);
-			}
+			repaintlobbies();
 		}
 		
 		//System.out.println("lobby 1 host" + lobbies[0].host);
@@ -92,6 +81,31 @@ public class JoinPanel extends JPanel {
 		}
 	}
 	
+	public void keepupdatingtime() {
+		long starttime = System.currentTimeMillis();
+		while(false || (System.currentTimeMillis()-starttime)<3000){
+			
+		}
+	}
+	
+	public void repaintlobbies() {
+		lobbies = client.getLobbyList().getLobbies();
+		for (int i = model.getRowCount()-1; i > -1; i--) {
+			model.removeRow(i);
+		}
+		for (LobbyInfo lobby : lobbies) {
+			if(lobby==null) {
+				break;
+			}
+			System.out.println("lobby not null");
+			UUID id = lobby.lobbyID;
+			String host = lobby.host;
+			int number = lobby.playerCount;
+			Object[] row = { id, host, number+"/8" };
+			model.addRow(row);
+		}
+	}
+	
 	/**
 	 * Create the buttons for joining, refreshing, and going back to the play
 	 * menu.
@@ -105,14 +119,16 @@ public class JoinPanel extends JPanel {
 
 		JButton backtoplay = new JButton("Back To Play Menu");
 		backtoplay.addActionListener(e -> {
-			PlayPanel ppanel = new PlayPanel(menu);
+			PlayPanel ppanel = new PlayPanel(menu, client);
 			menu.changeFrame(ppanel);
 		});
 		JButton join = new JButton("Join");
 		JButton refresh = new JButton("Refresh");
 		refresh.addActionListener(e -> {
 			//refresh
-			
+			client.updateList();
+			keepupdatingtime();
+			repaintlobbies();
 		});
 		join.setPreferredSize(new Dimension(500, 50));
 		refresh.setPreferredSize(new Dimension(200, 50));
