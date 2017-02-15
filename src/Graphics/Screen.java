@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 
 public class Screen extends JPanel implements KeyListener{
 	
+	public static int width, height;
+	
 	private double sleepTime = 1000/GameLogic.Global.REFRESH_RATE, lastRefresh = 0;
 	public static Point viewFrom;
 	public static Point viewTo;
@@ -27,7 +29,9 @@ public class Screen extends JPanel implements KeyListener{
 	int drawOrder[];
 	boolean w, a, s, d, e, q;
 	
-	public Screen(){
+	public Screen(int width, int height){
+		this.width = width;
+		this.height = height;
 		
 		//Create starting vectors
 		viewFrom = new Point(0, 0, 0);
@@ -70,7 +74,7 @@ public class Screen extends JPanel implements KeyListener{
 		
 		//Draw the background
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, (int)GameEngine.screenSize.getWidth(), (int)GameEngine.screenSize.getHeight());
+		g.fillRect(0, 0, (int)width, (int)height);
 		
 		//Perform camera calculations based on current keypresses
 		camera();
@@ -97,14 +101,14 @@ public class Screen extends JPanel implements KeyListener{
 		g.drawString("x: " + viewFrom.x + ", y: " + viewFrom.y + ", z: " + viewFrom.z + " x: " + camCoords.x + ", y: " + camCoords.y + ", z: " + camCoords.z, 40, 40);
 		g.drawString("x: " + viewTo.x + ", y: " + viewTo.y + ", z: " + viewTo.z, 40, 60);
 		g.drawString("r: " + r + " vert: " + verticalLook, 40, 80);
-		g.drawLine((int)GameEngine.screenSize.getWidth()/2 - 5, (int)GameEngine.screenSize.getHeight()/2, (int)GameEngine.screenSize.getWidth()/2 + 5, (int)GameEngine.screenSize.getHeight()/2);
-		g.drawLine((int)GameEngine.screenSize.getWidth()/2, (int)GameEngine.screenSize.getHeight()/2 - 5, (int)GameEngine.screenSize.getWidth()/2, (int)GameEngine.screenSize.getHeight()/2 + 5);
+		g.drawLine((int)width/2 - 5, (int)height/2, (int)width/2 + 5, (int)height/2);
+		g.drawLine((int)width/2, (int)height/2 - 5, (int)width/2, (int)height/2 + 5);
 		g.drawString("V: " + V.x + ", " + V.y + ", " + V.z, 40, 100);
 		g.drawString("U: " + U.x + ", " + U.y + ", " + U.z, 40, 120);
 		g.drawString("N: " + N.x + ", " + N.y + ", " + N.z, 40, 140);
 		
 		g.setColor(Color.RED);
-		Point origin = new Point(GameEngine.screenSize.getWidth() - 40, 40, 1);
+		Point origin = new Point(width - 40, 40, 1);
 		Point uLine = (new Point(0, 0, 0)).pointPlusVector(U.scale(20, 20, 20));
 		Point uLine2 = Matrix.multiplyPoint(CM, uLine);
 		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (uLine2.x)), (int)(origin.y + (-uLine2.y)));

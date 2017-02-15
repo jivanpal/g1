@@ -9,7 +9,7 @@ public class GameEngine{
 	
 	public static void main(String[] args){
 		JFrame frame = new JFrame();
-		Screen screen = new Screen();
+		Screen screen = new Screen(1920, 1080);
 		frame.add(screen);
 		frame.setUndecorated(true);
 		frame.setSize(screenSize);
