@@ -24,7 +24,7 @@ import ServerNetworking.Server;
 
 // TODO Invite function
 // TODO Kick function
-public class HostLobbyPanel extends JPanel {
+public class ClientLobbyPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
 	private Player player;
@@ -39,21 +39,14 @@ public class HostLobbyPanel extends JPanel {
 	 * @param client
 	 *            The Client Thread which connects to the Server
 	 */
-	public HostLobbyPanel(MainMenu menu, Client client) {
+	public ClientLobbyPanel(MainMenu menu, Client client, Lobby lobby) {
 		super();
 		this.menu = menu;
 		this.client = client;
 		setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
-		try {
-			Lobby lobby = new Lobby(client.name, InetAddress.getLocalHost());
-			client.setLobby(lobby);
-			client.send(lobby);
-			
-			player = lobby.getPlayers()[0];
-		} catch (Exception e) {
-
-		}
+		//get lobby to join
+		
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
