@@ -5,6 +5,8 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import GameLogic.KeyBindings;
+
 /**
  * The Main frame of the game
  * 
@@ -41,6 +43,8 @@ public class MainMenu {
 	}
 
 	public static void main(String[] args) {
+		KeyBindings.setKeyBindings();
 		MainMenu menu = new MainMenu();
+		
 	}
 }

@@ -48,8 +48,6 @@ public class JoinPanel extends JPanel {
 		this.client = client;
 		setLayout(new BorderLayout());
 		client.updateList();
-		Scanner s = new Scanner(System.in);
-		String r = s.nextLine();
 		lobbies = client.getLobbyList().getLobbies();
 		System.out.println("lobby 1 host" + lobbies[0].host);
 		//System.out.println(Server.lobbies);
@@ -64,7 +62,6 @@ public class JoinPanel extends JPanel {
 		model.addColumn("Players");
 		for (LobbyInfo lobby : lobbies) {
 			if(lobby==null) {
-				System.out.println("lobby is null");
 				break;
 			}
 			System.out.println("lobby not null");
