@@ -54,6 +54,44 @@ public class Map extends ArrayList<Body> {
     }
     
     /**
+     * Get the direction vector representing the shortest path from one body
+     * on this map to another on this map.
+     * @param   a   The origin body.
+     * @param   b   The destination body.
+     * @return  the shortest vector from <i>a</i> to <i>b</i>. Note that this
+     *      function is anti-commutative; for all <i>a</i> and <i>b</i>, we have
+     *      shortestPath(<i>a</i>, <i>b</i>) = -shortestPath(<i>b</i>, <i>a</i>).
+     */
+    public Vector shortestPath(Body a, Body b) {
+        if (this.contains(a)) {
+            if (this.contains(b)) {
+                Vector lineWithinBounds = b.getPosition().minus(a.getPosition());
+                return new Vector(
+                    lineWithinBounds.getX() > dimensions.getX() ?
+                        dimensions.getX() - lineWithinBounds.getX():
+                        lineWithinBounds.getX(),
+                    lineWithinBounds.getY() > dimensions.getY() ?
+                        dimensions.getY() - lineWithinBounds.getY():
+                        lineWithinBounds.getY(),
+                    lineWithinBounds.getZ() > dimensions.getZ() ?
+                        dimensions.getZ() - lineWithinBounds.getZ():
+                        lineWithinBounds.getZ()
+                );
+            } else {
+                throw new IllegalArgumentException(
+                    "The second body specified does not reside on this map."
+                + "\nThe body in question is '"+b+"'."
+                );
+            }
+        } else {
+            throw new IllegalArgumentException(
+                "The first body specified does not reside on this map."
+            + "\nThe body in question is '"+a+"'."
+            );
+        }
+    }
+    
+    /**
      * Update the state of the map.
      */
     public void update() {
@@ -64,13 +102,9 @@ public class Map extends ArrayList<Body> {
             }
         }
         
-        // Normalise each body's position vector
+        // Normalise each body's position vector and update its state.
         for (Body b : this) {
             b.setPosition(this.normalise(b.getPosition()));
-        }
-        
-        // Update each body's state
-        for (Body b : this) {
             b.update();
         }
     }
