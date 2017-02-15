@@ -1,5 +1,6 @@
 package GameLogic;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,7 +12,6 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 
-import com.sun.glass.events.KeyEvent;
 
 /**
  * Class which hold all of the key bindings
