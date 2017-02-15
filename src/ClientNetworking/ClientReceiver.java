@@ -11,7 +11,7 @@ public class ClientReceiver extends Thread
 {
 
 	ObjectInputStream fromServer;
-	public Lobby clientLobby;
+	public LobbyContainer clientLobby = new LobbyContainer();
 	private String nickname;
 	public LinkedBlockingQueue<Object> clientQueue;
 	public LobbyList lobbyList;
@@ -37,10 +37,9 @@ public class ClientReceiver extends Thread
 					// LOBBY
 					if (inObject instanceof Lobby)
 					{
-						clientLobby = (Lobby) inObject;
-						if (clientLobby.started)
+						clientLobby.setLobby((Lobby) inObject);
+						if (clientLobby.getLobby().started)
 							System.out.println("start game");
-						clientLobby.change();
 					}
 					// INVITE
 					else if (inObject instanceof Invite)
@@ -55,6 +54,7 @@ public class ClientReceiver extends Thread
 					{
 						LobbyList lList = (LobbyList) inObject;
 						lobbyList.change(lList.getLobbies());
+						System.out.println("clientrec: "+lList.getLobbies().length);
 					}
 				}
 				catch (ClassNotFoundException e)
@@ -75,10 +75,39 @@ public class ClientReceiver extends Thread
 	}
 	public Lobby getLobby()
 	{
-		return clientLobby;
+		return clientLobby.getLobby();
 	}
 	public void setLobby(Lobby l)
 	{
-		clientLobby = l;
+		clientLobby.setLobby(l);
+	}
+	public void addChangeListener(LobbyListener a)
+	{
+		clientLobby.addChangeListener(a);
+	}
+}
+
+class LobbyContainer
+{
+	private Lobby lobby = null;
+	private ArrayList<LobbyListener> listeners = new ArrayList<>();
+	public LobbyContainer()
+	{
+	}
+	public void setLobby(Lobby l)
+	{
+		lobby=l;
+		for(LobbyListener lListener : listeners)
+		{
+			lListener.lobbyChanged();
+		}
+	}
+	public Lobby getLobby()
+	{
+		return lobby;
+	}
+	public void addChangeListener(LobbyListener a)
+	{
+		listeners.add(a);
 	}
 }

@@ -77,7 +77,7 @@ public class KeyBindings {
 		keyBindings.setProperty(DEFAULT_MANUAL_PREV_BUTTON, DEFAULT_MANUAL_PREV_BUTTON);
 	}
 	
-	private static void saveKeyBindingsInFile(){
+	public static void saveKeyBindingsInFile(){
 		try {
 			inisialiseWriter();
 			KeyBindings.keyBindings.store(fileWriter, "");

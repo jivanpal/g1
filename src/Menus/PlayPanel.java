@@ -32,6 +32,7 @@ public class PlayPanel extends JPanel {
 	public PlayPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
+		System.out.print("Enter player name: ");
 		Scanner scan = new Scanner(System.in);
 		String name = scan.nextLine();
 		setLayout(new GridBagLayout());

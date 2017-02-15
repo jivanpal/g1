@@ -5,14 +5,16 @@ import Interfaces.ShipPresenter;
 import javax.swing.*;
 
 /**
- * Created by james on 08/02/17.
+ * Created by James on 08/02/17.
+ * View which shows the current speed of the ship.
  */
 public class SpeedometerView extends JPanel {
-    private ShipPresenter presenter;
-
     private JLabel speedometerLabel;
     private JLabel currentSpeedLabel;
 
+    /**
+     * Creates a new SpeedometerView. Speed defaults to 0.
+     */
     public SpeedometerView() {
         super();
 
@@ -23,15 +25,11 @@ public class SpeedometerView extends JPanel {
         this.add(currentSpeedLabel);
     }
 
-    public void makeUI() {
-
-    }
-
+    /**
+     * Update the speed label to a new value.
+     * @param newLevel The new value for the speed label.
+     */
     public void updateSpeedLevel(float newLevel) {
         this.currentSpeedLabel.setText(String.valueOf(newLevel));
-    }
-
-    public void setPresenter(ShipPresenter presenter) {
-        this.presenter = presenter;
     }
 }

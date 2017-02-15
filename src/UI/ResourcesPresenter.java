@@ -1,5 +1,7 @@
 package UI;
 
+import Views.ResourcesView;
+
 /**
  * Created by James on 28/01/17.
  */
