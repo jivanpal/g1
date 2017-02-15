@@ -5,11 +5,13 @@ import Graphics.Screen;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Created by James on 01/02/17.
  */
-public class PilotView extends JPanel {
+public class PilotView extends JPanel implements KeyListener{
 
     Screen screen;
 
@@ -46,7 +48,28 @@ public class PilotView extends JPanel {
 
         this.add(UIpanel, BorderLayout.SOUTH);
 
+        addKeyListener(this);
+        setFocusable(true);
     }
 
     public void makeUI() {}
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+        screen.keyTyped(keyEvent);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+        screen.keyPressed(keyEvent);
+
+        if(keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+            System.out.println("Weapon Fired");
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+        screen.keyReleased(keyEvent);
+    }
 }
