@@ -26,9 +26,9 @@ public class Ship extends Body{
 	
 	public Ship(String pilotName){
 		//Initialising weapons
-		torpedoWeapon = new TorpedoWeapon(this);
-		laserBlaster = new LaserBlaster(this);
-		plasmaBlaster = new PlasmaBlaster(this);
+		torpedoWeapon = new TorpedoWeapon();
+		laserBlaster = new LaserBlaster();
+		plasmaBlaster = new PlasmaBlaster();
 		
 		//Initialising other parts
 		engines = new Engines();

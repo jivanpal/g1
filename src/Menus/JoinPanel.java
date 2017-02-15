@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -31,7 +33,7 @@ import ServerNetworking.Server;
  */
 
 // TODO Joining function
-public class JoinPanel extends JPanel {
+public class JoinPanel extends JPanel implements Observer {
 	private MainMenu menu;
 	public Client client;
 	private JTable table;
@@ -153,6 +155,12 @@ public class JoinPanel extends JPanel {
 		panel.add(join, BorderLayout.CENTER);
 		panel.add(refresh, BorderLayout.EAST);
 		return panel;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// Should update the UI here !!!!
+		
 	}
 
 }
