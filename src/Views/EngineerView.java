@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import Graphics.Screen;
 import UI.ResourcesPresenter;
-import UI.ResourcesView;
 
 /**
  * Created by James on 01/02/17.
