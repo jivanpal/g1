@@ -60,14 +60,10 @@ public class PilotView extends JPanel implements KeyListener, Observer{
     }
 
     @Override
-    public void keyTyped(KeyEvent keyEvent) {
-        screen.keyTyped(keyEvent);
-    }
+    public void keyTyped(KeyEvent keyEvent) {}
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        screen.keyPressed(keyEvent);
-
         if(keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
             System.out.println("Weapon Fired");
         }
@@ -75,7 +71,7 @@ public class PilotView extends JPanel implements KeyListener, Observer{
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        screen.keyReleased(keyEvent);
+
     }
 
     @Override
