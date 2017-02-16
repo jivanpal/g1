@@ -13,6 +13,7 @@ import Physics.*;
 public class Map extends ArrayList<Body> {
 /// FIELDS
     private Vector dimensions;
+    private ArrayList<Bot> bots;
     
 /// CONSTRUCTORS
     
@@ -45,6 +46,12 @@ public class Map extends ArrayList<Body> {
     public Vector getDimensions() {
     	return dimensions;
     }
+    
+    public ArrayList<Bot> getBotList() {
+        return bots;
+    }
+    
+// Other methods
     
     /**
      * Given a position vector with any components, convert it to the
@@ -100,6 +107,8 @@ public class Map extends ArrayList<Body> {
         }
     }
     
+// Evolution
+    
     /**
      * Update the state of the map.
      */
@@ -114,6 +123,11 @@ public class Map extends ArrayList<Body> {
         // Normalise each body's position vector and update its state.
         for (Body b : this) {
             b.setPosition(this.normalise(b.getPosition()));
+            b.update();
+        }
+        
+        // Make bots do their thing
+        for (Bot b : bots) {
             b.update();
         }
     }

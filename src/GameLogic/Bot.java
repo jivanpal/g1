@@ -25,6 +25,8 @@ public abstract class Bot {
         } else {
             throw new IllegalArgumentException("The specified body does not exist on the specified map.");
         }
+        
+        map.getBotList().add(this);
     }
     
     /**
@@ -35,6 +37,8 @@ public abstract class Bot {
     public Bot(Map map, int botMapIndex) {
         this.map = map;
         bot = map.get(botMapIndex);
+        
+        map.getBotList().add(this);
     }
     
 /// INSTANCE METHODS
