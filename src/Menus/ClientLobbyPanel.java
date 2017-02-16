@@ -50,7 +50,7 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 		this.player = player;
 		setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
-		//Should set the lobby based on lobbyid or lobby object
+		
 		
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.weightx = 0.5;
@@ -71,6 +71,10 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 		add(inviteplayers, c);
 
 		c.anchor = GridBagConstraints.CENTER;
+		while(client.getLobby() == null) {
+			
+		}
+		client.addLobbyObserver(this);
 		JPanel ppanel = displayplayers();
 		ppanel.setOpaque(false);
 		this.lpanel = ppanel;
@@ -87,9 +91,7 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 		int number = 0;
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 4));
-		while(client.getLobby() == null) {
-			
-		}
+		
 		Player[] players = client.getLobby().getPlayers();
 		for (Player p : players) {
 			int position = number;

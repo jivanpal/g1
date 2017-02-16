@@ -32,8 +32,7 @@ import ServerNetworking.Server;
  *
  */
 
-// TODO Joining function. Erroring when trying to display the clientlobbypanel.
-public class JoinPanel extends JPanel implements Observer {
+public class JoinPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
 	private JTable table;
@@ -53,7 +52,12 @@ public class JoinPanel extends JPanel implements Observer {
 		this.menu = menu;
 		this.client = client;
 		setLayout(new BorderLayout());
-		model = new DefaultTableModel();
+		model = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		model.addColumn("Lobby ID");
 		model.addColumn("Host");
 		model.addColumn("Players");
@@ -160,12 +164,6 @@ public class JoinPanel extends JPanel implements Observer {
 		panel.add(join, BorderLayout.CENTER);
 		panel.add(refresh, BorderLayout.EAST);
 		return panel;
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
-		// Should update the UI here !!!!
-		
 	}
 
 }
