@@ -9,6 +9,8 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 import GameLogic.Map;
+import GameLogic.Ship;
+import Physics.Body;
 
 /**
  * The viewport of the ship, contains the camera and all objects to be rendered by it
@@ -35,10 +37,13 @@ public class Screen extends JPanel{
 	boolean w, a, s, d, e, q;
 	
 	private Map map;
+	private String nickname;
+	private int shipIndex;
 	
-	public Screen(){
+	public Screen(String nickname){
 		
-//		this.map = map;
+		this.nickname = nickname;
+		map = new Map(0, 0, 0);
 		
 		//Create starting vectors
 		viewFrom = new Point(0, 0, 0);
@@ -190,71 +195,8 @@ public class Screen extends JPanel{
 	 */
 	private void camera(){
 		
-		//Forwards
-		if(e){
-//			double[][] translate = Matrix.getTranslationMatrix(N.x * moveSpeed, N.y * moveSpeed, N.z * moveSpeed);
-//			cameraSystem = Matrix.multiply(translate, cameraSystem);
-			Vector move = N.scale(moveSpeed, moveSpeed, moveSpeed);
-			viewFrom = viewFrom.pointPlusVector(move);
-			viewTo = viewFrom.pointPlusVector(N);
-		}
+		Ship ship = (Ship) map.get(shipIndex);
 		
-		//Backwards
-		else if(q){
-//			double[][] translate = Matrix.getTranslationMatrix(N.x * -moveSpeed, N.y * -moveSpeed, N.z * -moveSpeed);
-//			cameraSystem = Matrix.multiply(translate, cameraSystem);
-			Vector move = N.scale(-moveSpeed, -moveSpeed, -moveSpeed);
-			viewFrom = viewFrom.pointPlusVector(move);
-			viewTo = viewFrom.pointPlusVector(N);
-		}
-		
-		//Rotate along N-axis anti-clockwise
-		if(a){
-//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z), Matrix.getRotationMatrix(-horizontalLookSpeed, N)), Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z));
-			double[][] rotate = Matrix.getRotationMatrix(-horizontalLookSpeed, N);
-			U = Matrix.multiplyVector(rotate, U);
-			U.normalise();
-			V = Matrix.multiplyVector(rotate, V);
-			V.normalise();
-		}
-		
-		//Rotate along N-axis clockwise
-		else if(d){
-//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z), Matrix.getRotationMatrix(horizontalLookSpeed, N)), Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z));
-			double[][] rotate = Matrix.getRotationMatrix(horizontalLookSpeed, N);
-			U = Matrix.multiplyVector(rotate, U);
-			U.normalise();
-			V = Matrix.multiplyVector(rotate, V);
-			V.normalise();
-		}
-		
-		//Rotate along the V-axis upwards
-		if(s){
-//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z), Matrix.getRotationMatrix(verticalLookSpeed, V)), Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z));
-			double[][] rotate = Matrix.getRotationMatrix(-verticalLookSpeed, V);
-			N = Matrix.multiplyVector(rotate, N);
-			N.normalise();
-			U = Matrix.multiplyVector(rotate, U);
-			U.normalise();
-			viewTo = viewFrom.pointPlusVector(N);
-		}
-		
-		//Rotate along the V-axis downwards
-		else if(w){
-//			double[][] rotate = Matrix.multiply(Matrix.multiply(Matrix.getTranslationMatrix(-viewFrom.x, -viewFrom.y, -viewFrom.z), Matrix.getRotationMatrix(-verticalLookSpeed, V)), Matrix.getTranslationMatrix(viewFrom.x, viewFrom.y, viewFrom.z));
-			double[][] rotate = Matrix.getRotationMatrix(verticalLookSpeed, V);
-			N = Matrix.multiplyVector(rotate, N);
-			N.normalise();
-			U = Matrix.multiplyVector(rotate, U);
-			U.normalise();
-			viewTo = viewFrom.pointPlusVector(N);
-		}
-		
-		//Update where the camera is looking at
-		
-		//Update U, V and N values
-//		updateVectors();
-//		Matrix.printMatrix(cameraSystem);
 		
 		//Generate CM matrix for transforming points from global coordinate system to camera coordinate system
 		CM = Matrix.getCM(viewFrom, V, U, N, 2);
@@ -262,5 +204,14 @@ public class Screen extends JPanel{
 	
 	public void setMap(Map map){
 		this.map = map;
+		for(Body b : map){
+			if(b.getClass() == Ship.class){
+				Ship s = (Ship)b;
+				if(s.getPilotName().equals(nickname)){
+					shipIndex = map.indexOf(b);
+					break;
+				}
+			}
+		}
 	}
 }
