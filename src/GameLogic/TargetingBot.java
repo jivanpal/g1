@@ -73,17 +73,36 @@ public class TargetingBot extends Bot {
         
         // If the target is in range, fire.
         if (
-               bot.getForwardVector().angleWith(pathToTarget) < IN_RANGE_ANGLE
-            && pathToTarget.length() < IN_RANGE_DISTANCE
+                bot.getForwardVector().angleWith(pathToTarget) < IN_RANGE_ANGLE
+            &&  pathToTarget.length() < IN_RANGE_DISTANCE
         ) {
             bot.fire(Ship.LASER_BLASTER_INDEX);
         }
         
-        // Get some useful vectors for heuristics in the bot's local basis.
-        Vector desiredDirection = bot.getOrientation().inverse().apply(pathToTarget).normalise();
+        // Get some useful vectors for heuristics, described in the bot's local basis.
+        Vector desiredDirection = bot.getOrientation().inverse().apply(pathToTarget);
         
+    // Pilot the bot-ship accordingly.
         
-        // Pilot the bot-ship accordingly.
-        /// STUFF ///
+        if (desiredDirection.getX() > 0) {
+            bot.rollRight();
+        } else if (desiredDirection.getX() < 0) {
+            bot.rollLeft();
+        }
+        
+        if (desiredDirection.getZ() > 0) {
+            bot.pitchUp();
+        } else if (desiredDirection.getZ() < 0) {
+            bot.pitchDown();
+        }
+        
+        // Get ETA until target lies in the bot's x-z plane, in seconds.
+        double timeToTarget = desiredDirection.getY() / bot.getVelocity().getY();
+        
+        if (timeToTarget > 5) {
+            bot.thrustReverse();
+        } else if (timeToTarget < 4) {
+            bot.thrustForward();
+        }
     }
 }
