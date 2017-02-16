@@ -39,12 +39,15 @@ public class Screen extends JPanel{
 	
 	private Map map;
 	private String nickname;
-	private int shipIndex;
+	private Integer shipIndex = null;
 	
 	public Screen(String nickname){
 		
 		this.nickname = nickname;
 		map = new Map(0, 0, 0);
+		Body asteroid = new Body();
+		asteroid.move(new Vector(0, 2, 0));
+		map.add(asteroid);
 		
 		//Create starting vectors
 		viewFrom = new Vector(0, 0, 0);
@@ -190,19 +193,23 @@ public class Screen extends JPanel{
 	}
 	
 	/**
-	 * Updates the camera vectors when keys are pressed
+	 * Updates the camera vectors
 	 */
 	private void camera(){
 		
-		if(shipIndex != 0){
+		if(shipIndex != null){
 			Ship ship = (Ship) map.get(shipIndex);
 			U = ship.getUpVector();
+			V = ship.getRightVector();
+			N = ship.getForwardVector();
+			viewFrom = ship.getPosition();
+			viewTo = viewFrom.plus(N);
+			
+			//Generate CM matrix for transforming points from global coordinate system to camera coordinate system
+			CM = Matrix.getCM(viewFrom, V, U, N, 2);
 		}
 		
 		
-		
-		//Generate CM matrix for transforming points from global coordinate system to camera coordinate system
-		CM = Matrix.getCM(viewFrom, V, U, N, 2);
 	}
 	
 	public void setMap(Map map){
