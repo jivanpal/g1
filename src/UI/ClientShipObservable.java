@@ -3,14 +3,13 @@ package UI;
 import java.util.Observable;
 
 /**
- * Created by james on 15/02/17.
+ * Created by James on 15/02/17.
  */
 public class ClientShipObservable extends Observable {
     private int shipHealth = 0;
     private int shipShields = 0;
     private int shipFuel = 0;
     private int shipSpeed = 0;
-
     private int plasmaAmmo = 0;
     private int laserAmmo = 0;
     private int torpedoAmmo = 0;
