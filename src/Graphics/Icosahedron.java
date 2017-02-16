@@ -1,6 +1,8 @@
 package Graphics;
 import java.awt.Color;
 
+import Geometry.Vector;
+
 
 /**
  * Creates an icosahedron object and adds it to the objects to be displayed on screen
@@ -41,10 +43,10 @@ public class Icosahedron{
 	 * @param z The z-coordinate of the object
 	 * @param size Size of the object
 	 */
-	public Icosahedron(double x, double y, double z, double size){
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public Icosahedron(Vector v, double size){
+		this.x = v.getX();
+		this.y = v.getY();
+		this.z = v.getZ();
 		this.size = size;
 		gr *= size;
 		

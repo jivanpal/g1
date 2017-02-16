@@ -15,8 +15,12 @@ import UI.ClientShipObservable;
  */
 public class EngineerView extends JPanel implements KeyListener, Observer {
 
-    Screen screen;
-    ResourcesView resourcesView;
+    private final WeaponView plasmaBlasterView;
+    private final WeaponView laserBlasterView;
+    private final WeaponView torpedosView;
+
+    private Screen screen;
+    private ResourcesView resourcesView;
 
     public EngineerView(String playerNickname) {
         this.setLayout(new BorderLayout());
@@ -37,7 +41,22 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         resourcesView.setMinimumSize(new Dimension(1000, 200));
         resourcesView.setPreferredSize(new Dimension(1000, 200));
 
+        plasmaBlasterView = new WeaponView("Plasma Blaster", true);
+
+        // default plasma blaster to be highlighted, remove at a later date!
+        plasmaBlasterView.setHighlightWeapon(true);
+
+        laserBlasterView = new WeaponView("Laser Blaster", true);
+        torpedosView = new WeaponView("Torpedos", true);
+
+        Container weaponPanel = new Container();
+        weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
+        weaponPanel.add(plasmaBlasterView);
+        weaponPanel.add(laserBlasterView);
+        weaponPanel.add(torpedosView);
+
         UIPanel.add(resourcesView);
+        UIPanel.add(weaponPanel);
 
         this.add(UIPanel, BorderLayout.SOUTH);
     }
@@ -49,6 +68,10 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         resourcesView.updateResourceLevels(ResourcesView.SHIELDS, shipObservable.getShipShields());
         resourcesView.updateResourceLevels(ResourcesView.HULL, shipObservable.getShipHealth());
         resourcesView.updateResourceLevels(ResourcesView.ENGINE, shipObservable.getShipFuel());
+
+        laserBlasterView.updateWeaponAmmoLevel(shipObservable.getLaserAmmo());
+        plasmaBlasterView.updateWeaponAmmoLevel(shipObservable.getPlasmaAmmo());
+        torpedosView.updateWeaponAmmoLevel(shipObservable.getTorpedoAmmo());
     }
 
     @Override

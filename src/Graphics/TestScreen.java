@@ -66,7 +66,7 @@ public class TestScreen extends JPanel implements KeyListener{
 			
 		Random r = new Random();
 		for(int i = 0; i < 100; i++){
-			Asteroid.createAsteroid(r.nextInt((int)mapSize), r.nextInt((int)mapSize), r.nextInt((int)mapSize));
+			AsteroidModel.createAsteroid(r.nextInt((int)mapSize), r.nextInt((int)mapSize), r.nextInt((int)mapSize));
 		}
 		addKeyListener(this);
 		setFocusable(true);

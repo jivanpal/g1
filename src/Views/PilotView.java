@@ -8,6 +8,8 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -32,6 +34,27 @@ public class PilotView extends JPanel implements KeyListener, Observer{
         screen.setMaximumSize(new Dimension(1000, 800));
         screen.setMinimumSize(new Dimension(1000, 800));
         screen.setPreferredSize(new Dimension(1000, 800));
+
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent mouseEvent) {
+                final int x = mouseEvent.getX();
+                final int y = mouseEvent.getY();
+
+                final Rectangle screenBounds = screen.getBounds();
+                if(screenBounds != null && screenBounds.contains(x, y)) {
+                    getParent().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+                } else {
+                    getParent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+            }
+        });
+
         this.add(screen, BorderLayout.CENTER);
 
         speedometerView = new SpeedometerView();
@@ -44,7 +67,10 @@ public class PilotView extends JPanel implements KeyListener, Observer{
         laserBlasterView = new WeaponView("Laser Blaster", false);
         torpedosView = new WeaponView("Torpedos", false);
 
-        instructionsView = null;
+        instructionsView = new InstructionsView();
+        instructionsView.addInstruction("test instruction 1");
+        instructionsView.addInstruction("test instruction 2");
+        instructionsView.addInstruction("test instruction 3");
 
         Container weaponPanel = new Container();
         weaponPanel.add(plasmaBlasterView);
@@ -55,6 +81,7 @@ public class PilotView extends JPanel implements KeyListener, Observer{
         Container UIpanel = new Container();
         UIpanel.add(weaponPanel);
         UIpanel.add(speedometerView);
+        UIpanel.add(instructionsView);
         UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
 
         this.add(UIpanel, BorderLayout.SOUTH);
@@ -69,7 +96,7 @@ public class PilotView extends JPanel implements KeyListener, Observer{
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         if(keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-            System.out.println("Weapon Fired");
+            System.out.println("Weapon Fired. Tell the server.");
         }
     }
 

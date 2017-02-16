@@ -90,7 +90,6 @@ public class HostLobbyPanel extends JPanel implements Observer {
 				client.send(new Action(client.getLobby().getID(), player, 11));
 
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
@@ -161,9 +160,9 @@ public class HostLobbyPanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		Lobby l = client.getLobby();
-		System.out.println("Lobby started is " + l.started);
-		if (l.started) {
+		System.out.println("Lobby starting ID: " + client.getLobby().getID());
+		System.out.println("Lobby started is " + client.getLobby().started);
+		if (client.getLobby().started) {
 			EngineerView eview = new EngineerView(client.name);
 			menu.changeFrame(eview);
 		} else {

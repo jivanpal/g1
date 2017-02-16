@@ -41,6 +41,7 @@ public class ClientReceiver extends Thread
 					if (inObject instanceof Lobby)
 					{
 						clientLobby.setLobby((Lobby) inObject);
+						System.out.println("Client rec: lobby started is " + getLobby().started);
 						if (clientLobby.getLobby().started)
 						{
 							GameClient gameClient = new GameClient(clientLobby.getLobby());
@@ -60,7 +61,6 @@ public class ClientReceiver extends Thread
 					{
 						LobbyList lList = (LobbyList) inObject;
 						lobbyList.change(lList.getLobbies());
-						System.out.println("clientrec: "+lList.getLobbies().length);
 					}
 				}
 				catch (ClassNotFoundException e)
