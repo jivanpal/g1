@@ -8,14 +8,12 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
-import GameLogic.Map;
-
 /**
  * The viewport of the ship, contains the camera and all objects to be rendered by it
  * @author Dominic
  *
  */
-public class Screen extends JPanel{
+public class TestScreen extends JPanel implements KeyListener{
 	
 	private double sleepTime = 1000/GameLogic.Global.REFRESH_RATE, lastRefresh = 0;
 	public static Point viewFrom;
@@ -24,7 +22,7 @@ public class Screen extends JPanel{
 	public static double[][] cameraSystem, worldToCamera, CM;
 	public static Vector N, U, V;
 	
-	private double lightPosition;
+	private double lightPosition, mapSize = 10;
 	private static double moveSpeed = 0.01, verticalLook = 0;
 	private double verticalLookSpeed = 0.01, horizontalLookSpeed = 0.01;
 	private double r;
@@ -34,11 +32,7 @@ public class Screen extends JPanel{
 	int drawOrder[];
 	boolean w, a, s, d, e, q;
 	
-	private Map map;
-	
-	public Screen(){
-		
-//		this.map = map;
+	public TestScreen(){
 		
 		//Create starting vectors
 		viewFrom = new Point(0, 0, 0);
@@ -65,6 +59,16 @@ public class Screen extends JPanel{
 		Matrix.printMatrix(CM);
 						
 		Matrix.printMatrix(cameraSystem);
+		
+		
+		Icosahedron testShip = new Icosahedron(0, 0, 200, 0.01);
+			
+		Random r = new Random();
+		for(int i = 0; i < 100; i++){
+			Asteroid.createAsteroid(r.nextInt((int)mapSize), r.nextInt((int)mapSize), r.nextInt((int)mapSize));
+		}
+		addKeyListener(this);
+		setFocusable(true);
 	}
 	
 	/* (non-Javadoc)
@@ -179,9 +183,8 @@ public class Screen extends JPanel{
 	 * Sets the light position
 	 */
 	private void setLight(){
-		Geometry.Vector mapSize = map.getDimensions();
-		lightDir.x = mapSize.getX()/2 - (mapSize.getX()/2 + Math.cos(lightPosition) * mapSize.getX() * 10);
-		lightDir.y = mapSize.getY()/2 - (mapSize.getY()/2 + Math.sin(lightPosition) * mapSize.getY() * 10);
+		lightDir.x = mapSize/2 - (mapSize/2 + Math.cos(lightPosition) * mapSize * 10);
+		lightDir.y = mapSize/2 - (mapSize/2 + Math.sin(lightPosition) * mapSize * 10);
 		lightDir.z = -200;
 	}
 	
@@ -259,8 +262,67 @@ public class Screen extends JPanel{
 		//Generate CM matrix for transforming points from global coordinate system to camera coordinate system
 		CM = Matrix.getCM(viewFrom, V, U, N, 2);
 	}
-	
-	public void setMap(Map map){
-		this.map = map;
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
+	public void keyTyped(KeyEvent e) {
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+	 */
+	public void keyPressed(KeyEvent ev) {
+		if(ev.getKeyCode() == KeyEvent.VK_W){
+			s = false;
+			w = true;
+		}
+		if(ev.getKeyCode() == KeyEvent.VK_A){
+			d = false;
+			a = true;
+		}
+		if(ev.getKeyCode() == KeyEvent.VK_S){
+			w = false;
+			s = true;
+		}
+		if(ev.getKeyCode() == KeyEvent.VK_D){
+			a = false;
+			d = true;
+		}
+		if(ev.getKeyCode() == KeyEvent.VK_E){
+			if(q){
+				q = false;
+			}
+			else{
+				e = true;
+			}
+		}
+		if(ev.getKeyCode() == KeyEvent.VK_Q){
+			if(e){
+				e = false;
+			}
+			else{
+				q = true;
+			}
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+	 */
+	public void keyReleased(KeyEvent ev) {
+		if(ev.getKeyCode() == KeyEvent.VK_W){
+			w = false;
+		}
+		if(ev.getKeyCode() == KeyEvent.VK_A){
+			a = false;
+		}
+		if(ev.getKeyCode() == KeyEvent.VK_S){
+			s = false;
+		}
+		if(ev.getKeyCode() == KeyEvent.VK_D){
+			d = false;
+		}
 	}
 }
