@@ -1,7 +1,6 @@
 package GameLogic;
 
 import Physics.*;
-import Geometry.*;
 
 /**
  * A superclass for game objects that implement some kind of AI.
