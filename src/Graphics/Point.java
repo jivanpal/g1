@@ -1,5 +1,7 @@
 package Graphics;
 
+import Geometry.Vector;
+
 /**
  * Representation of a 3D point
  * @author Dominic
@@ -27,7 +29,7 @@ public class Point {
 	 * @return The new point
 	 */
 	public Point pointPlusVector(Vector v){
-		Point q = new Point(x + v.x, y + v.y, z + v.z);
+		Point q = new Point(x + v.getX(), y + v.getY(), z + v.getZ());
 		return q;
 	}
 	
@@ -37,7 +39,7 @@ public class Point {
 	 * @return The new point
 	 */
 	public Point pointMinusVector(Vector v){
-		Point q = new Point(x - v.x, y - v.y, z - v.z);
+		Point q = new Point(x - v.getX(), y - v.getY(), z - v.getZ());
 		return q;
 	}
 	

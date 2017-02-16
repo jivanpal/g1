@@ -1,5 +1,7 @@
 package Graphics;
 
+import Geometry.Vector;
+
 /**
  * Contains calculations required to calculate the position of points in camera space
  * @author Dominic
@@ -15,12 +17,12 @@ public class Calculations {
 	 * Calculates the position of a point in camera space from a given global coordinate
 	 * @param viewFrom The position of the camera
 	 * @param viewTo The position the camera is looking at
-	 * @param point The position of the point to be transformed
+	 * @param p2 The position of the point to be transformed
 	 * @return
 	 */
-	public static Point calcPos(Point viewFrom, Point viewTo, Point point){
-		Point pInCamera = Matrix.multiplyPoint(Screen.CM, point);
-		return new Point((pInCamera.x*1000)/pInCamera.z, (pInCamera.y*1000)/pInCamera.z, pInCamera.z * 1000);
+	public static Point calcPos(Vector viewFrom, Vector viewTo, Vector p2){
+		Vector pInCamera = Matrix.multiplyVector(Screen.CM, p2);
+		return new Point((pInCamera.getX()*1000)/pInCamera.getZ(), (pInCamera.getY()*1000)/pInCamera.getZ(), pInCamera.getZ() * 1000);
 	}
 	
 	private static Vector getRotationVector(Point viewFrom, Point viewTo){
@@ -40,18 +42,18 @@ public class Calculations {
 	}
 	
 	
-	//Leftover code, currently not doing very much but scared to get rid of it
-	public static void setInfo(){
-		viewVec = Screen.viewTo.pointMinusPoint(Screen.viewFrom);
-		dirVec = new Vector(1, 1, 1);
-		planeVec1 = viewVec.crossProduct(dirVec);
-		planeVec2 = viewVec.crossProduct(planeVec1);
-		p = new Plane(planeVec1, planeVec2, Screen.viewTo);
-		
-		rotateVec = Calculations.getRotationVector(Screen.viewFrom, Screen.viewTo);
-		w1 = viewVec.crossProduct(rotateVec);
-		w2 = viewVec.crossProduct(w1);
-		
-		calcFocusPos = Calculations.calcPos(Screen.viewFrom, Screen.viewTo, Screen.viewTo);
-	}
+//	//Leftover code, currently not doing very much but scared to get rid of it
+//	public static void setInfo(){
+//		viewVec = Screen.viewTo.minus(Screen.viewFrom);
+//		dirVec = new Vector(1, 1, 1);
+//		planeVec1 = viewVec.cross(dirVec);
+//		planeVec2 = viewVec.cross(planeVec1);
+//		p = new Plane(planeVec1, planeVec2, Screen.viewTo);
+//		
+//		rotateVec = Calculations.getRotationVector(Screen.viewFrom, Screen.viewTo);
+//		w1 = viewVec.crossProduct(rotateVec);
+//		w2 = viewVec.crossProduct(w1);
+//		
+//		calcFocusPos = Calculations.calcPos(Screen.viewFrom, Screen.viewTo, Screen.viewTo);
+//	}
 }

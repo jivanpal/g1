@@ -84,7 +84,7 @@ public class Screen extends JPanel{
 		
 		//Perform camera calculations based on current keypresses
 		camera();
-		Calculations.setInfo();
+//		Calculations.setInfo();
 		setLight();
 		
 		//Draw all polygons onto the screen
