@@ -8,6 +8,7 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
+import GameLogic.Asteroid;
 import GameLogic.Map;
 import GameLogic.Ship;
 import Physics.Body;
@@ -65,10 +66,10 @@ public class Screen extends JPanel{
 		U = N.cross(V);
 		U.normalise();
 		
-		cameraSystem = new double[][] { {V.getX(),  V.getY(),  V.getZ(),  0},
-										{U.getX(),  U.getY(),  U.getZ(),  0},
+		cameraSystem = new double[][] { {V.getX(), V.getY(), V.getZ(), 0},
+										{U.getX(), U.getY(), U.getZ(), 0},
 										{N.getX(), N.getY(), N.getZ(), 0},
-										{0,    0,    0,    1}};
+										{0,        0,        0,        1}};
 										
 		CM = Matrix.getCM(viewFrom, V, U, N, 2);
 		Matrix.printMatrix(CM);
@@ -89,6 +90,8 @@ public class Screen extends JPanel{
 		camera();
 //		Calculations.setInfo();
 		setLight();
+		
+		createObjects();
 		
 		//Draw all polygons onto the screen
 		nPoly = poly3Ds.size();
@@ -133,6 +136,20 @@ public class Screen extends JPanel{
 		sleepAndRefresh();
 	}
 	
+	private void createObjects() {
+		for(Body b : map){
+			//if(/*Body ID is not already present on the map*/){
+				Class<? extends Body> bClass = b.getClass();
+				if(bClass == Ship.class){
+					Icosahedron ship = new Icosahedron(b.getPosition(), 0.01);
+				}
+				else if(bClass == Asteroid.class){
+					AsteroidModel asteroid = new AsteroidModel(b.getPosition(), 0.25);
+				}
+			//}
+		}
+	}
+
 	/**
 	 * If it has been longer than the sleepTime since the last refresh, repaint is called
 	 */
