@@ -1,19 +1,26 @@
 package Views;
 
 import Graphics.Screen;
+import UI.ClientShipObservable;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by James on 01/02/17.
  */
-public class PilotView extends JPanel implements KeyListener{
+public class PilotView extends JPanel implements KeyListener, Observer{
 
-    Screen screen;
+    private final Screen screen;
+    private final SpeedometerView speedometerView;
+    private final WeaponView plasmaBlasterView;
+    private final WeaponView laserBlasterView;
+    private final WeaponView torpedosView;
 
     public PilotView() {
         this.setLayout(new BorderLayout());
@@ -25,15 +32,15 @@ public class PilotView extends JPanel implements KeyListener{
         screen.setPreferredSize(new Dimension(1000, 800));
         this.add(screen, BorderLayout.CENTER);
 
-        SpeedometerView speedometerView = new SpeedometerView();
+        speedometerView = new SpeedometerView();
 
-        WeaponView plasmaBlasterView = new WeaponView("Plasma Blaster", false);
+        plasmaBlasterView = new WeaponView("Plasma Blaster", false);
 
         // default plasma blaster to be highlighted, remove at a later date!
         plasmaBlasterView.setHighlightWeapon(true);
 
-        WeaponView laserBlasterView = new WeaponView("Laser Blaster", false);
-        WeaponView torpedosView = new WeaponView("Torpedos", false);
+        laserBlasterView = new WeaponView("Laser Blaster", false);
+        torpedosView = new WeaponView("Torpedos", false);
 
         Container weaponPanel = new Container();
         weaponPanel.add(plasmaBlasterView);
@@ -52,17 +59,11 @@ public class PilotView extends JPanel implements KeyListener{
         setFocusable(true);
     }
 
-    public void makeUI() {}
-
     @Override
-    public void keyTyped(KeyEvent keyEvent) {
-        screen.keyTyped(keyEvent);
-    }
+    public void keyTyped(KeyEvent keyEvent) {}
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        screen.keyPressed(keyEvent);
-
         if(keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
             System.out.println("Weapon Fired");
         }
@@ -70,6 +71,16 @@ public class PilotView extends JPanel implements KeyListener{
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        screen.keyReleased(keyEvent);
+
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        ClientShipObservable shipObservable = (ClientShipObservable) observable;
+
+        speedometerView.updateSpeedLevel(shipObservable.getShipSpeed());
+        laserBlasterView.updateWeaponAmmoLevel(shipObservable.getLaserAmmo());
+        plasmaBlasterView.updateWeaponAmmoLevel(shipObservable.getPlasmaAmmo());
+        torpedosView.updateWeaponAmmoLevel(shipObservable.getTorpedoAmmo());
     }
 }
