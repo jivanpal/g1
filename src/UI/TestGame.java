@@ -15,7 +15,7 @@ public class TestGame {
 		JFrame f = new JFrame();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setSize(1900, 1080);
-		f.add(pView);
+		f.add(eView);
 		f.setVisible(true);
 	}
 }

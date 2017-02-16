@@ -1,8 +1,5 @@
 package Views;
 
-import UI.ResourcesModel;
-import UI.ResourcesPresenter;
-
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
@@ -12,7 +9,10 @@ import java.awt.*;
  * A view which shows all relevant information about the ships resources (health, shields and fuel levels).
  */
 public class ResourcesView extends JPanel {
-    private ResourcesPresenter presenter;
+    // Resource type constants
+    public static final int SHIELDS = 0;
+    public static final int HULL = 1;
+    public static final int ENGINE = 2;
 
     // Each component has a resource label, resource bar and 2 buttons to increment / decrement (to be removed later).
     private ResourceComponent shieldsComponent;
@@ -25,6 +25,10 @@ public class ResourcesView extends JPanel {
      */
     public ResourcesView() {
         super();
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        makeUI();
     }
 
     /**
@@ -34,22 +38,18 @@ public class ResourcesView extends JPanel {
      */
     public void updateResourceLevels(int type, float level) {
         switch (type) {
-            case ResourcesModel.SHIELDS:
+            case SHIELDS:
                 shieldsComponent.updateResourceLevel(level);
                 break;
 
-            case ResourcesModel.HULL:
+            case HULL:
                 hullComponent.updateResourceLevel(level);
                 break;
 
-            case ResourcesModel.ENGINE:
+            case ENGINE:
                 engineComponent.updateResourceLevel(level);
                 break;
         }
-    }
-
-    public void setPresenter(ResourcesPresenter presenter) {
-        this.presenter = presenter;
     }
 
     /**
@@ -57,15 +57,15 @@ public class ResourcesView extends JPanel {
      * Must be called before displaying, otherwise nothing will showup!
      */
     public void makeUI() {
-        shieldsComponent = new ResourceComponent("Shields", ResourcesModel.SHIELDS);
+        shieldsComponent = new ResourceComponent("Shields");
         shieldsComponent.setResourceBarColor(Color.blue);
         add(shieldsComponent);
 
-        hullComponent = new ResourceComponent("Hull", ResourcesModel.HULL);
+        hullComponent = new ResourceComponent("Hull");
         hullComponent.setResourceBarColor(Color.red);
         add(hullComponent);
 
-        engineComponent = new ResourceComponent("Engines", ResourcesModel.ENGINE);
+        engineComponent = new ResourceComponent("Engines");
         engineComponent.setResourceBarColor(Color.yellow);
         add(engineComponent);
     }
@@ -75,18 +75,15 @@ public class ResourcesView extends JPanel {
      * one type of resource
      */
     private class ResourceComponent extends JPanel {
-        private String resourceName;
         private JProgressBar resourceProgressBar;
 
         /**
          * Creates a ResourceComponent which displays info about a particular resource to the player.
          * @param name The name of the resource.
-         * @param resourceType Integer corresponding to the type of resource - see the constants defined in ResourceModel.java
          */
-        public ResourceComponent(String name, int resourceType) {
+        public ResourceComponent(String name) {
             super();
 
-            this.resourceName = name;
             this.resourceProgressBar = new JProgressBar();
             resourceProgressBar.setString(name);
             resourceProgressBar.setStringPainted(true);
@@ -94,8 +91,8 @@ public class ResourcesView extends JPanel {
             resourceProgressBar.setIndeterminate(false);
 
             // Find the maximum value for this kind of resource
-            float maxValue = presenter.getMaximumResourceValue(resourceType);
-            resourceProgressBar.setMaximum((int) maxValue);
+            // TODO
+            resourceProgressBar.setMaximum(10);
 
             add(resourceProgressBar);
         }
