@@ -1,5 +1,6 @@
 package Graphics;
 import java.awt.Color;
+import Geometry.Vector;
 
 /**
  * Creates a collection of polygons that resemble a 3D shape
@@ -45,7 +46,7 @@ public class Poly3D {
 		newY = new double[x.length];
 		draw = true;
 		for(int i = 0; i < x.length; i++){
-			Point p = new Point(x[i], y[i], z[i]);
+			Vector p = new Vector(x[i], y[i], z[i]);
 			calcPos = Calculations.calcPos(Screen.viewFrom, Screen.viewTo, p);
 			newX[i] = calcPos.x + GameEngine.screenSize.getWidth()/2;
 			newY[i] = calcPos.y + GameEngine.screenSize.getHeight()/2;
@@ -66,9 +67,9 @@ public class Poly3D {
 	 */
 	private void lighting() {
 		Plane lightPlane = new Plane(this);
-		double angle = Math.acos(((lightPlane.v3.x * Screen.lightDir.z) +
-				(lightPlane.v3.y * Screen.lightDir.y) + (lightPlane.v3.z * Screen.lightDir.z))
-				/(Math.sqrt(Screen.lightDir.x * Screen.lightDir.x + Screen.lightDir.y * Screen.lightDir.y + Screen.lightDir.z * Screen.lightDir.z)));
+		double angle = Math.acos(((lightPlane.v3.getX() * Screen.lightDir.getZ()) +
+				(lightPlane.v3.getY() * Screen.lightDir.getY()) + (lightPlane.v3.getZ() * Screen.lightDir.getZ()))
+				/(Math.sqrt(Screen.lightDir.getX() * Screen.lightDir.getX() + Screen.lightDir.getY() * Screen.lightDir.getY() + Screen.lightDir.getZ() * Screen.lightDir.getZ())));
 		
 		poly.light = 0.2 + 1 - Math.sqrt(Math.toDegrees(angle)/180);
 		
@@ -98,8 +99,8 @@ public class Poly3D {
 	 * @return Distance from a vertex to the camera
 	 */
 	private double getDistanceToP(int i){
-		return Math.sqrt((Screen.viewFrom.x - x[i]) * (Screen.viewFrom.x - x[i])
-						+ (Screen.viewFrom.y - y[i]) * (Screen.viewFrom.y - y[i])
-						+ (-Screen.viewFrom.z + z[i]) * (-Screen.viewFrom.z + z[i]));
+		return Math.sqrt((Screen.viewFrom.getX() - x[i]) * (Screen.viewFrom.getX() - x[i])
+						+ (Screen.viewFrom.getY() - y[i]) * (Screen.viewFrom.getY() - y[i])
+						+ (-Screen.viewFrom.getZ() + z[i]) * (-Screen.viewFrom.getZ() + z[i]));
 	}
 }

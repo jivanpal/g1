@@ -1,5 +1,7 @@
 package Graphics;
 
+import Geometry.Vector;
+
 /**
  * Class to access different matrices (represented by double[][]) and calculations involving matrices
  * @author Dominic
@@ -103,19 +105,19 @@ public class Matrix {
 	 */
 	public static double[][] getRotationMatrix(double angle, Vector v){
 		double[][] m = new double[4][4];
-		m[0][0] = Math.cos(angle) + v.x * v.x * (1 - Math.cos(angle));
-		m[0][1] = v.y * v.y * (1 - Math.cos(angle)) + v.z * Math.sin(angle);
-		m[0][2] = v.z * v.z * (1 - Math.cos(angle)) - v.y * Math.sin(angle);
+		m[0][0] = Math.cos(angle) + v.getX() * v.getX() * (1 - Math.cos(angle));
+		m[0][1] = v.getY() * v.getY() * (1 - Math.cos(angle)) + v.getZ() * Math.sin(angle);
+		m[0][2] = v.getZ() * v.getZ() * (1 - Math.cos(angle)) - v.getY() * Math.sin(angle);
 		m[0][3] = 0;
 		
-		m[1][0] = v.x * v.y * (1 - Math.cos(angle)) - v.z * Math.sin(angle);
-		m[1][1] = Math.cos(angle) + v.y * v.y * (1 - Math.cos(angle));
-		m[1][2] = v.z * v.y * (1 - Math.cos(angle)) + v.x * Math.sin(angle);
+		m[1][0] = v.getX() * v.getY() * (1 - Math.cos(angle)) - v.getZ() * Math.sin(angle);
+		m[1][1] = Math.cos(angle) + v.getY() * v.getY() * (1 - Math.cos(angle));
+		m[1][2] = v.getZ() * v.getY() * (1 - Math.cos(angle)) + v.getX() * Math.sin(angle);
 		m[1][3] = 0;
 		
-		m[2][0] = v.x * v.z * (1 - Math.cos(angle)) + v.y * Math.sin(angle);
-		m[2][1] = v.y * v.z * (1 - Math.cos(angle)) - v.x * Math.sin(angle);
-		m[2][2] = Math.cos(angle) + v.z * v.z * (1 - Math.cos(angle));
+		m[2][0] = v.getX() * v.getZ() * (1 - Math.cos(angle)) + v.getY() * Math.sin(angle);
+		m[2][1] = v.getY() * v.getZ() * (1 - Math.cos(angle)) - v.getX() * Math.sin(angle);
+		m[2][2] = Math.cos(angle) + v.getZ() * v.getZ() * (1 - Math.cos(angle));
 		m[2][3] = 0;
 		
 		m[3][0] = 0;
@@ -141,23 +143,23 @@ public class Matrix {
 	 * @param U The Up vector of the camera
 	 * @return The camera matrix
 	 */
-	public static double[][] getCameraMatrix(Point viewFrom, Point viewTo, Vector U){
-		Vector N = viewFrom.pointMinusPoint(viewTo);
+	public static double[][] getCameraMatrix(Vector viewFrom, Vector viewTo, Vector U){
+		Vector N = viewFrom.minus(viewTo);
 		N.normalise();
 		
-		U = U.crossProduct(N);
+		U = U.cross(N);
 		U.normalise();
 		
-		Vector V = N.crossProduct(U);
+		Vector V = N.cross(U);
 		V.normalise();
 		
-		double tx = U.dotProduct(viewFrom);
-		double ty = V.dotProduct(viewFrom);
-		double tz = N.dotProduct(viewFrom);
+		double tx = U.dot(viewFrom);
+		double ty = V.dot(viewFrom);
+		double tz = N.dot(viewFrom);
 		
-		double[][] m = {{U.x, U.y, U.z, tx},
-						{V.x, V.y, V.z, ty},
-						{N.x, N.y, N.z, tz},
+		double[][] m = {{U.getX(), U.getY(), U.getZ(), tx},
+						{V.getX(), V.getY(), V.getZ(), ty},
+						{N.getX(), N.getY(), N.getZ(), tz},
 						{0,   0,   0,   1 }};
 		return m;
 	}
@@ -194,7 +196,7 @@ public class Matrix {
 	 * @return The resulting matrix
 	 */
 	public static double[][] multiplyVector2(double[][] m1, Vector v){
-		double[][] m2 = new double[][] {{v.x}, {v.y}, {v.z}, {v.h}};
+		double[][] m2 = new double[][] {{v.getX()}, {v.getY()}, {v.getZ()}, {1}};
 		return multiply(m1, m2);
 	}
 	
@@ -307,13 +309,13 @@ public class Matrix {
 	
 	/**
 	 * Creates the translation matrix for the camera
-	 * @param p The position of the camera
+	 * @param viewFrom The position of the camera
 	 * @return Camera translation matrix
 	 */
-	private static double[][] getTM(Point p){
-		return new double[][]{	{1, 0, 0, 0-p.x},
-								{0, 1, 0, 0-p.y},
-								{0, 0, 1, 0-p.z},
+	private static double[][] getTM(Vector viewFrom){
+		return new double[][]{	{1, 0, 0, 0-viewFrom.getX()},
+								{0, 1, 0, 0-viewFrom.getY()},
+								{0, 0, 1, 0-viewFrom.getZ()},
 								{0, 0, 0, 1}};
 	}
 	
@@ -325,13 +327,13 @@ public class Matrix {
 	 * @return Camera rotation matrix
 	 */
 	private static double[][] getR(Vector V, Vector U, Vector N){
-		double lengthV = Math.sqrt(V.x * V.x + V.y * V.y + V.z * V.z);
-		double lengthU = Math.sqrt(U.x * U.x + U.y * U.y + U.z * U.z);
-		double lengthN = Math.sqrt(N.x * N.x + N.y * N.y + N.z * N.z);
+		double lengthV = Math.sqrt(V.getX() * V.getX() + V.getY() * V.getY() + V.getZ() * V.getZ());
+		double lengthU = Math.sqrt(U.getX() * U.getX() + U.getY() * U.getY() + U.getZ() * U.getZ());
+		double lengthN = Math.sqrt(N.getX() * N.getX() + N.getY() * N.getY() + N.getZ() * N.getZ());
 		
-		return new double[][] { {V.x/lengthV, V.y/lengthV, V.z/lengthV, 0},
-								{U.x/lengthU, U.y/lengthU, U.z/lengthU, 0},
-								{N.x/lengthN, N.y/lengthN, N.z/lengthN, 0},
+		return new double[][] { {V.getX()/lengthV, V.getY()/lengthV, V.getZ()/lengthV, 0},
+								{U.getX()/lengthU, U.getY()/lengthU, U.getZ()/lengthU, 0},
+								{N.getX()/lengthN, N.getY()/lengthN, N.getZ()/lengthN, 0},
 								{0, 0, 0, 1}};
 	}
 	
@@ -360,16 +362,16 @@ public class Matrix {
 	
 	/**
 	 * Creates the matrix to convert from camera space to global coordinates
-	 * @param p The position of the camera
+	 * @param viewFrom The position of the camera
 	 * @param V The camera's V vector
 	 * @param U The camera's U vector
 	 * @param N The camera's N vector
 	 * @param fov The distance from the camera to the projection plane
 	 * @return The cameraToWorld conversion matrix
 	 */
-	public static double[][] getCM(Point p, Vector V, Vector U, Vector N, double fov){
+	public static double[][] getCM(Vector viewFrom, Vector V, Vector U, Vector N, double fov){
 		
-		double[][] m = multiply(getTM(p), getR(V, U, N));
+		double[][] m = multiply(getTM(viewFrom), getR(V, U, N));
 		m = multiply(m, getSM());
 //		m = multiply(m, getPper(fov));
 		return m;

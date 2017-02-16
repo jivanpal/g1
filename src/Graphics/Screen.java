@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import GameLogic.Map;
 import GameLogic.Ship;
 import Physics.Body;
+import Geometry.Vector;
 
 /**
  * The viewport of the ship, contains the camera and all objects to be rendered by it
@@ -20,8 +21,8 @@ import Physics.Body;
 public class Screen extends JPanel{
 	
 	private double sleepTime = 1000/GameLogic.Global.REFRESH_RATE, lastRefresh = 0;
-	public static Point viewFrom;
-	public static Point viewTo;
+	public static Vector viewFrom;
+	public static Vector viewTo;
 	public static Vector lightDir;
 	public static double[][] cameraSystem, worldToCamera, CM;
 	public static Vector N, U, V;
@@ -46,24 +47,24 @@ public class Screen extends JPanel{
 		map = new Map(0, 0, 0);
 		
 		//Create starting vectors
-		viewFrom = new Point(0, 0, 0);
-		viewTo = new Point(0, 0, 1);
+		viewFrom = new Vector(0, 0, 0);
+		viewTo = new Vector(0, 0, 1);
 		lightDir = new Vector(1, 1, 1);
 		lightDir.normalise();
 		
 		//Create camera vectors
-		N = viewTo.pointMinusPoint(viewFrom);
+		N = viewTo.plus(viewFrom);
 		N.normalise();
 		U = new Vector(0, 1, 0);
 		U.normalise();
-		V = U.crossProduct(N);
+		V = U.cross(N);
 		V.normalise();
-		U = N.crossProduct(V);
+		U = N.cross(V);
 		U.normalise();
 		
-		cameraSystem = new double[][] { {V.x,  V.y,  V.z,  0},
-										{U.x,  U.y,  U.z,  0},
-										{N.x, N.y, N.z, 0},
+		cameraSystem = new double[][] { {V.getX(),  V.getY(),  V.getZ(),  0},
+										{U.getX(),  U.getY(),  U.getZ(),  0},
+										{N.getX(), N.getY(), N.getZ(), 0},
 										{0,    0,    0,    1}};
 										
 		CM = Matrix.getCM(viewFrom, V, U, N, 2);
@@ -83,7 +84,7 @@ public class Screen extends JPanel{
 		
 		//Perform camera calculations based on current keypresses
 		camera();
-		Calculations.setInfo();
+//		Calculations.setInfo();
 		setLight();
 		
 		//Draw all polygons onto the screen
@@ -103,28 +104,28 @@ public class Screen extends JPanel{
 		//Draw debugging information
 		Vector camCoords = Matrix.multiplyVector(cameraSystem, new Vector(0, 0, 0));
 		g.setColor(Color.WHITE);
-		g.drawString("x: " + viewFrom.x + ", y: " + viewFrom.y + ", z: " + viewFrom.z + " x: " + camCoords.x + ", y: " + camCoords.y + ", z: " + camCoords.z, 40, 40);
-		g.drawString("x: " + viewTo.x + ", y: " + viewTo.y + ", z: " + viewTo.z, 40, 60);
+		g.drawString("x: " + viewFrom.getX() + ", y: " + viewFrom.getY() + ", z: " + viewFrom.getZ() + " x: " + camCoords.getX() + ", y: " + camCoords.getY() + ", z: " + camCoords.getZ(), 40, 40);
+		g.drawString("x: " + viewTo.getX() + ", y: " + viewTo.getY() + ", z: " + viewTo.getZ(), 40, 60);
 		g.drawString("r: " + r + " vert: " + verticalLook, 40, 80);
 		g.drawLine((int)getWidth()/2 - 5, (int)getHeight()/2, (int)getWidth()/2 + 5, (int)getHeight()/2);
 		g.drawLine((int)getWidth()/2, (int)getHeight()/2 - 5, (int)getWidth()/2, (int)getHeight()/2 + 5);
-		g.drawString("V: " + V.x + ", " + V.y + ", " + V.z, 40, 100);
-		g.drawString("U: " + U.x + ", " + U.y + ", " + U.z, 40, 120);
-		g.drawString("N: " + N.x + ", " + N.y + ", " + N.z, 40, 140);
+		g.drawString("V: " + V.getX() + ", " + V.getY() + ", " + V.getZ(), 40, 100);
+		g.drawString("U: " + U.getX() + ", " + U.getY() + ", " + U.getZ(), 40, 120);
+		g.drawString("N: " + N.getX() + ", " + N.getY() + ", " + N.getZ(), 40, 140);
 		
 		g.setColor(Color.RED);
 		Point origin = new Point(getWidth() - 40, 40, 1);
-		Point uLine = (new Point(0, 0, 0)).pointPlusVector(U.scale(20, 20, 20));
-		Point uLine2 = Matrix.multiplyPoint(CM, uLine);
-		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (uLine2.x)), (int)(origin.y + (-uLine2.y)));
+		Vector uLine = (new Vector(0, 0, 0)).plus(U.scale(20));
+		Vector uLine2 = Matrix.multiplyVector(CM, uLine);
+		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (uLine2.getX())), (int)(origin.y + (-uLine2.getY())));
 		g.setColor(Color.BLUE);
-		Point vLine = (new Point(0, 0, 0)).pointPlusVector(V.scale(20, 20, 20));
-		Point vLine2 = Matrix.multiplyPoint(CM, vLine);
-		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (vLine2.x)), (int)(origin.y + (-vLine2.y)));
+		Vector vLine = (new Vector(0, 0, 0)).plus(V.scale(20));
+		Vector vLine2 = Matrix.multiplyVector(CM, vLine);
+		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (vLine2.getX())), (int)(origin.y + (-vLine2.getY())));
 		g.setColor(Color.GREEN);
-		Point nLine = (new Point(0, 0, 0)).pointPlusVector(N.scale(20, 20, 20));
-		Point nLine2 = Matrix.multiplyPoint(CM, nLine);
-		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (nLine2.x)), (int)(origin.y + (-nLine2.y)));
+		Vector nLine = (new Vector(0, 0, 0)).plus(N.scale(20));
+		Vector nLine2 = Matrix.multiplyVector(CM, nLine);
+		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (nLine2.getX())), (int)(origin.y + (-nLine2.getY())));
 		
 		sleepAndRefresh();
 	}
@@ -185,9 +186,7 @@ public class Screen extends JPanel{
 	 */
 	private void setLight(){
 		Geometry.Vector mapSize = map.getDimensions();
-		lightDir.x = mapSize.getX()/2 - (mapSize.getX()/2 + Math.cos(lightPosition) * mapSize.getX() * 10);
-		lightDir.y = mapSize.getY()/2 - (mapSize.getY()/2 + Math.sin(lightPosition) * mapSize.getY() * 10);
-		lightDir.z = -200;
+		lightDir = new Vector (mapSize.getX()/2 - (mapSize.getX()/2 + Math.cos(lightPosition) * mapSize.getX() * 10), mapSize.getY()/2 - (mapSize.getY()/2 + Math.sin(lightPosition) * mapSize.getY() * 10), -200);
 	}
 	
 	/**
@@ -195,7 +194,11 @@ public class Screen extends JPanel{
 	 */
 	private void camera(){
 		
-		Ship ship = (Ship) map.get(shipIndex);
+		if(shipIndex != 0){
+			Ship ship = (Ship) map.get(shipIndex);
+			U = ship.getUpVector();
+		}
+		
 		
 		
 		//Generate CM matrix for transforming points from global coordinate system to camera coordinate system
