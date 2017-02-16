@@ -22,10 +22,12 @@ public class PilotView extends JPanel implements KeyListener, Observer{
     private final WeaponView laserBlasterView;
     private final WeaponView torpedosView;
 
-    public PilotView() {
+    private final InstructionsView instructionsView;
+
+    public PilotView(String playerNickname) {
         this.setLayout(new BorderLayout());
 
-        screen = new Screen();
+        screen = new Screen(playerNickname);
         screen.setSize(1000, 800);
         screen.setMaximumSize(new Dimension(1000, 800));
         screen.setMinimumSize(new Dimension(1000, 800));
@@ -41,6 +43,8 @@ public class PilotView extends JPanel implements KeyListener, Observer{
 
         laserBlasterView = new WeaponView("Laser Blaster", false);
         torpedosView = new WeaponView("Torpedos", false);
+
+        instructionsView = null;
 
         Container weaponPanel = new Container();
         weaponPanel.add(plasmaBlasterView);

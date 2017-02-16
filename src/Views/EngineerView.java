@@ -13,15 +13,15 @@ import UI.ClientShipObservable;
 /**
  * Created by James on 01/02/17.
  */
-public class EngineerView extends JPanel implements Observer, KeyListener {
+public class EngineerView extends JPanel implements KeyListener, Observer {
 
     Screen screen;
     ResourcesView resourcesView;
 
-    public EngineerView() {
+    public EngineerView(String playerNickname) {
         this.setLayout(new BorderLayout());
 
-        screen = new Screen();
+        screen = new Screen(playerNickname);
         screen.setSize(1000, 800);
         screen.setMaximumSize(new Dimension(1000, 800));
         screen.setMinimumSize(new Dimension(1000, 800));
@@ -53,7 +53,7 @@ public class EngineerView extends JPanel implements Observer, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
-        
+
     }
 
     @Override
