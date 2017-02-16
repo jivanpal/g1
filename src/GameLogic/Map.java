@@ -130,5 +130,13 @@ public class Map extends ArrayList<Body> {
         for (Bot b : bots) {
             b.update();
         }
+        
+        for (Body a : this) {
+            for (Body b : this) {
+                if (a.isTouching(b)) {
+                    a.rebound(b);
+                }
+            }
+        }
     }
 }

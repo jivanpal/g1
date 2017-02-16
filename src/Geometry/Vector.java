@@ -218,8 +218,11 @@ public class Vector {
      * @return  Returns the smallest congruent vector in that space.
      */
     public Vector modulo(Vector v) {
-        return new Vector(x % v.getX() + (x % v.getX() < 0 ? v.getX() : 0),
-                y % v.getY() + (y % v.getY() < 0 ? v.getY() : 0), z % v.getZ() + (z % v.getZ() < 0 ? v.getZ() : 0));
+        return new Vector(
+            x % v.getX() + (x % v.getX() < 0 ? v.getX() : 0),
+            y % v.getY() + (y % v.getY() < 0 ? v.getY() : 0),
+            z % v.getZ() + (z % v.getZ() < 0 ? v.getZ() : 0)
+        );
     }
     
     /**
@@ -238,12 +241,12 @@ public class Vector {
     }
     
     /**
-     * Get the projection of this vector onto another.
+     * Get the projection of this vector onto another vector.
      * @param   v   The vector to project this vector onto.
      * @return  the projection of this vector onto `v`. That is, the component of this
      *              vector that lies on the line described by `v`.
      */
     public Vector proj(Vector v) {
-        return v.scale(v.dot(this) / (v.length() * v.length()));
+        return v.scale( v.dot(this) / (v.length() * v.length()) );
     }
 }
