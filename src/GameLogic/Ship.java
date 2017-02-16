@@ -93,7 +93,12 @@ public class Ship extends Body{
 		this.shields.cusomChangeShieldsLevel(change);
 	}
 	
-	public void fire(int weaponIndex) {
-	    // TODO Implement this method
-	}
+	// TODO Implement these methods
+	public void fire(int weaponIndex) {}
+	public void pitchUp() {}
+	public void pitchDown() {}
+	public void rollRight() {}
+	public void rollLeft() {}
+	public void thrustForward() {}
+	public void thrustReverse() {}
 }
