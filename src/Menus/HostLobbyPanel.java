@@ -6,9 +6,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.net.InetAddress;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import ClientNetworking.Client;
 import GeneralNetworking.Invite;
@@ -24,7 +27,7 @@ import ServerNetworking.Server;
 
 // TODO Invite function
 // TODO Kick function
-public class HostLobbyPanel extends JPanel {
+public class HostLobbyPanel extends JPanel implements Observer {
 	private MainMenu menu;
 	public Client client;
 	private Player player;
@@ -41,6 +44,7 @@ public class HostLobbyPanel extends JPanel {
 	 */
 	public HostLobbyPanel(MainMenu menu, Client client) {
 		super();
+
 		this.menu = menu;
 		this.client = client;
 		setLayout(new GridBagLayout());
@@ -48,11 +52,15 @@ public class HostLobbyPanel extends JPanel {
 		try {
 			Lobby lobby = new Lobby(client.name, InetAddress.getLocalHost());
 			client.setLobby(lobby);
+			client.addLobbyObserver(this);
 			client.send(lobby);
-			
-			player = lobby.getPlayers()[0];
+			player = lobby.getHost();
 		} catch (Exception e) {
-
+			JOptionPane.showMessageDialog(this,
+					"An error has occured while creating the game. Please check your connection!", "Create Game Error",
+					JOptionPane.ERROR_MESSAGE);
+			PlayPanel ppanel = new PlayPanel(menu, client);
+			menu.changeFrame(ppanel);
 		}
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.weightx = 0.5;
@@ -78,6 +86,7 @@ public class HostLobbyPanel extends JPanel {
 		this.lpanel = ppanel;
 		add(ppanel, c);
 		setBackground(Color.BLACK);
+
 	}
 
 	/**
@@ -117,16 +126,33 @@ public class HostLobbyPanel extends JPanel {
 
 			});
 			JButton kick = new JButton("Kick");
-			if (this.player.equals(p)) {
+
+			System.out.println("Host: " + player.nickname);
+			if (p == null) {
+				kick.setEnabled(false);
+			} else if (this.player.nickname.equals(p.nickname)) {
 				move.setEnabled(false);
 				kick.setEnabled(false);
-			} else if (p == null) {
-				kick.setEnabled(false);
+			} else {
+				System.out.println("Player: " + p.nickname);
+				move.setEnabled(false);
 			}
 			panel.add(move);
 			panel.add(kick);
 
 		}
 		return panel;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		this.remove(lpanel);
+		JPanel newpanel = displayplayers();
+		newpanel.setOpaque(false);
+		this.add(newpanel, c);
+		this.invalidate();
+		this.validate();
+		this.lpanel = newpanel;
+
 	}
 }

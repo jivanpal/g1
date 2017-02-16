@@ -42,7 +42,7 @@ public class PlayPanel extends JPanel {
 		c.gridy = 0;
 		JButton backtostart = new JButton("Back To Start");
 		backtostart.addActionListener(e -> {
-			ButtonPanel bpanel = new ButtonPanel(menu);
+			ButtonPanel bpanel = new ButtonPanel(menu, client);
 			menu.changeFrame(bpanel);
 		});
 		add(backtostart, c);

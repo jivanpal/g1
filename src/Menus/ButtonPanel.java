@@ -32,16 +32,10 @@ public class ButtonPanel extends JPanel {
 	 * @param menu
 	 *            The main frame which the game will use
 	 */
-	public ButtonPanel(MainMenu menu) {
+	public ButtonPanel(MainMenu menu, Client client) {
 		super();
 		this.menu = menu;
-		String name = JOptionPane.showInputDialog(this, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
-		while (name.equals("") || name == null) {
-			name = JOptionPane.showInputDialog(this, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
-		}
-		Client client = new Client(name);
-		client.start();
-		client.updateList();
+		
 		this.client = client;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -53,7 +47,7 @@ public class ButtonPanel extends JPanel {
 		JPanel bpanel = createButtons();
 		bpanel.setOpaque(false);
 		add(bpanel, c);
-		JLabel title = new JLabel("<html>Space Flying 101<br><br>Welcome " + name +"</html>");
+		JLabel title = new JLabel("<html>Space Flying 101<br><br>Welcome " + client.name +"</html>");
 		title.setForeground(Color.WHITE);
 		title.setOpaque(false);
 		Font titlefont = title.getFont();
@@ -79,7 +73,7 @@ public class ButtonPanel extends JPanel {
 		});
 		JButton settings = new JButton("Settings");
 		settings.addActionListener(e -> {
-			SettingsPanel spanel = new SettingsPanel(menu);
+			SettingsPanel spanel = new SettingsPanel(menu, client);
 			menu.changeFrame(spanel);
 		});
 		JButton exit = new JButton("Exit");

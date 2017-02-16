@@ -9,6 +9,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import ClientNetworking.Client;
+
 /**
  * The menu when Settings is clicked in the Main Menu.
  * 
@@ -16,10 +18,12 @@ import javax.swing.JPanel;
  */
 public class SettingsPanel extends JPanel {
 	private MainMenu menu;
+	public Client client;
 
-	public SettingsPanel(MainMenu menu) {
+	public SettingsPanel(MainMenu menu, Client client) {
 		super();
 		this.menu = menu;
+		this.client = client;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -29,7 +33,7 @@ public class SettingsPanel extends JPanel {
 		c.gridy = 0;
 		JButton backtomenu = new JButton("Back To Start");
 		backtomenu.addActionListener(e -> {
-			ButtonPanel bpanel = new ButtonPanel(menu);
+			ButtonPanel bpanel = new ButtonPanel(menu, client);
 			menu.changeFrame(bpanel);
 		});
 		add(backtomenu, c);
@@ -50,12 +54,12 @@ public class SettingsPanel extends JPanel {
 		JPanel panel = new JPanel();
 		JButton gotosound = new JButton("Sound");
 		gotosound.addActionListener(e -> {
-			SoundPanel spanel = new SoundPanel(menu);
+			SoundPanel spanel = new SoundPanel(menu, client);
 			menu.changeFrame(spanel);
 		});
 		JButton gotocontrols = new JButton("Controls");
 		gotocontrols.addActionListener(e -> {
-			ControlsPanel cpanel = new ControlsPanel(menu);
+			ControlsPanel cpanel = new ControlsPanel(menu, client);
 			menu.changeFrame(cpanel);
 		});
 		panel.setLayout(new BorderLayout());

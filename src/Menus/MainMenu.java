@@ -3,8 +3,10 @@ package Menus;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import ClientNetworking.Client;
 import GameLogic.KeyBindings;
 
 /**
@@ -14,14 +16,17 @@ import GameLogic.KeyBindings;
  */
 public class MainMenu {
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	private JFrame frame;
+	private static JFrame frame;
 
 	/**
 	 * Constructor method of the main frame
 	 */
-	public MainMenu() {
+	public MainMenu(String name) {
 		frame = new JFrame();
-		ButtonPanel comp = new ButtonPanel(this);
+		Client client = new Client(name);
+		client.start();
+		client.updateList();
+		ButtonPanel comp = new ButtonPanel(this, client);
 		frame.setContentPane(comp);
 		// frame.setUndecorated(true);
 		Dimension d = new Dimension(800, 600);
@@ -44,7 +49,11 @@ public class MainMenu {
 
 	public static void main(String[] args) {
 		KeyBindings.setKeyBindings();
-		MainMenu menu = new MainMenu();
+		String name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
+		while (name.equals("") || name == null) {
+			name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
+		}
+		MainMenu menu = new MainMenu(name);
 		
 	}
 }

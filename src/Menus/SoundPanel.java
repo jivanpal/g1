@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
+import ClientNetworking.Client;
+
 /**
  * The Sound Menu. Able to change the volume of the game.
  * 
@@ -18,7 +20,7 @@ import javax.swing.JSlider;
 public class SoundPanel extends JPanel {
 	private MainMenu menu;
 
-	public SoundPanel(MainMenu menu) {
+	public SoundPanel(MainMenu menu, Client client) {
 		super();
 		this.menu = menu;
 		setLayout(new GridBagLayout());
@@ -30,7 +32,7 @@ public class SoundPanel extends JPanel {
 		c.gridy = 0;
 		JButton backtomenu = new JButton("Back To Settings");
 		backtomenu.addActionListener(e -> {
-			SettingsPanel spanel = new SettingsPanel(menu);
+			SettingsPanel spanel = new SettingsPanel(menu, client);
 			menu.changeFrame(spanel);
 		});
 		add(backtomenu, c);

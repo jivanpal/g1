@@ -32,7 +32,7 @@ import ServerNetworking.Server;
  *
  */
 
-// TODO Joining function
+// TODO Joining function. Erroring when trying to display the clientlobbypanel.
 public class JoinPanel extends JPanel implements Observer {
 	private MainMenu menu;
 	public Client client;
@@ -134,16 +134,19 @@ public class JoinPanel extends JPanel implements Observer {
 			try
 			{
 				client.send(new Action(lInfo.lobbyID,new Player(client.name,InetAddress.getLocalHost(),false),9));
+				ClientLobbyPanel clpanel = new ClientLobbyPanel(menu, client, lInfo.lobbyID);
+				menu.changeFrame(clpanel);
 			}
 			catch (Exception e1)
 			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Joining Lobby failed. Please check your connection!", "Join Lobby Error", JOptionPane.ERROR_MESSAGE);
+				JoinPanel jpanel = new JoinPanel(menu, client);
+				menu.changeFrame(jpanel);
+				//e1.printStackTrace();
 			}
 		});
 		JButton refresh = new JButton("Refresh");
 		refresh.addActionListener(e -> {
-			//refresh
 			client.updateList();
 			keepupdatingtime();
 			repaintlobbies();

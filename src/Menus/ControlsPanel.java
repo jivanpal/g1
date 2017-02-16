@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import ClientNetworking.Client;
 import GameLogic.KeyBindings;
 
 /**
@@ -30,10 +31,12 @@ import GameLogic.KeyBindings;
 public class ControlsPanel extends JPanel {
 	private MainMenu menu;
 	private boolean pressed;
-
-	public ControlsPanel(MainMenu menu) {
+	public Client client;
+	
+	public ControlsPanel(MainMenu menu, Client client) {
 		super();
 		this.menu = menu;
+		this.client = client;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -43,7 +46,7 @@ public class ControlsPanel extends JPanel {
 		c.gridy = 0;
 		JButton backtomenu = new JButton("Back To Settings");
 		backtomenu.addActionListener(e -> {
-			SettingsPanel spanel = new SettingsPanel(menu);
+			SettingsPanel spanel = new SettingsPanel(menu, client);
 			menu.changeFrame(spanel);
 		});
 		add(backtomenu, c);

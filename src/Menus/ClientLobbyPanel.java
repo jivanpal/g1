@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.net.InetAddress;
+import java.util.UUID;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -39,7 +40,7 @@ public class ClientLobbyPanel extends JPanel {
 	 * @param client
 	 *            The Client Thread which connects to the Server
 	 */
-	public ClientLobbyPanel(MainMenu menu, Client client, Lobby lobby) {
+	public ClientLobbyPanel(MainMenu menu, Client client, UUID lobbyID) {
 		super();
 		this.menu = menu;
 		this.client = client;
@@ -110,11 +111,10 @@ public class ClientLobbyPanel extends JPanel {
 
 			});
 			JButton kick = new JButton("Kick");
+			kick.setEnabled(false);
 			if (this.player.equals(p)) {
 				move.setEnabled(false);
-				kick.setEnabled(false);
-			} else if (p == null) {
-				kick.setEnabled(false);
+				
 			}
 			panel.add(move);
 			panel.add(kick);
