@@ -40,13 +40,14 @@ public class ClientLobbyPanel extends JPanel {
 	 * @param client
 	 *            The Client Thread which connects to the Server
 	 */
-	public ClientLobbyPanel(MainMenu menu, Client client, UUID lobbyID) {
+	public ClientLobbyPanel(MainMenu menu, Client client, UUID lobbyID, Player player) {
 		super();
 		this.menu = menu;
 		this.client = client;
+		this.player = player;
 		setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
-		//get lobby to join
+		//Should set the lobby based on lobbyid or lobby object
 		
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.weightx = 0.5;
@@ -83,6 +84,9 @@ public class ClientLobbyPanel extends JPanel {
 		int number = 0;
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 4));
+		while(client.getLobby() == null) {
+			
+		}
 		Player[] players = client.getLobby().getPlayers();
 		for (Player p : players) {
 			int position = number;
@@ -112,9 +116,10 @@ public class ClientLobbyPanel extends JPanel {
 			});
 			JButton kick = new JButton("Kick");
 			kick.setEnabled(false);
-			if (this.player.equals(p)) {
-				move.setEnabled(false);
+			if (p == null) {
 				
+			} else {
+				move.setEnabled(false);
 			}
 			panel.add(move);
 			panel.add(kick);

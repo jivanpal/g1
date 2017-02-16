@@ -133,8 +133,10 @@ public class JoinPanel extends JPanel implements Observer {
 			LobbyInfo lInfo = lobbies[selected];
 			try
 			{
-				client.send(new Action(lInfo.lobbyID,new Player(client.name,InetAddress.getLocalHost(),false),9));
-				ClientLobbyPanel clpanel = new ClientLobbyPanel(menu, client, lInfo.lobbyID);
+				Player player = new Player(client.name, InetAddress.getLocalHost(), false);
+				client.send(new Action(lInfo.lobbyID,player,9));
+				//Error here since when creating the clientlobbypanel, the client's lobby isn't set so throws a nullpointerexception.
+				ClientLobbyPanel clpanel = new ClientLobbyPanel(menu, client, lInfo.lobbyID, player);
 				menu.changeFrame(clpanel);
 			}
 			catch (Exception e1)
@@ -142,7 +144,7 @@ public class JoinPanel extends JPanel implements Observer {
 				JOptionPane.showMessageDialog(this, "Joining Lobby failed. Please check your connection!", "Join Lobby Error", JOptionPane.ERROR_MESSAGE);
 				JoinPanel jpanel = new JoinPanel(menu, client);
 				menu.changeFrame(jpanel);
-				//e1.printStackTrace();
+				e1.printStackTrace();
 			}
 		});
 		JButton refresh = new JButton("Refresh");

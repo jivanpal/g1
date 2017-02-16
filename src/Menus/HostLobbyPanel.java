@@ -126,15 +126,12 @@ public class HostLobbyPanel extends JPanel implements Observer {
 
 			});
 			JButton kick = new JButton("Kick");
-
-			System.out.println("Host: " + player.nickname);
 			if (p == null) {
 				kick.setEnabled(false);
 			} else if (this.player.nickname.equals(p.nickname)) {
 				move.setEnabled(false);
 				kick.setEnabled(false);
 			} else {
-				System.out.println("Player: " + p.nickname);
 				move.setEnabled(false);
 			}
 			panel.add(move);
