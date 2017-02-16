@@ -225,7 +225,7 @@ public class Vector {
     /**
      * Get the angle that this vector makes with another vector.
      * @param   v   The other vector.
-     * @return the non-reflex angle spanned in the plane of the two vectors when they
+     * @return  the non-reflex angle spanned in the plane of the two vectors when they
      *      are placed tip-to-tip with each other, measured in radians. As an example,
      *      if <i>u</i> = (2, 0, 0), and <i>v</i> = (-5, 5, 0), then <i>u</i>.angleWith(<i>v</i>)
      *      will return the double-approximation of 3π/4. Since this value is computed
@@ -235,5 +235,15 @@ public class Vector {
      */
     public double angleWith(Vector v) {
         return Math.acos(this.dot(v) / ( this.length() * v.length() ));
+    }
+    
+    /**
+     * Get the projection of this vector onto another.
+     * @param   v   The vector to project this vector onto.
+     * @return  the projection of this vector onto `v`. That is, the component of this
+     *              vector that lies on the line described by `v`.
+     */
+    public Vector proj(Vector v) {
+        return v.scale(v.dot(this) / (v.length() * v.length()));
     }
 }
