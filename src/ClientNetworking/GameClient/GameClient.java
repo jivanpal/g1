@@ -19,7 +19,9 @@ public class GameClient extends Thread
 	{
 		for(int i=0;i<8;i++)
 		{
-			if(lobby.getPlayers()[i].isHost)
+			if(lobby.getPlayers()[i] == null) {
+				continue;
+			} else if(lobby.getPlayers()[i].isHost)
 				hostname = lobby.getPlayers()[i].address;
 		}
 	}
