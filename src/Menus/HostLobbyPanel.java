@@ -2,6 +2,7 @@ package Menus;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -14,10 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import ClientNetworking.Client;
+import GeneralNetworking.Action;
 import GeneralNetworking.Invite;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 import ServerNetworking.Server;
+import Views.EngineerView;
 
 /**
  * Panel for the host of the game
@@ -79,6 +82,21 @@ public class HostLobbyPanel extends JPanel implements Observer {
 
 		});
 		add(inviteplayers, c);
+
+		c.anchor = GridBagConstraints.SOUTH;
+		JButton startgame = new JButton("Start Game");
+		startgame.addActionListener(e -> {
+			try {
+				client.send(new Action(client.getLobby().getID(), player, 11));
+
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		});
+		startgame.setPreferredSize(new Dimension(300, 50));
+		add(startgame, c);
 
 		c.anchor = GridBagConstraints.CENTER;
 		JPanel ppanel = displayplayers();
@@ -143,13 +161,20 @@ public class HostLobbyPanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		this.remove(lpanel);
-		JPanel newpanel = displayplayers();
-		newpanel.setOpaque(false);
-		this.add(newpanel, c);
-		this.invalidate();
-		this.validate();
-		this.lpanel = newpanel;
+		Lobby l = client.getLobby();
+		System.out.println("Lobby started is " + l.started);
+		if (l.started) {
+			EngineerView eview = new EngineerView(client.name);
+			menu.changeFrame(eview);
+		} else {
+			this.remove(lpanel);
+			JPanel newpanel = displayplayers();
+			newpanel.setOpaque(false);
+			this.add(newpanel, c);
+			this.invalidate();
+			this.validate();
+			this.lpanel = newpanel;
+		}
 
 	}
 }

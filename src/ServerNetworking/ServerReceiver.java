@@ -70,6 +70,12 @@ public class ServerReceiver extends Thread
 								Player kicked = a.getKicked();
 								l.kick(p, kicked);
 							}
+							// START GAME
+							else if (pos == 11)
+							{
+								l.start(p);
+								System.out.println("started lobby");
+							}
 							// MOVE PLAYER
 							else
 							{

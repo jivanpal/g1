@@ -6,6 +6,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.net.InetAddress;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.UUID;
 
 import javax.swing.JButton;
@@ -16,6 +18,7 @@ import GeneralNetworking.Invite;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 import ServerNetworking.Server;
+import Views.EngineerView;
 
 /**
  * Panel for the host of the game
@@ -25,7 +28,7 @@ import ServerNetworking.Server;
 
 // TODO Invite function
 // TODO Kick function
-public class ClientLobbyPanel extends JPanel {
+public class ClientLobbyPanel extends JPanel implements Observer {
 	private MainMenu menu;
 	public Client client;
 	private Player player;
@@ -126,5 +129,23 @@ public class ClientLobbyPanel extends JPanel {
 
 		}
 		return panel;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		Lobby l = client.getLobby();
+		if (l.started) {
+			EngineerView eview = new EngineerView(client.name);
+			menu.changeFrame(eview);
+		} else {
+			this.remove(lpanel);
+			JPanel newpanel = displayplayers();
+			newpanel.setOpaque(false);
+			this.add(newpanel, c);
+			this.invalidate();
+			this.validate();
+			this.lpanel = newpanel;
+		}
+		
 	}
 }

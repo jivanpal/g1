@@ -43,6 +43,7 @@ public class MainMenu {
 	 */
 	public void changeFrame(JPanel panel) {
 		frame.setContentPane(panel);
+		//frame.pack();
 		frame.repaint();
 		frame.revalidate();
 	}
