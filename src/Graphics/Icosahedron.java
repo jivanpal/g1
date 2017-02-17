@@ -1,6 +1,7 @@
 package Graphics;
 import java.awt.Color;
 
+import Geometry.Rotation;
 import Geometry.Vector;
 
 
@@ -12,7 +13,7 @@ import Geometry.Vector;
 public class Icosahedron{
 	
 	private double x, y, z, size;
-	private Point[] vertices = new Point[12];
+	private Vector[] vertices = new Vector[12];
 	private int[][] sides = {{0, 8, 4},
 								{0, 5, 10},
 								{2, 4, 9},
@@ -36,21 +37,20 @@ public class Icosahedron{
 	private Color[] colors = new Color[20];
 	private double gr = 1.618;
 	private Vector xVec, yVec, zVec;
+	private Rotation orientation;
 	
 	/**
 	 * Creates the new icosahedron, and adds it to the screen
 	 * @param v x, y and z coordinates of its position
 	 * @param size Size of the object
 	 */
-	public Icosahedron(Vector v, double size, Vector xVec, Vector yVec, Vector zVec){
+	public Icosahedron(Vector v, double size, Rotation orientation) {
 		this.x = v.getX();
 		this.y = v.getY();
 		this.z = v.getZ();
 		this.size = size;
 		gr *= size;
-		this.xVec = xVec;
-		this.yVec = yVec;
-		this.zVec = zVec;
+		this.orientation = orientation;
 		
 		createPoints();
 		
@@ -61,27 +61,28 @@ public class Icosahedron{
 		GraphicalModel g = new GraphicalModel(vertices, sides, colors);
 		g.create();
 	}
-	
+
 	/**
 	 * Creates the vertices of the object
 	 */
 	private void createPoints(){
-		vertices[0] = new Point(gr, size, 0);
-		vertices[1] = new Point(-gr, size, 0);
-		vertices[2] = new Point(gr, -size, 0);
-		vertices[3] = new Point(-gr, -size, 0);
-		vertices[4] = new Point(size, 0, gr);
-		vertices[5] = new Point(size, 0, -gr);
-		vertices[6] = new Point(-size, 0, gr);
-		vertices[7] = new Point(-size, 0, -gr);
-		vertices[8] = new Point(0, gr, size);
-		vertices[9] = new Point(0, -gr, size);
-		vertices[10] = new Point(0, gr, -size);
-		vertices[11] = new Point(0, -gr, -size);
+		vertices[0] = new Vector(gr, size, 0);
+		vertices[1] = new Vector(-gr, size, 0);
+		vertices[2] = new Vector(gr, -size, 0);
+		vertices[3] = new Vector(-gr, -size, 0);
+		vertices[4] = new Vector(size, 0, gr);
+		vertices[5] = new Vector(size, 0, -gr);
+		vertices[6] = new Vector(-size, 0, gr);
+		vertices[7] = new Vector(-size, 0, -gr);
+		vertices[8] = new Vector(0, gr, size);
+		vertices[9] = new Vector(0, -gr, size);
+		vertices[10] = new Vector(0, gr, -size);
+		vertices[11] = new Vector(0, -gr, -size);
+		
+		orientation.apply(vertices);
 		
 		for(int i = 0; i < vertices.length; i++){
-			vertices[i] = Matrix.multiplyPoint(Matrix.getR(xVec, yVec, zVec), vertices[i]);
-			vertices[i] = new Point(vertices[i].x + x, vertices[i].y + y, vertices[i].z + z);
+			vertices[i] = new Vector(vertices[i].getX() + x, vertices[i].getY() + y, vertices[i].getZ() + z);
 		}
 	}
 	

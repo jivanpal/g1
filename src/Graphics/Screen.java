@@ -149,12 +149,12 @@ public class Screen extends JPanel{
 			Class<? extends Body> bClass = b.getClass();
 			if(bClass == Ship.class){
 				for(Vector v : map.getAllPositions(b.getPosition())){
-				Icosahedron i = new Icosahedron(v, 0.01, b.getRightVector(), b.getUpVector(), b.getBackwardVector());
+				Icosahedron i = new Icosahedron(v, 0.01, b.getOrientation());
 				}
 			}
 			else if(bClass == Asteroid.class){
 				for(Vector v : map.getAllPositions(b.getPosition())){
-					AsteroidModel asteroid = new AsteroidModel(v, 0.25, b.getRightVector(), b.getUpVector(), b.getBackwardVector());
+					AsteroidModel asteroid = new AsteroidModel(v, 0.25, b.getOrientation());
 				}
 			}
 		}
