@@ -160,6 +160,7 @@ public class Map extends ArrayList<Body> {
             position.plus(new Vector( 0,  y,  z)),
             position.plus(new Vector( x,  y,  z)),
         };
+        return positions;
     }
     
 // Evolution
