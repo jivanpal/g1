@@ -41,10 +41,12 @@ public class Screen extends JPanel{
 	private Map map;
 	private String nickname;
 	private Integer shipIndex = null;
+	private boolean pilot;
 	
-	public Screen(String nickname){
+	public Screen(String nickname, boolean pilot){
 		
 		this.nickname = nickname;
+		this.pilot = pilot;
 		map = new Map(0, 0, 0);
 		Body asteroid = new Body();
 		asteroid.move(new Vector(0, 2, 0));
@@ -218,7 +220,12 @@ public class Screen extends JPanel{
 			Ship ship = (Ship) map.get(shipIndex);
 			U = ship.getUpVector();
 			V = ship.getRightVector();
-			N = ship.getForwardVector();
+			if(pilot){
+				N = ship.getForwardVector();
+			}
+			else{
+				N = ship.getForwardVector();
+			}
 			viewFrom = ship.getPosition();
 			viewTo = viewFrom.plus(N);
 			
