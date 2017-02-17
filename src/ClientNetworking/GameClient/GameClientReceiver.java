@@ -2,6 +2,7 @@ package ClientNetworking.GameClient;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.Observable;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import GameLogic.Map;
@@ -10,7 +11,7 @@ public class GameClientReceiver extends Thread
 {
 	ObjectInputStream fromServer;
 	private LinkedBlockingQueue<String> queue;
-	private Map gameMap;
+	private MapContainer gameMap= new MapContainer();
 	GameClientReceiver(ObjectInputStream reader, LinkedBlockingQueue<String> q)
 	{
 		fromServer = reader;
@@ -27,7 +28,7 @@ public class GameClientReceiver extends Thread
 				try
 				{
 					Object inObject = fromServer.readObject();
-					gameMap = (Map)inObject;
+					gameMap.setMap((Map)inObject);
 				}
 				catch (ClassNotFoundException e)
 				{
@@ -42,5 +43,21 @@ public class GameClientReceiver extends Thread
 		}
 	}
 	public Map getMap()
-	{return gameMap;}
+	{return gameMap.getMap();}
 }
+class MapContainer extends Observable
+{
+        private Map map;
+        public MapContainer()
+        {}
+        public void setMap(Map map)
+        {
+            this.map=map;
+            setChanged();
+            notifyObservers();
+        }
+        public Map getMap()
+        {
+            return map;
+        }
+ }
