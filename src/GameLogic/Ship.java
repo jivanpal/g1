@@ -8,6 +8,7 @@ import Physics.Body;
  *
  */
 public class Ship extends Body{
+	private final int ENGINE_FORCE = 1000; // 1 000 newtons
 	
 	public static final byte LASER_BLASTER_INDEX = 0;
 	public static final byte PLASMA_BLASTER_INDEX = 1;
@@ -29,6 +30,9 @@ public class Ship extends Body{
 	 * @param pilotName The pilot name of the specific ship
 	 */
 	public Ship(String pilotName){
+		// Set mass and radius
+		super(100, 2);
+		
 		//Initialising weapons
 		torpedoWeapon = new TorpedoWeapon();
 		laserBlaster = new LaserBlaster();
@@ -102,16 +106,12 @@ public class Ship extends Body{
 		switch(weaponIndex){
 		case LASER_BLASTER_INDEX:
 			return laserBlaster.fire(this);
-			break;
 		case PLASMA_BLASTER_INDEX:
 			return plasmaBlaster.fire(this);
-			break;
 		case TORPEDO_WEAPON_INDEX:
 			return torpedoWeapon.fire(this);
-			break;
 		default:
 		    throw new IllegalArgumentException("You didn't specify a weapon index!");
-		    break;
 		}
 	}
 	
@@ -127,18 +127,18 @@ public class Ship extends Body{
 	
 	public void rollLeft() {
 	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
-	    this.exertForce(Vector.K..negate().scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
+	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
 	}
 	
 	public void rollRight() {
 	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
-        this.exertForce(Vector.K..negate().scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
+        this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
 	}
 	public void thrustForward() {
 	    this.exertForce(Vector.J.scale(ENGINE_FORCE), Vector.J.negate().scale(this.getRadius()));
 	}
 	
 	public void thrustReverse() {
-	    this.exertForce(Vector.J..negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
+	    this.exertForce(Vector.J.negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
 	}
 }
