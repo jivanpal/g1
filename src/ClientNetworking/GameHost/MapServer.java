@@ -13,6 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 import Geometry.Vector;
+import Physics.Body;
 import GameLogic.*;
 
 public class MapServer extends Thread
@@ -48,18 +49,18 @@ public class MapServer extends Thread
 				// Listen to the socket, accepting connections from new clients:
 				Socket socket = serverSocket.accept();
 				InetAddress address = socket.getInetAddress();
-				boolean flag = false;
+				boolean flag = false;		
 				int pos = 0;
 				String name = "";
-				for (Player player : lobby.getPlayers())
+				Player[] players = lobby.getPlayers();
+				for (pos=0;pos<players.length;pos++)
 				{
-					if (player.address == address)
+					if (players[pos]!= null && players[pos].address == address)
 					{
-						name = player.nickname;
+						name = players[pos].nickname;
 						flag = true;
 						break;
 					}
-					pos++;
 				}
 				if (!flag)
 				{
@@ -87,7 +88,19 @@ public class MapServer extends Thread
 						a.setPosition(new Vector(r.nextDouble()* gameMap.getDimensions().getX(), 
 												r.nextDouble()* gameMap.getDimensions().getY(),
 												r.nextDouble()* gameMap.getDimensions().getZ()));
-						gameMap.add(a);
+						boolean overlaps = false;
+						for(Body b : gameMap) {
+							if (a.isTouching(b)) {
+								overlaps=true;
+								break;
+							}
+						}
+						
+						if(!overlaps) {
+							gameMap.add(a);
+						} else {
+							i--;
+						}
 					}
 
 					// This is so that we can use readLine():
@@ -99,7 +112,7 @@ public class MapServer extends Thread
 					// We create and start new threads to read from the
 					// client(this one executes the commands):
 
-					GameHostReceiver clientInput = new GameHostReceiver(fromClient);
+					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap);
 					clientInput.start();
 
 					// We create and start a new thread to write to the client:

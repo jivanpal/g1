@@ -3,14 +3,18 @@ package ClientNetworking.GameHost;
 
 import java.io.ObjectInputStream;
 
+import GameLogic.Map;
+
 
 public class GameHostReceiver extends Thread
 {
 	private ObjectInputStream clientIN;
-
-	public GameHostReceiver(ObjectInputStream reader)
+	private Map gameMap=null;
+		
+	public GameHostReceiver(ObjectInputStream reader, Map gM)
 	{
 		clientIN = reader;
+		gameMap = gM;
 	}
 
 	public void run()
