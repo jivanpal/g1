@@ -107,6 +107,61 @@ public class Map extends ArrayList<Body> {
         }
     }
     
+    /**
+     * Given a position vector, get an array containing the 27 vectors
+     * corresponding to that position vector that reside in the primary
+     * map space, as well as all its direct neighbours.
+     * @param   position    The position vector.
+     * @return
+     */
+    public Vector[] getAllPositions(Vector position) {
+        // Get the central position vector.
+        position = position.modulo(dimensions);
+        
+        double x = dimensions.getX();
+        double y = dimensions.getY();
+        double z = dimensions.getZ();
+        
+        Vector[] positions = new Vector[] {
+            position.plus(new Vector(-x, -y, -z)),
+            position.plus(new Vector( 0, -y, -z)),
+            position.plus(new Vector( x, -y, -z)),
+            
+            position.plus(new Vector(-x,  0, -z)),
+            position.plus(new Vector( 0,  0, -z)),
+            position.plus(new Vector( x,  0, -z)),
+            
+            position.plus(new Vector(-x,  y, -z)),
+            position.plus(new Vector( 0,  y, -z)),
+            position.plus(new Vector( x,  y, -z)),
+            
+            
+            position.plus(new Vector(-x, -y,  0)),
+            position.plus(new Vector( 0, -y,  0)),
+            position.plus(new Vector( x, -y,  0)),
+            
+            position.plus(new Vector(-x,  0,  0)),
+            position.plus(new Vector( 0,  0,  0)),
+            position.plus(new Vector( x,  0,  0)),
+            
+            position.plus(new Vector(-x,  y,  0)),
+            position.plus(new Vector( 0,  y,  0)),
+            position.plus(new Vector( x,  y,  0)),
+            
+            position.plus(new Vector(-x, -y,  z)),
+            position.plus(new Vector( 0, -y,  z)),
+            position.plus(new Vector( x, -y,  z)),
+            
+            position.plus(new Vector(-x,  0,  z)),
+            position.plus(new Vector( 0,  0,  z)),
+            position.plus(new Vector( x,  0,  z)),
+            
+            position.plus(new Vector(-x,  y,  z)),
+            position.plus(new Vector( 0,  y,  z)),
+            position.plus(new Vector( x,  y,  z)),
+        };
+    }
+    
 // Evolution
     
     /**
