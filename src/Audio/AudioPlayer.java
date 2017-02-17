@@ -13,7 +13,7 @@ import javax.sound.sampled.Clip;
 public class AudioPlayer {
 	
 	//the directories to each sound file --
-	private static String pathToProjectAudio = System.getProperty("user.dir") + "\\src\\Audio\\";
+	private static String pathToProjectAudio = System.getProperty("user.dir") + "/src/Audio/";
 	public static String MENU_SCREEN_TUNE = pathToProjectAudio + "intro_screen.wav";
 	public static String IN_GAME_TUNE = pathToProjectAudio + "game_audio.wav";
 	
@@ -71,4 +71,5 @@ public class AudioPlayer {
 			soundEffectClip.stop();
 		}
 	}
+
 }
