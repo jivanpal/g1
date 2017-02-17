@@ -24,12 +24,6 @@ public class ServerSender extends Thread
 		while (runs)
 		{
 			Object objectOut = null;
-			try {
-				clientOUT.reset();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			try
 			{	
 				objectOut = clientTable.getQueue(nickname).take();
@@ -42,6 +36,7 @@ public class ServerSender extends Thread
 			{
 				if (objectOut != null)
 				{
+					clientOUT.reset();
 					clientOUT.writeObject(objectOut);
 					clientOUT.flush();
 				}

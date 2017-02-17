@@ -24,8 +24,8 @@ public class ClientSender extends Thread
 		while (true)
 		{
 			Object o;
-			try
-			{
+			try {
+				toServer.reset();
 				o = clientQueue.take();
 				toServer.writeObject(o);
 				toServer.flush();
@@ -35,10 +35,9 @@ public class ClientSender extends Thread
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			catch (IOException e)
-			{
+			catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
 		}
 	}

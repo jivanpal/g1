@@ -16,8 +16,8 @@ public class InstructionsView extends JPanel {
 
     public InstructionsView(List<String> instructions) {
         for(String instruction : instructions) {
-            int instructionCounter = instructionLabels.size() + 1;
-            instructionLabels.add(new JLabel(String.valueOf(instructionCounter) + instruction));
+            int index = instructionLabels.size();
+            instructionLabels.add(new JLabel(String.valueOf(index+1) + instruction));
         }
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -28,9 +28,9 @@ public class InstructionsView extends JPanel {
     }
 
     public void addInstruction(String instruction) {
-        int instructionCounter = instructionLabels.size() + 1;
-        instructionLabels.add(new JLabel(instructionCounter + instruction));
-        this.add(instructionLabels.get(instructionCounter));
+        int index = instructionLabels.size();
+        instructionLabels.add(new JLabel(index + 1 + instruction));
+        this.add(instructionLabels.get(index));
     }
 
 }

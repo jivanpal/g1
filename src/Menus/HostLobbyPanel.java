@@ -21,7 +21,8 @@ import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 import ServerNetworking.Server;
 import Views.EngineerView;
-
+import Views.PilotView;
+import ClientNetworking.GameHost.*;
 /**
  * Panel for the host of the game
  * 
@@ -87,6 +88,8 @@ public class HostLobbyPanel extends JPanel implements Observer {
 		JButton startgame = new JButton("Start Game");
 		startgame.addActionListener(e -> {
 			try {
+				MapServer game = new MapServer(client.getLobby());
+				game.start();
 				client.send(new Action(client.getLobby().getID(), player, 11));
 
 			} catch (Exception e1) {
@@ -151,9 +154,12 @@ public class HostLobbyPanel extends JPanel implements Observer {
 			} else {
 				move.setEnabled(false);
 			}
+
+/*			kick.addActionListener(e -> {
+				client.send(new Action(,10));
+			});*/
 			panel.add(move);
 			panel.add(kick);
-
 		}
 		return panel;
 	}
@@ -163,8 +169,26 @@ public class HostLobbyPanel extends JPanel implements Observer {
 		System.out.println("Lobby starting ID: " + client.getLobby().getID());
 		System.out.println("Lobby started is " + client.getLobby().started);
 		if (client.getLobby().started) {
-			EngineerView eview = new EngineerView(client.name);
-			menu.changeFrame(eview);
+			Player[] players = client.getLobby().getPlayers();
+			int pos = 0;
+			while (pos < players.length)
+			{
+				System.out.println("pos = ");
+				if(player.equals(players[pos]))
+					break;
+				pos++;
+			}
+			System.out.println(pos);
+			if(pos % 2 == 0)	// i.e. if player is pilot
+			{
+				PilotView pv = new PilotView(client.name);
+				menu.changeFrame(pv);
+			}
+			else		// else player is engineer
+			{
+				EngineerView eview = new EngineerView(client.name);
+				menu.changeFrame(eview);
+			}
 		} else {
 			this.remove(lpanel);
 			JPanel newpanel = displayplayers();
