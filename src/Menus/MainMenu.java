@@ -56,7 +56,7 @@ public class MainMenu {
 			name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
 		}
 		MainMenu menu = new MainMenu(name);
-		AudioPlayer.playMusic(AudioPlayer.INTRO_SCREEN_TUNE);
+		AudioPlayer.playMusic(AudioPlayer.MENU_SCREEN_TUNE);
 		
 	}
 }

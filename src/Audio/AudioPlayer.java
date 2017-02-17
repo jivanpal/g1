@@ -14,7 +14,8 @@ public class AudioPlayer {
 	
 	//the directories to each sound file --
 	private static String pathToProject = System.getProperty("user.dir");
-	public static String INTRO_SCREEN_TUNE = pathToProject + "\\src\\Audio\\intro_screen.wav";
+	public static String MENU_SCREEN_TUNE = pathToProject + "\\src\\Audio\\intro_screen.wav";
+	public static String IN_GAME_TUNE = pathToProject + "\\src\\Audio\\game_audio.wav";
 	
 	private static Clip musicClip;
 	private static Clip soundEffectClip;
@@ -26,7 +27,7 @@ public class AudioPlayer {
 	public static synchronized void playSoundEffect(String sound) {
 		try {
 			AudioInputStream audioInputStream = AudioSystem
-					.getAudioInputStream(new File(INTRO_SCREEN_TUNE).getAbsoluteFile());
+					.getAudioInputStream(new File(sound).getAbsoluteFile());
 			soundEffectClip = AudioSystem.getClip();
 			soundEffectClip.open(audioInputStream);
 			soundEffectClip.start();
@@ -43,7 +44,7 @@ public class AudioPlayer {
 	public static synchronized void playMusic(String sound) {
 		try {
 			AudioInputStream audioInputStream = AudioSystem
-					.getAudioInputStream(new File(INTRO_SCREEN_TUNE).getAbsoluteFile());
+					.getAudioInputStream(new File(sound).getAbsoluteFile());
 			musicClip = AudioSystem.getClip();
 			musicClip.open(audioInputStream);
 			musicClip.loop(Clip.LOOP_CONTINUOUSLY);
