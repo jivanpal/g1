@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 
-import GameLogic.Map;
+import GameLogic.*;
 import ServerNetworking.ClientTable;
 
 
@@ -17,12 +17,14 @@ public class GameHostReceiver extends Thread
 	private BufferedReader in;
 	private ClientTable clientTable;
 	private String playerPos;
+	private int playerInt;
 	public GameHostReceiver(ObjectInputStream reader, Map gM, ClientTable cT, String playerPos)
 	{		
 		in = new BufferedReader(new InputStreamReader(reader));
 		gameMap = gM;
 		this.playerPos = playerPos;
 		clientTable = cT;
+		playerInt = Integer.parseInt(playerPos);
 	}
 
 	public void run()
@@ -33,25 +35,32 @@ public class GameHostReceiver extends Thread
 			try
 			{
 				String str = in.readLine();
+				Ship playerShip = (Ship)(gameMap.get(playerInt));
 				switch(str){
 					case "fireWeapon1":
-						
+						gameMap.add(playerShip.fire(Ship.LASER_BLASTER_INDEX));
 						break;
 					case "fireWeapon2":
+						gameMap.add(playerShip.fire(Ship.PLASMA_BLASTER_INDEX));
 						break;
 					case "fireWeapon3":
+						gameMap.add(playerShip.fire(Ship.TORPEDO_WEAPON_INDEX));
 						break;
 					case "accelerate":
+						playerShip.thrustForward();
 						break;
 					case "decelerate":
-						break;
+						playerShip.thrustReverse();
 					case "pitchDown":
-						break;
+						playerShip.pitchDown();
 					case "pitchUp":
+						playerShip.pitchUp();
 						break;
 					case "rollLeft":
+						playerShip.rollLeft();
 						break;
 					case "rollRight":
+						playerShip.rollRight();
 						break;
 					case "exit":
 						running = false;
