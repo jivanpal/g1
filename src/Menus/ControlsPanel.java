@@ -65,8 +65,9 @@ public class ControlsPanel extends JPanel {
 		add(apply, c);
 		JButton resettodefault = new JButton("Reset To Defaults");
 		resettodefault.addActionListener(e -> {
-			KeyBindings kbs = new KeyBindings();
-			kbs.resetKeysToDefaults();
+			//KeyBindings kbs = new KeyBindings();
+			KeyBindings.resetKeysToDefaults();
+			KeyBindings.saveKeyBindingsInFile();
 			repaintbuttons(bpanel);
 		});
 
