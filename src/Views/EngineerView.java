@@ -3,6 +3,7 @@ package Views;
 import javax.swing.*;
 
 import Audio.AudioPlayer;
+import ClientNetworking.GameClient.GameClient;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -25,7 +26,7 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
     private Screen screen;
     private ResourcesView resourcesView;
 
-    public EngineerView(String playerNickname) {
+    public EngineerView(String playerNickname, GameClient gameClient) {
         this.setLayout(new BorderLayout());
 
         screen = new Screen(playerNickname, false);

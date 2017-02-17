@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import Audio.AudioPlayer;
+import ClientNetworking.GameClient.GameClient;
+import GameLogic.KeyBindings;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -29,7 +31,7 @@ public class PilotView extends JPanel implements KeyListener, Observer{
 
     private final InstructionsView instructionsView;
 
-    public PilotView(String playerNickname) {
+    public PilotView(String playerNickname, GameClient gameClient) {
         this.setLayout(new BorderLayout());
 
         screen = new Screen(playerNickname, true);
@@ -102,31 +104,31 @@ public class PilotView extends JPanel implements KeyListener, Observer{
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        if(keyEvent.getKeyCode() == KeyEvent.VK_1) {
+        if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
             System.out.println("Weapon Fired. Tell the server.");
         }
-        else if(keyEvent.getKeyCode() == KeyEvent.VK_2){
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON)){
         	
         }
-        else if(keyEvent.getKeyCode() == KeyEvent.VK_3){
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON)){
         	
         }
-        else if(keyEvent.getKeyCode() == KeyEvent.VK_E){
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ACCELERATE_BUTTON)){
         	
         }
-        else if(keyEvent.getKeyCode() == KeyEvent.VK_Q){
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_DECELERATE_BUTTON)){
         	
         }
-        else if(keyEvent.getKeyCode() == KeyEvent.VK_W){
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON)){
         	
         }
-        else if(keyEvent.getKeyCode() == KeyEvent.VK_S){
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_UP_BUTTON)){
         	
         }
-        else if(keyEvent.getKeyCode() == KeyEvent.VK_A){
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON)){
         	
         }
-        else if(keyEvent.getKeyCode() == KeyEvent.VK_D){
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON)){
         	
         }
     }
