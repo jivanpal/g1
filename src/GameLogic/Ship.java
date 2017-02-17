@@ -97,17 +97,20 @@ public class Ship extends Body{
 	}
 	
 	
-	public void fire(int weaponIndex) {
+	public Bullet fire(int weaponIndex, Ship parent) throws Exception {
 		switch(weaponIndex){
 		case LASER_BLASTER_INDEX:
-			laserBlaster.fire();
+			return laserBlaster.fire(parent);
 			break;
 		case PLASMA_BLASTER_INDEX:
-			plasmaBlaster.fire();
+			return plasmaBlaster.fire(parent);
 			break;
 		case TORPEDO_WEAPON_INDEX:
-			torpedoWeapon.fire();
+			return torpedoWeapon.fire(parent);
 			break;
+		default:
+		    throw new IllegalArgumentException("You didn't specify a weapon index!");
+		    break;
 		}
 	}
 	
