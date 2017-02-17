@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import GameLogic.Map;
 import GeneralNetworking.Lobby;
 
 public class GameClient extends Thread
@@ -16,6 +17,7 @@ public class GameClient extends Thread
 	private int port = GameVariables.PORT;
 	private InetAddress hostname = null;
 	private LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
+	GameClientReceiver receiver;
 	public GameClient(Lobby lobby)
 	{
 		for(int i=0;i<8;i++)
@@ -52,7 +54,7 @@ public class GameClient extends Thread
 		}
 
 		GameClientSender sender = new GameClientSender(toServer,queue);
-		GameClientReceiver receiver = new GameClientReceiver(fromServer,queue);
+		receiver = new GameClientReceiver(fromServer,queue);
 
 		// Start the sender and receiver threads
 		sender.start();
@@ -75,4 +77,8 @@ public class GameClient extends Thread
 	{
 		queue.offer(str);
 	}
+	public Map getMap()
+	{
+		 return receiver.getMap();
+	};
 }

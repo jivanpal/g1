@@ -149,5 +149,7 @@ public class PilotView extends JPanel implements KeyListener, Observer{
         laserBlasterView.updateWeaponAmmoLevel(shipObservable.getLaserAmmo());
         plasmaBlasterView.updateWeaponAmmoLevel(shipObservable.getPlasmaAmmo());
         torpedosView.updateWeaponAmmoLevel(shipObservable.getTorpedoAmmo());
+        
+        screen.setMap(gameClient.getMap());
     }
 }

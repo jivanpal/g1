@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import GameLogic.Map;
+
 public class GameClientReceiver extends Thread
 {
 	ObjectInputStream fromServer;
 	private LinkedBlockingQueue<String> queue;
-
+	private Map gameMap;
 	GameClientReceiver(ObjectInputStream reader, LinkedBlockingQueue<String> q)
 	{
 		fromServer = reader;
@@ -25,7 +27,7 @@ public class GameClientReceiver extends Thread
 				try
 				{
 					Object inObject = fromServer.readObject();
-					// TYPECAST
+					gameMap = (Map)inObject;
 				}
 				catch (ClassNotFoundException e)
 				{
@@ -39,4 +41,6 @@ public class GameClientReceiver extends Thread
 			System.exit(1); // Give up.
 		}
 	}
+	public Map getMap()
+	{return gameMap;}
 }
