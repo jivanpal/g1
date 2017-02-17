@@ -40,8 +40,8 @@ public class ClientReceiver extends Thread
 					// LOBBY
 					if (inObject instanceof Lobby)
 					{
-						clientLobby.setLobby((Lobby) inObject);
-						System.out.println("Client rec: lobby started is " + getLobby().started);
+						Lobby lobby = (Lobby) inObject;
+						clientLobby.setLobby(lobby);
 					}
 					// INVITE
 					else if (inObject instanceof Invite)

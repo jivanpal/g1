@@ -31,7 +31,8 @@ import ClientNetworking.GameHost.*;
  */
 
 // TODO Invite function
-// TODO Kick function
+// TODO Kick function works partially
+// TODO Merge host and client lobby panel
 public class HostLobbyPanel extends JPanel implements Observer {
 	private MainMenu menu;
 	public Client client;
@@ -74,6 +75,7 @@ public class HostLobbyPanel extends JPanel implements Observer {
 		c.gridy = 0;
 		JButton backtostart = new JButton("Back To Play Menu");
 		backtostart.addActionListener(e -> {
+			client.send(new Action(client.getLobby().getID(), player, player, 10));
 			PlayPanel ppanel = new PlayPanel(menu, client);
 			menu.changeFrame(ppanel);
 		});
@@ -122,9 +124,23 @@ public class HostLobbyPanel extends JPanel implements Observer {
 		Player[] players = client.getLobby().getPlayers();
 		for (Player p : players) {
 			int position = number;
+			String role = "";
 			number++;
-			JLabel label = new JLabel(number + ".");
-			label.setForeground(Color.WHITE);
+			if (position % 2 ==0) {
+				role = "Pilot";
+			} else {
+				role = "Engineer";
+			}
+			JLabel label = new JLabel(role);
+			if (position < 2) {
+				label.setForeground(Color.RED);
+			} else if (position < 4) {
+				label.setForeground(Color.YELLOW);
+			} else if (position < 6) {
+				label.setForeground(Color.GREEN);
+			} else {
+				label.setForeground(Color.WHITE);
+			}
 			panel.add(label);
 			if (p != null) {
 				JLabel name = new JLabel(p.nickname);
@@ -136,17 +152,13 @@ public class HostLobbyPanel extends JPanel implements Observer {
 			}
 			JButton move = new JButton("Move");
 			move.addActionListener(e -> {
-				client.getLobby().move(this.player, position);
-				this.remove(lpanel);
-				JPanel newpanel = displayplayers();
-				newpanel.setOpaque(false);
-				this.add(newpanel, c);
-				this.invalidate();
-				this.validate();
-				this.lpanel = newpanel;
+				client.send(new Action (client.getLobby().getID(), player, position));
 
 			});
 			JButton kick = new JButton("Kick");
+			kick.addActionListener(e -> {
+				client.send(new Action(client.getLobby().getID(), player, players[position], 10));
+			});
 			if (p == null) {
 				kick.setEnabled(false);
 			} else if (this.player.nickname.equals(p.nickname)) {
@@ -167,14 +179,11 @@ public class HostLobbyPanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("Lobby starting ID: " + client.getLobby().getID());
-		System.out.println("Lobby started is " + client.getLobby().started);
 		if (client.getLobby().started) {
 			Player[] players = client.getLobby().getPlayers();
 			int pos = 0;
 			while (pos < players.length)
 			{
-				System.out.println("pos = ");
 				if(player.equals(players[pos]))
 					break;
 				pos++;
