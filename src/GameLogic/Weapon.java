@@ -113,7 +113,8 @@ public abstract class Weapon {
     }
     
 // Actions
-    public void fire() {
+    public Bullet fire(Ship parent) throws Exception {
         ammo.down();
+        return getBulletInstance(parent);
     }
 }
