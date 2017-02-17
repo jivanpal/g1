@@ -89,6 +89,7 @@ public class Lobby implements Serializable
 	{
 		if (p.isHost)
 		{
+			System.out.println("Lobby class, started is true");
 			started = true;
 		}
 	}

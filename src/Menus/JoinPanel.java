@@ -139,7 +139,6 @@ public class JoinPanel extends JPanel {
 			{
 				Player player = new Player(client.name, InetAddress.getLocalHost(), false);
 				client.send(new Action(lInfo.lobbyID,player,9));
-				//Error here since when creating the clientlobbypanel, the client's lobby isn't set so throws a nullpointerexception.
 				ClientLobbyPanel clpanel = new ClientLobbyPanel(menu, client, lInfo.lobbyID, player);
 				menu.changeFrame(clpanel);
 			}

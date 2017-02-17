@@ -38,9 +38,7 @@ public class Icosahedron{
 	
 	/**
 	 * Creates the new icosahedron, and adds it to the screen
-	 * @param x The x-coordinate of the object
-	 * @param y The y-coordinate of the object
-	 * @param z The z-coordinate of the object
+	 * @param v x, y and z coordinates of its position
 	 * @param size Size of the object
 	 */
 	public Icosahedron(Vector v, double size){

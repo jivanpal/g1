@@ -29,7 +29,7 @@ public class PilotView extends JPanel implements KeyListener, Observer{
     public PilotView(String playerNickname) {
         this.setLayout(new BorderLayout());
 
-        screen = new Screen(playerNickname);
+        screen = new Screen(playerNickname, true);
         screen.setSize(1000, 800);
         screen.setMaximumSize(new Dimension(1000, 800));
         screen.setMinimumSize(new Dimension(1000, 800));

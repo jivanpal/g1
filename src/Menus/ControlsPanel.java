@@ -24,10 +24,8 @@ import GameLogic.KeyBindings;
  * 
  * @author Jaren Chin-Hao Liu
  */
-// TODO Make controls work Space button & Arrow keys
-// TODO Bug in changing keys when you switch the keys around. I believe bug is
-// in the method changeKeyByCurrentValue in KeyBindings class. Will need to
-// inform Ivan to fix it.
+// TODO Make controls work Arrow keys
+
 public class ControlsPanel extends JPanel {
 	private MainMenu menu;
 	private boolean pressed;
@@ -499,6 +497,7 @@ public class ControlsPanel extends JPanel {
 		JButton button = new JButton();
 		button.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "none");
 		button.getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "none");
+		
 		button.addActionListener(e -> {
 			pressed = true;
 

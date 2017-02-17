@@ -41,10 +41,17 @@ public class Screen extends JPanel{
 	private Map map;
 	private String nickname;
 	private Integer shipIndex = null;
+	private boolean pilot;
 	
-	public Screen(String nickname){
+	/**
+	 * Creates a new Screen object
+	 * @param nickname The nickname of the user who is the pilot of the ship
+	 * @param pilot Whether this user is the pilot or the engineer
+	 */
+	public Screen(String nickname, boolean pilot){
 		
 		this.nickname = nickname;
+		this.pilot = pilot;
 		map = new Map(0, 0, 0);
 		Body asteroid = new Body();
 		asteroid.move(new Vector(0, 2, 0));
@@ -141,7 +148,7 @@ public class Screen extends JPanel{
 			//if(/*Body ID is not already present on the map*/){
 				Class<? extends Body> bClass = b.getClass();
 				if(bClass == Ship.class){
-					Icosahedron ship = new Icosahedron(b.getPosition(), 0.01);
+					
 				}
 				else if(bClass == Asteroid.class){
 					AsteroidModel asteroid = new AsteroidModel(b.getPosition(), 0.25);
@@ -218,7 +225,12 @@ public class Screen extends JPanel{
 			Ship ship = (Ship) map.get(shipIndex);
 			U = ship.getUpVector();
 			V = ship.getRightVector();
-			N = ship.getForwardVector();
+			if(pilot){
+				N = ship.getForwardVector();
+			}
+			else{
+				N = ship.getForwardVector();
+			}
 			viewFrom = ship.getPosition();
 			viewTo = viewFrom.plus(N);
 			

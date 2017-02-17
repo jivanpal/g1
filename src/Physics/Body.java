@@ -16,9 +16,9 @@ public class Body implements Cloneable {
 
     private Vector v = Vector.ZERO;     // Default velocity is zero.
     private Vector omega = Vector.ZERO; // Default angular velocity is zero.
-
+    
 /// CONSTRUCTORS
-
+    
     /**
      * Create a body with given parameters.
      * @param   mass            The body's mass, in kg.
@@ -158,6 +158,10 @@ public class Body implements Cloneable {
         return omega;
     }
     
+    public Vector getMomentum() {
+        return v.scale(m);
+    }
+    
 // Other Useful Getters
     
     /**
@@ -277,7 +281,7 @@ public class Body implements Cloneable {
     public void setAngularVelocity(Vector angularVelocity) {
         omega = angularVelocity;
     }
-
+    
 // Alterers
 
     /**
@@ -329,7 +333,40 @@ public class Body implements Cloneable {
         alterVelocity(reference.getVelocity());
         alterAngularVelocity(reference.getAngularVelocity());
     }
-
+    
+    /**
+     * Get the force that would cause this body to "rebound" in accordance with a
+     * given coefficient of restitution.
+     * @param   lineOfImpact    The line of action of the force; the common normal
+     *              between the colliding bodies touching surfaces.
+     * @param   restitution     The coefficient of restitution for this collision.
+     * @return
+     */
+    public Vector reboundForce(Vector lineOfImpact, double restitution) {
+        /* What the method does:
+        Vector affectedVelocityComponent = v.proj(lineOfImpact);
+        Vector velocityDelta    = affectedVelocityComponent.negate().scale(restitution);
+        Vector momentumDelta    = velocityDelta.scale(m);
+        Vector requiredImpulse  = momentumDelta;                                // Impulse = Force * time
+        Vector requiredForce    = requiredImpulse.scale(Global.REFRESH_RATE);   // therefore F = I / t
+        return requiredForce;
+        */
+        
+        // One liner that does the same thing:
+        return v.proj(lineOfImpact).scale(-m * Global.REFRESH_RATE * (1 + restitution));
+    }
+    
+    /**
+     * Get the force that would case this body to "rebound" perfectly elastically.
+     * Same as `reboundForce(lineOfImpact, 1)`.
+     * @param   lineOfImpact    The line of action of the force; the common normal
+     *              between the colliding bodies touching surfaces.
+     * @return
+     */
+    public Vector reboundForce(Vector lineOfImpact) {
+        return v.proj(lineOfImpact).scale(-m * Global.REFRESH_RATE);
+    }
+    
 // Evolution
 
     /**
@@ -344,9 +381,9 @@ public class Body implements Cloneable {
     }
 
     /**
-     * Change the rate-related parameters of the body as if a force
-     * of given magnitude has acted on it at a given displacement from
-     * its barycenter.
+     * Exert a force of given magnitude on this body at a given displacement
+     * from its barycenter. This serves to change the rate-related parameters
+     * of the body.
      *
      * @param   f   The force vector to simulate exertion of, in newtons.
      * @param   r   The displacement of the the point of action of the force from
@@ -367,5 +404,28 @@ public class Body implements Cloneable {
      */
     public boolean isTouching(Body b) {
         return this.getPosition().minus(b.getPosition()).length() < this.getRadius() + b.getRadius();
+    }
+    
+    /**
+     * Exert a force on this body that is equivalent to the force it would experience
+     * when colliding with a given body. This takes into account the body's position.
+     * In practice, `rebound(<i>b</i>)` is invoked <b>if and only if</b>
+     * `<i>this</i>.isTouching(<i>b</i>)`.
+     * @param   b   The body to simulate rebounding this body off of. The body <i>b</i>
+     *              is unaffected by invocation of this method. In order for this body
+     *              (call it body <i>a</i>) and <i>b</i> to both experience a rebounding
+     *              effect off of each other, both `<i>a</i>.rebound(<i>b</i>)` and
+     *              `<i>b</i>.rebound(<i>a</i>)` must be called <b>exactly once<b> each.
+     */
+    public void rebound(Body b) {
+        if(b == this) {
+            return;
+        }
+        
+        Vector lineOfAction = getPosition().minus(b.getPosition());
+        this.exertForce(
+            reboundForce(lineOfAction),
+            lineOfAction.normalise().scale(getRadius())
+        );
     }
 }
