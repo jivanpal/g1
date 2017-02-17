@@ -4,15 +4,20 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import ServerNetworking.ClientTable;
+
 public class GameHostSender extends Thread
 {
 	private ObjectOutputStream clientOUT;
 	private LinkedBlockingQueue<Object> queue;
+	private ClientTable clientTable;
+	private String pos;
 
-	public GameHostSender(ObjectOutputStream sender, LinkedBlockingQueue<Object> q)
+	public GameHostSender(ObjectOutputStream sender, ClientTable cT,String name)
 	{
 		clientOUT = sender;
-		queue=q;
+		clientTable = cT;
+		pos = name;
 	}
 
 	public void run()
@@ -23,7 +28,7 @@ public class GameHostSender extends Thread
 			Object objectOut = null;
 			try
 			{
-				objectOut = queue.take();
+				objectOut = clientTable.getQueue(pos).take();
 			}
 			catch (InterruptedException e)
 			{
@@ -34,6 +39,7 @@ public class GameHostSender extends Thread
 				//check if we got anything to send
 				if (objectOut != null)
 				{
+					clientOUT.reset();
 					clientOUT.writeObject(objectOut);
 					clientOUT.flush();
 				}

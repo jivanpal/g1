@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 
 import GameLogic.Map;
+import ServerNetworking.ClientTable;
 
 
 public class GameHostReceiver extends Thread
@@ -14,12 +15,14 @@ public class GameHostReceiver extends Thread
 	private ObjectInputStream clientIN;
 	private Map gameMap=null;
 	private BufferedReader in;
-	private int playerPos;
-	public GameHostReceiver(ObjectInputStream reader, Map gM, int playerPos)
+	private ClientTable clientTable;
+	private String playerPos;
+	public GameHostReceiver(ObjectInputStream reader, Map gM, ClientTable cT, String playerPos)
 	{		
 		in = new BufferedReader(new InputStreamReader(reader));
 		gameMap = gM;
 		this.playerPos = playerPos;
+		clientTable = cT;
 	}
 
 	public void run()

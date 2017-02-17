@@ -14,6 +14,7 @@ import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 import Geometry.Vector;
 import Physics.Body;
+import ServerNetworking.ClientTable;
 import GameLogic.*;
 
 public class MapServer extends Thread
@@ -42,8 +43,8 @@ public class MapServer extends Thread
 	{
 		try
 		{
-			LinkedBlockingQueue<Object> queue = new LinkedBlockingQueue<Object>();
-
+			ClientTable clientTable = new ClientTable();
+			
 			while (true)
 			{
 				// Listen to the socket, accepting connections from new clients:
@@ -68,7 +69,7 @@ public class MapServer extends Thread
 				}
 				else
 				{
-
+					clientTable.add(""+pos);
 					// If the player added is the pilot, put a new ship on the
 					// map in a sensible position.
 					if (pos % 2 == 0)
@@ -113,11 +114,11 @@ public class MapServer extends Thread
 					// We create and start new threads to read from the
 					// client(this one executes the commands):
 
-					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap);
+					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap,clientTable,""+pos);
 					clientInput.start();
 
 					// We create and start a new thread to write to the client:
-					GameHostSender clientOutput = new GameHostSender(toClient, queue);
+					GameHostSender clientOutput = new GameHostSender(toClient, clientTable,""+pos);
 					clientOutput.start();
 				}
 
