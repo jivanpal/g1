@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 import ClientNetworking.*;
+import ClientNetworking.GameClient.GameClient;
 import GeneralNetworking.*;
 import Views.*;
 /**
@@ -134,14 +135,17 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 				pos++;
 			}
 			System.out.println(pos);
+			GameClient gameClient = new GameClient(l);
+			gameClient.start();
 			if(pos % 2 == 0)	// i.e. if player is pilot
 			{
-				PilotView pv = new PilotView(client.name);
+				
+				PilotView pv = new PilotView(client.name, gameClient);
 				menu.changeFrame(pv);
 			}
 			else		// else player is engineer
 			{
-				EngineerView eview = new EngineerView(client.name);
+				EngineerView eview = new EngineerView(client.name, gameClient);
 				menu.changeFrame(eview);
 			}
 		} else {

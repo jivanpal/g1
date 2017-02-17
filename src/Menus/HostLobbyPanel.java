@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import ClientNetworking.Client;
+import ClientNetworking.GameClient.GameClient;
 import GeneralNetworking.Action;
 import GeneralNetworking.Invite;
 import GeneralNetworking.Lobby;
@@ -179,14 +180,16 @@ public class HostLobbyPanel extends JPanel implements Observer {
 				pos++;
 			}
 			System.out.println(pos);
+			GameClient gameClient = new GameClient(client.getLobby());
+			gameClient.start();
 			if(pos % 2 == 0)	// i.e. if player is pilot
 			{
-				PilotView pv = new PilotView(client.name);
+				PilotView pv = new PilotView(client.name, gameClient);
 				menu.changeFrame(pv);
 			}
 			else		// else player is engineer
 			{
-				EngineerView eview = new EngineerView(client.name);
+				EngineerView eview = new EngineerView(client.name, gameClient);
 				menu.changeFrame(eview);
 			}
 		} else {
