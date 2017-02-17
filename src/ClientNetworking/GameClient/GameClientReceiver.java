@@ -3,6 +3,7 @@ package ClientNetworking.GameClient;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import GameLogic.Map;
@@ -44,6 +45,10 @@ public class GameClientReceiver extends Thread
 	}
 	public Map getMap()
 	{return gameMap.getMap();}
+	public void setObserver(Observer o)
+	{
+	    gameMap.addObserver(o);
+	}
 }
 class MapContainer extends Observable
 {

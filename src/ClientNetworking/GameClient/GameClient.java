@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import GameLogic.Map;
@@ -81,4 +82,8 @@ public class GameClient extends Thread
 	{
 		 return receiver.getMap();
 	};
+	public void addObserver(Observer o)
+	{
+	    receiver.setObserver(o);
+	}
 }
