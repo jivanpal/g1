@@ -76,7 +76,12 @@ public class TargetingBot extends Bot {
                 bot.getForwardVector().angleWith(pathToTarget) < IN_RANGE_ANGLE
             &&  pathToTarget.length() < IN_RANGE_DISTANCE
         ) {
-            bot.fire(Ship.LASER_BLASTER_INDEX);
+            try {
+            	bot.fire(Ship.LASER_BLASTER_INDEX);
+            } catch (Exception e) {
+            	System.err.println("Bot couldn't fire weapon!\n"+e.getMessage());
+            	e.printStackTrace();
+            }
         }
         
         // Get some useful vectors for heuristics, described in the bot's local basis.
