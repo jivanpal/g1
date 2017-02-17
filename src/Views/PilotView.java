@@ -95,8 +95,32 @@ public class PilotView extends JPanel implements KeyListener, Observer{
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        if(keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+        if(keyEvent.getKeyCode() == KeyEvent.VK_1) {
             System.out.println("Weapon Fired. Tell the server.");
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_2){
+        	
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_3){
+        	
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_E){
+        	
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_Q){
+        	
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_W){
+        	
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_S){
+        	
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_A){
+        	
+        }
+        else if(keyEvent.getKeyCode() == KeyEvent.VK_D){
+        	
         }
     }
 
