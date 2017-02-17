@@ -25,9 +25,11 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
     private Screen screen;
     private ResourcesView resourcesView;
+    private GameClient gameClient;
 
     public EngineerView(String playerNickname, GameClient gameClient) {
         this.setLayout(new BorderLayout());
+        this.gameClient = gameClient;
 
         screen = new Screen(playerNickname, false);
         screen.setSize(1000, 800);
