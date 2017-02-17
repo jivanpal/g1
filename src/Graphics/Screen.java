@@ -43,6 +43,11 @@ public class Screen extends JPanel{
 	private Integer shipIndex = null;
 	private boolean pilot;
 	
+	/**
+	 * Creates a new Screen object
+	 * @param nickname The nickname of the user who is the pilot of the ship
+	 * @param pilot Whether this user is the pilot or the engineer
+	 */
 	public Screen(String nickname, boolean pilot){
 		
 		this.nickname = nickname;
@@ -143,7 +148,7 @@ public class Screen extends JPanel{
 			//if(/*Body ID is not already present on the map*/){
 				Class<? extends Body> bClass = b.getClass();
 				if(bClass == Ship.class){
-					Icosahedron ship = new Icosahedron(b.getPosition(), 0.01);
+					
 				}
 				else if(bClass == Asteroid.class){
 					AsteroidModel asteroid = new AsteroidModel(b.getPosition(), 0.25);
