@@ -3,6 +3,7 @@ package ClientNetworking.GameClient;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -14,7 +15,7 @@ public class GameClient extends Thread
 {
 	private int port = GameVariables.PORT;
 	private InetAddress hostname = null;
-	private LinkedBlockingQueue<Object> queue = new LinkedBlockingQueue<Object>();
+	private LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
 	public GameClient(Lobby lobby)
 	{
 		for(int i=0;i<8;i++)
@@ -28,7 +29,7 @@ public class GameClient extends Thread
 	public void run()
 	{
 		// Open sockets:
-		ObjectOutputStream toServer = null;
+		OutputStream toServer = null;
 		ObjectInputStream fromServer = null;
 		Socket server = null;
 
@@ -36,7 +37,7 @@ public class GameClient extends Thread
 		try
 		{
 			server = new Socket(hostname,port);
-			toServer = new ObjectOutputStream(server.getOutputStream());
+			toServer = server.getOutputStream();
 			fromServer = new ObjectInputStream(server.getInputStream());
 		}
 		catch (UnknownHostException e)
@@ -70,8 +71,8 @@ public class GameClient extends Thread
 		}
 
 	}
-	public synchronized void send(Object obj)
+	public synchronized void send(String str)
 	{
-		queue.offer(obj);
+		queue.offer(str);
 	}
 }

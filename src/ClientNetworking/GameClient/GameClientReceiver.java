@@ -7,9 +7,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class GameClientReceiver extends Thread
 {
 	ObjectInputStream fromServer;
-	private LinkedBlockingQueue<Object> queue;
+	private LinkedBlockingQueue<String> queue;
 
-	GameClientReceiver(ObjectInputStream reader, LinkedBlockingQueue<Object> q)
+	GameClientReceiver(ObjectInputStream reader, LinkedBlockingQueue<String> q)
 	{
 		fromServer = reader;
 		queue = q;
