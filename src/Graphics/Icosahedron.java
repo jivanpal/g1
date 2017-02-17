@@ -35,18 +35,22 @@ public class Icosahedron{
 								{11, 7, 5}};
 	private Color[] colors = new Color[20];
 	private double gr = 1.618;
+	private Vector xVec, yVec, zVec;
 	
 	/**
 	 * Creates the new icosahedron, and adds it to the screen
 	 * @param v x, y and z coordinates of its position
 	 * @param size Size of the object
 	 */
-	public Icosahedron(Vector v, double size){
+	public Icosahedron(Vector v, double size, Vector xVec, Vector yVec, Vector zVec){
 		this.x = v.getX();
 		this.y = v.getY();
 		this.z = v.getZ();
 		this.size = size;
 		gr *= size;
+		this.xVec = xVec;
+		this.yVec = yVec;
+		this.zVec = zVec;
 		
 		createPoints();
 		
@@ -74,6 +78,11 @@ public class Icosahedron{
 		vertices[9] = new Point(0, -gr, size);
 		vertices[10] = new Point(0, gr, -size);
 		vertices[11] = new Point(0, -gr, -size);
+		
+		for(int i = 0; i < vertices.length; i++){
+			vertices[i] = Matrix.multiplyPoint(Matrix.getR(xVec, yVec, zVec), vertices[i]);
+			vertices[i] = new Point(vertices[i].x + x, vertices[i].y + y, vertices[i].z + z);
+		}
 	}
 	
 }
