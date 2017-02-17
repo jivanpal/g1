@@ -1,5 +1,6 @@
 package GameLogic;
 
+import Geometry.Vector;
 import Physics.Body;
 /**
  * Class which represents the ship object in the game
@@ -114,11 +115,30 @@ public class Ship extends Body{
 		}
 	}
 	
-	// TODO Implement these methods
-	public void pitchUp() {}
-	public void pitchDown() {}
-	public void rollRight() {}
-	public void rollLeft() {}
-	public void thrustForward() {}
-	public void thrustReverse() {}
+// Movement methods
+	
+	public void pitchUp() {
+	    this.exertForce(Vector.K.scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
+	}
+	
+	public void pitchDown() {
+	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
+	}
+	
+	public void rollLeft() {
+	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
+	    this.exertForce(Vector.K..negate().scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
+	}
+	
+	public void rollRight() {
+	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
+        this.exertForce(Vector.K..negate().scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
+	}
+	public void thrustForward() {
+	    this.exertForce(Vector.J.scale(ENGINE_FORCE), Vector.J.negate().scale(this.getRadius()));
+	}
+	
+	public void thrustReverse() {
+	    this.exertForce(Vector.J..negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
+	}
 }
