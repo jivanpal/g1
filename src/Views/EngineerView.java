@@ -1,6 +1,9 @@
 package Views;
 
 import javax.swing.*;
+
+import Audio.AudioPlayer;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -59,6 +62,10 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         UIPanel.add(weaponPanel);
 
         this.add(UIPanel, BorderLayout.SOUTH);
+        
+        //starting the in-game sounds
+        AudioPlayer.stopMusic();
+		AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
     }
 
     @Override

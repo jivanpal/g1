@@ -5,6 +5,9 @@ import UI.ClientShipObservable;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+
+import Audio.AudioPlayer;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -88,6 +91,10 @@ public class PilotView extends JPanel implements KeyListener, Observer{
 
         addKeyListener(this);
         setFocusable(true);
+        
+        //starting the in-game sounds
+        AudioPlayer.stopMusic();
+		AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
     }
 
     @Override
