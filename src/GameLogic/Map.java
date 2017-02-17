@@ -112,7 +112,7 @@ public class Map extends ArrayList<Body> {
      * corresponding to that position vector that reside in the primary
      * map space, as well as all its direct neighbours.
      * @param   position    The position vector.
-     * @return
+     * @return  an array with the position vectors for each of the 27 instances.
      */
     public Vector[] getAllPositions(Vector position) {
         // Get the central position vector.
@@ -160,6 +160,7 @@ public class Map extends ArrayList<Body> {
             position.plus(new Vector( 0,  y,  z)),
             position.plus(new Vector( x,  y,  z)),
         };
+        return positions;
     }
     
 // Evolution

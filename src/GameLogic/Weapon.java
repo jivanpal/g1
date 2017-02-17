@@ -92,7 +92,7 @@ public abstract class Weapon {
         return remainingCooldown == 0.0;
     }
     
-    private Bullet getBulletInstance() throws Exception {
+    private Bullet getBulletInstance(Ship parent) throws Exception {
         Bullet instance = null;
         try {
             instance = (Bullet)bullet.clone();
@@ -114,12 +114,6 @@ public abstract class Weapon {
     
 // Actions
     public void fire() {
-        try {
-            parent.getMap().add(getBulletInstance());
-        } catch (Exception ex) {
-            System.err.println("EE: Couldn't fire bullet!");
-            ex.printStackTrace();
-        }
         ammo.down();
     }
 }

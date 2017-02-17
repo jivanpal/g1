@@ -16,7 +16,6 @@ public class Ship extends Body{
 	private static final int DEFAULT_MAX_HEALTH = 0;
 	
 	private String pilotName;
-	
 	private Weapon torpedoWeapon;
 	private Weapon laserBlaster;
 	private Weapon plasmaBlaster;
@@ -24,6 +23,10 @@ public class Ship extends Body{
 	private Shields shields;
 	private Resource shipHealth;
 	
+	/**
+	 * Creates a new ship with a specific pilotName
+	 * @param pilotName The pilot name of the specific ship
+	 */
 	public Ship(String pilotName){
 		//Initialising weapons
 		torpedoWeapon = new TorpedoWeapon();
@@ -93,8 +96,22 @@ public class Ship extends Body{
 		this.shields.cusomChangeShieldsLevel(change);
 	}
 	
+	
+	public void fire(int weaponIndex) {
+		switch(weaponIndex){
+		case LASER_BLASTER_INDEX:
+			laserBlaster.fire();
+			break;
+		case PLASMA_BLASTER_INDEX:
+			plasmaBlaster.fire();
+			break;
+		case TORPEDO_WEAPON_INDEX:
+			torpedoWeapon.fire();
+			break;
+		}
+	}
+	
 	// TODO Implement these methods
-	public void fire(int weaponIndex) {}
 	public void pitchUp() {}
 	public void pitchDown() {}
 	public void rollRight() {}
