@@ -6,7 +6,9 @@ import javax.swing.*;
 import ClientNetworking.*;
 import ClientNetworking.GameClient.GameClient;
 import GeneralNetworking.*;
+import GeneralNetworking.Action;
 import Views.*;
+
 /**
  * Panel for the host of the game
  * 
@@ -15,6 +17,7 @@ import Views.*;
 
 // TODO Invite function
 // TODO Kick function
+// TODO Merge Host and client lobby panel.
 public class ClientLobbyPanel extends JPanel implements Observer {
 	private MainMenu menu;
 	public Client client;
@@ -37,8 +40,7 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 		this.player = player;
 		setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
-		
-		
+
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
@@ -54,13 +56,14 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 		c.anchor = GridBagConstraints.NORTHEAST;
 		JButton inviteplayers = new JButton("Invite Players");
 		inviteplayers.addActionListener(e -> {
-			// TODO Add panel to get recipient's nickname and send them an invite
-//			client.send(new Invite());
+			// TODO Add panel to get recipient's nickname and send them an
+			// invite
+			// client.send(new Invite());
 		});
 		add(inviteplayers, c);
 
 		c.anchor = GridBagConstraints.CENTER;
-		while(client.getLobby() == null) {
+		while (client.getLobby() == null) {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e1) {
@@ -84,11 +87,25 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 		int number = 0;
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 4));
-		
+
 		Player[] players = client.getLobby().getPlayers();
 		for (int pos = 0; pos < players.length; pos++) {
-			JLabel label = new JLabel(pos + ".");
-			label.setForeground(Color.WHITE);
+			String role = "";
+			if (pos % 2 == 0) {
+				role = "Pilot";
+			} else {
+				role = "Engineer";
+			}
+			JLabel label = new JLabel(role);
+			if (pos < 2) {
+				label.setForeground(Color.RED);
+			} else if (pos < 4) {
+				label.setForeground(Color.YELLOW);
+			} else if (pos < 6) {
+				label.setForeground(Color.GREEN);
+			} else {
+				label.setForeground(Color.WHITE);
+			}
 			panel.add(label);
 			if (players[pos] != null) {
 				JLabel name = new JLabel(players[pos].nickname);
@@ -101,15 +118,7 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 			JButton move = new JButton("Move");
 			final int finalPos = pos;
 			move.addActionListener(e -> {
-				client.getLobby().move(this.player, finalPos);
-				this.remove(lpanel);
-				JPanel newpanel = displayplayers();
-				newpanel.setOpaque(false);
-				this.add(newpanel, c);
-				this.invalidate();
-				this.validate();
-				this.lpanel = newpanel;
-
+				client.send(new Action(client.getLobby().getID(), player, finalPos));
 			});
 			JButton kick = new JButton("Kick");
 			kick.setEnabled(false);
@@ -125,30 +134,46 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		Lobby l = client.getLobby();
-		if (l.started) {
-			Player[] players = l.getPlayers();
+		Player[] players = l.getPlayers();
+		boolean inlobby = false;
+		for (Player p : players) {
+			if (p == null) {
+				continue;
+			} else if (p.nickname.equals(client.name)) {
+				inlobby = true;
+				break;
+			}
+		}
+		
+		if (inlobby == false) {
+			JOptionPane.showMessageDialog(this, "You have been kicked from the lobby!", "Kicked From Lobby", JOptionPane.INFORMATION_MESSAGE);
+			ButtonPanel bpanel = new ButtonPanel(menu, client);
+			menu.changeFrame(bpanel);
+		} else if (l.started)
+		{
+			// Player[] players = l.getPlayers();
 			int pos = 0;
-			while (pos < players.length)
-			{
-				if(player.equals(players[pos]))
+			while (pos < players.length) {
+				if (player.equals(players[pos]))
 					break;
 				pos++;
 			}
 			System.out.println(pos);
 			GameClient gameClient = new GameClient(l);
 			gameClient.start();
-			if(pos % 2 == 0)	// i.e. if player is pilot
+			if (pos % 2 == 0) // i.e. if player is pilot
 			{
-				
+
 				PilotView pv = new PilotView(client.name, gameClient);
 				menu.changeFrame(pv);
-			}
-			else		// else player is engineer
+			} else // else player is engineer
 			{
 				EngineerView eview = new EngineerView(client.name, gameClient);
 				menu.changeFrame(eview);
 			}
-		} else {
+		} else
+
+		{
 			this.remove(lpanel);
 			JPanel newpanel = displayplayers();
 			newpanel.setOpaque(false);
@@ -157,6 +182,6 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 			this.validate();
 			this.lpanel = newpanel;
 		}
-		
+
 	}
 }
