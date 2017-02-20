@@ -17,7 +17,7 @@ import UI.ClientShipObservable;
 /**
  * Created by James on 01/02/17.
  */
-public class EngineerView extends JLayeredPane implements KeyListener, Observer {
+public class EngineerView extends JPanel implements KeyListener, Observer {
 
     private final ShipState state = ShipState.NONE;
     private final KeySequenceManager keyManager;
@@ -29,6 +29,8 @@ public class EngineerView extends JLayeredPane implements KeyListener, Observer 
     private Screen screen;
     private ResourcesView resourcesView;
     private GameClient gameClient;
+
+    private JLayeredPane UIContainer;
 
     public EngineerView(String playerNickname, GameClient gameClient) {
         this.setLayout(new BorderLayout());

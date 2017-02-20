@@ -21,7 +21,7 @@ import java.util.Observer;
 /**
  * Created by James on 01/02/17.
  */
-public class PilotView extends JLayeredPane implements KeyListener, Observer{
+public class PilotView extends JPanel implements KeyListener, Observer{
 
     private final Screen screen;
     private final SpeedometerView speedometerView;
@@ -32,6 +32,8 @@ public class PilotView extends JLayeredPane implements KeyListener, Observer{
     private final InstructionsView instructionsView;
     
     private GameClient gameClient;
+
+    private JLayeredPane UIContainer;
 
     public PilotView(String playerNickname, GameClient gameClient) {
         this.setLayout(new BorderLayout());
