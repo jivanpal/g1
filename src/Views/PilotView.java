@@ -16,7 +16,7 @@ import java.util.Observer;
 /**
  * Created by James on 01/02/17.
  */
-public class PilotView extends JPanel implements KeyListener, Observer{
+public class PilotView extends JLayeredPane implements KeyListener, Observer{
 
     private final Screen screen;
     private final SpeedometerView speedometerView;

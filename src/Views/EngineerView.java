@@ -13,7 +13,7 @@ import UI.ClientShipObservable;
 /**
  * Created by James on 01/02/17.
  */
-public class EngineerView extends JPanel implements KeyListener, Observer {
+public class EngineerView extends JLayeredPane implements KeyListener, Observer {
 
     private final WeaponView plasmaBlasterView;
     private final WeaponView laserBlasterView;

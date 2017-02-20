@@ -8,7 +8,7 @@ import java.awt.*;
  * Created by James on 27/01/17.
  * A view which shows all relevant information about the ships resources (health, shields and fuel levels).
  */
-public class ResourcesView extends JPanel {
+public class ResourcesView extends JLayeredPane {
     // Resource type constants
     public static final int SHIELDS = 0;
     public static final int HULL = 1;

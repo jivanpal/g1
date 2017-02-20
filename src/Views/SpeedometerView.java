@@ -8,7 +8,7 @@ import javax.swing.*;
  * Created by James on 08/02/17.
  * View which shows the current speed of the ship.
  */
-public class SpeedometerView extends JPanel {
+public class SpeedometerView extends JLayeredPane {
     private JLabel speedometerLabel;
     private JLabel currentSpeedLabel;
 
