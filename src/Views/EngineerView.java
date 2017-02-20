@@ -20,6 +20,7 @@ import UI.ClientShipObservable;
 public class EngineerView extends JLayeredPane implements KeyListener, Observer {
 
     private final ShipState state = ShipState.NONE;
+    private final KeySequenceManager keyManager;
 
     private final WeaponView plasmaBlasterView;
     private final WeaponView laserBlasterView;
@@ -71,6 +72,8 @@ public class EngineerView extends JLayeredPane implements KeyListener, Observer 
         //starting the in-game sounds
         AudioPlayer.stopMusic();
 		AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
+
+		keyManager = new KeySequenceManager(this);
     }
 
     @Override
