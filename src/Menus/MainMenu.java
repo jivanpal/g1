@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Audio.AudioPlayer;
 import ClientNetworking.Client;
 import GameLogic.KeyBindings;
 
@@ -55,6 +56,7 @@ public class MainMenu {
 			name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
 		}
 		MainMenu menu = new MainMenu(name);
+		AudioPlayer.playMusic(AudioPlayer.MENU_SCREEN_TUNE);
 		
 	}
 }

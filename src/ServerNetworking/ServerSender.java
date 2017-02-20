@@ -36,6 +36,7 @@ public class ServerSender extends Thread
 			{
 				if (objectOut != null)
 				{
+					clientOUT.reset();
 					clientOUT.writeObject(objectOut);
 					clientOUT.flush();
 				}

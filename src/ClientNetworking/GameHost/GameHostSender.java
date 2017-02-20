@@ -4,15 +4,21 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import GameLogic.Global;
+import GameLogic.Map;
+import ServerNetworking.ClientTable;
+
 public class GameHostSender extends Thread
 {
 	private ObjectOutputStream clientOUT;
-	private LinkedBlockingQueue<Object> queue;
+	private Map gameMap;
+	private String pos;
 
-	public GameHostSender(ObjectOutputStream sender, LinkedBlockingQueue<Object> q)
+	public GameHostSender(ObjectOutputStream sender, Map gM,String name)
 	{
 		clientOUT = sender;
-		queue=q;
+		gameMap = gM;
+		pos = name;
 	}
 
 	public void run()
@@ -20,23 +26,18 @@ public class GameHostSender extends Thread
 		// get the message queue for said client
 		while (true)
 		{
-			Object objectOut = null;
-			try
-			{
-				objectOut = queue.take();
-			}
-			catch (InterruptedException e)
-			{
-				e.printStackTrace();
-			}
 			try
 			{
 				//check if we got anything to send
-				if (objectOut != null)
-				{
-					clientOUT.writeObject(objectOut);
+					clientOUT.reset();
+					clientOUT.writeObject(gameMap);
 					clientOUT.flush();
-				}
+					try {
+						Thread.sleep((long)(Global.REFRESH_PERIOD*1000));
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
 			catch (IOException e)
 			{

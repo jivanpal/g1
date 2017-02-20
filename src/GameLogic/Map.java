@@ -107,6 +107,62 @@ public class Map extends ArrayList<Body> {
         }
     }
     
+    /**
+     * Given a position vector, get an array containing the 27 vectors
+     * corresponding to that position vector that reside in the primary
+     * map space, as well as all its direct neighbours.
+     * @param   position    The position vector.
+     * @return  an array with the position vectors for each of the 27 instances.
+     */
+    public Vector[] getAllPositions(Vector position) {
+        // Get the central position vector.
+        position = position.modulo(dimensions);
+        
+        double x = dimensions.getX();
+        double y = dimensions.getY();
+        double z = dimensions.getZ();
+        
+        Vector[] positions = new Vector[] {
+            position.plus(new Vector(-x, -y, -z)),
+            position.plus(new Vector( 0, -y, -z)),
+            position.plus(new Vector( x, -y, -z)),
+            
+            position.plus(new Vector(-x,  0, -z)),
+            position.plus(new Vector( 0,  0, -z)),
+            position.plus(new Vector( x,  0, -z)),
+            
+            position.plus(new Vector(-x,  y, -z)),
+            position.plus(new Vector( 0,  y, -z)),
+            position.plus(new Vector( x,  y, -z)),
+            
+            
+            position.plus(new Vector(-x, -y,  0)),
+            position.plus(new Vector( 0, -y,  0)),
+            position.plus(new Vector( x, -y,  0)),
+            
+            position.plus(new Vector(-x,  0,  0)),
+            position.plus(new Vector( 0,  0,  0)),
+            position.plus(new Vector( x,  0,  0)),
+            
+            position.plus(new Vector(-x,  y,  0)),
+            position.plus(new Vector( 0,  y,  0)),
+            position.plus(new Vector( x,  y,  0)),
+            
+            position.plus(new Vector(-x, -y,  z)),
+            position.plus(new Vector( 0, -y,  z)),
+            position.plus(new Vector( x, -y,  z)),
+            
+            position.plus(new Vector(-x,  0,  z)),
+            position.plus(new Vector( 0,  0,  z)),
+            position.plus(new Vector( x,  0,  z)),
+            
+            position.plus(new Vector(-x,  y,  z)),
+            position.plus(new Vector( 0,  y,  z)),
+            position.plus(new Vector( x,  y,  z)),
+        };
+        return positions;
+    }
+    
 // Evolution
     
     /**
@@ -129,6 +185,14 @@ public class Map extends ArrayList<Body> {
         // Make bots do their thing
         for (Bot b : bots) {
             b.update();
+        }
+        
+        for (Body a : this) {
+            for (Body b : this) {
+                if (a.isTouching(b)) {
+                    a.rebound(b);
+                }
+            }
         }
     }
 }

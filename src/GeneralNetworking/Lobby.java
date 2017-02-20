@@ -89,6 +89,7 @@ public class Lobby implements Serializable
 	{
 		if (p.isHost)
 		{
+			System.out.println("Lobby class, started is true");
 			started = true;
 		}
 	}
@@ -103,7 +104,7 @@ public class Lobby implements Serializable
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				if(players[i].equals(leaver))
+				if(players[i] != null && players[i].equals(leaver))
 					players[i]=null;
 				//NOTIFY
 			}

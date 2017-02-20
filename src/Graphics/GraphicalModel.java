@@ -1,6 +1,8 @@
 package Graphics;
 import java.awt.Color;
 
+import Geometry.Vector;
+
 
 /**
  * Creates Poly3D objects to represent a 3D shape from its given vertex positions and faces
@@ -9,7 +11,7 @@ import java.awt.Color;
  */
 public class GraphicalModel {
 	
-	private Point[] vertices;
+	private Vector[] vertices;
 	private int[][] sides;
 	private Poly3D[] polys;
 	private Color[] colors;
@@ -19,7 +21,7 @@ public class GraphicalModel {
 	 * @param sides An array of the sides of the objects, using integers to represent the vertices from the vertex array
 	 * @param colors The colours of each side
 	 */
-	public GraphicalModel(Point[] vertices, int[][] sides, Color[] colors){
+	public GraphicalModel(Vector[] vertices, int[][] sides, Color[] colors){
 		this.vertices = vertices;
 		this.sides = sides;
 		this.colors = colors;
@@ -36,9 +38,9 @@ public class GraphicalModel {
 			double[] zs = new double[sides[i].length];
 			for(int j = 0; j < sides[i].length; j++){
 //				System.out.println("i: " + i + " j: " + j + " vertex: " + sides[i][j]);
-				xs[j] = vertices[sides[i][j]].x;
-				ys[j] = vertices[sides[i][j]].y;
-				zs[j] = vertices[sides[i][j]].z;
+				xs[j] = vertices[sides[i][j]].getX();
+				ys[j] = vertices[sides[i][j]].getY();
+				zs[j] = vertices[sides[i][j]].getZ();
 			}
 			polys[i] = new Poly3D(xs, ys, zs, colors[i]);
 		}

@@ -326,7 +326,7 @@ public class Matrix {
 	 * @param N Camera N vector
 	 * @return Camera rotation matrix
 	 */
-	private static double[][] getR(Vector V, Vector U, Vector N){
+	public static double[][] getR(Vector V, Vector U, Vector N){
 		double lengthV = Math.sqrt(V.getX() * V.getX() + V.getY() * V.getY() + V.getZ() * V.getZ());
 		double lengthU = Math.sqrt(U.getX() * U.getX() + U.getY() * U.getY() + U.getZ() * U.getZ());
 		double lengthN = Math.sqrt(N.getX() * N.getX() + N.getY() * N.getY() + N.getZ() * N.getZ());

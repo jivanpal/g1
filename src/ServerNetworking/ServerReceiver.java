@@ -69,6 +69,7 @@ public class ServerReceiver extends Thread
 							{
 								Player kicked = a.getKicked();
 								l.kick(p, kicked);
+								clientTable.getQueue(kicked.nickname).offer(l);
 							}
 							// START GAME
 							else if (pos == 11)

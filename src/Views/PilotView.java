@@ -5,6 +5,11 @@ import UI.ClientShipObservable;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+
+import Audio.AudioPlayer;
+import ClientNetworking.GameClient.GameClient;
+import GameLogic.KeyBindings;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -25,11 +30,14 @@ public class PilotView extends JLayeredPane implements KeyListener, Observer{
     private final WeaponView torpedosView;
 
     private final InstructionsView instructionsView;
+    
+    private GameClient gameClient;
 
-    public PilotView(String playerNickname) {
+    public PilotView(String playerNickname, GameClient gameClient) {
         this.setLayout(new BorderLayout());
+        this.gameClient = gameClient;
 
-        screen = new Screen(playerNickname);
+        screen = new Screen(playerNickname, true);
         screen.setSize(1000, 800);
         screen.setMaximumSize(new Dimension(1000, 800));
         screen.setMinimumSize(new Dimension(1000, 800));
@@ -88,6 +96,10 @@ public class PilotView extends JLayeredPane implements KeyListener, Observer{
 
         addKeyListener(this);
         setFocusable(true);
+        
+        //starting the in-game sounds
+        AudioPlayer.stopMusic();
+		AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
     }
 
     @Override
@@ -95,8 +107,32 @@ public class PilotView extends JLayeredPane implements KeyListener, Observer{
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        if(keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-            System.out.println("Weapon Fired. Tell the server.");
+        if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
+            gameClient.send("fireWeapon1");
+        }
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON)){
+        	gameClient.send("fireWeapon2");
+        }
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON)){
+        	gameClient.send("fireWeapon3");
+        }
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ACCELERATE_BUTTON)){
+        	gameClient.send("accelerate");
+        }
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_DECELERATE_BUTTON)){
+        	gameClient.send("decelerate");
+        }
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON)){
+        	gameClient.send("pitchDown");
+        }
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_UP_BUTTON)){
+        	gameClient.send("pitchUp");
+        }
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON)){
+        	gameClient.send("rollLeft");
+        }
+        else if(keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON)){
+        	gameClient.send("rollRight");
         }
     }
 
@@ -113,5 +149,7 @@ public class PilotView extends JLayeredPane implements KeyListener, Observer{
         laserBlasterView.updateWeaponAmmoLevel(shipObservable.getLaserAmmo());
         plasmaBlasterView.updateWeaponAmmoLevel(shipObservable.getPlasmaAmmo());
         torpedosView.updateWeaponAmmoLevel(shipObservable.getTorpedoAmmo());
+        
+        screen.setMap(gameClient.getMap());
     }
 }

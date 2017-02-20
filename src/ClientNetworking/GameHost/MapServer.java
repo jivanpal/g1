@@ -13,6 +13,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 import Geometry.Vector;
+import Physics.Body;
+import ServerNetworking.ClientTable;
 import GameLogic.*;
 
 public class MapServer extends Thread
@@ -41,25 +43,25 @@ public class MapServer extends Thread
 	{
 		try
 		{
-			LinkedBlockingQueue<Object> queue = new LinkedBlockingQueue<Object>();
-
+			ClientTable clientTable = new ClientTable();
+			
 			while (true)
 			{
 				// Listen to the socket, accepting connections from new clients:
 				Socket socket = serverSocket.accept();
 				InetAddress address = socket.getInetAddress();
-				boolean flag = false;
+				boolean flag = false;		
 				int pos = 0;
 				String name = "";
-				for (Player player : lobby.getPlayers())
+				Player[] players = lobby.getPlayers();
+				for (pos=0;pos<players.length;pos++)
 				{
-					if (player.address == address)
+					if (players[pos]!= null && players[pos].address == address)
 					{
-						name = player.nickname;
+						name = players[pos].nickname;
 						flag = true;
 						break;
 					}
-					pos++;
 				}
 				if (!flag)
 				{
@@ -67,7 +69,7 @@ public class MapServer extends Thread
 				}
 				else
 				{
-
+					clientTable.add(""+pos);
 					// If the player added is the pilot, put a new ship on the
 					// map in a sensible position.
 					if (pos % 2 == 0)
@@ -87,7 +89,20 @@ public class MapServer extends Thread
 						a.setPosition(new Vector(r.nextDouble()* gameMap.getDimensions().getX(), 
 												r.nextDouble()* gameMap.getDimensions().getY(),
 												r.nextDouble()* gameMap.getDimensions().getZ()));
-						gameMap.add(a);
+						boolean overlaps = false;
+						for(Body b : gameMap) {
+							if (a.isTouching(b)) {
+								overlaps=true;
+								break;
+							}
+						}
+						
+						if(!overlaps) {
+							a.setVelocity(new Vector(r.nextDouble(), r.nextDouble(), r.nextDouble()).scale(10));
+							gameMap.add(a);
+						} else {
+							i--;
+						}
 					}
 
 					// This is so that we can use readLine():
@@ -99,11 +114,11 @@ public class MapServer extends Thread
 					// We create and start new threads to read from the
 					// client(this one executes the commands):
 
-					GameHostReceiver clientInput = new GameHostReceiver(fromClient);
+					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap,clientTable,""+pos);
 					clientInput.start();
 
 					// We create and start a new thread to write to the client:
-					GameHostSender clientOutput = new GameHostSender(toClient, queue);
+					GameHostSender clientOutput = new GameHostSender(toClient,gameMap,""+pos);
 					clientOutput.start();
 				}
 

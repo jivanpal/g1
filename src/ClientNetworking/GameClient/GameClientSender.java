@@ -2,36 +2,31 @@ package ClientNetworking.GameClient;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class GameClientSender extends Thread
 {
 	private String nickname;
-	private ObjectOutputStream toServer;
-	private LinkedBlockingQueue<Object> clientQueue;
-
-	public GameClientSender(ObjectOutputStream server, LinkedBlockingQueue<Object> queue)
+	private LinkedBlockingQueue<String> clientQueue;
+	PrintWriter out;
+	public GameClientSender(OutputStream server, LinkedBlockingQueue<String> queue)
 	{
-		this.toServer = server;
 		this.clientQueue = queue;
+		out = new PrintWriter(server);	
 	}
 
 	public void run()
 	{
 		while (true)
 		{
-			Object obj;
+			String str;
 			try {
-				obj = clientQueue.take();
-				if(!obj.equals(null))
-				{
-					toServer.writeObject(obj);
-					toServer.flush();
-				}
+				str = clientQueue.take() + "\n";
+				out.append(str);
+				out.flush();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

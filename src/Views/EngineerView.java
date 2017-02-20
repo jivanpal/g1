@@ -1,6 +1,10 @@
 package Views;
 
 import javax.swing.*;
+
+import Audio.AudioPlayer;
+import ClientNetworking.GameClient.GameClient;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -21,11 +25,13 @@ public class EngineerView extends JLayeredPane implements KeyListener, Observer 
 
     private Screen screen;
     private ResourcesView resourcesView;
+    private GameClient gameClient;
 
-    public EngineerView(String playerNickname) {
+    public EngineerView(String playerNickname, GameClient gameClient) {
         this.setLayout(new BorderLayout());
+        this.gameClient = gameClient;
 
-        screen = new Screen(playerNickname);
+        screen = new Screen(playerNickname, false);
         screen.setSize(1000, 800);
         screen.setMaximumSize(new Dimension(1000, 800));
         screen.setMinimumSize(new Dimension(1000, 800));
@@ -59,6 +65,10 @@ public class EngineerView extends JLayeredPane implements KeyListener, Observer 
         UIPanel.add(weaponPanel);
 
         this.add(UIPanel, BorderLayout.SOUTH);
+        
+        //starting the in-game sounds
+        AudioPlayer.stopMusic();
+		AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
     }
 
     @Override
@@ -72,6 +82,8 @@ public class EngineerView extends JLayeredPane implements KeyListener, Observer 
         laserBlasterView.updateWeaponAmmoLevel(shipObservable.getLaserAmmo());
         plasmaBlasterView.updateWeaponAmmoLevel(shipObservable.getPlasmaAmmo());
         torpedosView.updateWeaponAmmoLevel(shipObservable.getTorpedoAmmo());
+        
+        screen.setMap(gameClient.getMap());
     }
 
     @Override
