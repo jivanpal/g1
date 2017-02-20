@@ -19,6 +19,8 @@ import UI.ClientShipObservable;
  */
 public class EngineerView extends JLayeredPane implements KeyListener, Observer {
 
+    private final ShipState state = ShipState.NONE;
+
     private final WeaponView plasmaBlasterView;
     private final WeaponView laserBlasterView;
     private final WeaponView torpedosView;
@@ -100,4 +102,8 @@ public class EngineerView extends JLayeredPane implements KeyListener, Observer 
     public void keyReleased(KeyEvent keyEvent) {
 
     }
+}
+
+enum ShipState {
+       NONE, SHIELD_REPLENISH, FUEL_REPLENISH, LASER_REPLENISH, TORPEDO_REPLENISH, PLASMA_REPLENISH
 }
