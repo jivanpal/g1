@@ -1,9 +1,11 @@
 package Physics;
 
+import java.io.Serializable;
+
 import GameLogic.Global;
 import Geometry.*;
 
-public class Body implements Cloneable {
+public class Body implements Cloneable, Serializable {
 /// FIELDS
     private boolean destroyed = false;
     
