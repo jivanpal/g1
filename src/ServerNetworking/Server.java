@@ -46,11 +46,14 @@ public class Server
 				// Listen to the socket, accepting connections from new clients:
 				Socket socket = serverSocket.accept();
 				System.out.println("server");
+				
+				// This is to print o the server
+				ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
+				toClient.flush();
 				// This is so that we can use readLine():
 				ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
 
-				// This is to print o the server
-				ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
+				
 				
 				
 				String nickname ="";

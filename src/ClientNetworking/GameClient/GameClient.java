@@ -22,6 +22,7 @@ public class GameClient extends Thread
 	GameClientSender sender;
 	public GameClient(Lobby lobby)
 	{
+		System.out.println("Entered GameClient constructor");
 		for(int i=0;i<8;i++)
 		{
 			if(lobby.getPlayers()[i] == null) {
@@ -29,6 +30,7 @@ public class GameClient extends Thread
 			} else if(lobby.getPlayers()[i].isHost)
 				hostname = lobby.getPlayers()[i].address;
 		}
+		System.out.println("Left for loop");
 		
 		
 		// Open sockets:
@@ -41,15 +43,19 @@ public class GameClient extends Thread
 		{
 			server = new Socket(hostname,port);
 			toServer = server.getOutputStream();
+			toServer.flush();
 			fromServer = new ObjectInputStream(server.getInputStream());
+			System.out.println("Server variables established");
 		}
 		catch (UnknownHostException e)
 		{
+			System.out.println("Unknown host exception");
 			System.err.println("Unknown host: " + hostname);
 			System.exit(1);
 		}
 		catch (IOException e)
 		{
+			System.out.println("IO exception");
 			System.err.println("The server doesn't seem to be running " + e.getMessage());
 			System.exit(1);
 		}
@@ -58,6 +64,7 @@ public class GameClient extends Thread
 		receiver = new GameClientReceiver(fromServer,queue);
 		sender.start();
 		receiver.start();
+		System.out.println("GameClient created");
 	}
 	public void run()
 	{

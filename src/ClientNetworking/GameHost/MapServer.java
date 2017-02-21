@@ -37,6 +37,7 @@ public class MapServer extends Thread
 		{
 			System.err.println("Couldn't listen on port " + PORT);
 		}
+		System.out.println("MapServer is a go");
 	}
 
 	public void run()
@@ -44,6 +45,7 @@ public class MapServer extends Thread
 		try
 		{
 			ClientTable clientTable = new ClientTable();
+			System.out.println(serverSocket.getInetAddress());
 			
 			while (true)
 			{
@@ -105,11 +107,14 @@ public class MapServer extends Thread
 						}
 					}
 
-					// This is so that we can use readLine():
-					ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
-
 					// This is to print o the server
 					ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
+					toClient.flush();
+					
+					// This is so that we can use readLine():
+					ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
+					
+					
 
 					// We create and start new threads to read from the
 					// client(this one executes the commands):

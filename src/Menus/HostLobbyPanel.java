@@ -180,6 +180,8 @@ public class HostLobbyPanel extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (client.getLobby().started) {
+			System.out.println();
+			System.out.println("Entered update method of HostLobbyPanel");
 			Player[] players = client.getLobby().getPlayers();
 			int pos = 0;
 			while (pos < players.length)
@@ -190,7 +192,9 @@ public class HostLobbyPanel extends JPanel implements Observer {
 			}
 			System.out.println(pos);
 			GameClient gameClient = new GameClient(client.getLobby());
+			System.out.println("GameClient created");
 			gameClient.start();
+			System.out.println("GameClient started");
 			if(pos % 2 == 0)	// i.e. if player is pilot
 			{
 				PilotView pv = new PilotView(client.name, gameClient);

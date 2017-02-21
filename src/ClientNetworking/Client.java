@@ -47,6 +47,7 @@ public class Client extends Thread
 		{
 			server = new Socket(hostname, port);
 			toServer = new ObjectOutputStream(server.getOutputStream());
+			toServer.flush();
 			fromServer = new ObjectInputStream(server.getInputStream());
 		}
 		catch (UnknownHostException e)
@@ -115,6 +116,7 @@ public class Client extends Thread
 	}
 	public void addLobbyObserver(Observer obs)
 	{
+		System.out.println("HostLobbyPanel added as observer to ClientReceiver");
 		receiver.addObserver(obs);
 	}
 } 
