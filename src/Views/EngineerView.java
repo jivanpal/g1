@@ -32,59 +32,27 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
     private ResourcesView resourcesView;
     private GameClient gameClient;
 
-    private JLayeredPane UIContainer;
+    private JLayeredPane UILayeredPane;
+    private JPanel UIBaseLayer;
 
     public EngineerView(String playerNickname, GameClient gameClient) {
-
-        UIContainer.setLayout(new LayoutManager() {
-            private Map<Component, Rectangle> bounds = new LinkedHashMap<Component, Rectangle>();
-
-            @Override
-            public void addLayoutComponent(String s, Component component) {
-                bounds.put(component, new Rectangle(component.getPreferredSize()));
-            }
-
-            @Override
-            public void removeLayoutComponent(Component component) {
-                bounds.remove(component);
-            }
-
-            @Override
-            public Dimension preferredLayoutSize(Container container) {
-                Rectangle rect = new Rectangle();
-                for (Rectangle r : bounds.values()) {
-                    rect = rect.union(r);
-                }
-
-                return rect.getSize();
-            }
-
-            @Override
-            public Dimension minimumLayoutSize(Container container) {
-                return preferredLayoutSize(container);
-            }
-
-            @Override
-            public void layoutContainer(Container container) {
-                for(Map.Entry<Component, Rectangle> entry : bounds.entrySet()) {
-                    entry.getKey().setBounds(entry.getValue());
-                }
-            }
-
-            public void setBounds(Component c, Rectangle bounds) {
-                this.bounds.put(c, bounds);
-            }
-        });
-
-        this.setLayout(new BorderLayout());
         this.gameClient = gameClient;
         gameClient.addObserver(this);
+
+        UILayeredPane = new JLayeredPane();
+        JLayeredPaneLayoutManager layeredLayoutManager = new JLayeredPaneLayoutManager();
+        UILayeredPane.setLayout(layeredLayoutManager);
+
+        UIBaseLayer = new JPanel();
+        UIBaseLayer.setLayout(new BorderLayout());
+
+        this.setLayout(new BorderLayout());
         screen = new Screen(playerNickname, false);
         screen.setSize(1000, 800);
         screen.setMaximumSize(new Dimension(1000, 800));
         screen.setMinimumSize(new Dimension(1000, 800));
         screen.setPreferredSize(new Dimension(1000, 800));
-        this.add(screen, BorderLayout.CENTER);
+        UIBaseLayer.add(screen, BorderLayout.CENTER);
 
         Container UIPanel = new Container();
         UIPanel.setLayout(new BoxLayout(UIPanel, BoxLayout.X_AXIS));
@@ -112,13 +80,18 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         UIPanel.add(resourcesView);
         UIPanel.add(weaponPanel);
 
-        this.add(UIPanel, BorderLayout.SOUTH);
+        UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
 
         // starting the in-game sounds
         AudioPlayer.stopMusic();
         AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
 
         keyManager = new KeySequenceManager(this);
+
+
+        UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+        layeredLayoutManager.setBounds(UIBaseLayer, new Rectangle(1000, 1000, 1000, 1000));
+        this.add(UILayeredPane);
     }
 
     @Override
