@@ -19,6 +19,7 @@ public class GameClient extends Thread
 	private InetAddress hostname = null;
 	private LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
 	GameClientReceiver receiver;
+	GameClientSender sender;
 	public GameClient(Lobby lobby)
 	{
 		for(int i=0;i<8;i++)
@@ -28,9 +29,8 @@ public class GameClient extends Thread
 			} else if(lobby.getPlayers()[i].isHost)
 				hostname = lobby.getPlayers()[i].address;
 		}
-	}
-	public void run()
-	{
+		
+		
 		// Open sockets:
 		OutputStream toServer = null;
 		ObjectInputStream fromServer = null;
@@ -54,12 +54,13 @@ public class GameClient extends Thread
 			System.exit(1);
 		}
 
-		GameClientSender sender = new GameClientSender(toServer,queue);
+		sender = new GameClientSender(toServer,queue);
 		receiver = new GameClientReceiver(fromServer,queue);
-
-		// Start the sender and receiver threads
 		sender.start();
 		receiver.start();
+	}
+	public void run()
+	{
 
 		// Wait for them to end and close sockets.
 		try
