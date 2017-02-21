@@ -12,7 +12,8 @@ public class GameClientReceiver extends Thread
 {
 	ObjectInputStream fromServer;
 	private LinkedBlockingQueue<String> queue;
-	private MapContainer gameMap= new MapContainer();
+	private MapContainer gameMap = new MapContainer();
+
 	GameClientReceiver(ObjectInputStream reader, LinkedBlockingQueue<String> q)
 	{
 		fromServer = reader;
@@ -29,7 +30,7 @@ public class GameClientReceiver extends Thread
 				try
 				{
 					Object inObject = fromServer.readObject();
-					gameMap.setMap((Map)inObject);
+					gameMap.setMap((Map) inObject);
 				}
 				catch (ClassNotFoundException e)
 				{
@@ -43,26 +44,35 @@ public class GameClientReceiver extends Thread
 			System.exit(1); // Give up.
 		}
 	}
+
 	public Map getMap()
-	{return gameMap.getMap();}
+	{
+		return gameMap.getMap();
+	}
+
 	public void setObserver(Observer o)
 	{
-	    gameMap.addObserver(o);
+		gameMap.addObserver(o);
 	}
 }
+
 class MapContainer extends Observable
 {
-        private Map map;
-        public MapContainer()
-        {}
-        public void setMap(Map map)
-        {
-            this.map=map;
-            setChanged();
-            notifyObservers();
-        }
-        public Map getMap()
-        {
-            return map;
-        }
- }
+	private Map map = new Map(10000,10000,10000);
+
+	public MapContainer()
+	{
+	}
+
+	public void setMap(Map map)
+	{
+		this.map = map;
+		setChanged();
+		notifyObservers();
+	}
+
+	public Map getMap()
+	{
+		return map;
+	}
+}
