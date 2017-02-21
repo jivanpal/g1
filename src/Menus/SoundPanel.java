@@ -1,6 +1,7 @@
 package Menus;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -9,7 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.sound.sampled.*;
 
+import Audio.AudioPlayer;
 import ClientNetworking.Client;
 
 /**
@@ -17,6 +20,8 @@ import ClientNetworking.Client;
  * 
  * @author Jaren Chin-Hao Liu
  */
+
+//TODO Background is yellow but only for debugging
 public class SoundPanel extends JPanel {
 	private MainMenu menu;
 
@@ -76,12 +81,31 @@ public class SoundPanel extends JPanel {
 		label.setOpaque(false);
 		label.setForeground(Color.WHITE);
 		panel.add(label);
-		JSlider slider = new JSlider(0, 100);
-		// TODO sliders are not white and are not visible
-		slider.setValue(100);
+		JSlider slider = new JSlider(-40, 0);
+		
+		slider.setValue(0);
 		slider.setPaintTicks(true);
-		slider.setForeground(Color.RED);
 		slider.setBackground(Color.YELLOW);
+		slider.setOpaque(true);
+		slider.addChangeListener(e -> {
+			float volume = (float) slider.getValue();
+			System.out.println(volume);
+			FloatControl musiccontrol = (FloatControl) AudioPlayer.getMusicClip().getControl(FloatControl.Type.MASTER_GAIN);
+			System.out.println(musiccontrol.getMinimum());
+			//FloatControl soundeffectcontrol = (FloatControl) AudioPlayer.getSoundEffectClip().getControl(FloatControl.Type.MASTER_GAIN);
+			switch (name) {
+			case "Master Volume":
+				musiccontrol.setValue(volume);
+				//soundeffectcontrol.setValue(volume);
+				break;
+			case "Music Volume":
+				musiccontrol.setValue(volume);
+				break;
+			case "Sound Effects":
+				//soundeffectcontrol.setValue(volume);
+				break;
+			}
+		});
 		panel.add(slider);
 		return panel;
 	}
