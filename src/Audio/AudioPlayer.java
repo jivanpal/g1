@@ -71,5 +71,13 @@ public class AudioPlayer {
 			soundEffectClip.stop();
 		}
 	}
+	
+	public static Clip getMusicClip() {
+		return musicClip;
+	}
+	
+	public static Clip getSoundEffectClip() {
+		return soundEffectClip;
+	}
 
 }
