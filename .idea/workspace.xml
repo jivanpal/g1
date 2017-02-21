@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="002e9a16-0426-4586-8b79-041026d192f8" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Views/JLayeredPaneLayoutManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/UI/TestGame.java" afterPath="$PROJECT_DIR$/src/UI/TestGame.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Views/EngineerView.java" afterPath="$PROJECT_DIR$/src/Views/EngineerView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Views/KeySequenceManager.java" afterPath="$PROJECT_DIR$/src/Views/KeySequenceManager.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,19 +23,31 @@
       <file leaf-file-name="EngineerView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Views/EngineerView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="75" column="13" lean-forward="true" selection-start-line="75" selection-start-column="13" selection-end-line="75" selection-end-column="13" />
+            <state relative-caret-position="340">
+              <caret line="92" column="70" lean-forward="false" selection-start-line="92" selection-start-column="70" selection-end-line="92" selection-end-column="70" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1066#1088#0" expanded="true" />
-                <element signature="e#1379#1380#0" expanded="true" />
-                <element signature="e#1435#1436#0" expanded="true" />
-                <element signature="e#1841#1842#0" expanded="true" />
-                <element signature="e#1910#1911#0" expanded="true" />
-                <element signature="e#2241#2242#0" expanded="true" />
-                <element signature="e#2299#2300#0" expanded="true" />
-                <element signature="e#5076#5077#0" expanded="true" />
-                <element signature="e#5123#5124#0" expanded="true" />
+                <element signature="e#4225#4226#0" expanded="true" />
+                <element signature="e#4272#4273#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JLayeredPaneLayoutManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Views/JLayeredPaneLayoutManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="672">
+              <caret line="46" column="5" lean-forward="false" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#261#283#0" expanded="true" />
+                <element signature="e#526#527#0" expanded="true" />
+                <element signature="e#566#567#0" expanded="true" />
+                <element signature="e#892#893#0" expanded="true" />
+                <element signature="e#945#946#0" expanded="true" />
+                <element signature="e#1220#1221#0" expanded="true" />
+                <element signature="e#1262#1263#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -114,6 +125,7 @@
         <option value="$PROJECT_DIR$/src/UI/TestGame.java" />
         <option value="$PROJECT_DIR$/src/ClientNetworking/GameClient/GameClient.java" />
         <option value="$PROJECT_DIR$/src/Views/KeySequenceManager.java" />
+        <option value="$PROJECT_DIR$/src/Views/JLayeredPaneLayoutManager.java" />
         <option value="$PROJECT_DIR$/src/Views/EngineerView.java" />
       </list>
     </option>
@@ -900,12 +912,12 @@
       <workItem from="1487252296479" duration="204000" />
       <workItem from="1487252526107" duration="2797000" />
       <workItem from="1487600584783" duration="2137000" />
-      <workItem from="1487676269639" duration="4656000" />
+      <workItem from="1487676269639" duration="5805000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33237000" />
+    <option name="totallyTimeSpent" value="34386000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1366" height="744" extended-state="6" />
@@ -990,7 +1002,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/UI/ResourcesPresenter.java" />
     <entry file="file://$PROJECT_DIR$/src/ClientNetworking/ClientVariables.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -1228,8 +1239,8 @@
         <state relative-caret-position="340">
           <caret line="22" column="5" lean-forward="false" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
           <folding>
-            <element signature="e#453#454#0" expanded="true" />
-            <element signature="e#486#487#0" expanded="true" />
+            <element signature="e#453#454#0" expanded="false" />
+            <element signature="e#486#487#0" expanded="false" />
             <element signature="method#setShipHealth#0;class#ClientShipObservable#0" expanded="false" />
             <element signature="method#setShipShields#0;class#ClientShipObservable#0" expanded="false" />
             <element signature="method#setShipSpeed#0;class#ClientShipObservable#0" expanded="false" />
@@ -1350,21 +1361,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Views/EngineerView.java">
+    <entry file="file://$PROJECT_DIR$/src/Views/JLayeredPaneLayoutManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="75" column="13" lean-forward="true" selection-start-line="75" selection-start-column="13" selection-end-line="75" selection-end-column="13" />
+        <state relative-caret-position="672">
+          <caret line="46" column="5" lean-forward="false" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1066#1088#0" expanded="true" />
-            <element signature="e#1379#1380#0" expanded="true" />
-            <element signature="e#1435#1436#0" expanded="true" />
-            <element signature="e#1841#1842#0" expanded="true" />
-            <element signature="e#1910#1911#0" expanded="true" />
-            <element signature="e#2241#2242#0" expanded="true" />
-            <element signature="e#2299#2300#0" expanded="true" />
-            <element signature="e#5076#5077#0" expanded="true" />
-            <element signature="e#5123#5124#0" expanded="true" />
+            <element signature="e#261#283#0" expanded="true" />
+            <element signature="e#526#527#0" expanded="true" />
+            <element signature="e#566#567#0" expanded="true" />
+            <element signature="e#892#893#0" expanded="true" />
+            <element signature="e#945#946#0" expanded="true" />
+            <element signature="e#1220#1221#0" expanded="true" />
+            <element signature="e#1262#1263#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Views/EngineerView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="92" column="70" lean-forward="false" selection-start-line="92" selection-start-column="70" selection-end-line="92" selection-end-column="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4225#4226#0" expanded="true" />
+            <element signature="e#4272#4273#0" expanded="true" />
           </folding>
         </state>
       </provider>
