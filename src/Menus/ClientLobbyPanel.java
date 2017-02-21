@@ -23,6 +23,7 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 	public Client client;
 	private Player player;
 	private JPanel lpanel;
+	private boolean leftserver;
 	private GridBagConstraints c;
 
 	/**
@@ -38,6 +39,7 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 		this.menu = menu;
 		this.client = client;
 		this.player = player;
+		leftserver = false;
 		setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
 
@@ -48,8 +50,9 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 		c.gridy = 0;
 		JButton backtostart = new JButton("Back To Play Menu");
 		backtostart.addActionListener(e -> {
+			client.send(new Action(lobbyID, player, player, 10));
+			leftserver = true;
 			PlayPanel ppanel = new PlayPanel(menu, client);
-			// TODO Make player leave this lobby
 			menu.changeFrame(ppanel);
 		});
 		add(backtostart, c);
@@ -145,7 +148,7 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 			}
 		}
 		
-		if (inlobby == false) {
+		if (inlobby == false && leftserver == false) {
 			JOptionPane.showMessageDialog(this, "You have been kicked from the lobby!", "Kicked From Lobby", JOptionPane.INFORMATION_MESSAGE);
 			ButtonPanel bpanel = new ButtonPanel(menu, client);
 			menu.changeFrame(bpanel);
@@ -174,6 +177,9 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 		} else
 
 		{
+			while (lpanel == null) {
+				
+			}
 			this.remove(lpanel);
 			JPanel newpanel = displayplayers();
 			newpanel.setOpaque(false);

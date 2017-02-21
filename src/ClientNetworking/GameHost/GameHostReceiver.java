@@ -2,6 +2,7 @@ package ClientNetworking.GameHost;
 
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -12,13 +13,12 @@ import ServerNetworking.ClientTable;
 
 public class GameHostReceiver extends Thread
 {
-	private ObjectInputStream clientIN;
 	private Map gameMap=null;
 	private BufferedReader in;
 	private ClientTable clientTable;
 	private String playerPos;
 	private int playerInt;
-	public GameHostReceiver(ObjectInputStream reader, Map gM, ClientTable cT, String playerPos)
+	public GameHostReceiver(InputStream reader, Map gM, ClientTable cT, String playerPos)
 	{		
 		in = new BufferedReader(new InputStreamReader(reader));
 		gameMap = gM;
