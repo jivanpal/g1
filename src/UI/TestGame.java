@@ -6,7 +6,6 @@ import Views.EngineerView;
 import Views.PilotView;
 
 import javax.swing.JFrame;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -16,12 +15,12 @@ public class TestGame {
 		try {
 			PilotView pView = new PilotView("TestPlayer1", new GameClient(new Lobby("James", InetAddress.getLocalHost())));
 
-			EngineerView eView = new EngineerView("TestPlayer2", new GameClient(new Lobby("James", InetAddress.getLocalHost())));
+			// EngineerView eView = new EngineerView("TestPlayer2", new GameClient(new Lobby("James", InetAddress.getLocalHost())));
 
 			JFrame f = new JFrame();
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			f.setSize(1900, 1080);
-			f.add(eView);
+			f.add(pView);
 			f.setVisible(true);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
