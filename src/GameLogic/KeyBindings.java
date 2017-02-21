@@ -35,7 +35,7 @@ public class KeyBindings {
 	public static final String DEFAULT_MANUAL_PREV_BUTTON = String.valueOf(KeyEvent.VK_C);
 
 	// the default filename that the values are saved at
-	private final static String FILE_NAME = System.getProperty("user.dir") + "\\keybindings.txt";
+	public final static String FILE_NAME = System.getProperty("user.dir") + "\\keybindings.txt";
 
 	// hashtable which holds the current values
 	private static Properties keyBindings = new Properties();
@@ -110,6 +110,10 @@ public class KeyBindings {
 	public static boolean checkIfKeyTaken(int keyCode) {
 		return keyBindings.containsValue(String.valueOf(keyCode));
 
+	}
+	
+	public Properties getKeyBindings(){
+		return this.keyBindings;
 	}
 
 }

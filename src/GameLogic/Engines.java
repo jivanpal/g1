@@ -1,6 +1,6 @@
 package GameLogic;
 
-java.io.Serializable;
+import java.io.Serializable;
 
 /**
  * Class which represents the engines of the ship
