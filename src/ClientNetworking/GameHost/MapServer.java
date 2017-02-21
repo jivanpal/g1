@@ -56,20 +56,22 @@ public class MapServer extends Thread
 				Socket socket = serverSocket.accept();
 
 				InetAddress address = socket.getInetAddress();
-				boolean flag = false;		
+				System.out.println("Address: " + address);
+				
+				boolean gameShouldStart = false;		
 				int pos = 0;
 				String name = "";
 				Player[] players = lobby.getPlayers();
 				for (pos=0;pos<players.length;pos++)
 				{
-					if (players[pos]!= null && players[pos].address == address)
+					if (players[pos]!= null && players[pos].address.equals(address))
 					{
 						name = players[pos].nickname;
-						flag = true;
+						gameShouldStart = true;
 						break;
 					}
 				}
-				if (!flag)
+				if (!gameShouldStart)
 				{
 					System.out.println("I CLOSED THE SOCKET XD");
 					socket.close();
