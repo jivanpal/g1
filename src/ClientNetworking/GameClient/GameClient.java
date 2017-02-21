@@ -23,11 +23,9 @@ public class GameClient extends Thread
 	public GameClient(Lobby lobby)
 	{
 		System.out.println("Entered GameClient constructor");
-		for(int i=0;i<8;i++)
+		for(int i=0;i<lobby.getPlayers().length;i++)
 		{
-			if(lobby.getPlayers()[i] == null) {
-				continue;
-			} else if(lobby.getPlayers()[i].isHost)
+			if(lobby.getPlayers()[i] != null &&  lobby.getPlayers()[i].isHost)
 				hostname = lobby.getPlayers()[i].address;
 		}
 		System.out.println("Left for loop");
@@ -45,9 +43,11 @@ public class GameClient extends Thread
 			System.out.println("b4 getoutputstream");
 			toServer = server.getOutputStream();
 			toServer.flush();
-			System.out.println("couldnt get fromserver" + (toServer == null));
+			System.err.println("toServer created");
+			System.err.println("SERVER is "+(server == null ? "NULL" : "NOT NULL"));
+			
 			fromServer = new ObjectInputStream(server.getInputStream());
-			System.out.println("??????????????????????????????????????????? "+ (fromServer==null));
+			System.err.println("Created `fromServer`");
 		}
 		catch (UnknownHostException e)
 		{

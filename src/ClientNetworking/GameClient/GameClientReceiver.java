@@ -4,9 +4,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import GameLogic.Asteroid;
 import GameLogic.Map;
+import GameLogic.Ship;
+import Geometry.Vector;
+import Physics.Body;
 
 public class GameClientReceiver extends Thread
 {
@@ -22,6 +27,8 @@ public class GameClientReceiver extends Thread
 
 	public void run()
 	{
+		
+		
 
 		try
 		{
