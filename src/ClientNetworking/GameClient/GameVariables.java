@@ -2,5 +2,5 @@ package ClientNetworking.GameClient;
 
 public class GameVariables
 {
-	public static int PORT = 8765;
+	public static int PORT = 1273;
 }
