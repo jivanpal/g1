@@ -31,6 +31,9 @@ public class KeySequenceManager {
         // Check if the player pressed a key correctly
         if (e.getKeyChar() == keySequence.charAt(position)) {
             if(position + 1 >= keySequence.length()) {
+                // Tell the parent we have succeeded
+                parent.keySequencePassed();
+
                 position = 0;
 
                 // Check if we should start the KeySequence again without reinitialisation.
@@ -46,6 +49,8 @@ public class KeySequenceManager {
             position = 0;
 
             if(!restart) {
+                // Tell the parent we have failed
+                parent.keySequenceFailed();
                 active = false;
             }
 
