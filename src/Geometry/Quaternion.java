@@ -1,5 +1,7 @@
 package Geometry;
 
+import java.io.Serializable;
+
 /**
  * A class of objects that describe Hamiltonian quaternions. These are useful
  * for implementing rotations in a way that reduces the number of degrees of
@@ -8,7 +10,7 @@ package Geometry;
  * @author jivan
  *
  */
-public class Quaternion {
+public class Quaternion implements Serializable {
 /// CONSTANTS
     public static final Quaternion ZERO = new Quaternion (0, 0, 0, 0);
     public static final Quaternion UNIT = new Quaternion (1, 0, 0, 0);

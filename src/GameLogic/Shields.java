@@ -1,10 +1,13 @@
 package GameLogic;
+
+import java.io.Serializable;
+
 /**
  * A class which represents the shilds of a ship in the game
  * @author Ivan Panchev
  *
  */
-public class Shields {
+public class Shields implements Serializable {
 	
 	private static final int DEFAULT_SHIELDS_LEVEL = 0;
 	private static final int DEFAULT_MAX_SHIELDS_LEVEL = 0;

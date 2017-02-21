@@ -1,5 +1,6 @@
 package GameLogic;
 
+import java.io.Serializable;
 import Geometry.*;
 import Physics.*;
 
@@ -8,7 +9,7 @@ import Physics.*;
  * @author Ivan Panchev
  * @author jivan
  */
-public abstract class Weapon {
+public abstract class Weapon implements Serializable {
 /// FIELDS
   
     private Bullet      bullet;

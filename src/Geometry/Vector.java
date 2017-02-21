@@ -1,11 +1,13 @@
 package Geometry;
 
+import java.io.Serializable;
+
 /**
  * A class of objects to describe 3D Euclidean vectors.
  * @author jivan
  *
  */
-public class Vector {
+public class Vector implements Serializable {
 /// CONSTANTS
 
     /**

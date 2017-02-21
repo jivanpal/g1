@@ -1,10 +1,12 @@
 package GameLogic;
 
+java.io.Serializable;
+
 /**
  * Class which represents the engines of the ship
  * @author Ivan Panchev
  */
-public class Engines {
+public class Engines implements Serializable {
 	
 	private static final int DEFAULT_FUEL_LEVEL = 0;
 	private static final int DEFAULT_FUEL_MAX_LEVEL = 0;

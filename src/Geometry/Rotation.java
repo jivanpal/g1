@@ -1,11 +1,13 @@
 package Geometry;
 
+import java.io.Serializable;
+
 /**
  * A class of objects that describe rotations with respect to the origin of an
  * initial coordinate system. These are described internally using quaternions.
  * @author jivan
  */
-public class Rotation {
+public class Rotation implements Serializable {
 /// CONSTANTS
     /**
      * The rotation object that describes no rotation; the rotation that does

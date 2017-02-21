@@ -1,12 +1,13 @@
 package GameLogic;
 
+import java.io.Serializable;
 import Physics.*;
 
 /**
  * A superclass for game objects that implement some kind of AI.
  * @author jivan
  */
-public abstract class Bot {
+public abstract class Bot implements Serializable{
     private Map map;
     private Body bot;
     

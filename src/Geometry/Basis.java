@@ -1,5 +1,7 @@
 package Geometry;
 
+import java.io.Serializable;
+
 /**
  * A class of objects that can describe an orthogonal basis (coordinate system)
  * that can be reached from a reference basis simply by way of translating and
@@ -13,7 +15,7 @@ package Geometry;
  * @author jivan
  *
  */
-public class Basis {
+public class Basis implements Serializable {
 /// CONSTANTS
     /**
      * The identity basis; the basis reached by doing nothing

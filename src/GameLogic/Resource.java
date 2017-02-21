@@ -1,12 +1,14 @@
 package GameLogic;
 
+import java.io.Serializable;
+
 /**
  * A simple container for a bounded integer.
  * Used to represent weapon levels and capacity.
  * @author jivan
  *
  */
-public class Resource {
+public class Resource implements Serializable {
 /// FIELDS
     private int level;
     private int max;
