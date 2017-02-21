@@ -29,7 +29,7 @@ public class GameClient extends Thread
 			} else if(lobby.getPlayers()[i].isHost)
 				hostname = lobby.getPlayers()[i].address;
 		}
-		
+		System.out.println(hostname + " CLIENT ");
 		
 		// Open sockets:
 		OutputStream toServer = null;
@@ -40,8 +40,11 @@ public class GameClient extends Thread
 		try
 		{
 			server = new Socket(hostname,port);
+			System.out.println("b4 getoutputstream");
 			toServer = server.getOutputStream();
+			System.out.println("couldnt get fromserver" + (toServer == null));
 			fromServer = new ObjectInputStream(server.getInputStream());
+			System.out.println("??????????????????????????????????????????? "+ (fromServer==null));
 		}
 		catch (UnknownHostException e)
 		{
@@ -53,15 +56,19 @@ public class GameClient extends Thread
 			System.err.println("The server doesn't seem to be running " + e.getMessage());
 			System.exit(1);
 		}
-
+		System.out.println("b4 init");
 		sender = new GameClientSender(toServer,queue);
+		System.out.println("sender didnt fuck it up");
 		receiver = new GameClientReceiver(fromServer,queue);
+		System.out.println("b4 start");
 		sender.start();
+		System.out.println("sender didn't fuck it up 2");
 		receiver.start();
+		System.out.println("end of gameclient const");
 	}
 	public void run()
 	{
-
+		System.out.println("does it start");
 		// Wait for them to end and close sockets.
 		try
 		{

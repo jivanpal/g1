@@ -2,6 +2,7 @@
 package ClientNetworking.GameHost;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -31,7 +32,7 @@ public class MapServer extends Thread
 		// Open a server socket:
 		try
 		{
-			serverSocket = new ServerSocket(PORT);
+			serverSocket = new ServerSocket(PORT,8,InetAddress.getLocalHost());
 		}
 		catch (IOException e)
 		{
@@ -44,11 +45,13 @@ public class MapServer extends Thread
 		try
 		{
 			ClientTable clientTable = new ClientTable();
-			
+			System.out.println("I HAVE STARTED THE SERVER");
+			System.out.println(serverSocket + " SERVER");
 			while (true)
 			{
 				// Listen to the socket, accepting connections from new clients:
 				Socket socket = serverSocket.accept();
+
 				InetAddress address = socket.getInetAddress();
 				boolean flag = false;		
 				int pos = 0;
@@ -65,10 +68,12 @@ public class MapServer extends Thread
 				}
 				if (!flag)
 				{
+					System.out.println("I CLOSED THE SOCKET XD");
 					socket.close();
 				}
 				else
 				{
+					System.out.println("reached else");
 					clientTable.add(""+pos);
 					// If the player added is the pilot, put a new ship on the
 					// map in a sensible position.
@@ -100,13 +105,15 @@ public class MapServer extends Thread
 						if(!overlaps) {
 							a.setVelocity(new Vector(r.nextDouble(), r.nextDouble(), r.nextDouble()).scale(10));
 							gameMap.add(a);
+							System.out.println("notsTUCK");
 						} else {
+							System.out.println("stuck");
 							i--;
 						}
 					}
 
 					// This is so that we can use readLine():
-					ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
+					InputStream fromClient = socket.getInputStream();
 
 					// This is to print o the server
 					ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
@@ -120,6 +127,10 @@ public class MapServer extends Thread
 					// We create and start a new thread to write to the client:
 					GameHostSender clientOutput = new GameHostSender(toClient,gameMap,""+pos);
 					clientOutput.start();
+					
+					
+					
+					
 				}
 
 			}
