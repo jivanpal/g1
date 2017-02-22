@@ -88,7 +88,6 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
         keyManager = new KeySequenceManager(this);
 
-
         UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
         layeredLayoutManager.setBounds(UIBaseLayer, new Rectangle(1000, 1000, 1000, 1000));
         this.add(UILayeredPane);
