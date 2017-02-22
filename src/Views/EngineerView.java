@@ -106,9 +106,11 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
             plasmaBlasterView.updateWeaponAmmoLevel(shipObservable.getPlasmaAmmo());
             torpedosView.updateWeaponAmmoLevel(shipObservable.getTorpedoAmmo());
         } else
+        {
             screen.setMap(gameClient.getMap());
+            System.out.println("MAP UPDATED IN VIEWS");
+        }
     }
-
     @Override
     public void keyTyped(KeyEvent keyEvent) {
 

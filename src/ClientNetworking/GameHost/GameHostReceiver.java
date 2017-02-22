@@ -20,12 +20,14 @@ public class GameHostReceiver extends Thread
 	private ClientTable clientTable;
 	private int position;
 	public MapContainer gameMap;
-	public GameHostReceiver(ObjectInputStream reader,MapContainer map, ClientTable cT, int playerPos, String nickname)
+	public int mapEntryNumber;
+	public GameHostReceiver(ObjectInputStream reader,MapContainer map, ClientTable cT, int playerPos, String nickname,int mapEntry)
 	{		
 		gameMap = map;
 		position = playerPos;
 		clientTable = cT;
 		clientIn = reader;
+		mapEntryNumber=mapEntry;
 	}
 
 	public void run()
@@ -36,7 +38,7 @@ public class GameHostReceiver extends Thread
 			try
 			{
 				String str = (String)clientIn.readObject();
-				gameMap.updateMap(str, position);
+				gameMap.updateMap(str, mapEntryNumber);
 				clientTable.queueToAll(gameMap.gameMap);
 			}
 

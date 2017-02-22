@@ -9,26 +9,27 @@ import Geometry.Vector;
 import Physics.Body;
 
 public class MapContainer {
-
+	
+	public int ASTEROID_NUMBER = 100;
 	public Map gameMap = new Map(10000, 10000, 10000);
 
 	public MapContainer() {
 		generateTerrain();
 	}
 
-	public void addShip(int position, String nickname) {
+	public int addShip(int position, String nickname) {
 		if (position % 2 == 0) {
 			Ship ship = (new Ship(nickname));
 			ship.setPosition(new Vector(position % 4 == 0 ? 0 : gameMap.getDimensions().getX() / 2,
 					position < 4 ? 0 : gameMap.getDimensions().getY() / 2, 0));
 			gameMap.add(ship);
 		}
-
+		return gameMap.size()-1;
 	}
 
 	private void generateTerrain() {
 		Random r = new Random();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < ASTEROID_NUMBER; i++) {
 			Asteroid a = new Asteroid();
 			a.setPosition(new Vector(r.nextDouble() * gameMap.getDimensions().getX(),
 					r.nextDouble() * gameMap.getDimensions().getY(), r.nextDouble() * gameMap.getDimensions().getZ()));
@@ -50,7 +51,7 @@ public class MapContainer {
 	}
 
 	public synchronized void updateMap(String str, int position) {
-		Ship playerShip = (Ship) (gameMap.get(position));
+		Ship playerShip = (Ship) (gameMap.get(position+ASTEROID_NUMBER));
 		try {
 			switch (str) {
 			case "fireWeapon1":

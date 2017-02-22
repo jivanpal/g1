@@ -76,6 +76,7 @@ public class MapServer extends Thread
 				else
 				{
 					clientTable.add(""+pos);
+					int mapEntry = gameMap.addShip(pos,name);
 					// This is to print o the server
 					ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
 					toClient.flush();
@@ -84,7 +85,7 @@ public class MapServer extends Thread
 
 					// We create and start new threads to read from the
 					// client(this one executes the commands):
-					GameHostReceiver clientInput = new GameHostReceiver(fromClient,gameMap,clientTable,pos,name);
+					GameHostReceiver clientInput = new GameHostReceiver(fromClient,gameMap,clientTable,pos,name,mapEntry);
 					clientInput.start();
 					// We create and start a new thread to write to the client:
 					GameHostSender clientOutput = new GameHostSender(toClient,clientTable,""+pos);
