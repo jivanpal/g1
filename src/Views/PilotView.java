@@ -72,6 +72,7 @@ public class PilotView extends JPanel implements KeyListener, Observer
 			}
 		});
 
+		System.out.println("Adding the screen");
 		this.add(screen, BorderLayout.CENTER);
 
 		speedometerView = new SpeedometerView();
@@ -89,6 +90,7 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		instructionsView.addInstruction("test instruction 2");
 		instructionsView.addInstruction("test instruction 3");
 
+		System.out.println("Making the weapon panel");
 		Container weaponPanel = new Container();
 		weaponPanel.add(plasmaBlasterView);
 		weaponPanel.add(laserBlasterView);
@@ -96,11 +98,13 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
 
 		Container UIpanel = new Container();
+		System.out.println("Adding weapons, speed and instructions to the UIPanel");
 		UIpanel.add(weaponPanel);
 		UIpanel.add(speedometerView);
 		UIpanel.add(instructionsView);
 		UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
 
+		System.out.println("Adding UIPanel");
 		this.add(UIpanel, BorderLayout.SOUTH);
 
 		addKeyListener(this);
