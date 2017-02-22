@@ -18,6 +18,7 @@ public class GameClientReceiver extends Thread
 	ObjectInputStream fromServer;
 	private LinkedBlockingQueue<String> queue;
 	private MapContainer gameMap = new MapContainer();
+	private boolean running=true;
 
 	GameClientReceiver(ObjectInputStream reader, LinkedBlockingQueue<String> q)
 	{
@@ -27,12 +28,9 @@ public class GameClientReceiver extends Thread
 
 	public void run()
 	{
-		
-		
-
 		try
 		{
-			while (true)
+			while (running)
 			{
 				try
 				{
@@ -48,6 +46,7 @@ public class GameClientReceiver extends Thread
 		catch (IOException e)
 		{
 			System.out.println("Server seems to have died " + e.getMessage());
+			running = false;
 			System.exit(1); // Give up.
 		}
 	}

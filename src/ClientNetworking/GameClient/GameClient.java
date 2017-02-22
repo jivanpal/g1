@@ -13,7 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import GameLogic.Map;
 import GeneralNetworking.Lobby;
 
-public class GameClient extends Thread
+public class GameClient
 {
 	private int port = GameVariables.PORT;
 	private InetAddress hostname = null;
@@ -22,7 +22,6 @@ public class GameClient extends Thread
 	GameClientSender sender;
 	public GameClient(Lobby lobby)
 	{
-		System.out.println("Entered GameClient constructor");
 		for(int i=0;i<lobby.getPlayers().length;i++)
 		{
 			if(lobby.getPlayers()[i] != null &&  lobby.getPlayers()[i].isHost)
@@ -40,14 +39,10 @@ public class GameClient extends Thread
 		try
 		{
 			server = new Socket(hostname,port);
-			System.out.println("b4 getoutputstream");
 			toServer = server.getOutputStream();
 			toServer.flush();
-			System.err.println("toServer created");
-			System.err.println("SERVER is "+(server == null ? "NULL" : "NOT NULL"));
-			
 			fromServer = new ObjectInputStream(server.getInputStream());
-			System.err.println("Created `fromServer`");
+			System.err.println("Created `fromServer` and 'toServer'");
 		}
 		catch (UnknownHostException e)
 		{
@@ -61,33 +56,13 @@ public class GameClient extends Thread
 			System.err.println("The server doesn't seem to be running " + e.getMessage());
 			System.exit(1);
 		}
-		System.out.println("b4 init");
 		sender = new GameClientSender(toServer,queue);
-		System.out.println("sender didnt fuck it up");
 		receiver = new GameClientReceiver(fromServer,queue);
-		System.out.println("b4 start");
 		sender.start();
-		System.out.println("sender didn't fuck it up 2");
 		receiver.start();
-		System.out.println("GameClient created");
 		System.out.println("end of gameclient const");
 	}
-	public void run()
-	{
-		System.out.println("does it start");
-		// Wait for them to end and close sockets.
-		try
-		{
-			sender.join();
-			receiver.join();
-		}
-		catch (Exception e)
-		{
-			System.err.println(e.getMessage());
-			System.exit(1);
-		}
 
-	}
 	public synchronized void send(String str)
 	{
 		queue.offer(str);

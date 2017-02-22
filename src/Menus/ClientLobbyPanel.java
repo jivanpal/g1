@@ -163,7 +163,6 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 			}
 			System.out.println(pos);
 			GameClient gameClient = new GameClient(l);
-			gameClient.start();
 			if (pos % 2 == 0) // i.e. if player is pilot
 			{
 
@@ -171,7 +170,7 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 				menu.changeFrame(pv);
 			} else // else player is engineer
 			{
-				EngineerView eview = new EngineerView(client.name, gameClient);
+				PilotView eview = new PilotView(client.name, gameClient);
 				menu.changeFrame(eview);
 			}
 		} else
