@@ -3,13 +3,11 @@ package ClientNetworking.GameClient;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
-
 import GameLogic.Map;
 import GeneralNetworking.Lobby;
 
@@ -20,13 +18,10 @@ public class GameClient
 	private LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
 	GameClientReceiver receiver;
 	GameClientSender sender;
+	
 	public GameClient(Lobby lobby)
 	{
-		for(int i=0;i<lobby.getPlayers().length;i++)
-		{
-			if(lobby.getPlayers()[i] != null &&  lobby.getPlayers()[i].isHost)
-				hostname = lobby.getPlayers()[i].address;
-		}
+		this.hostname = lobby.getHostAddress();
 		System.out.println("Left for loop");
 		System.out.println(hostname + " CLIENT ");
 		

@@ -1,8 +1,5 @@
  package GameLogic;
 
-import Geometry.*;
-import Physics.*;
-
 /**
  * A class of objects representing laser blaster weapons attached to some ship.
  */

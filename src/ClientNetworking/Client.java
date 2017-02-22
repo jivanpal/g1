@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
-import ClientNetworking.*;
 import GeneralNetworking.Action;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.LobbyList;
@@ -35,6 +34,7 @@ public class Client extends Thread
 		clientQueue = new LinkedBlockingQueue<Object>();
 	}
 
+	//what's the point of this thing being a thread? 
 	public void run()
 	{
 		// Open sockets:
