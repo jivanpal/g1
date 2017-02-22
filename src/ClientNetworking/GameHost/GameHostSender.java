@@ -11,36 +11,32 @@ import ServerNetworking.ClientTable;
 public class GameHostSender extends Thread
 {
 	private ObjectOutputStream clientOUT;
-	public Map gameMap;
-	private String pos;
-
-	public GameHostSender(ObjectOutputStream sender, Map gM,String name)
+	ClientTable clientTable;
+	private String nickname;
+	
+	public GameHostSender(ObjectOutputStream sender,ClientTable ct, String name)
 	{
 		clientOUT = sender;
-		gameMap = gM;
-		pos = name;
+		clientTable = ct;
+		nickname = name;
 	}
 
 	public void run()
 	{
+		boolean running= true;
 		// get the message queue for said client
-		while (true)
+		while (running)
 		{
 			try
 			{
 				//check if we got anything to send
 					clientOUT.reset();
-					clientOUT.writeObject(gameMap);
+					clientOUT.writeObject(clientTable.getQueue(nickname).take());
 					clientOUT.flush();
-					try {
-						Thread.sleep((long)(Global.REFRESH_PERIOD*1000));
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 			}
-			catch (IOException e)
+			catch (IOException | InterruptedException e)
 			{
+				running = false;
 				e.printStackTrace();
 			}
 		}

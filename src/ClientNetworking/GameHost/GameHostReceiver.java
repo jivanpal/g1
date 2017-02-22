@@ -16,53 +16,16 @@ import ServerNetworking.ClientTable;
 
 public class GameHostReceiver extends Thread
 {
-	public Map gameMap;
 	private ObjectInputStream clientIn;
 	private ClientTable clientTable;
-	private String playerPos;
-	private int playerInt;
-	public GameHostReceiver(ObjectInputStream reader, Map gM, ClientTable cT, String playerPos, String nickname)
+	private int position;
+	public MapContainer gameMap;
+	public GameHostReceiver(ObjectInputStream reader,MapContainer map, ClientTable cT, int playerPos, String nickname)
 	{		
-		this.playerPos = playerPos;
+		gameMap = map;
+		position = playerPos;
 		clientTable = cT;
-		playerInt = Integer.parseInt(playerPos);
-		gameMap = gM;
 		clientIn = reader;
-		// If the player added is the pilot, put a new ship on the
-		// map in a sensible position.
-		if (playerInt % 2 == 0)
-		{
-			Ship ship = (new Ship(nickname));
-			ship.setPosition(new Vector(
-					playerInt % 4 == 0 ? 0 : gameMap.getDimensions().getX() / 2,
-							playerInt < 4 ? 0 : gameMap.getDimensions().getY() / 2,
-					0
-			));
-			gameMap.add(ship);
-		}
-		Random r = new Random();
-		for (int i = 0; i < 100; i++)
-		{
-			Asteroid a = new Asteroid();
-			a.setPosition(new Vector(r.nextDouble()* gameMap.getDimensions().getX(), 
-									r.nextDouble()* gameMap.getDimensions().getY(),
-									r.nextDouble()* gameMap.getDimensions().getZ()));
-			boolean overlaps = false;
-			for(Body b : gameMap) {
-				if (a.isTouching(b)) {
-					overlaps=true;
-					break;
-				}
-			}
-			
-			if(!overlaps) {
-				a.setVelocity(new Vector(r.nextDouble(), r.nextDouble(), r.nextDouble()).scale(10));
-				gameMap.add(a);
-			} else {
-				i--;
-			}
-		}
-		
 	}
 
 	public void run()
@@ -73,43 +36,13 @@ public class GameHostReceiver extends Thread
 			try
 			{
 				String str = (String)clientIn.readObject();
-				Ship playerShip = (Ship)(gameMap.get(playerInt));
-				switch(str){
-					case "fireWeapon1":
-						gameMap.add(playerShip.fire(Ship.LASER_BLASTER_INDEX));
-						break;
-					case "fireWeapon2":
-						gameMap.add(playerShip.fire(Ship.PLASMA_BLASTER_INDEX));
-						break;
-					case "fireWeapon3":
-						gameMap.add(playerShip.fire(Ship.TORPEDO_WEAPON_INDEX));
-						break;
-					case "accelerate":
-						playerShip.thrustForward();
-						break;
-					case "decelerate":
-						playerShip.thrustReverse();
-					case "pitchDown":
-						playerShip.pitchDown();
-					case "pitchUp":
-						playerShip.pitchUp();
-						break;
-					case "rollLeft":
-						playerShip.rollLeft();
-						break;
-					case "rollRight":
-						playerShip.rollRight();
-						break;
-					case "exit":
-						running = false;
-					default:
-						throw new IllegalArgumentException("You done sent the wrong string yo");
-				}
-					
+				gameMap.updateMap(str, position);
+				clientTable.queueToAll(gameMap.gameMap);
 			}
 
 			catch (Exception e)
 			{
+				running=false;
 				e.printStackTrace();
 			}
 

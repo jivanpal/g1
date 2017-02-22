@@ -1,6 +1,7 @@
 package ServerNetworking;
 //Each nickname has a different incomming-message queue.
 
+import java.util.Set;
 import java.util.concurrent.*;
 
 /**
@@ -39,5 +40,16 @@ public class ClientTable
 	{
 		return queueTable.get(nickname);
 	}
-
+	/**
+	 * queue an object to each queue
+	 * @param o the object
+	 */
+	public void queueToAll(Object o)
+	{
+		Set<String> names = queueTable.keySet();
+		for(String name: names)
+		{
+			queueTable.get(name).offer(o);
+		}
+	}
 }

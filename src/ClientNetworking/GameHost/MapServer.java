@@ -23,8 +23,7 @@ public class MapServer extends Thread
 	private final int PORT = 1273;
 	private final Lobby lobby;
 	private ServerSocket serverSocket = null;
-	public Map gameMap = new Map(10000, 10000, 10000);
-
+	
 	public MapServer(Lobby l)
 	{
 		lobby = l;
@@ -38,7 +37,6 @@ public class MapServer extends Thread
 		{
 			System.err.println("Couldn't listen on port " + PORT);
 		}
-		System.out.println("MapServer is a go");
 	}
 
 	public void run()
@@ -46,8 +44,8 @@ public class MapServer extends Thread
 		try
 		{
 			ClientTable clientTable = new ClientTable();
+			MapContainer gameMap= new MapContainer(); 
 			System.out.println(serverSocket.getInetAddress());
-			
 			System.out.println("I HAVE STARTED THE SERVER");
 			while (true)
 			{
@@ -69,6 +67,7 @@ public class MapServer extends Thread
 						break;
 					}
 				}
+
 				if (!gameShouldStart)
 				{
 					System.out.println("I CLOSED THE SOCKET XD");
@@ -85,12 +84,11 @@ public class MapServer extends Thread
 
 					// We create and start new threads to read from the
 					// client(this one executes the commands):
-					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap,clientTable,""+pos,name);
+					GameHostReceiver clientInput = new GameHostReceiver(fromClient,gameMap,clientTable,pos,name);
 					clientInput.start();
 					// We create and start a new thread to write to the client:
-					GameHostSender clientOutput = new GameHostSender(toClient,gameMap,""+pos);
+					GameHostSender clientOutput = new GameHostSender(toClient,clientTable,""+pos);
 					clientOutput.start();
-					
 				}
 
 			}
