@@ -195,7 +195,7 @@ public class HostLobbyPanel extends JPanel implements Observer {
 			
 			if(pos % 2 == 0)	// i.e. if player is pilot
 			{
-				EngineerView pv = new EngineerView(client.name, gameClient);
+				PilotView pv = new PilotView(client.name, gameClient);
 				menu.changeFrame(pv);
 			}
 			else		// else player is engineer

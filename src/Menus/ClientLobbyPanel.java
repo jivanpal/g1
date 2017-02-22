@@ -170,7 +170,7 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 				menu.changeFrame(pv);
 			} else // else player is engineer
 			{
-				PilotView eview = new PilotView(client.name, gameClient);
+				EngineerView eview = new EngineerView(client.name, gameClient);
 				menu.changeFrame(eview);
 			}
 		} else

@@ -88,6 +88,8 @@ public class MapServer extends Thread
 					clientInput.start();
 					// We create and start a new thread to write to the client:
 					GameHostSender clientOutput = new GameHostSender(toClient,clientTable,""+pos);
+					toClient.reset();
+					toClient.writeObject(gameMap.gameMap);
 					clientOutput.start();
 				}
 
