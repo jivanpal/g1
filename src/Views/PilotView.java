@@ -24,17 +24,16 @@ import java.util.Observer;
  */
 public class PilotView extends JPanel implements KeyListener, Observer
 {
-
-	private final Screen screen;
 	private final SpeedometerView speedometerView;
 	private final WeaponView plasmaBlasterView;
 	private final WeaponView laserBlasterView;
 	private final WeaponView torpedosView;
-
 	private final InstructionsView instructionsView;
 
 	private GameClient gameClient;
-
+	
+	private final Screen screen;
+	private JPanel UIPanel;
 	private JLayeredPane UIContainer;
 
 	public PilotView(String playerNickname, GameClient gameClient)
@@ -42,6 +41,7 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		this.setLayout(new BorderLayout());
 		this.gameClient = gameClient;
 		gameClient.addObserver(this);
+		
 		screen = new Screen(playerNickname, true);
 		screen.setSize(1000, 800);
 		screen.setMaximumSize(new Dimension(1000, 800));
@@ -77,6 +77,9 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		this.add(screen, BorderLayout.CENTER);
 
 		speedometerView = new SpeedometerView();
+		speedometerView.setBackground(Color.blue);
+		speedometerView.setPreferredSize(new Dimension(30, 30));
+		speedometerView.setVisible(true);
 
 		plasmaBlasterView = new WeaponView("Plasma Blaster", false);
 
@@ -90,27 +93,35 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		instructionsView.addInstruction("test instruction 1");
 		instructionsView.addInstruction("test instruction 2");
 		instructionsView.addInstruction("test instruction 3");
+		instructionsView.setBackground(Color.green);
+		instructionsView.setPreferredSize(new Dimension(50, 300));
 
 		System.out.println("Making the weapon panel");
-		Container weaponPanel = new Container();
+		JPanel weaponPanel = new JPanel();
 		weaponPanel.add(plasmaBlasterView);
 		weaponPanel.add(laserBlasterView);
 		weaponPanel.add(torpedosView);
+		weaponPanel.setBackground(Color.red);
+		weaponPanel.setPreferredSize(new Dimension(100, 100));
 		weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
 
-		Container UIpanel = new Container();
+		JPanel UIpanel = new JPanel();
+		UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
 		UIpanel.setPreferredSize(new Dimension(1920, 300));
-		UIpanel.setMinimumSize(new Dimension(1920, 300));
-		UIpanel.setMaximumSize(new Dimension(1920, 300));
-		UIpanel.setSize(new Dimension(1920, 300));
 		System.out.println("Adding weapons, speed and instructions to the UIPanel");
 		UIpanel.add(weaponPanel);
+		UIpanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		UIpanel.add(speedometerView);
+		UIpanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		UIpanel.add(instructionsView);
-		UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
-
+		UIpanel.add(Box.createRigidArea(new Dimension(10, 0)));		
+		UIpanel.revalidate();
+		UIpanel.repaint();
+		
 		System.out.println("Adding UIPanel");
 		this.add(UIpanel, BorderLayout.SOUTH);
+		this.revalidate();
+		this.repaint();
 
 		addKeyListener(this);
 		setFocusable(true);

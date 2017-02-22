@@ -8,7 +8,7 @@ import java.awt.*;
  * View to show information about one single weapon (name, ammo bar, highlighted).
  * By default the Weapon is unhighlighted and shows no ammo bar.
  */
-public class WeaponView extends JLayeredPane {
+public class WeaponView extends JPanel {
     private Color HIGHLIGHT_COLOUR = Color.red;
     private Color DEFAULT_COLOUR = Color.black;
 
