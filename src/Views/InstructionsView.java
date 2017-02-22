@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by James on 16/02/17.
  */
-public class InstructionsView extends JLayeredPane {
+public class InstructionsView extends JPanel {
     private ArrayList<JLabel> instructionLabels;
 
     public InstructionsView() {
