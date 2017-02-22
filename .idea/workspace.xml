@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="002e9a16-0426-4586-8b79-041026d192f8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Views/EngineerView.java" afterPath="$PROJECT_DIR$/src/Views/EngineerView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Views/PilotView.java" afterPath="$PROJECT_DIR$/src/Views/PilotView.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -23,8 +22,8 @@
       <file leaf-file-name="EngineerView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Views/EngineerView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1037">
-              <caret line="93" column="5" lean-forward="false" selection-start-line="93" selection-start-column="5" selection-end-line="93" selection-end-column="5" />
+            <state relative-caret-position="-586">
+              <caret line="69" column="0" lean-forward="true" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -35,8 +34,8 @@
       <file leaf-file-name="PilotView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Views/PilotView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="92" column="54" lean-forward="false" selection-start-line="92" selection-start-column="54" selection-end-line="92" selection-end-column="54" />
+            <state relative-caret-position="234">
+              <caret line="104" column="50" lean-forward="false" selection-start-line="104" selection-start-column="50" selection-end-line="104" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -824,12 +823,12 @@
       <workItem from="1487252526107" duration="2797000" />
       <workItem from="1487600584783" duration="2137000" />
       <workItem from="1487676269639" duration="6903000" />
-      <workItem from="1487763712988" duration="590000" />
+      <workItem from="1487763712988" duration="974000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36074000" />
+    <option name="totallyTimeSpent" value="36458000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1366" height="744" extended-state="6" />
@@ -1280,8 +1279,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Views/EngineerView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="93" column="5" lean-forward="false" selection-start-line="93" selection-start-column="5" selection-end-line="93" selection-end-column="5" />
+        <state relative-caret-position="-586">
+          <caret line="69" column="0" lean-forward="true" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1290,8 +1289,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Views/PilotView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="92" column="54" lean-forward="false" selection-start-line="92" selection-start-column="54" selection-end-line="92" selection-end-column="54" />
+        <state relative-caret-position="234">
+          <caret line="104" column="50" lean-forward="false" selection-start-line="104" selection-start-column="50" selection-end-line="104" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

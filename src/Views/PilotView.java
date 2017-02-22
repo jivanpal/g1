@@ -9,6 +9,7 @@ import javax.swing.border.Border;
 import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 import GameLogic.KeyBindings;
+import sun.swing.UIClientPropertyKey;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -98,6 +99,10 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
 
 		Container UIpanel = new Container();
+		UIpanel.setPreferredSize(new Dimension(1920, 300));
+		UIpanel.setMinimumSize(new Dimension(1920, 300));
+		UIpanel.setMaximumSize(new Dimension(1920, 300));
+		UIpanel.setSize(new Dimension(1920, 300));
 		System.out.println("Adding weapons, speed and instructions to the UIPanel");
 		UIpanel.add(weaponPanel);
 		UIpanel.add(speedometerView);
