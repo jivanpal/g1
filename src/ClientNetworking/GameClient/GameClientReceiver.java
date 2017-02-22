@@ -45,7 +45,7 @@ public class GameClientReceiver extends Thread
 		}
 		catch (IOException e)
 		{
-			System.out.println("Server seems to have died " + e.getMessage());
+			System.out.println("GAME CLIENT RECEIVER: Server seems to have died " + e.getMessage());
 			running = false;
 			System.exit(1); // Give up.
 		}

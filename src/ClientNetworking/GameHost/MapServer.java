@@ -23,7 +23,7 @@ public class MapServer extends Thread
 	private final int PORT = 1273;
 	private final Lobby lobby;
 	private ServerSocket serverSocket = null;
-	private Map gameMap = new Map(10000, 10000, 10000);
+	public Map gameMap = new Map(10000, 10000, 10000);
 
 	public MapServer(Lobby l)
 	{
@@ -51,7 +51,7 @@ public class MapServer extends Thread
 			System.out.println("I HAVE STARTED THE SERVER");
 			while (true)
 			{
-				// Listen to the socket, accepting connectioxns from new clients:
+				// Listen to the socket, accepting connections from new clients:
 				Socket socket = serverSocket.accept();
 				System.out.println("SOMEONE JOINED LOL");
 				InetAddress address = socket.getInetAddress();
@@ -81,7 +81,7 @@ public class MapServer extends Thread
 					ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
 					toClient.flush();
 					// This is so that we can use readLine():
-					InputStream fromClient = socket.getInputStream();
+					ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
 
 					// We create and start new threads to read from the
 					// client(this one executes the commands):

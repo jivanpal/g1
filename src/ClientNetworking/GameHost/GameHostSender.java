@@ -11,7 +11,7 @@ import ServerNetworking.ClientTable;
 public class GameHostSender extends Thread
 {
 	private ObjectOutputStream clientOUT;
-	private Map gameMap;
+	public Map gameMap;
 	private String pos;
 
 	public GameHostSender(ObjectOutputStream sender, Map gM,String name)

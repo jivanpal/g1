@@ -8,13 +8,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class GameClientSender extends Thread
 {
-	private String nickname;
 	private LinkedBlockingQueue<String> clientQueue;
-	PrintWriter out;
-	public GameClientSender(OutputStream server, LinkedBlockingQueue<String> queue)
+	private ObjectOutputStream out;
+	public GameClientSender(ObjectOutputStream server, LinkedBlockingQueue<String> queue)
 	{
 		this.clientQueue = queue;
-		out = new PrintWriter(server);	
+		out = server;	
 	}
 
 	public void run()
@@ -23,11 +22,11 @@ public class GameClientSender extends Thread
 		{
 			String str;
 			try {
-				str = clientQueue.take() + "\n";
-				out.append(str);
+				str = clientQueue.take();
+				out.reset();
+				out.writeObject(str);
 				out.flush();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+			} catch (InterruptedException | IOException e) {
 				e.printStackTrace();
 			}
 

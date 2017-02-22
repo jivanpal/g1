@@ -31,7 +31,7 @@ public class GameClient
 		System.out.println(hostname + " CLIENT ");
 		
 		// Open sockets:
-		OutputStream toServer = null;
+		ObjectOutputStream toServer = null;
 		ObjectInputStream fromServer = null;
 		Socket server = null;
 
@@ -39,7 +39,7 @@ public class GameClient
 		try
 		{
 			server = new Socket(hostname,port);
-			toServer = server.getOutputStream();
+			toServer = new ObjectOutputStream(server.getOutputStream());
 			toServer.flush();
 			fromServer = new ObjectInputStream(server.getInputStream());
 			System.err.println("Created `fromServer` and 'toServer'");

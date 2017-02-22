@@ -16,19 +16,18 @@ import ServerNetworking.ClientTable;
 
 public class GameHostReceiver extends Thread
 {
-	private Map gameMap;
-	private BufferedReader in;
+	public Map gameMap;
+	private ObjectInputStream clientIn;
 	private ClientTable clientTable;
 	private String playerPos;
 	private int playerInt;
-	public GameHostReceiver(InputStream reader, Map gM, ClientTable cT, String playerPos, String nickname)
+	public GameHostReceiver(ObjectInputStream reader, Map gM, ClientTable cT, String playerPos, String nickname)
 	{		
-		in = new BufferedReader(new InputStreamReader(reader));
 		this.playerPos = playerPos;
 		clientTable = cT;
 		playerInt = Integer.parseInt(playerPos);
 		gameMap = gM;
-		
+		clientIn = reader;
 		// If the player added is the pilot, put a new ship on the
 		// map in a sensible position.
 		if (playerInt % 2 == 0)
@@ -73,7 +72,7 @@ public class GameHostReceiver extends Thread
 		{
 			try
 			{
-				String str = in.readLine();
+				String str = (String)clientIn.readObject();
 				Ship playerShip = (Ship)(gameMap.get(playerInt));
 				switch(str){
 					case "fireWeapon1":
