@@ -59,9 +59,7 @@ public class GameHostReceiver extends Thread
 			if(!overlaps) {
 				a.setVelocity(new Vector(r.nextDouble(), r.nextDouble(), r.nextDouble()).scale(10));
 				gameMap.add(a);
-				System.out.println("notsTUCK");
 			} else {
-				System.out.println("stuck");
 				i--;
 			}
 		}

@@ -49,15 +49,13 @@ public class MapServer extends Thread
 			System.out.println(serverSocket.getInetAddress());
 			
 			System.out.println("I HAVE STARTED THE SERVER");
-			System.out.println(serverSocket + " SERVER");
 			while (true)
 			{
 				// Listen to the socket, accepting connectioxns from new clients:
 				Socket socket = serverSocket.accept();
 				System.out.println("SOMEONE JOINED LOL");
 				InetAddress address = socket.getInetAddress();
-				System.out.println("Address: " + address);
-				
+			
 				boolean gameShouldStart = false;		
 				int pos = 0;
 				String name = "";
@@ -78,30 +76,20 @@ public class MapServer extends Thread
 				}
 				else
 				{
-					System.out.println("reached else");
 					clientTable.add(""+pos);
-					System.out.println("WE HAVE ADDED THE PLAYER");
 					// This is to print o the server
 					ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
 					toClient.flush();
-					System.out.println("WE HAVE CREATED THE TO CLIENT");
 					// This is so that we can use readLine():
 					InputStream fromClient = socket.getInputStream();
-					System.out.println("WE HAVE CREATED THE FROM LCLIENT");
-					
 
 					// We create and start new threads to read from the
 					// client(this one executes the commands):
-					System.out.println("WE HAVE sTERTED THE CLIENT RECEIVER");
 					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap,clientTable,""+pos,name);
 					clientInput.start();
-					System.out.println("WE HAVE sTERTED THE CLIENT SENDER");
 					// We create and start a new thread to write to the client:
 					GameHostSender clientOutput = new GameHostSender(toClient,gameMap,""+pos);
 					clientOutput.start();
-					
-					System.out.println("asdasdasdasdasdasdasdasd");
-					
 					
 				}
 

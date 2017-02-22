@@ -96,10 +96,6 @@ public class Client extends Thread
 	{
 		return receiver.getList();
 	}
-	public void check()
-	{
-		System.out.println("lobby count client"+getLobbyList().getLobbies().length);
-	}
 	public synchronized void send(Object obj)
 	{
 		clientQueue.offer(obj);
