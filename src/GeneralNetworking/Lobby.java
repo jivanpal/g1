@@ -102,11 +102,24 @@ public class Lobby implements Serializable
 	{
 		if (presser.equals(leaver) || presser.isHost)
 		{
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < players.length; i++)
 			{
+				
 				if(players[i] != null && players[i].equals(leaver))
-					players[i]=null;
-				//NOTIFY
+				{
+					if(players[i].isHost)
+					 	{
+							players[i]=null;
+							for (int j = 0; j < players.length; j++)
+								if(players[j]!=null)
+								{
+									players[j].isHost=true;
+									break;
+								}
+					 	}
+					else players[i]=null;
+				}
+				
 			}
 		}
 	}
@@ -137,4 +150,24 @@ public class Lobby implements Serializable
 		}
 		return hostAddress;
 	}
+	
+	public int countPlayers()
+	{
+		int c=0;
+		for(Player p:players)
+		{
+			if (p!=null)
+				c++;
+		}
+		return c;
+	}
+	public int getPlayerPosByName(String name){
+		for(int i =0; i< players.length;i++){
+			if(players[i].nickname.equals(name)){
+				return i;
+			}
+		}
+		return -1;
+	}
 }
+
