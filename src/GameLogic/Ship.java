@@ -115,6 +115,16 @@ public class Ship extends Body{
 		}
 	}
 	
+	public void increaseWeaponAmmoByIndex(int index){
+		if(index == LASER_BLASTER_INDEX){
+			laserBlaster.increaseAmmo();
+		} else if(index == TORPEDO_WEAPON_INDEX){
+			torpedoWeapon.increaseAmmo();
+		} else if(index == PLASMA_BLASTER_INDEX){
+			plasmaBlaster.increaseAmmo();
+		}
+	}
+	
 // Movement methods
 	
 	public void pitchUp() {

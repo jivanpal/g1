@@ -56,6 +56,9 @@ public abstract class Weapon implements Serializable {
 /// INSTANCE METHODS
     
 // Getters
+    public void increaseAmmo(){
+    	this.ammo.up();
+    }
     
     public Bullet getReferenceBullet() {
         return bullet;
