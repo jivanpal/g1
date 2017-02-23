@@ -162,7 +162,7 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 				pos++;
 			}
 			System.out.println(pos);
-			GameClient gameClient = new GameClient(l);
+			GameClient gameClient = new GameClient(l,player);
 			if (pos % 2 == 0) // i.e. if player is pilot
 			{
 

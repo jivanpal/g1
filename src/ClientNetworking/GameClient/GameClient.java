@@ -10,6 +10,7 @@ import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
 import GameLogic.Map;
 import GeneralNetworking.Lobby;
+import GeneralNetworking.Player;
 
 public class GameClient
 {
@@ -19,7 +20,7 @@ public class GameClient
 	GameClientReceiver receiver;
 	GameClientSender sender;
 	
-	public GameClient(Lobby lobby)
+	public GameClient(Lobby lobby, Player player)
 	{
 		this.hostname = lobby.getHostAddress();
 		System.out.println("Left for loop");
@@ -36,6 +37,8 @@ public class GameClient
 			server = new Socket(hostname,port);
 			toServer = new ObjectOutputStream(server.getOutputStream());
 			toServer.flush();
+			System.out.println("writing nickname to server");
+			toServer.writeObject(player.nickname);
 			fromServer = new ObjectInputStream(server.getInputStream());
 			System.err.println("Created `fromServer` and 'toServer'");
 		}

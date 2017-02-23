@@ -137,6 +137,7 @@ public class Lobby implements Serializable
 		}
 		return hostAddress;
 	}
+	
 	public int countPlayers()
 	{
 		int c=0;
@@ -146,6 +147,14 @@ public class Lobby implements Serializable
 				c++;
 		}
 		return c;
+	}
+	public int getPlayerPosByName(String name){
+		for(int i =0; i< players.length;i++){
+			if(players[i].nickname.equals(name)){
+				return i;
+			}
+		}
+		return -1;
 	}
 }
 
