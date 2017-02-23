@@ -29,7 +29,7 @@ public class SpeedometerView extends JPanel {
      * Update the speed label to a new value.
      * @param newLevel The new value for the speed label.
      */
-    public void updateSpeedLevel(float newLevel) {
+    public void updateSpeedLevel(double newLevel) {
         this.currentSpeedLabel.setText(String.valueOf(newLevel));
     }
 }

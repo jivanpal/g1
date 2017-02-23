@@ -1,6 +1,7 @@
 package Views;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
@@ -32,19 +33,19 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
     private ResourcesView resourcesView;
     private GameClient gameClient;
 
-    private JLayeredPane UILayeredPane;
-    private JPanel UIBaseLayer;
+    /*private JLayeredPane UILayeredPane;
+    private JPanel UIBaseLayer;*/
 
     public EngineerView(String playerNickname, GameClient gameClient) {
         this.gameClient = gameClient;
         gameClient.addObserver(this);
 
-        UILayeredPane = new JLayeredPane();
+        /*UILayeredPane = new JLayeredPane();
         JLayeredPaneLayoutManager layeredLayoutManager = new JLayeredPaneLayoutManager();
         UILayeredPane.setLayout(layeredLayoutManager);
 
         UIBaseLayer = new JPanel();
-        UIBaseLayer.setLayout(new BorderLayout());
+        UIBaseLayer.setLayout(new BorderLayout());*/
 
         this.setLayout(new BorderLayout());
         screen = new Screen(playerNickname, false);
@@ -52,7 +53,7 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         screen.setMaximumSize(new Dimension(1000, 800));
         screen.setMinimumSize(new Dimension(1000, 800));
         screen.setPreferredSize(new Dimension(1000, 800));
-        UIBaseLayer.add(screen, BorderLayout.CENTER);
+        // UIBaseLayer.add(screen, BorderLayout.CENTER);
 
         Container UIPanel = new Container();
         UIPanel.setLayout(new BoxLayout(UIPanel, BoxLayout.X_AXIS));
@@ -80,17 +81,20 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         UIPanel.add(resourcesView);
         UIPanel.add(weaponPanel);
 
-        UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
+        // UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
 
         // starting the in-game sounds
-        AudioPlayer.stopMusic();
-        AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
+        /*AudioPlayer.stopMusic();
+        AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);*/
 
         keyManager = new KeySequenceManager(this);
 
-        UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+        /*UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
         layeredLayoutManager.setBounds(UIBaseLayer, new Rectangle(1000, 1000, 1000, 1000));
-        this.add(UILayeredPane);
+        this.add(UILayeredPane);*/
+
+        this.add(screen, BorderLayout.CENTER);
+        this.add(UIPanel, BorderLayout.SOUTH);
     }
 
     @Override
@@ -130,14 +134,19 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
             case NONE:
                 break;
             case SHIELD_REPLENISH:
+                gameClient.send("shieldReplenish");
                 break;
             case FUEL_REPLENISH:
+                gameClient.send("fuelReplenish");
                 break;
             case LASER_REPLENISH:
+                gameClient.send("laserReplenish");
                 break;
             case TORPEDO_REPLENISH:
+                gameClient.send("torpedoReplenish");
                 break;
             case PLASMA_REPLENISH:
+                gameClient.send("plasmaReplenish");
                 break;
         }
     }
