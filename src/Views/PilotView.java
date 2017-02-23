@@ -188,6 +188,6 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		}
 		else
 			screen.setMap(gameClient.getMap());
-			System.out.println("MAP UPDATED IN VIEWS");
+//			System.out.println("MAP UPDATED IN VIEWS");
 	}
 }

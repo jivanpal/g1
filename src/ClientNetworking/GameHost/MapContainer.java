@@ -11,7 +11,7 @@ import Physics.Body;
 public class MapContainer {
 	
 	public int ASTEROID_NUMBER = 100;
-	public Map gameMap = new Map(10000, 10000, 10000);
+	public Map gameMap = new Map(100, 100, 100);
 
 	public MapContainer() {
 		generateTerrain();
@@ -84,6 +84,7 @@ public class MapContainer {
 			default:
 				throw new IllegalArgumentException("You done sent the wrong string yo");
 			}
+			gameMap.update();
 		} catch (Exception e) {
 			System.out.println("error in updateMap()");
 		}

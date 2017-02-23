@@ -42,6 +42,8 @@ public class Screen extends JPanel{
 	private String nickname;
 	private Integer shipIndex = null;
 	private boolean pilot;
+	private boolean asteroidDrawn = false;
+	private int i = 0;
 	
 	/**
 	 * Creates a new Screen object
@@ -144,18 +146,20 @@ public class Screen extends JPanel{
 	}
 	
 	private void createObjects() {
-		poly3Ds = new ArrayList<Poly3D>();
+//		poly3Ds = new ArrayList<Poly3D>();
 		for(Body b : map){
 			Class<? extends Body> bClass = b.getClass();
-			if(bClass == Ship.class){
+			if(bClass == Ship.class && map.indexOf(b) != shipIndex){
 				for(Vector v : map.getAllPositions(b.getPosition())){
-				Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
+					Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
 				}
 			}
-			else if(bClass == Asteroid.class){
+			else if(bClass == Asteroid.class && !asteroidDrawn){
+//				System.out.println("Got an asteroid " + map.indexOf(b));
 				for(Vector v : map.getAllPositions(b.getPosition())){
 					AsteroidModel asteroid = new AsteroidModel(v, 5, b.getOrientation());
 				}
+				asteroidDrawn  = true;
 			}
 		}
 	}
@@ -245,7 +249,9 @@ public class Screen extends JPanel{
 	}
 	
 	public void setMap(Map map){
+		System.out.println(i ++);
 		this.map = map;
+//		System.out.println(map.get(0).getPosition());
 		for(Body b : map){
 			if(b.getClass() == Ship.class){
 				Ship s = (Ship)b;
