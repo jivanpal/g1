@@ -1,16 +1,6 @@
 package ClientNetworking.GameHost;
 
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
-import java.io.PrintWriter;
-import java.util.Random;
-
-import GameLogic.*;
-import Geometry.Vector;
-import Physics.Body;
 import ServerNetworking.ClientTable;
 
 

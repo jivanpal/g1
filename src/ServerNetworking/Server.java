@@ -53,9 +53,6 @@ public class Server
 				// This is so that we can use readLine():
 				ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
 
-				
-				
-				
 				String nickname ="";
 				
 				try
