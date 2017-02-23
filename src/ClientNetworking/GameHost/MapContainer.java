@@ -51,7 +51,8 @@ public class MapContainer {
 	}
 
 	public synchronized void updateMap(String str, int position) {
-		Ship playerShip = (Ship) (gameMap.get(position+ASTEROID_NUMBER));
+		Ship playerShip = (Ship) (gameMap.get(position));
+		System.out.println(str);
 		try {
 			switch (str) {
 			case "fireWeapon1":
