@@ -10,12 +10,15 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import ClientNetworking.GameHost.MapContainer;
+import GameLogic.Ship;
 import Graphics.Screen;
 import UI.ClientShipObservable;
+
+import GameLogic.Map;
 
 /**
  * Created by James on 01/02/17.
@@ -32,11 +35,14 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
     private Screen screen;
     private ResourcesView resourcesView;
     private GameClient gameClient;
+    private String playerNickname;
 
     /*private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;*/
 
     public EngineerView(String playerNickname, GameClient gameClient) {
+        this.playerNickname = playerNickname;
+
         this.gameClient = gameClient;
         gameClient.addObserver(this);
 
@@ -99,21 +105,24 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        if (observable instanceof ClientShipObservable) {
-            ClientShipObservable shipObservable = (ClientShipObservable) observable;
+        Map m = gameClient.getMap();
+        screen.setMap(m);
 
-            resourcesView.updateResourceLevels(ResourcesView.SHIELDS, shipObservable.getShipShields());
-            resourcesView.updateResourceLevels(ResourcesView.HULL, shipObservable.getShipHealth());
-            resourcesView.updateResourceLevels(ResourcesView.ENGINE, shipObservable.getShipFuel());
-
-            laserBlasterView.updateWeaponAmmoLevel(shipObservable.getLaserAmmo());
-            plasmaBlasterView.updateWeaponAmmoLevel(shipObservable.getPlasmaAmmo());
-            torpedosView.updateWeaponAmmoLevel(shipObservable.getTorpedoAmmo());
-        } else
-        {
-            screen.setMap(gameClient.getMap());
+        for(int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
+            if(m.get(i) instanceof Ship) {
+                Ship s = (Ship) m.get(i);
+                if(s.getEngineerName().equals(playerNickname)) {
+                    laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
+                    plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
+                    torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
+                    resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
+                    resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
+                    resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
+                }
+            }
         }
     }
+
     @Override
     public void keyTyped(KeyEvent keyEvent) {
 
