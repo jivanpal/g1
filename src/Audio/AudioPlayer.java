@@ -4,6 +4,7 @@ import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 /**
  * Class which play the audio in the game
  * at the moment only .wav files are supported!
@@ -21,6 +22,8 @@ public class AudioPlayer {
 	private static Clip musicClip;
 	private static Clip soundEffectClip;
 	
+	private static FloatControl musicVolumeControl;
+	private static FloatControl soundEffectVolumeControl;
 	/**
 	 * Method which plays a non-looping sound effect
 	 * @param sound The directory to the file to be played 
@@ -31,11 +34,21 @@ public class AudioPlayer {
 					.getAudioInputStream(new File(sound).getAbsoluteFile());
 			soundEffectClip = AudioSystem.getClip();
 			soundEffectClip.open(audioInputStream);
+			soundEffectVolumeControl = (FloatControl) AudioPlayer.getMusicClip().getControl(FloatControl.Type.MASTER_GAIN);
+			soundEffectVolumeControl.setValue(0.0f);
 			soundEffectClip.start();
 		} catch (Exception ex) {
 			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
 		}
+	}
+	
+	public static void setMusicVolume(float volume){
+		musicVolumeControl.setValue(volume);
+	}
+	
+	public static void setSoundEffectVolume(float volume){
+		soundEffectVolumeControl.setValue(volume);
 	}
 	
 	/**

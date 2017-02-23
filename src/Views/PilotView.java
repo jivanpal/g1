@@ -8,7 +8,7 @@ import javax.swing.border.Border;
 
 import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
-import GameLogic.KeyBindings;
+import GameLogic.GameOptions;
 import sun.swing.UIClientPropertyKey;
 
 import java.awt.*;
@@ -128,41 +128,41 @@ public class PilotView extends JPanel implements KeyListener, Observer
 	@Override
 	public void keyPressed(KeyEvent keyEvent)
 	{
-		if (keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON))
+		if (keyEvent.getKeyCode() == GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON))
 		{
 			gameClient.send("fireWeapon1");
 		}
-		else if (keyEvent.getKeyCode() == KeyBindings
-				.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON))
+		else if (keyEvent.getKeyCode() == GameOptions
+				.getCurrentValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON))
 		{
 			gameClient.send("fireWeapon2");
 		}
-		else if (keyEvent.getKeyCode() == KeyBindings
-				.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON))
+		else if (keyEvent.getKeyCode() == GameOptions
+				.getCurrentValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON))
 		{
 			gameClient.send("fireWeapon3");
 		}
-		else if (keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ACCELERATE_BUTTON))
+		else if (keyEvent.getKeyCode() == GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON))
 		{
 			gameClient.send("accelerate");
 		}
-		else if (keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_DECELERATE_BUTTON))
+		else if (keyEvent.getKeyCode() == GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON))
 		{
 			gameClient.send("decelerate");
 		}
-		else if (keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON))
+		else if (keyEvent.getKeyCode() == GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_PITCH_DOWN_BUTTON))
 		{
 			gameClient.send("pitchDown");
 		}
-		else if (keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_UP_BUTTON))
+		else if (keyEvent.getKeyCode() == GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_PITCH_UP_BUTTON))
 		{
 			gameClient.send("pitchUp");
 		}
-		else if (keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON))
+		else if (keyEvent.getKeyCode() == GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON))
 		{
 			gameClient.send("rollLeft");
 		}
-		else if (keyEvent.getKeyCode() == KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON))
+		else if (keyEvent.getKeyCode() == GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON))
 		{
 			gameClient.send("rollRight");
 		}

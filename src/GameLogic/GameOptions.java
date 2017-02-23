@@ -17,7 +17,7 @@ import java.util.Properties;
  * @author Ivan Panchev
  *
  */
-public class KeyBindings {
+public class GameOptions {
 
 	// default values for each action
 	public static final String DEFAULT_FIRE_WEAPON_1_BUTTON = String.valueOf(KeyEvent.VK_1);
@@ -45,11 +45,11 @@ public class KeyBindings {
 	private static Reader fileReader;
 
 	private static void initialiseReader() throws FileNotFoundException {
-		KeyBindings.fileReader = new FileReader(new File(FILE_NAME));
+		GameOptions.fileReader = new FileReader(new File(FILE_NAME));
 	}
 
 	private static void inisialiseWriter() throws IOException {
-		KeyBindings.fileWriter = new PrintWriter(new File(FILE_NAME));
+		GameOptions.fileWriter = new PrintWriter(new File(FILE_NAME));
 	}
 
 	// called when the game is started.
@@ -64,7 +64,7 @@ public class KeyBindings {
 		try {
 			initialiseReader();
 			keyBindings.load(fileReader);
-			KeyBindings.fileReader.close();
+			GameOptions.fileReader.close();
 		} catch (Exception e) {
 			resetKeysToDefaults();
 			saveKeyBindingsInFile();
@@ -90,8 +90,8 @@ public class KeyBindings {
 	public static void saveKeyBindingsInFile() {
 		try {
 			inisialiseWriter();
-			KeyBindings.keyBindings.store(fileWriter, "");
-			KeyBindings.fileWriter.close();
+			GameOptions.keyBindings.store(fileWriter, "");
+			GameOptions.fileWriter.close();
 		} catch (IOException e) {
 			// something went wrong
 			e.printStackTrace();
@@ -100,7 +100,7 @@ public class KeyBindings {
 	}
 
 	public static void changeKeyByDefaultValue(String defaultValue, int newValue) {
-		KeyBindings.keyBindings.setProperty(defaultValue, String.valueOf(newValue));
+		GameOptions.keyBindings.setProperty(defaultValue, String.valueOf(newValue));
 	}
 
 	public static int getCurrentValueByDefault(String defaultValue) {
