@@ -18,7 +18,7 @@ import javax.swing.KeyStroke;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
-import GameLogic.KeyBindings;
+import GameLogic.GameOptions;
 
 /**
  * The Controls Menu. Menu to change key bindings for the game.
@@ -62,14 +62,14 @@ public class ControlsPanel extends JPanel {
 		apply.addActionListener(e -> {
 			changekeys(bpanel);
 			repaintbuttons(bpanel);
-			KeyBindings.saveKeyBindingsInFile();
+			GameOptions.saveKeyBindingsInFile();
 		});
 		add(apply, c);
 		JButton resettodefault = new JButton("Reset To Defaults");
 		resettodefault.addActionListener(e -> {
 			//KeyBindings kbs = new KeyBindings();
-			KeyBindings.resetKeysToDefaults();
-			KeyBindings.saveKeyBindingsInFile();
+			GameOptions.resetKeysToDefaults();
+			GameOptions.saveKeyBindingsInFile();
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			repaintbuttons(bpanel);
 		});
@@ -124,7 +124,7 @@ public class ControlsPanel extends JPanel {
 			} else if (c instanceof JButton) {
 				switch (buttontopaint) {
 				case "Thrust Fwd":
-					int keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ACCELERATE_BUTTON);
+					int keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -134,7 +134,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Fire 1":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -144,7 +144,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Thrust Rev":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_DECELERATE_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON);
 					;
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
@@ -155,7 +155,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Fire 2":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -165,7 +165,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Pitch Down":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_PITCH_DOWN_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -175,7 +175,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Fire 3":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -185,7 +185,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Pitch Up":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_UP_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_PITCH_UP_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -195,7 +195,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Manual":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_MANUAL_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_MANUAL_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -205,7 +205,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Roll Left":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -215,7 +215,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Manual Prev":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_MANUAL_PREV_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_MANUAL_PREV_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -225,7 +225,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Roll Right":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -235,7 +235,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Manual Next":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_MANUAL_NEXT_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -245,7 +245,7 @@ public class ControlsPanel extends JPanel {
 					}
 					break;
 				case "Overdrive":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_OVERDRIVE_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_OVERDRIVE_BUTTON);
 					if (keybind == KeyEvent.VK_ENTER) {
 						((JButton) c).setText("Enter");
 					} else if (keybind == KeyEvent.VK_SPACE) {
@@ -294,188 +294,188 @@ public class ControlsPanel extends JPanel {
 				switch (button) {
 				case "Thrust Fwd":
 					if (enter) {
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ACCELERATE_BUTTON, KeyEvent.VK_ENTER);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_ACCELERATE_BUTTON, KeyEvent.VK_ENTER);
 					} else if (space) {
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ACCELERATE_BUTTON, KeyEvent.VK_SPACE);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_ACCELERATE_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ACCELERATE_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_ACCELERATE_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Fire 1":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON,
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON,
 								KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON,
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON,
 								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Thrust Rev":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_DECELERATE_BUTTON, KeyEvent.VK_ENTER);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_DECELERATE_BUTTON, KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_DECELERATE_BUTTON, KeyEvent.VK_SPACE);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_DECELERATE_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_DECELERATE_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_DECELERATE_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Fire 2":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON,
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON,
 								KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON,
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON,
 								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Pitch Down":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON, KeyEvent.VK_ENTER);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_PITCH_DOWN_BUTTON, KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON, KeyEvent.VK_SPACE);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_PITCH_DOWN_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_PITCH_DOWN_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Fire 3":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON,
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON,
 								KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON,
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON,
 								KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Pitch Up":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_UP_BUTTON, KeyEvent.VK_ENTER);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_PITCH_UP_BUTTON, KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_UP_BUTTON, KeyEvent.VK_SPACE);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_PITCH_UP_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_PITCH_UP_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_PITCH_UP_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Manual":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_BUTTON, KeyEvent.VK_ENTER);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_MANUAL_BUTTON, KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_BUTTON, KeyEvent.VK_SPACE);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_MANUAL_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_MANUAL_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Roll Left":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON, KeyEvent.VK_ENTER);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_ROLL_LEFT_BUTTON, KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON, KeyEvent.VK_SPACE);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_ROLL_LEFT_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_ROLL_LEFT_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Manual Prev":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_PREV_BUTTON, KeyEvent.VK_ENTER);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_MANUAL_PREV_BUTTON, KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_PREV_BUTTON, KeyEvent.VK_SPACE);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_MANUAL_PREV_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_PREV_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_MANUAL_PREV_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Roll Right":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON, KeyEvent.VK_ENTER);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON, KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON, KeyEvent.VK_SPACE);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Manual Next":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_NEXT_BUTTON, KeyEvent.VK_ENTER);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON, KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_NEXT_BUTTON, KeyEvent.VK_SPACE);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_MANUAL_NEXT_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON, ks.getKeyCode());
 					}
 					break;
 				case "Overdrive":
 					if (enter) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_OVERDRIVE_BUTTON, KeyEvent.VK_ENTER);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_OVERDRIVE_BUTTON, KeyEvent.VK_ENTER);
 					} else if (space) {
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_OVERDRIVE_BUTTON, KeyEvent.VK_SPACE);
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_OVERDRIVE_BUTTON, KeyEvent.VK_SPACE);
 					} else {
 						char changeto = btext.charAt(0);
 						KeyStroke ks = KeyStroke.getKeyStroke(Character.toUpperCase(changeto), 0);
 
-						KeyBindings.changeKeyByDefaultValue(KeyBindings.DEFAULT_OVERDRIVE_BUTTON, ks.getKeyCode());
+						GameOptions.changeKeyByDefaultValue(GameOptions.DEFAULT_OVERDRIVE_BUTTON, ks.getKeyCode());
 					}
 					break;
 				}
@@ -519,7 +519,7 @@ public class ControlsPanel extends JPanel {
 					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 						String btext = button.getText();
 						button.setText("Enter");
-						if (KeyBindings.checkIfKeyTaken(e.getKeyCode())) {
+						if (GameOptions.checkIfKeyTaken(e.getKeyCode())) {
 							displaykeyerror();
 							button.setText(btext);
 							pressed = false;
@@ -529,7 +529,7 @@ public class ControlsPanel extends JPanel {
 					} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 						String btext = button.getText();
 						button.setText("Space");
-						if (KeyBindings.checkIfKeyTaken(e.getKeyCode())) {
+						if (GameOptions.checkIfKeyTaken(e.getKeyCode())) {
 							displaykeyerror();
 							button.setText(btext);
 							pressed = false;
@@ -539,7 +539,7 @@ public class ControlsPanel extends JPanel {
 					} else {
 						String btext = button.getText();
 						button.setText("" + Character.toUpperCase(e.getKeyChar()));
-						if (KeyBindings.checkIfKeyTaken(e.getKeyCode())) {
+						if (GameOptions.checkIfKeyTaken(e.getKeyCode())) {
 							displaykeyerror();
 							button.setText(btext);
 							pressed = false;
@@ -574,41 +574,41 @@ public class ControlsPanel extends JPanel {
 				switch (buttontopaint) {
 				case "Thrust Fwd":
 
-					int keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ACCELERATE_BUTTON);
+					int keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON);
 					System.out.println("Accelerate: " + KeyEvent.getKeyText(keybind));
 
 					break;
 				case "Fire 1":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_1_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON);
 					System.out.println("Fire 1: " + KeyEvent.getKeyText(keybind));
 
 					break;
 				case "Thrust Rev":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_DECELERATE_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON);
 					System.out.println("Decelerate: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Fire 2":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_2_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON);
 					System.out.println("Fire 2: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Pitch Down":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_DOWN_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_PITCH_DOWN_BUTTON);
 					System.out.println("Pitch Down: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Fire 3":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_FIRE_WEAPON_3_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON);
 					System.out.println("Fire 3: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Pitch Up":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_PITCH_UP_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_PITCH_UP_BUTTON);
 					System.out.println("Pitch Up: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Roll Left":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_LEFT_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON);
 					System.out.println("Roll Left: " + KeyEvent.getKeyText(keybind));
 					break;
 				case "Roll Right":
-					keybind = KeyBindings.getCurrentValueByDefault(KeyBindings.DEFAULT_ROLL_RIGHT_BUTTON);
+					keybind = GameOptions.getCurrentValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON);
 					System.out.println("Roll Right: " + KeyEvent.getKeyText(keybind));
 					break;
 				}

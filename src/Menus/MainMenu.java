@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
-import GameLogic.KeyBindings;
+import GameLogic.GameOptions;
 
 /**
  * The Main frame of the game
@@ -50,7 +50,7 @@ public class MainMenu {
 	}
 
 	public static void main(String[] args) {
-		KeyBindings.setKeyBindings();
+		GameOptions.setKeyBindings();
 		String name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
 		while (name.equals("") || name == null) {
 			name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
