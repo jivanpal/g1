@@ -57,6 +57,7 @@ public class Client extends Thread
 		}
 		catch (IOException e)
 		{
+			e.printStackTrace();
 			System.err.println("The server doesn't seem to be running " + e.getMessage());
 			System.exit(1);
 		}

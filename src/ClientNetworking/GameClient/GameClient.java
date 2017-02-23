@@ -54,6 +54,7 @@ public class GameClient
 		{
 			System.out.println("IO exception");
 			System.err.println("The server doesn't seem to be running " + e.getMessage());
+			e.printStackTrace();
 			System.exit(1);
 		}
 		sender = new GameClientSender(toServer,queue);
