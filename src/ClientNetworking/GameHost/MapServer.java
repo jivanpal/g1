@@ -82,9 +82,10 @@ public class MapServer extends Thread {
 
 					GameHostSender clientOutput = new GameHostSender(toClient, clientTable, String.valueOf(position));
 					toClient.reset();
-					toClient.writeObject(gameMap.gameMap);
 					clientOutput.start();
 				}
+				GameClock clock = new GameClock(clientTable, gameMap);
+				clock.start();
 			}
 		} 
 		catch (IOException e) 

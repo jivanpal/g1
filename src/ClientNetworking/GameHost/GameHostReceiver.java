@@ -29,7 +29,6 @@ public class GameHostReceiver extends Thread
 			{
 				String str = (String)clientIn.readObject();
 				gameMap.updateMap(str, mapEntryNumber);
-				clientTable.queueToAll(gameMap.gameMap);
 			}
 
 			catch (Exception e)
