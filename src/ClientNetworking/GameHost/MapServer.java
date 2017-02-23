@@ -77,8 +77,7 @@ public class MapServer extends Thread {
 
 					int mapEntry = gameMap.addShip(position, clientName);
 
-					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,
-							clientName, mapEntry);
+					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,clientName, mapEntry);
 					clientInput.start();
 
 					GameHostSender clientOutput = new GameHostSender(toClient, clientTable, String.valueOf(position));

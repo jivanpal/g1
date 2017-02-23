@@ -102,11 +102,24 @@ public class Lobby implements Serializable
 	{
 		if (presser.equals(leaver) || presser.isHost)
 		{
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < players.length; i++)
 			{
+				
 				if(players[i] != null && players[i].equals(leaver))
-					players[i]=null;
-				//NOTIFY
+				{
+					if(players[i].isHost)
+					 	{
+							players[i]=null;
+							for (int j = 0; j < players.length; j++)
+								if(players[j]!=null)
+								{
+									players[j].isHost=true;
+									break;
+								}
+					 	}
+					else players[i]=null;
+				}
+				
 			}
 		}
 	}
