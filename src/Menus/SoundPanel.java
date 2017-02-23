@@ -38,6 +38,7 @@ public class SoundPanel extends JPanel {
 		JButton backtomenu = new JButton("Back To Settings");
 		backtomenu.addActionListener(e -> {
 			SettingsPanel spanel = new SettingsPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
 		});
 		add(backtomenu, c);
@@ -85,21 +86,21 @@ public class SoundPanel extends JPanel {
 		
 		slider.setValue(0);
 		slider.setPaintTicks(true);
-		slider.setBackground(Color.YELLOW);
+		slider.setForeground(Color.RED);
+		slider.setBackground(Color.WHITE);
 		slider.setOpaque(true);
 		slider.addChangeListener(e -> {
 			float volume = (float) slider.getValue();
-			System.out.println(volume);
 			FloatControl musiccontrol = (FloatControl) AudioPlayer.getMusicClip().getControl(FloatControl.Type.MASTER_GAIN);
-			System.out.println(musiccontrol.getMinimum());
+			float musicvol = musiccontrol.getValue();
 			//FloatControl soundeffectcontrol = (FloatControl) AudioPlayer.getSoundEffectClip().getControl(FloatControl.Type.MASTER_GAIN);
 			switch (name) {
 			case "Master Volume":
-				musiccontrol.setValue(volume);
+				musiccontrol.setValue(musicvol + volume);
 				//soundeffectcontrol.setValue(volume);
 				break;
 			case "Music Volume":
-				musiccontrol.setValue(volume);
+				musiccontrol.setValue(musicvol + volume);
 				break;
 			case "Sound Effects":
 				//soundeffectcontrol.setValue(volume);

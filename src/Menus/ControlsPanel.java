@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import Audio.AudioPlayer;
 import ClientNetworking.Client;
 import GameLogic.KeyBindings;
 
@@ -45,6 +46,7 @@ public class ControlsPanel extends JPanel {
 		JButton backtomenu = new JButton("Back To Settings");
 		backtomenu.addActionListener(e -> {
 			SettingsPanel spanel = new SettingsPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
 		});
 		add(backtomenu, c);
@@ -68,6 +70,7 @@ public class ControlsPanel extends JPanel {
 			//KeyBindings kbs = new KeyBindings();
 			KeyBindings.resetKeysToDefaults();
 			KeyBindings.saveKeyBindingsInFile();
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			repaintbuttons(bpanel);
 		});
 

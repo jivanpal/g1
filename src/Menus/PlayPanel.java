@@ -10,6 +10,7 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import Audio.AudioPlayer;
 import ClientNetworking.Client;
 
 /**
@@ -35,6 +36,7 @@ public class PlayPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		this.client = client;
+		client.setLobby(null);
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
@@ -60,12 +62,14 @@ public class PlayPanel extends JPanel {
 		creategame.setPreferredSize(new Dimension(300, 50));
 		panel.add(creategame, BorderLayout.NORTH);
 		creategame.addActionListener(e -> {
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			HostLobbyPanel lpanel = new HostLobbyPanel(menu, client);
 			menu.changeFrame(lpanel);
 		});
 		JButton joingame = new JButton("Join Game");
 		joingame.setPreferredSize(new Dimension(300, 50));
 		joingame.addActionListener(e -> {
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			JoinPanel jlpanel = new JoinPanel(menu, client);
 			menu.changeFrame(jlpanel);
 		});
