@@ -60,7 +60,7 @@ public class MapServer extends Thread {
 				int pos;
 				for (pos = 0; pos < players.length; pos++) 
 				{
-					if (players[pos] != null && players[pos].nickname == clientName) 
+					if (players[pos] != null && players[pos].nickname.equals(clientName)) 
 					{
 						gameShouldStart = true;
 						break;
