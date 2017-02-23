@@ -11,6 +11,7 @@ public class InstructionsView extends JPanel {
     private ArrayList<JLabel> instructionLabels;
 
     public InstructionsView() {
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         instructionLabels = new ArrayList<>();
     }
 
