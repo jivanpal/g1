@@ -16,6 +16,7 @@ public class AudioPlayer {
 	private static String pathToProjectAudio = System.getProperty("user.dir") + "/src/Audio/";
 	public static String MENU_SCREEN_TUNE = pathToProjectAudio + "intro_screen.wav";
 	public static String IN_GAME_TUNE = pathToProjectAudio + "game_audio.wav";
+	public static String MOUSE_CLICK_EFFECT = pathToProjectAudio + "mouse_click.wav";
 	
 	private static Clip musicClip;
 	private static Clip soundEffectClip;

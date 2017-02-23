@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import Audio.AudioPlayer;
 import ClientNetworking.Client;
 import ClientNetworking.GameClient.GameClient;
 import GeneralNetworking.Action;
@@ -98,13 +100,14 @@ public class HostLobbyPanel extends JPanel implements Observer {
 		c.anchor = GridBagConstraints.NORTHEAST;
 		JButton inviteplayers = new JButton("Invite Players");
 		inviteplayers.addActionListener(e -> {
-
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 		});
 		add(inviteplayers, c);
 
 		c.anchor = GridBagConstraints.SOUTH;
 		JButton startgame = new JButton("Start Game");
 		startgame.addActionListener(e -> {
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			try {
 				MapServer game = new MapServer(client.getLobby());
 				game.start();

@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import Audio.AudioPlayer;
 import ClientNetworking.Client;
 
 /**
@@ -34,6 +35,7 @@ public class SettingsPanel extends JPanel {
 		JButton backtomenu = new JButton("Back To Start");
 		backtomenu.addActionListener(e -> {
 			ButtonPanel bpanel = new ButtonPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(bpanel);
 		});
 		add(backtomenu, c);
@@ -55,11 +57,13 @@ public class SettingsPanel extends JPanel {
 		JButton gotosound = new JButton("Sound");
 		gotosound.addActionListener(e -> {
 			SoundPanel spanel = new SoundPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
 		});
 		JButton gotocontrols = new JButton("Controls");
 		gotocontrols.addActionListener(e -> {
 			ControlsPanel cpanel = new ControlsPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(cpanel);
 		});
 		panel.setLayout(new BorderLayout());

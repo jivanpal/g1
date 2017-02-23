@@ -3,6 +3,8 @@ package Menus;
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
+
+import Audio.AudioPlayer;
 import ClientNetworking.*;
 import ClientNetworking.GameClient.GameClient;
 import GeneralNetworking.*;
@@ -53,12 +55,14 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 			client.send(new Action(lobbyID, player, player, 10));
 			leftserver = true;
 			PlayPanel ppanel = new PlayPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
 		});
 		add(backtostart, c);
 		c.anchor = GridBagConstraints.NORTHEAST;
 		JButton inviteplayers = new JButton("Invite Players");
 		inviteplayers.addActionListener(e -> {
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			// TODO Add panel to get recipient's nickname and send them an
 			// invite
 			// client.send(new Invite());
