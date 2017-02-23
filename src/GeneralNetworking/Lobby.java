@@ -137,4 +137,15 @@ public class Lobby implements Serializable
 		}
 		return hostAddress;
 	}
+	public int countPlayers()
+	{
+		int c=0;
+		for(Player p:players)
+		{
+			if (p!=null)
+				c++;
+		}
+		return c;
+	}
 }
+

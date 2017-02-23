@@ -187,7 +187,9 @@ public class PilotView extends JPanel implements KeyListener, Observer
 			torpedosView.updateWeaponAmmoLevel(shipObservable.getTorpedoAmmo());
 		}
 		else
+		{
 			screen.setMap(gameClient.getMap());
 			System.out.println("MAP UPDATED IN VIEWS");
+		}
 	}
 }

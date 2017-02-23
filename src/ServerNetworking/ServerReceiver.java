@@ -69,6 +69,8 @@ public class ServerReceiver extends Thread
 							{
 								Player kicked = a.getKicked();
 								l.kick(p, kicked);
+								if(l.countPlayers()==0)
+									lobbies.remove(i);
 								clientTable.getQueue(kicked.nickname).offer(l);
 							}
 							// START GAME
