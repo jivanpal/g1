@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Audio.AudioPlayer;
 import ClientNetworking.Client;
 import GeneralNetworking.Action;
 import GeneralNetworking.Lobby;
@@ -129,10 +130,12 @@ public class JoinPanel extends JPanel {
 		JButton backtoplay = new JButton("Back To Play Menu");
 		backtoplay.addActionListener(e -> {
 			PlayPanel ppanel = new PlayPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
 		});
 		JButton join = new JButton("Join");
 		join.addActionListener(e -> {
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			int selected = table.getSelectedRow();
 			LobbyInfo lInfo = lobbies[selected];
 			try
@@ -152,6 +155,7 @@ public class JoinPanel extends JPanel {
 		});
 		JButton refresh = new JButton("Refresh");
 		refresh.addActionListener(e -> {
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			client.updateList();
 			keepupdatingtime();
 			repaintlobbies();

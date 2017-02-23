@@ -1,19 +1,16 @@
 package Menus;
 
-import javax.swing.JPanel;
-
-import ClientNetworking.Client;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import Audio.AudioPlayer;
+import ClientNetworking.Client;
 
 /**
  * The Main Menu of the game.
@@ -69,15 +66,18 @@ public class ButtonPanel extends JPanel {
 		JButton play = new JButton("Play");
 		play.addActionListener(e -> {
 			PlayPanel ppanel = new PlayPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
 		});
 		JButton settings = new JButton("Settings");
 		settings.addActionListener(e -> {
 			SettingsPanel spanel = new SettingsPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
 		});
 		JButton exit = new JButton("Exit");
 		exit.addActionListener(e -> {
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			System.exit(0);
 		});
 

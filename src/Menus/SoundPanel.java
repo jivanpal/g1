@@ -38,6 +38,7 @@ public class SoundPanel extends JPanel {
 		JButton backtomenu = new JButton("Back To Settings");
 		backtomenu.addActionListener(e -> {
 			SettingsPanel spanel = new SettingsPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
 		});
 		add(backtomenu, c);
