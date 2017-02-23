@@ -127,4 +127,14 @@ public class Lobby implements Serializable
 	{
 		return id;
 	}
+	
+	public InetAddress getHostAddress(){
+		InetAddress hostAddress = null;
+		for(int i=0;i<players.length;i++){
+			if(players[i] != null &&  players[i].isHost){
+				hostAddress = players[i].address;
+			}
+		}
+		return hostAddress;
+	}
 }

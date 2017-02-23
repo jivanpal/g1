@@ -1,14 +1,16 @@
 package ClientNetworking;
 
-import java.io.*;
-import java.net.*;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.InetAddress;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
-
-import ClientNetworking.GameClient.GameClient;
-import GeneralNetworking.*;
+import GeneralNetworking.Action;
+import GeneralNetworking.Invite;
+import GeneralNetworking.Lobby;
+import GeneralNetworking.LobbyList;
+import GeneralNetworking.Player;
 
 public class ClientReceiver extends Thread
 {

@@ -2,21 +2,14 @@
 package ClientNetworking.GameHost;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Random;
-import java.util.concurrent.LinkedBlockingQueue;
-
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
-import Geometry.Vector;
-import Physics.Body;
 import ServerNetworking.ClientTable;
-import GameLogic.*;
 
 public class MapServer extends Thread
 {
@@ -54,10 +47,21 @@ public class MapServer extends Thread
 				System.out.println("SOMEONE JOINED LOL");
 				InetAddress address = socket.getInetAddress();
 			
+				
 				boolean gameShouldStart = false;		
 				int pos = 0;
 				String name = "";
 				Player[] players = lobby.getPlayers();
+				//debuging
+				//when run on the same computer the players' addresses are the same
+				//therefore we shouldn't identify them by adresses
+				/*System.out.println("printing players' adresses");
+				for(pos = 0; pos<players.length;pos++){
+					if(players[pos] != null){
+						System.out.println(players[pos].address);
+					}
+				}*/
+				
 				for (pos=0;pos<players.length;pos++)
 				{
 					if (players[pos]!= null && players[pos].address.equals(address))
@@ -75,7 +79,7 @@ public class MapServer extends Thread
 				}
 				else
 				{
-					clientTable.add(""+pos);
+					clientTable.add(String.valueOf(pos));
 					int mapEntry = gameMap.addShip(pos,name);
 					// This is to print o the server
 					ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
@@ -88,7 +92,7 @@ public class MapServer extends Thread
 					GameHostReceiver clientInput = new GameHostReceiver(fromClient,gameMap,clientTable,pos,name,mapEntry);
 					clientInput.start();
 					// We create and start a new thread to write to the client:
-					GameHostSender clientOutput = new GameHostSender(toClient,clientTable,""+pos);
+					GameHostSender clientOutput = new GameHostSender(toClient,clientTable,String.valueOf(pos));
 					toClient.reset();
 					toClient.writeObject(gameMap.gameMap);
 					clientOutput.start();

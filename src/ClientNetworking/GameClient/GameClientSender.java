@@ -2,8 +2,6 @@ package ClientNetworking.GameClient;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class GameClientSender extends Thread
