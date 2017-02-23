@@ -136,7 +136,16 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		
 		Lobby l = client.getLobby();
+		if (l == null) {
+			return;
+		}
+		if (l.getHost().equals(player)) {
+			HostLobbyPanel hlpanel = new HostLobbyPanel(menu, client);
+			menu.changeFrame(hlpanel);
+			return;
+		}
 		Player[] players = l.getPlayers();
 		boolean inlobby = false;
 		for (Player p : players) {

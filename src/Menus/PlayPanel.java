@@ -35,6 +35,7 @@ public class PlayPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		this.client = client;
+		client.setLobby(null);
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.weightx = 0.5;
 		c.weighty = 0.5;

@@ -24,6 +24,7 @@ import ServerNetworking.Server;
 import Views.EngineerView;
 import Views.PilotView;
 import ClientNetworking.GameHost.*;
+
 /**
  * Panel for the host of the game
  * 
@@ -55,24 +56,38 @@ public class HostLobbyPanel extends JPanel implements Observer {
 		this.client = client;
 		setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
-		try {
-			Lobby lobby = new Lobby(client.name, InetAddress.getLocalHost());
-			client.setLobby(lobby);
-			client.addLobbyObserver(this);
-			client.send(lobby);
-			player = lobby.getHost();
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this,
-					"An error has occured while creating the game. Please check your connection!", "Create Game Error",
-					JOptionPane.ERROR_MESSAGE);
-			PlayPanel ppanel = new PlayPanel(menu, client);
-			menu.changeFrame(ppanel);
-		}
-		c.anchor = GridBagConstraints.NORTHWEST;
+		c.anchor = GridBagConstraints.NORTH;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.gridx = 0;
 		c.gridy = 0;
+		
+		JLabel host = new JLabel("Host");
+		host.setForeground(Color.WHITE);
+		add(host, c);
+		
+		if (client.getLobby() == null) {
+			System.out.println("HostLobby: lobby is null");
+			try {
+				Lobby lobby = new Lobby(client.name, InetAddress.getLocalHost());
+				client.setLobby(lobby);
+				client.addLobbyObserver(this);
+				client.send(lobby);
+				player = lobby.getHost();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this,
+						"An error has occured while creating the game. Please check your connection!",
+						"Create Game Error", JOptionPane.ERROR_MESSAGE);
+				PlayPanel ppanel = new PlayPanel(menu, client);
+				menu.changeFrame(ppanel);
+			}
+		} else {
+			System.out.println(client.getLobby().getID());
+			System.out.println("Changed from clientlobby to hostlobby");
+			player = client.getLobby().getHost();
+			
+		}
+		c.anchor = GridBagConstraints.NORTHWEST;
 		JButton backtostart = new JButton("Back To Play Menu");
 		backtostart.addActionListener(e -> {
 			client.send(new Action(client.getLobby().getID(), player, player, 10));
@@ -126,7 +141,7 @@ public class HostLobbyPanel extends JPanel implements Observer {
 			int position = number;
 			String role = "";
 			number++;
-			if (position % 2 ==0) {
+			if (position % 2 == 0) {
 				role = "Pilot";
 			} else {
 				role = "Engineer";
@@ -152,7 +167,7 @@ public class HostLobbyPanel extends JPanel implements Observer {
 			}
 			JButton move = new JButton("Move");
 			move.addActionListener(e -> {
-				client.send(new Action (client.getLobby().getID(), player, position));
+				client.send(new Action(client.getLobby().getID(), player, position));
 
 			});
 			JButton kick = new JButton("Kick");
@@ -168,9 +183,9 @@ public class HostLobbyPanel extends JPanel implements Observer {
 				move.setEnabled(false);
 			}
 
-/*			kick.addActionListener(e -> {
-				client.send(new Action(,10));
-			});*/
+			/*
+			 * kick.addActionListener(e -> { client.send(new Action(,10)); });
+			 */
 			panel.add(move);
 			panel.add(kick);
 		}
@@ -179,26 +194,28 @@ public class HostLobbyPanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println("Entered update method of HostLobbyPanel");
+		if (client.getLobby() == null) {
+			return;
+		}
 		if (client.getLobby().started) {
 			System.out.println();
-			System.out.println("Entered update method of HostLobbyPanel");
+			
 			Player[] players = client.getLobby().getPlayers();
 			int pos = 0;
-			while (pos < players.length)
-			{
-				if(player.equals(players[pos]))
+			while (pos < players.length) {
+				if (player.equals(players[pos]))
 					break;
 				pos++;
 			}
 			System.out.println(pos);
-			GameClient gameClient = new GameClient(client.getLobby(),player);
-			
-			if(pos % 2 == 0)	// i.e. if player is pilot
+			GameClient gameClient = new GameClient(client.getLobby(), player);
+
+			if (pos % 2 == 0) // i.e. if player is pilot
 			{
 				PilotView pv = new PilotView(client.name, gameClient);
 				menu.changeFrame(pv);
-			}
-			else		// else player is engineer
+			} else // else player is engineer
 			{
 				EngineerView eview = new EngineerView(client.name, gameClient);
 				menu.changeFrame(eview);
