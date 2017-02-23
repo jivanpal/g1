@@ -26,8 +26,9 @@ public class GameHostSender extends Thread
 			try
 			{
 				//check if we got anything to send
+					Object o = clientTable.getQueue(nickname).take();
 					clientOUT.reset();
-					clientOUT.writeObject(clientTable.getQueue(nickname).take());
+					clientOUT.writeObject(o);
 					clientOUT.flush();
 			}
 			catch (IOException | InterruptedException e)

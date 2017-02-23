@@ -18,7 +18,7 @@ public class GameClock extends Thread {
 		{
 			clientTable.queueToAll(mapContainer.gameMap);
 			try {
-				Thread.sleep((long)GameLogic.Global.REFRESH_PERIOD*1000);
+				Thread.sleep(GameLogic.Global.REFRESH_RATE);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
