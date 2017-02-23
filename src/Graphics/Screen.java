@@ -100,7 +100,8 @@ public class Screen extends JPanel{
 //		Calculations.setInfo();
 		setLight();
 		
-		createObjects();
+		if(!asteroidDrawn)
+			createObjects();
 		
 		//Draw all polygons onto the screen
 		nPoly = poly3Ds.size();
@@ -157,7 +158,7 @@ public class Screen extends JPanel{
 			else if(bClass == Asteroid.class && !asteroidDrawn){
 //				System.out.println("Got an asteroid " + map.indexOf(b));
 				for(Vector v : map.getAllPositions(b.getPosition())){
-					AsteroidModel asteroid = new AsteroidModel(v, 5, b.getOrientation());
+					AsteroidModel asteroid = new AsteroidModel(v, 10, b.getOrientation());
 				}
 				asteroidDrawn  = true;
 			}
