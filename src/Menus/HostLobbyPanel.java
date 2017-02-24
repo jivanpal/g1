@@ -93,7 +93,7 @@ public class HostLobbyPanel extends JPanel implements Observer {
 		c.anchor = GridBagConstraints.NORTHWEST;
 		JButton backtostart = new JButton("Back To Play Menu");
 		backtostart.addActionListener(e -> {
-			client.send(new Action(client.getLobby().getID(), player, player, 10));
+			client.send(new Action(client.getLobby().getID(), player, player, Action.KICK));
 			PlayPanel ppanel = new PlayPanel(menu, client);
 			menu.changeFrame(ppanel);
 			client.setLobby(null);
@@ -113,7 +113,7 @@ public class HostLobbyPanel extends JPanel implements Observer {
 			try {
 				MapServer game = new MapServer(client.getLobby());
 				game.start();
-				client.send(new Action(client.getLobby().getID(), player, 11));
+				client.send(new Action(client.getLobby().getID(), player, Action.START));
 
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -177,7 +177,7 @@ public class HostLobbyPanel extends JPanel implements Observer {
 			});
 			JButton kick = new JButton("Kick");
 			kick.addActionListener(e -> {
-				client.send(new Action(client.getLobby().getID(), player, players[position], 10));
+				client.send(new Action(client.getLobby().getID(), player, players[position], Action.KICK));
 			});
 			if (p == null) {
 				kick.setEnabled(false);
