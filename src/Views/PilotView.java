@@ -1,5 +1,9 @@
 package Views;
 
+import ClientNetworking.GameClient.GameClientReceiver;
+import ClientNetworking.GameHost.MapContainer;
+import GameLogic.Map;
+import GameLogic.Ship;
 import Graphics.Screen;
 import UI.ClientShipObservable;
 
@@ -36,9 +40,11 @@ public class PilotView extends JPanel implements KeyListener, Observer
 	private GameClient gameClient;
 
 	private JLayeredPane UIContainer;
+	private String playerNickname;
 
 	public PilotView(String playerNickname, GameClient gameClient)
 	{
+		this.playerNickname = playerNickname;
 		this.setLayout(new BorderLayout());
 		this.gameClient = gameClient;
 		gameClient.addObserver(this);
@@ -116,8 +122,20 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		setFocusable(true);
 
 		// starting the in-game sounds
-		AudioPlayer.stopMusic();
-		AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
+		/*try {
+			AudioPlayer.stopMusic();
+			AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
+		} catch (Exception e) {
+			// TODO: Fix
+			// In game sound failed to load? Hopefully the game will no longer hang. This fix
+			// doesn't appear to work. Never starting the sound allows me to load though? - James
+			AudioPlayer.stopMusic();
+			AudioPlayer.stopSoundEffect();
+			e.printStackTrace();
+
+			getParent().revalidate();
+			getParent().repaint();
+		}*/
 	}
 
 	@Override
@@ -177,18 +195,19 @@ public class PilotView extends JPanel implements KeyListener, Observer
 	@Override
 	public void update(Observable observable, Object o)
 	{
-		if (observable instanceof ClientShipObservable)
-		{
-			ClientShipObservable shipObservable = (ClientShipObservable) observable;
+		Map m = gameClient.getMap();
+		screen.setMap(m);
 
-			speedometerView.updateSpeedLevel(shipObservable.getShipSpeed());
-			laserBlasterView.updateWeaponAmmoLevel(shipObservable.getLaserAmmo());
-			plasmaBlasterView.updateWeaponAmmoLevel(shipObservable.getPlasmaAmmo());
-			torpedosView.updateWeaponAmmoLevel(shipObservable.getTorpedoAmmo());
-		}
-		else
-		{
-			screen.setMap(gameClient.getMap());
+		for(int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
+			if(m.get(i) instanceof Ship) {
+				Ship s = (Ship) m.get(i);
+				if(s.getPilotName().equals(playerNickname)) {
+					speedometerView.updateSpeedLevel(s.getVelocity().length());
+					laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
+					plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
+					torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
+				}
+			}
 		}
 	}
 }
