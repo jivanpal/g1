@@ -123,10 +123,18 @@ public class Lobby implements Serializable
 			}
 		}
 	}
+	/**
+	 * Get the players in the Lobby
+	 * @return the players
+	 */
 	public Player[] getPlayers()
 	{
 		return players;
 	}
+	/**
+	 * Get the Lobby host
+	 * @return the host / null if there is none
+	 */
 	public Player getHost()
 	{
 		for(Player player : players )
@@ -136,21 +144,26 @@ public class Lobby implements Serializable
 		}
 		return null;
 	}
+	/**
+	 * Get the Lobby ID
+	 * @return the ID
+	 */
 	public UUID getID()
 	{
 		return id;
 	}
-	
+	/**
+	 * Get the address of the host
+	 * @return the address
+	 */
 	public InetAddress getHostAddress(){
-		InetAddress hostAddress = null;
-		for(int i=0;i<LOBBY_SIZE;i++){
-			if(players[i] != null &&  players[i].isHost){
-				hostAddress = players[i].address;
-			}
-		}
-		return hostAddress;
+		Player host = getHost();
+		return  host == null? null : host.address;
 	}
-	
+	/**
+	 * Get the number of players in the lobby
+	 * @return the number of players
+	 */
 	public int countPlayers()
 	{
 		int c=0;
@@ -161,6 +174,11 @@ public class Lobby implements Serializable
 		}
 		return c;
 	}
+	/**
+	 * Get the position of a player specified by a name
+	 * @param name the name of the player
+	 * @return his position
+	 */
 	public int getPlayerPosByName(String name){
 		for(int i =0; i< LOBBY_SIZE;i++){
 			if(players[i].nickname.equals(name)){

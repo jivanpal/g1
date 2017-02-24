@@ -11,7 +11,12 @@ import GeneralNetworking.Invite;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.LobbyList;
 import GeneralNetworking.Player;
-
+/**
+ * 
+ * @author Svetlin
+ * A thread that listens from the server
+ * Also stores the current lobby
+ */
 public class ClientReceiver extends Thread
 {
 
@@ -20,7 +25,12 @@ public class ClientReceiver extends Thread
 	private String nickname;
 	public LinkedBlockingQueue<Object> clientQueue;
 	public LobbyList lobbyList;
-
+	/**
+	 * Constructor
+	 * @param reader the input stream from the server
+	 * @param name the player nickname
+	 * @param queue the queue from which objects are sent to the server
+	 */
 	ClientReceiver(ObjectInputStream reader, String name, LinkedBlockingQueue<Object> queue)
 	{
 		nickname = name;
@@ -38,6 +48,7 @@ public class ClientReceiver extends Thread
 			{
 				try
 				{
+					//read an object from the server and typecast it
 					Object inObject = fromServer.readObject();
 					// LOBBY
 					if (inObject instanceof Lobby)
@@ -72,36 +83,68 @@ public class ClientReceiver extends Thread
 			System.exit(1); // Give up.
 		}
 	}
+	/**
+	 * get the Lobby List
+	 * @return the list
+	 */
 	public LobbyList getList()
 	{
 		return lobbyList;
 	}
+	/**
+	 * Get the Lobby
+	 * @return the lobby
+	 */
 	public Lobby getLobby()
 	{
 		return clientLobby.getLobby();
 	}
+	/**
+	 * set the lobby
+	 * @param l the lobby
+	 */
 	public void setLobby(Lobby l)
 	{
 		clientLobby.setLobby(l);
 	}
+	/**
+	 * Add an observer to the Lobby Container
+	 * @param obs the observer
+	 */
 	public void addObserver(Observer obs)
 	{
 		clientLobby.addObserver(obs);
 	}
 }
-
+/**
+ * 
+ * @author Svetlin
+ * the Lobby Container
+ * allows us to attach Observers to the lobby without sending them along with the lobby to the server
+ */
 class LobbyContainer extends Observable
 {
 	private Lobby lobby = null;
+	/**
+	 * Constructor
+	 */
 	public LobbyContainer()
 	{
 	}
+	/**
+	 * set the lobby, notify the observers
+	 * @param l the new lobby
+	 */
 	public void setLobby(Lobby l)
 	{
 		lobby=l;
 		setChanged();
 		notifyObservers();
 	}
+	/**
+	 * get the Lobby
+	 * @return the lobby
+	 */
 	public Lobby getLobby()
 	{
 		return lobby;

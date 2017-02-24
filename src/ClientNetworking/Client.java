@@ -16,7 +16,7 @@ import GeneralNetworking.Player;
 
 /**
  * The Class Client.
- * @author Svetlin � 
+ * @author Svetlin
  */
 public class Client extends Thread
 {
@@ -28,20 +28,24 @@ public class Client extends Thread
 	private ClientReceiver receiver;
 	private ClientSender sender;
 
+	/**
+	 * Constructor
+	 * @param nickname the player nickname
+	 */
 	public Client(String nickname)
 	{
 		this.name = nickname;
 		clientQueue = new LinkedBlockingQueue<Object>();
 	}
 
-	//what's the point of this thing being a thread? 
+
 	public void run()
 	{
 		// Open sockets:
 		ObjectOutputStream toServer = null;
 		ObjectInputStream fromServer = null;
 		Socket server = null;
-		//lobby.addObserver();
+		
 		// get a socket and the 2 streams
 		try
 		{
@@ -61,6 +65,7 @@ public class Client extends Thread
 			System.err.println("The server doesn't seem to be running " + e.getMessage());
 			System.exit(1);
 		}
+		// tell our name to the server
 		try
 		{
 			toServer.writeObject(name);
@@ -70,6 +75,7 @@ public class Client extends Thread
 		{
 			e.printStackTrace();
 		}
+		//Create the receiver and the sender
 		sender = new ClientSender(toServer, clientQueue);
 		receiver = new ClientReceiver(fromServer, name, clientQueue);
 
@@ -80,37 +86,63 @@ public class Client extends Thread
 			receiver.join();
 			sender.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
+	/**
+	 * Get the Lobby
+	 * @return the lobby
+	 */
 	public Lobby getLobby()
 	{
 		return receiver.getLobby();
 	}
+	/**
+	 * Unused
+	 * set the Lobby
+	 * @param lobby the new Lobby
+	 */
 	public void setLobby(Lobby lobby)
 	{
 		receiver.setLobby(lobby);	
 	}
+	/**
+	 * get the list of Lobbies
+	 * @return the list
+	 */
 	public LobbyList getLobbyList()
 	{
 		return receiver.getList();
 	}
+	/**
+	 * Send an object to the server
+	 * @param obj the object to be sent
+	 */
 	public synchronized void send(Object obj)
 	{
 		clientQueue.offer(obj);
 	}
-
+	/**
+	 * Ask the server to give us an updated Lobby list
+	 */
 	public void updateList()
 	{
 		clientQueue.offer(name);
 	}
-
+	/**
+	 * Kick a player from the lobby
+	 * @param presser the person who is kicking
+	 * @param kicked the kicked person
+	 */
 	public void kick(Player presser,Player kicked)
 	{
 		clientQueue.offer(new Action(getLobby().getID(),presser,kicked,10));
 	}
+	/**
+	 * Add an observer to the LobbyContainer in the receiver thread
+	 * @param obs the observer
+	 */
 	public void addLobbyObserver(Observer obs)
 	{
 		System.out.println("HostLobbyPanel added as observer to ClientReceiver");
