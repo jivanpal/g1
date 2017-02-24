@@ -33,23 +33,33 @@ public class GameOptions {
 	public static final String DEFAULT_MANUAL_BUTTON = String.valueOf(KeyEvent.VK_X);
 	public static final String DEFAULT_MANUAL_NEXT_BUTTON = String.valueOf(KeyEvent.VK_Z);
 	public static final String DEFAULT_MANUAL_PREV_BUTTON = String.valueOf(KeyEvent.VK_C);
+	
+	public static final String MASTER_VOLUME = "MASTER_VOLUME";
+	public static final String SOUND_VOLUME = "SOUND_VOLUME";
+	public static final String MUSIC_VOLUME = "MUSIC_VOLUME";
+	
+	public static final String DEFAULT_MASTER_VOLUME = "0";
+	public static final String DEFAULT_SOUND_VOLUME = "0";
+	public static final String DEFAULT_MUSIC_VOLUME = "0";
 
 	// the default filename that the values are saved at
-	public final static String FILE_NAME = System.getProperty("user.dir") + "\\keybindings.txt";
+	public final static String KEY_BINDINGS_FILE = System.getProperty("user.dir") + "/keybindings.txt";
+	public final static String SOUND_VALUES_FILE = System.getProperty("user.dir") + "/soundvalues.txt";
 
 	// hashtable which holds the current values
 	private static Properties keyBindings = new Properties();
+	private static Properties soundValues = new Properties();
 
 	// reader and writer to change and write to the file
 	private static Writer fileWriter;
 	private static Reader fileReader;
 
-	private static void initialiseReader() throws FileNotFoundException {
-		GameOptions.fileReader = new FileReader(new File(FILE_NAME));
+	private static void initialiseReader(String fileName) throws FileNotFoundException {
+		GameOptions.fileReader = new FileReader(new File(fileName));
 	}
 
-	private static void inisialiseWriter() throws IOException {
-		GameOptions.fileWriter = new PrintWriter(new File(FILE_NAME));
+	private static void inisialiseWriter(String fileName) throws IOException {
+		GameOptions.fileWriter = new PrintWriter(new File(fileName));
 	}
 
 	// called when the game is started.
@@ -62,13 +72,31 @@ public class GameOptions {
 	public static void setKeyBindings() {
 
 		try {
-			initialiseReader();
+			initialiseReader(KEY_BINDINGS_FILE);
 			keyBindings.load(fileReader);
 			GameOptions.fileReader.close();
 		} catch (Exception e) {
 			resetKeysToDefaults();
 			saveKeyBindingsInFile();
 		}
+	}
+	
+	public static void setSoundValues() {
+		
+		try {
+			initialiseReader(SOUND_VALUES_FILE);
+			soundValues.load(fileReader);
+			GameOptions.fileReader.close();
+		} catch (Exception e) {
+			resetSoundValuesToDefaults();
+			saveKeyBindingsInFile();
+		}
+	}
+	
+	public static void resetSoundValuesToDefaults() {
+		soundValues.setProperty(DEFAULT_MASTER_VOLUME, MASTER_VOLUME);
+		soundValues.setProperty(DEFAULT_SOUND_VOLUME, SOUND_VOLUME);
+		soundValues.setProperty(DEFAULT_MUSIC_VOLUME, MUSIC_VOLUME);
 	}
 
 	public static void resetKeysToDefaults() {
@@ -89,7 +117,7 @@ public class GameOptions {
 
 	public static void saveKeyBindingsInFile() {
 		try {
-			inisialiseWriter();
+			inisialiseWriter(KEY_BINDINGS_FILE);
 			GameOptions.keyBindings.store(fileWriter, "");
 			GameOptions.fileWriter.close();
 		} catch (IOException e) {
@@ -98,13 +126,33 @@ public class GameOptions {
 		}
 
 	}
+	
+	public static void saveSoundValuesInFile() {
+		try {
+			inisialiseWriter(SOUND_VALUES_FILE);
+			GameOptions.soundValues.store(fileWriter, "");
+			GameOptions.fileWriter.close();
+		} catch (IOException e) {
+			// something went wrong
+			e.printStackTrace();
+		}
+		
+	}
 
 	public static void changeKeyByDefaultValue(String defaultValue, int newValue) {
 		GameOptions.keyBindings.setProperty(defaultValue, String.valueOf(newValue));
 	}
+	
+	public static void changeSoundByDefaultValue(String defaultValue, int newValue) {
+		GameOptions.soundValues.setProperty(defaultValue, String.valueOf(newValue));
+	}
 
-	public static int getCurrentValueByDefault(String defaultValue) {
+	public static int getCurrentKeyValueByDefault(String defaultValue) {
 		return Integer.valueOf(keyBindings.getProperty(defaultValue));
+	}
+	
+	public static int getCurrentSoundValueByDefault(String defaultValue) {
+		return Integer.valueOf(soundValues.getProperty(defaultValue));
 	}
 
 	public static boolean checkIfKeyTaken(int keyCode) {
