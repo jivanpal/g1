@@ -51,6 +51,7 @@ public class MainMenu {
 
 	public static void main(String[] args) {
 		GameOptions.setKeyBindings();
+		GameOptions.setSoundValues();
 		String name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
 		while (name.equals("") || name == null) {
 			name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);

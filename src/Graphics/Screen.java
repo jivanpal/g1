@@ -152,13 +152,14 @@ public class Screen extends JPanel{
 			Class<? extends Body> bClass = b.getClass();
 			if(bClass == Ship.class && map.indexOf(b) != shipIndex){
 				for(Vector v : map.getAllPositions(b.getPosition())){
+					System.out.println("Drawing Ship: " + map.indexOf(b) + ", " + shipIndex);
 					Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
 				}
 			}
 			else if(bClass == Asteroid.class && !asteroidDrawn){
 //				System.out.println("Got an asteroid " + map.indexOf(b));
 				for(Vector v : map.getAllPositions(b.getPosition())){
-					AsteroidModel asteroid = new AsteroidModel(v, 10, b.getOrientation());
+					AsteroidModel asteroid = new AsteroidModel(v, 50, b.getOrientation());
 				}
 				asteroidDrawn  = true;
 			}
@@ -214,9 +215,9 @@ public class Screen extends JPanel{
 				}
 			}
 		}
-		for(int i : drawOrder){
-			System.out.println(poly3Ds.get(i).avgDistance);
-		}
+//		for(int i : drawOrder){
+//			System.out.println(poly3Ds.get(i).avgDistance);
+//		}
 	}
 	
 	/**

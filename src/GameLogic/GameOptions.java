@@ -74,13 +74,14 @@ public class GameOptions {
 			keyBindings.load(fileReader);
 			GameOptions.fileReader.close();
 		} catch (Exception e) {
+			System.out.println("exception caught");
 			resetKeysToDefaults();
 			saveKeyBindingsInFile();
 		}
 	}
 	
 	public static void setSoundValues() {
-		
+		System.out.println("works?");
 		try {
 			initialiseReader(SOUND_VALUES_FILE);
 			soundValues.load(fileReader);
@@ -92,8 +93,9 @@ public class GameOptions {
 	}
 	
 	public static void resetSoundValuesToDefaults() {
-		soundValues.setProperty(DEFAULT_SOUND_VOLUME, SOUND_VOLUME);
-		soundValues.setProperty(DEFAULT_MUSIC_VOLUME, MUSIC_VOLUME);
+		System.out.println("resetting sound");
+		soundValues.setProperty(SOUND_VOLUME,DEFAULT_SOUND_VOLUME);
+		soundValues.setProperty(MUSIC_VOLUME, DEFAULT_MUSIC_VOLUME);
 	}
 
 	public static void resetKeysToDefaults() {
@@ -140,7 +142,7 @@ public class GameOptions {
 		GameOptions.keyBindings.setProperty(defaultValue, String.valueOf(newValue));
 	}
 	
-	public static void changeSoundByDefaultValue(String defaultValue, int newValue) {
+	public static void changeSoundByDefaultValue(String defaultValue, String newValue) {
 		GameOptions.soundValues.setProperty(defaultValue, String.valueOf(newValue));
 	}
 
@@ -148,8 +150,8 @@ public class GameOptions {
 		return Integer.valueOf(keyBindings.getProperty(defaultValue));
 	}
 	
-	public static int getCurrentSoundValueByDefault(String defaultValue) {
-		return Integer.valueOf(soundValues.getProperty(defaultValue));
+	public static float getCurrentSoundValueByDefault(String defaultValue) {
+		return Float.valueOf(soundValues.getProperty(defaultValue));
 	}
 
 	public static boolean checkIfKeyTaken(int keyCode) {

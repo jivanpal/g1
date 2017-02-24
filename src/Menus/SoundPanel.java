@@ -86,16 +86,23 @@ public class SoundPanel extends JPanel {
 		slider.setForeground(Color.RED);
 		slider.setBackground(Color.WHITE);
 		slider.setOpaque(true);
-		
+	
 		slider.addChangeListener(e -> {
 			float volume = (float) slider.getValue();
-			switch (name) {
-			case "Master Volume":
-				break;
-			case "Music Volume":
-				break;
-			case "Sound Effects":
-				break;
+			if(name.equals("Master Volume")){
+				AudioPlayer.setMusicVolume(volume);
+				AudioPlayer.setSoundEffectVolume(volume);
+				GameOptions.changeSoundByDefaultValue(GameOptions.MUSIC_VOLUME, String.valueOf(volume));
+				GameOptions.changeSoundByDefaultValue(GameOptions.SOUND_VOLUME, String.valueOf(volume));
+				GameOptions.saveSoundValuesInFile();
+			} else if (name.equals("Music Volume")) {
+				AudioPlayer.setSoundEffectVolume(volume);
+				GameOptions.changeSoundByDefaultValue(GameOptions.SOUND_VOLUME, String.valueOf(volume));
+				GameOptions.saveSoundValuesInFile();
+			} else if(name.equals("Sound Effects")){
+				AudioPlayer.setMusicVolume(volume);
+				GameOptions.changeSoundByDefaultValue(GameOptions.MUSIC_VOLUME, String.valueOf(volume));
+				GameOptions.saveSoundValuesInFile();
 			}
 		});
 		panel.add(slider);

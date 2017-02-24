@@ -131,7 +131,7 @@ public class Lobby implements Serializable
 	{
 		for(Player player : players )
 		{
-			if(player.isHost)
+			if(player != null && player.isHost)
 				return player;
 		}
 		return null;

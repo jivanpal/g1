@@ -8,8 +8,8 @@ import java.io.Serializable;
  */
 public class Engines implements Serializable {
 	
-	private static final int DEFAULT_FUEL_LEVEL = 0;
-	private static final int DEFAULT_FUEL_MAX_LEVEL = 0;
+	public static final int DEFAULT_FUEL_LEVEL = 0;
+	public static final int DEFAULT_FUEL_MAX_LEVEL = 0;
 	
 	private Resource fuel; //amount of fuel left as a percentage between 0.0 and 1.0
 	private boolean isWorking; //whether or not it is working properly 

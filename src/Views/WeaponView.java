@@ -67,4 +67,8 @@ public class WeaponView extends JPanel{
             weaponNameLabel.setForeground(DEFAULT_COLOUR);
         }
     }
+
+    public void setMaxiumumAmmo(int maxiumumAmmo) {
+        weaponAmmoLevel.setMaximum(maxiumumAmmo);
+    }
 }
