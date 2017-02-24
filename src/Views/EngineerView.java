@@ -16,11 +16,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ClientNetworking.GameHost.MapContainer;
-import GameLogic.Ship;
+import GameLogic.*;
 import Graphics.Screen;
 import UI.ClientShipObservable;
-
-import GameLogic.Map;
 
 /**
  * Created by James on 01/02/17.
@@ -129,8 +127,8 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
                 if(s.getEngineerName().equals(playerNickname)) {
                     laserBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
-                    plasmaBlasterView.setMaxiumumAmmo();
-                    torpedosView.setMaxiumumAmmo();
+                    plasmaBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
+                    torpedosView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.TORPEDO_WEAPON_INDEX));
                     laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
                     plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
                     torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
@@ -138,9 +136,9 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
                     resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
                     resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
                     resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
-                    resourcesView.setMaximumResourceLevel(ResourcesView.ENGINE,);
-                    resourcesView.setMaximumResourceLevel(ResourcesView.HULL,);
-                    resourcesView.setMaximumResourceLevel(ResourcesView.SHIELDS,);
+                    resourcesView.setMaximumResourceLevel(ResourcesView.ENGINE, Engines.DEFAULT_FUEL_MAX_LEVEL);
+                    resourcesView.setMaximumResourceLevel(ResourcesView.HULL, ShipHealth.DEFAULT_MAX_SHIP_HEALTH_LEVEL);
+                    resourcesView.setMaximumResourceLevel(ResourcesView.SHIELDS, Shields.DEFAULT_MAX_SHIELDS_LEVEL);
                 }
             }
         }

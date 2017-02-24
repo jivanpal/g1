@@ -138,6 +138,9 @@ public class Ship extends Body{
 		} else if(index == PLASMA_BLASTER_INDEX){
 			return plasmaBlaster.getMaxAmmo();
 		}
+
+        // Should never reach this
+		return -1;
 	}
 	
 // Movement methods
