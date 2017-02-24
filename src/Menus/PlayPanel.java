@@ -63,7 +63,7 @@ public class PlayPanel extends JPanel {
 		panel.add(creategame, BorderLayout.NORTH);
 		creategame.addActionListener(e -> {
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			HostLobbyPanel lpanel = new HostLobbyPanel(menu, client);
+			LobbyPanel lpanel = new LobbyPanel(menu, client, null, null, true);
 			menu.changeFrame(lpanel);
 		});
 		JButton joingame = new JButton("Join Game");

@@ -142,8 +142,9 @@ public class JoinPanel extends JPanel {
 			{
 				Player player = new Player(client.name, InetAddress.getLocalHost(), false);
 				client.send(new Action(lInfo.lobbyID,player,9));
-				ClientLobbyPanel clpanel = new ClientLobbyPanel(menu, client, lInfo.lobbyID, player);
-				menu.changeFrame(clpanel);
+				//ClientLobbyPanel clpanel = new ClientLobbyPanel(menu, client, lInfo.lobbyID, player);
+				LobbyPanel hlpanel = new LobbyPanel(menu, client, lInfo.lobbyID, player, false);
+				menu.changeFrame(hlpanel);
 			}
 			catch (Exception e1)
 			{
