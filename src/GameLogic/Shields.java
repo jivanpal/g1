@@ -9,8 +9,8 @@ import java.io.Serializable;
  */
 public class Shields implements Serializable {
 	
-	public static final int DEFAULT_SHIELDS_LEVEL = 0;
-	public static final int DEFAULT_MAX_SHIELDS_LEVEL = 0;
+	public static final int DEFAULT_SHIELDS_LEVEL = 50;
+	public static final int DEFAULT_MAX_SHIELDS_LEVEL = 100;
 
 	private Resource shieldsLevel;
 	

@@ -17,7 +17,7 @@ public class ResourcesView extends JPanel {
     // Each component has a resource label, resource bar and 2 buttons to increment / decrement (to be removed later).
     private ResourceComponent shieldsComponent;
     private ResourceComponent hullComponent;
-    private ResourceComponent engineComponent;
+    public ResourceComponent engineComponent;
 
     /**
      * Instantiates a new ResourceView which shows details about the amount of shields, hull health and engine fuel
@@ -86,12 +86,16 @@ public class ResourcesView extends JPanel {
         add(engineComponent);
     }
 
+    public int getMaxFuelLevel() {
+        return engineComponent.resourceProgressBar.getMaximum();
+    }
+
     /**
      * A ResourceComponent is a constituent of the ResourceView. Each ResourceComponent shows the details about just
      * one type of resource
      */
     private class ResourceComponent extends JPanel {
-        private JProgressBar resourceProgressBar;
+        public JProgressBar resourceProgressBar;
 
         /**
          * Creates a ResourceComponent which displays info about a particular resource to the player.

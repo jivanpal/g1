@@ -47,7 +47,7 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		super();
 
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -57,9 +57,6 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		this.gameClient = gameClient;
 		gameClient.addObserver(this);
 		screen = new Screen(playerNickname, true);
-		screen.setSize(1000, 800);
-		screen.setMaximumSize(new Dimension(1000, 800));
-		screen.setMinimumSize(new Dimension(1000, 800));
 		screen.setPreferredSize(new Dimension(1000, 800));
 
 		this.addMouseMotionListener(new MouseMotionListener() {
@@ -94,7 +91,7 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		plasmaBlasterView = new WeaponView("Plasma Blaster", false);
 
 		// default plasma blaster to be highlighted, remove at a later date!
-		plasmaBlasterView.setHighlightWeapon(true);
+		// plasmaBlasterView.setHighlightWeapon(true);
 
 		laserBlasterView = new WeaponView("Laser Blaster", false);
 		torpedosView = new WeaponView("Torpedos", false);

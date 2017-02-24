@@ -47,7 +47,7 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         super();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -134,7 +134,7 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         plasmaBlasterView = new WeaponView("Plasma Blaster", true);
 
         // default plasma blaster to be highlighted, remove at a later date!
-        plasmaBlasterView.setHighlightWeapon(true);
+        // plasmaBlasterView.setHighlightWeapon(true);
 
         laserBlasterView = new WeaponView("Laser Blaster", true);
         torpedosView = new WeaponView("Torpedos", true);
@@ -214,7 +214,6 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
                     laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
                     plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
                     torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
-
                     resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
                     resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
                     resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
@@ -248,19 +247,29 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
                     case 'l':
                         System.out.println("Starting a laser sequence");
                         this.state = ShipState.LASER_REPLENISH;
-                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[0]), true);
+                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[0]), false);
                         break;
                     case 't':
                         System.out.println("Starting a torpedo sequence");
                         this.state = ShipState.TORPEDO_REPLENISH;
-                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[1]), true);
+                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[1]), false);
                         break;
                     case 'p':
                         System.out.println("Starting a plasma sequence");
                         this.state = ShipState.PLASMA_REPLENISH;
-                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[2]), true);
+                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[2]), false);
                         break;
-                        
+                    case 's':
+                        System.out.println("Startng a shield sequence");
+                        this.state = ShipState.SHIELD_REPLENISH;
+                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[3]), false);
+                        break;
+                    case 'f':
+                        System.out.println("Starting a fuel sequence");
+                        this.state = ShipState.FUEL_REPLENISH;
+                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[4]), false);
+                        break;
+
                 }
             }
         }
@@ -292,6 +301,8 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
     public void keySequenceFailed() {
         System.out.println("Bad key!!!!!");
+
+        this.state = ShipState.NONE;
     }
 }
 

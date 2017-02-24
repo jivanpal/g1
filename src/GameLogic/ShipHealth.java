@@ -8,8 +8,8 @@ import java.io.Serializable;
  */
 public class ShipHealth implements Serializable {
 	
-	public static final int DEFAULT_SHIP_HEALTH_LEVEL = 0;
-	public static final int DEFAULT_MAX_SHIP_HEALTH_LEVEL = 0;
+	public static final int DEFAULT_SHIP_HEALTH_LEVEL = 50;
+	public static final int DEFAULT_MAX_SHIP_HEALTH_LEVEL = 100;
 	
 	private Resource shipHealth; 
 	

@@ -51,10 +51,11 @@ public class KeySequenceManager {
             System.out.println("incorrect key");
             position = 0;
 
+            // Tell the parent we have failed
+            parent.keySequenceFailed();
+            System.out.println("telling the parent we failed");
+
             if(!restart) {
-                // Tell the parent we have failed
-                parent.keySequenceFailed();
-                System.out.println("telling the parent we failed");
                 active = false;
             }
 
