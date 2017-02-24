@@ -75,7 +75,7 @@ public class MapServer extends Thread {
 				{
 					clientTable.add(String.valueOf(String.valueOf(position)));
 
-					int mapEntry = gameMap.addShip(position, clientName);
+					int mapEntry = gameMap.addShip(position, clientName, players[position+1] == null? "" : players[position+1].nickname);
 
 					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,clientName, mapEntry);
 					clientInput.start();

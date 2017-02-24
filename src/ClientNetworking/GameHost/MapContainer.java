@@ -81,6 +81,18 @@ public class MapContainer {
 			case "rollRight":
 				playerShip.rollRight();
 				break;
+			case "shieldReplenish":
+				playerShip.increseShieldsLevel();
+			    break;
+			case "fuelReplenish":
+				playerShip.increaseFuel();
+				break;	
+			case "laserReplenish":
+				break;
+			case "torpedoReplenish":
+				break;
+			case "plasmaReplenish":
+				break;
 			default:
 				throw new IllegalArgumentException("You done sent the wrong string yo");
 			}
