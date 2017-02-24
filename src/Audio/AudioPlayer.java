@@ -5,6 +5,8 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+
+import GameLogic.GameOptions;
 /**
  * Class which play the audio in the game
  * at the moment only .wav files are supported!
@@ -35,7 +37,7 @@ public class AudioPlayer {
 			soundEffectClip = AudioSystem.getClip();
 			soundEffectClip.open(audioInputStream);
 			soundEffectVolumeControl = (FloatControl) AudioPlayer.getMusicClip().getControl(FloatControl.Type.MASTER_GAIN);
-			soundEffectVolumeControl.setValue(0.0f);
+			soundEffectVolumeControl.setValue(GameOptions.getCurrentSoundValueByDefault(GameOptions.SOUND_VOLUME));;
 			soundEffectClip.start();
 		} catch (Exception ex) {
 			System.out.println("Error with playing sound.");
@@ -61,6 +63,8 @@ public class AudioPlayer {
 					.getAudioInputStream(new File(sound).getAbsoluteFile());
 			musicClip = AudioSystem.getClip();
 			musicClip.open(audioInputStream);
+			musicVolumeControl = (FloatControl) AudioPlayer.getMusicClip().getControl(FloatControl.Type.MASTER_GAIN);
+			musicVolumeControl.setValue(GameOptions.getCurrentSoundValueByDefault(GameOptions.MUSIC_VOLUME));
 			musicClip.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (Exception ex) {
 			System.out.println("Error with playing sound.");
