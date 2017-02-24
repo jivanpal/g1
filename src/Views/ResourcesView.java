@@ -8,7 +8,7 @@ import java.awt.*;
  * Created by James on 27/01/17.
  * A view which shows all relevant information about the ships resources (health, shields and fuel levels).
  */
-public class ResourcesView extends JLayeredPane {
+public class ResourcesView extends JPanel {
     // Resource type constants
     public static final int SHIELDS = 0;
     public static final int HULL = 1;
@@ -48,6 +48,22 @@ public class ResourcesView extends JLayeredPane {
 
             case ENGINE:
                 engineComponent.updateResourceLevel(level);
+                break;
+        }
+    }
+
+    public void setMaximumResourceLevel(int type, int level) {
+        switch (type) {
+            case SHIELDS:
+                shieldsComponent.setMaximumResourceLevel(level);
+                break;
+
+            case HULL:
+                hullComponent.setMaximumResourceLevel(level);
+                break;
+
+            case ENGINE:
+                engineComponent.setMaximumResourceLevel(level);
                 break;
         }
     }
@@ -107,6 +123,10 @@ public class ResourcesView extends JLayeredPane {
 
         public void setResourceBarColor(Color c) {
             this.resourceProgressBar.setForeground(c);
+        }
+
+        public void setMaximumResourceLevel(int maximumResourceLevel) {
+            this.resourceProgressBar.setMaximum(maximumResourceLevel);
         }
     }
 }

@@ -69,7 +69,7 @@ public class HostLobbyPanel extends JPanel implements Observer {
 		add(host, c);
 		
 		if (client.getLobby() == null) {
-			System.out.println("HostLobby: lobby is null");
+
 			try {
 				Lobby lobby = new Lobby(client.name, InetAddress.getLocalHost());
 				client.setLobby(lobby);
