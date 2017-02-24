@@ -44,6 +44,14 @@ public class PilotView extends JPanel implements KeyListener, Observer
 
 	public PilotView(String playerNickname, GameClient gameClient)
 	{
+		super();
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		this.playerNickname = playerNickname;
 		this.setLayout(new BorderLayout());
 		this.gameClient = gameClient;
@@ -79,7 +87,6 @@ public class PilotView extends JPanel implements KeyListener, Observer
 			}
 		});
 
-		System.out.println("Adding the screen");
 		this.add(screen, BorderLayout.CENTER);
 
 		speedometerView = new SpeedometerView();
@@ -99,7 +106,6 @@ public class PilotView extends JPanel implements KeyListener, Observer
 			instructionsView.addInstruction(instruction);
 		}
 
-		System.out.println("Making the weapon panel");
 		Container weaponPanel = new Container();
 		weaponPanel.add(plasmaBlasterView);
 		weaponPanel.add(laserBlasterView);
@@ -111,13 +117,12 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		UIpanel.setMinimumSize(new Dimension(1920, 300));
 		UIpanel.setMaximumSize(new Dimension(1920, 300));
 		UIpanel.setSize(new Dimension(1920, 300));
-		System.out.println("Adding weapons, speed and instructions to the UIPanel");
 		UIpanel.add(weaponPanel);
 		UIpanel.add(speedometerView);
 		UIpanel.add(instructionsView);
 		UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
 
-		System.out.println("Adding UIPanel");
+		System.out.println("Done creating UI. I am the Pilot");
 		this.add(UIpanel, BorderLayout.SOUTH);
 
 		addKeyListener(this);

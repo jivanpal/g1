@@ -254,7 +254,6 @@ public class Screen extends JPanel{
 	}
 	
 	public void setMap(Map map){
-		System.out.println(i ++);
 		this.map = map;
 //		System.out.println(map.get(0).getPosition());
 		for(Body b : map){
