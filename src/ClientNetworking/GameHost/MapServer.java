@@ -7,6 +7,8 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 import ServerNetworking.ClientTable;
@@ -29,6 +31,8 @@ public class MapServer extends Thread {
 
 	public void run() {
 		try {
+			ArrayList<char[][]> keySequences = KeySequenceGen.Generate(10,5);
+			
 			ClientTable clientTable = new ClientTable();
 			MapContainer gameMap = new MapContainer();
 			System.out.println(serverSocket.getInetAddress());
@@ -54,7 +58,7 @@ public class MapServer extends Thread {
 				}
 
 				int position = lobby.getPlayerPosByName(clientName);
-
+				toClient.writeObject(keySequences.get(position/2));
 				boolean gameShouldStart = false;
 				Player[] players = lobby.getPlayers();
 				int pos;

@@ -16,6 +16,7 @@ public class GameClient
 {
 	private int port = GameVariables.PORT;
 	private InetAddress hostname = null;
+	public char[][] keySequence;
 	private LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
 	GameClientReceiver receiver;
 	GameClientSender sender;
@@ -41,6 +42,7 @@ public class GameClient
 			toServer.writeObject(player.nickname);
 			fromServer = new ObjectInputStream(server.getInputStream());
 			System.err.println("Created `fromServer` and 'toServer'");
+			keySequence = (char[][])fromServer.readObject();
 		}
 		catch (UnknownHostException e)
 		{
@@ -54,6 +56,8 @@ public class GameClient
 			System.err.println("The server doesn't seem to be running " + e.getMessage());
 			e.printStackTrace();
 			System.exit(1);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		sender = new GameClientSender(toServer,queue);
 		receiver = new GameClientReceiver(fromServer,queue);
