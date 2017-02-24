@@ -37,7 +37,7 @@ public class KeyBidingsTest {
 		
 		keyBindingsFromFile = new Properties();
 		try {
-			keyBindingsFromFile.load( new FileReader(new File(GameOptions.FILE_NAME)));
+			keyBindingsFromFile.load( new FileReader(new File(GameOptions.KEY_BINDINGS_FILE)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
