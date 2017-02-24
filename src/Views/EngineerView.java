@@ -19,13 +19,14 @@ import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
 import Graphics.Screen;
 import UI.ClientShipObservable;
+import javafx.scene.input.KeyCode;
 
 /**
  * Created by James on 01/02/17.
  */
 public class EngineerView extends JPanel implements KeyListener, Observer {
-
-    private final ShipState state = ShipState.NONE;
+    private boolean UIinitialised = false;
+    private ShipState state = ShipState.NONE;
     private final KeySequenceManager keyManager;
 
     private WeaponView plasmaBlasterView;
@@ -37,10 +38,20 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
     private GameClient gameClient;
     private String playerNickname;
 
+    private char[][] keySequences;
+
     /*private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;*/
 
     public EngineerView(String playerNickname, GameClient gameClient) {
+        super();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         this.playerNickname = playerNickname;
 
         this.gameClient = gameClient;
@@ -48,7 +59,10 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
         keyManager = new KeySequenceManager(this);
 
-        initialiseUI();
+        addKeyListener(this);
+        setFocusable(true);
+
+        // initialiseUI();
 
         // starting the in-game sounds
         /*AudioPlayer.stopMusic();
@@ -86,8 +100,6 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
             System.out.println("Unable to find the Ship");
             e.printStackTrace();
         }
-
-
     }
 
     private void addAllComponents() {
@@ -107,11 +119,15 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
         this.add(screen, BorderLayout.CENTER);
         this.add(UIPanel, BorderLayout.SOUTH);
-        System.out.println("Done adding all components");
+        System.out.println("Done creating the UI. I am the Engineer");
+
+        this.revalidate();
+        this.repaint();
     }
 
     /**
      * Given a Ship, this will initialise the weapon progress bars to their initial values and set their maximum values
+     *
      * @param s This players Ship object
      */
     private void initaliseWeapons(Ship s) {
@@ -132,6 +148,7 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
     /**
      * Given a Ship, this will initialse the resource progress bars to their initial values and set their maximum values
+     *
      * @param s This players Ship object
      */
     private void initialiseResources(Ship s) {
@@ -158,17 +175,18 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
     /**
      * Finds the players Ship within all of the objects in the Map
+     *
      * @return The players Ship object
      * @throws Exception No ship could be found, in theory this should never be called! Hopefully...
      */
     private Ship findPlayerShip() throws Exception {
         Map m = gameClient.getMap();
 
-        for(int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
-            if(m.get(i) instanceof Ship) {
+        for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
+            if (m.get(i) instanceof Ship) {
                 Ship s = (Ship) m.get(i);
 
-                if(s.getEngineerName().equals(playerNickname)) {
+                if (s.getEngineerName().equals(playerNickname)) {
                     return s;
                 }
             }
@@ -179,14 +197,20 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
     @Override
     public void update(Observable observable, Object o) {
+        if(!UIinitialised) {
+            keySequences = gameClient.keySequence;
+            initialiseUI();
+            UIinitialised = true;
+        }
+
         Map m = gameClient.getMap();
         screen.setMap(m);
 
-        for(int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
-            if(m.get(i) instanceof Ship) {
+        for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
+            if (m.get(i) instanceof Ship) {
                 Ship s = (Ship) m.get(i);
 
-                if(s.getEngineerName().equals(playerNickname)) {
+                if (s.getEngineerName().equals(playerNickname)) {
                     laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
                     plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
                     torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
@@ -211,12 +235,39 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        if(keyManager.isActive()) {
-            keyManager.keyPressed(keyEvent);
+        System.out.println("Recieved a keypress");
+        if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            state = ShipState.NONE;
+            keyManager.deactiveate();
+        } else {
+            if (keyManager.isActive()) {
+                System.out.println("Passing " + keyEvent.getKeyChar() + " to the sequence manager");
+                keyManager.keyPressed(keyEvent);
+            } else {
+                switch (keyEvent.getKeyChar()) {
+                    case 'l':
+                        System.out.println("Starting a laser sequence");
+                        this.state = ShipState.LASER_REPLENISH;
+                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[0]), true);
+                        break;
+                    case 't':
+                        System.out.println("Starting a torpedo sequence");
+                        this.state = ShipState.TORPEDO_REPLENISH;
+                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[1]), true);
+                        break;
+                    case 'p':
+                        System.out.println("Starting a plasma sequence");
+                        this.state = ShipState.PLASMA_REPLENISH;
+                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[2]), true);
+                        break;
+                        
+                }
+            }
         }
     }
 
     public void keySequencePassed() {
+        System.out.println("Passed a sequence");
         switch (state) {
             case NONE:
                 break;
@@ -227,6 +278,7 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
                 gameClient.send("fuelReplenish");
                 break;
             case LASER_REPLENISH:
+                System.out.println("Adding more lasers");
                 gameClient.send("laserReplenish");
                 break;
             case TORPEDO_REPLENISH:
@@ -239,6 +291,7 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
     }
 
     public void keySequenceFailed() {
+        System.out.println("Bad key!!!!!");
     }
 }
 
