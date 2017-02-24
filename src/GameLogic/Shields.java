@@ -3,7 +3,7 @@ package GameLogic;
 import java.io.Serializable;
 
 /**
- * A class which represents the shilds of a ship in the game
+ * A class which represents the shields of a ship in the game
  * @author Ivan Panchev
  *
  */

@@ -93,9 +93,11 @@ public class PilotView extends JPanel implements KeyListener, Observer
 		torpedosView = new WeaponView("Torpedos", false);
 
 		instructionsView = new InstructionsView();
-		instructionsView.addInstruction("test instruction 1");
-		instructionsView.addInstruction("test instruction 2");
-		instructionsView.addInstruction("test instruction 3");
+
+		for(int i = 0; i < gameClient.keySequence.length; i++) {
+			String instruction = String.valueOf(gameClient.keySequence[i]);
+			instructionsView.addInstruction(instruction);
+		}
 
 		System.out.println("Making the weapon panel");
 		Container weaponPanel = new Container();

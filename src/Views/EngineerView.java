@@ -28,9 +28,9 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
     private final ShipState state = ShipState.NONE;
     private final KeySequenceManager keyManager;
 
-    private final WeaponView plasmaBlasterView;
-    private final WeaponView laserBlasterView;
-    private final WeaponView torpedosView;
+    private WeaponView plasmaBlasterView;
+    private WeaponView laserBlasterView;
+    private WeaponView torpedosView;
 
     private Screen screen;
     private ResourcesView resourcesView;
@@ -46,6 +46,15 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         this.gameClient = gameClient;
         gameClient.addObserver(this);
 
+        keyManager = new KeySequenceManager(this);
+
+        initialiseUI();
+
+        // starting the in-game sounds
+        /*AudioPlayer.stopMusic();
+        AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);*/
+
+
         /*UILayeredPane = new JLayeredPane();
         JLayeredPaneLayoutManager layeredLayoutManager = new JLayeredPaneLayoutManager();
         UILayeredPane.setLayout(layeredLayoutManager);
@@ -53,30 +62,39 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         UIBaseLayer = new JPanel();
         UIBaseLayer.setLayout(new BorderLayout());*/
 
-        this.setLayout(new BorderLayout());
-        screen = new Screen(playerNickname, false);
-        screen.setSize(1000, 800);
-        screen.setMaximumSize(new Dimension(1000, 800));
-        screen.setMinimumSize(new Dimension(1000, 800));
-        screen.setPreferredSize(new Dimension(1000, 800));
+
         // UIBaseLayer.add(screen, BorderLayout.CENTER);
+
+
+        // UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
+
+        /*UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+        layeredLayoutManager.setBounds(UIBaseLayer, new Rectangle(1000, 1000, 1000, 1000));
+        this.add(UILayeredPane);*/
+    }
+
+    public void initialiseUI() {
+        try {
+            Ship s = findPlayerShip();
+
+            initaliseWeapons(s);
+            initialiseResources(s);
+            initialiseScreen();
+            addAllComponents();
+
+        } catch (Exception e) {
+            System.out.println("Unable to find the Ship");
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void addAllComponents() {
+        this.setLayout(new BorderLayout());
 
         Container UIPanel = new Container();
         UIPanel.setLayout(new BoxLayout(UIPanel, BoxLayout.X_AXIS));
-
-        resourcesView = new ResourcesView();
-        resourcesView.setSize(new Dimension(1000, 200));
-        resourcesView.setMaximumSize(new Dimension(1000, 200));
-        resourcesView.setMinimumSize(new Dimension(1000, 200));
-        resourcesView.setPreferredSize(new Dimension(1000, 200));
-
-        plasmaBlasterView = new WeaponView("Plasma Blaster", true);
-
-        // default plasma blaster to be highlighted, remove at a later date!
-        plasmaBlasterView.setHighlightWeapon(true);
-
-        laserBlasterView = new WeaponView("Laser Blaster", true);
-        torpedosView = new WeaponView("Torpedos", true);
 
         Container weaponPanel = new Container();
         weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
@@ -87,33 +105,76 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         UIPanel.add(resourcesView);
         UIPanel.add(weaponPanel);
 
-        // UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
-
-        // starting the in-game sounds
-        /*AudioPlayer.stopMusic();
-        AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);*/
-
-        keyManager = new KeySequenceManager(this);
-
-        /*UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
-        layeredLayoutManager.setBounds(UIBaseLayer, new Rectangle(1000, 1000, 1000, 1000));
-        this.add(UILayeredPane);*/
-
         this.add(screen, BorderLayout.CENTER);
         this.add(UIPanel, BorderLayout.SOUTH);
+        System.out.println("Done adding all components");
+    }
 
-        JButton test = new JButton("Laser Replenish");
-        test.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("Replenishing lasers");
-                gameClient.send("laserReplenish");
+    /**
+     * Given a Ship, this will initialise the weapon progress bars to their initial values and set their maximum values
+     * @param s This players Ship object
+     */
+    private void initaliseWeapons(Ship s) {
+        plasmaBlasterView = new WeaponView("Plasma Blaster", true);
+
+        // default plasma blaster to be highlighted, remove at a later date!
+        plasmaBlasterView.setHighlightWeapon(true);
+
+        laserBlasterView = new WeaponView("Laser Blaster", true);
+        torpedosView = new WeaponView("Torpedos", true);
+        laserBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
+        plasmaBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
+        torpedosView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.TORPEDO_WEAPON_INDEX));
+        laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
+        plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
+        torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
+    }
+
+    /**
+     * Given a Ship, this will initialse the resource progress bars to their initial values and set their maximum values
+     * @param s This players Ship object
+     */
+    private void initialiseResources(Ship s) {
+        resourcesView = new ResourcesView();
+        resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
+        resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
+        resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
+        resourcesView.setMaximumResourceLevel(ResourcesView.ENGINE, Engines.DEFAULT_FUEL_MAX_LEVEL);
+        resourcesView.setMaximumResourceLevel(ResourcesView.HULL, ShipHealth.DEFAULT_MAX_SHIP_HEALTH_LEVEL);
+        resourcesView.setMaximumResourceLevel(ResourcesView.SHIELDS, Shields.DEFAULT_MAX_SHIELDS_LEVEL);
+
+    }
+
+    /**
+     * Initialise the Screen for the UI
+     */
+    private void initialiseScreen() {
+        screen = new Screen(playerNickname, false);
+        screen.setSize(1000, 800);
+        screen.setMaximumSize(new Dimension(1000, 800));
+        screen.setMinimumSize(new Dimension(1000, 800));
+        screen.setPreferredSize(new Dimension(1000, 800));
+    }
+
+    /**
+     * Finds the players Ship within all of the objects in the Map
+     * @return The players Ship object
+     * @throws Exception No ship could be found, in theory this should never be called! Hopefully...
+     */
+    private Ship findPlayerShip() throws Exception {
+        Map m = gameClient.getMap();
+
+        for(int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
+            if(m.get(i) instanceof Ship) {
+                Ship s = (Ship) m.get(i);
+
+                if(s.getEngineerName().equals(playerNickname)) {
+                    return s;
+                }
             }
-        });
-        this.add(test, BorderLayout.NORTH);
+        }
 
-
-
+        throw new Exception("ERROR: Couldn't find the players ship!");
     }
 
     @Override
@@ -126,9 +187,6 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
                 Ship s = (Ship) m.get(i);
 
                 if(s.getEngineerName().equals(playerNickname)) {
-                    laserBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
-                    plasmaBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
-                    torpedosView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.TORPEDO_WEAPON_INDEX));
                     laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
                     plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
                     torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
@@ -136,9 +194,6 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
                     resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
                     resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
                     resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
-                    resourcesView.setMaximumResourceLevel(ResourcesView.ENGINE, Engines.DEFAULT_FUEL_MAX_LEVEL);
-                    resourcesView.setMaximumResourceLevel(ResourcesView.HULL, ShipHealth.DEFAULT_MAX_SHIP_HEALTH_LEVEL);
-                    resourcesView.setMaximumResourceLevel(ResourcesView.SHIELDS, Shields.DEFAULT_MAX_SHIELDS_LEVEL);
                 }
             }
         }
@@ -156,7 +211,9 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        keyManager.keyPressed(keyEvent);
+        if(keyManager.isActive()) {
+            keyManager.keyPressed(keyEvent);
+        }
     }
 
     public void keySequencePassed() {
