@@ -140,8 +140,8 @@ public class GameOptions {
 		GameOptions.keyBindings.setProperty(defaultValue, String.valueOf(newValue));
 	}
 	
-	public static void changeSoundByDefaultValue(String defaultValue, int newValue) {
-		GameOptions.soundValues.setProperty(defaultValue, String.valueOf(newValue));
+	public static void changeSoundByDefaultValue(String defaultValue, String newValue) {
+		GameOptions.soundValues.setProperty(defaultValue, newValue);
 	}
 
 	public static int getCurrentKeyValueByDefault(String defaultValue) {

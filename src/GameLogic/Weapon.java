@@ -121,4 +121,8 @@ public abstract class Weapon implements Serializable {
         ammo.down();
         return getBulletInstance(parent);
     }
+    
+    public int getMaxAmmo(){
+    	return this.ammo.getMax();
+    }
 }

@@ -24,7 +24,7 @@ public class Ship extends Body{
 	private Weapon plasmaBlaster;
 	private Engines engines;
 	private Shields shields;
-	private Resource shipHealth;
+	private ShipHealth shipHealth;
 	
 	/**
 	 * Creates a new ship with a specific pilotName
@@ -42,7 +42,7 @@ public class Ship extends Body{
 		//Initialising other parts
 		engines = new Engines();
 		shields = new Shields();
-		shipHealth = new Resource(DEFAULT_MAX_HEALTH, DEFAULT_HEALTH);
+		shipHealth = new ShipHealth();
 		
 		//assigning the pilot name to the ship as a way of identifying the ship 
 		this.pilotName = pilotName;
@@ -59,7 +59,7 @@ public class Ship extends Body{
 	
 	//getters and setters
 	public int getShipHealth(){
-		return this.shipHealth.get();
+		return this.shipHealth.getHealth();
 	}
 	
 	public int getShieldLevels(){
@@ -127,6 +127,16 @@ public class Ship extends Body{
 			torpedoWeapon.increaseAmmo();
 		} else if(index == PLASMA_BLASTER_INDEX){
 			plasmaBlaster.increaseAmmo();
+		}
+	}
+	
+	public void getWeaponMaxAmmoByIndex(int index){
+		if(index == LASER_BLASTER_INDEX){
+			laserBlaster.getMaxAmmo();
+		} else if(index == TORPEDO_WEAPON_INDEX){
+			torpedoWeapon.getMaxAmmo();
+		} else if(index == PLASMA_BLASTER_INDEX){
+			plasmaBlaster.getMaxAmmo();
 		}
 	}
 	
