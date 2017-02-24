@@ -104,4 +104,8 @@ public class MapContainer {
 			System.out.println("error in updateMap()");
 		}
 	}
+	
+	public synchronized void updateMap() {
+		gameMap.update();
+	}
 }

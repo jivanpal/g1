@@ -47,7 +47,6 @@ public class Ship extends Body{
 		//assigning the pilot name to the ship as a way of identifying the ship 
 		this.pilotName = pilotName;
 		this.engineerName = engineerName;
-	
 	}
 	
 	public String getPilotName(){
@@ -131,34 +130,37 @@ public class Ship extends Body{
 		}
 	}
 	
-	public void getWeaponMaxAmmoByIndex(int index){
+	public int getWeaponMaxAmmoByIndex(int index){
 		if(index == LASER_BLASTER_INDEX){
-			laserBlaster.getMaxAmmo();
+			return laserBlaster.getMaxAmmo();
 		} else if(index == TORPEDO_WEAPON_INDEX){
-			torpedoWeapon.getMaxAmmo();
+			return torpedoWeapon.getMaxAmmo();
 		} else if(index == PLASMA_BLASTER_INDEX){
-			plasmaBlaster.getMaxAmmo();
+			return plasmaBlaster.getMaxAmmo();
 		}
+
+        // Should never reach this
+		return -1;
 	}
 	
 // Movement methods
 	
 	public void pitchUp() {
-	    this.exertForce(Vector.K.scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
+	    this.exertForce(Vector.K.scale(ENGINE_FORCE/100), Vector.J.scale(this.getRadius()));
 	}
 	
 	public void pitchDown() {
-	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
+	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/100), Vector.J.scale(this.getRadius()));
 	}
 	
 	public void rollLeft() {
-	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
-	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
+	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2000), Vector.I.scale(this.getRadius()));
+	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/200), Vector.I.negate().scale(this.getRadius()));
 	}
 	
 	public void rollRight() {
-	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
-        this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
+	    this.exertForce(Vector.K.scale(ENGINE_FORCE/200), Vector.I.negate().scale(this.getRadius()));
+        this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/200), Vector.I.scale(this.getRadius()));
 	}
 	public void thrustForward() {
 	    this.exertForce(Vector.J.scale(ENGINE_FORCE), Vector.J.negate().scale(this.getRadius()));

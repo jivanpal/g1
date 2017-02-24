@@ -23,7 +23,7 @@ import Views.*;
 public class ClientLobbyPanel extends JPanel implements Observer {
 	private MainMenu menu;
 	public Client client;
-	private Player player;
+	public Player player;
 	private JPanel lpanel;
 	private boolean leftserver;
 	private GridBagConstraints c;
@@ -142,10 +142,8 @@ public class ClientLobbyPanel extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		
 		Lobby l = client.getLobby();
-		if (l == null) {
-			return;
-		}
-		if (l.getHost().equals(player)) {
+		if (l.getHost().nickname.equals(player.nickname)) {
+			System.out.println("Player and host is equal");
 			HostLobbyPanel hlpanel = new HostLobbyPanel(menu, client);
 			menu.changeFrame(hlpanel);
 			return;
