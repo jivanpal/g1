@@ -6,7 +6,9 @@ import java.util.UUID;
 @SuppressWarnings("serial")
 public class Action implements Serializable
 {
-
+	public static int ADD = Lobby.LOBBY_SIZE + 1;
+	public static int KICK = Lobby.LOBBY_SIZE + 2 ;
+	public static int START = Lobby.LOBBY_SIZE + 3;
 	private Player player, player2 = null;
 	private int position;
 	private UUID lobbyID;

@@ -214,6 +214,9 @@ public class Screen extends JPanel{
 				}
 			}
 		}
+		for(int i : drawOrder){
+			System.out.println(poly3Ds.get(i).avgDistance);
+		}
 	}
 	
 	/**
@@ -256,7 +259,7 @@ public class Screen extends JPanel{
 		for(Body b : map){
 			if(b.getClass() == Ship.class){
 				Ship s = (Ship)b;
-				if(s.getPilotName().equals(nickname)){
+				if(s.getPilotName().equals(nickname) || s.getEngineerName().equals(nickname)){
 					shipIndex = map.indexOf(b);
 					break;
 				}

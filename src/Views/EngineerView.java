@@ -7,6 +7,8 @@ import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedHashMap;
@@ -101,6 +103,19 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
         this.add(screen, BorderLayout.CENTER);
         this.add(UIPanel, BorderLayout.SOUTH);
+
+        JButton test = new JButton("Laser Replenish");
+        test.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("Replenishing lasers");
+                gameClient.send("laserReplenish");
+            }
+        });
+        this.add(test, BorderLayout.NORTH);
+
+
+
     }
 
     @Override
@@ -111,6 +126,9 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         for(int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
             if(m.get(i) instanceof Ship) {
                 Ship s = (Ship) m.get(i);
+                if(s == null) {
+                    System.out.println("Ship is null? Oh dear oh dear.");
+                }
                 if(s.getEngineerName().equals(playerNickname)) {
                     laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
                     plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());

@@ -60,12 +60,12 @@ public class ServerReceiver extends Thread
 							int pos = a.getPos();
 							Player p = a.getPlayer();
 							// ADD PLAYER
-							if (pos == 9)
+							if (pos == Action.ADD)
 							{
 								l.add(p);
 							}
 							// KICK PLAYER
-							else if (pos == 10)
+							else if (pos == Action.KICK)
 							{
 								Player kicked = a.getKicked();
 								l.kick(p, kicked);
@@ -74,7 +74,7 @@ public class ServerReceiver extends Thread
 								clientTable.getQueue(kicked.nickname).offer(l);
 							}
 							// START GAME
-							else if (pos == 11)
+							else if (pos == Action.START)
 							{
 								l.start(p);
 								System.out.println("started lobby");
