@@ -16,7 +16,8 @@ public class Ship extends Body{
 	
 	private static final int DEFAULT_HEALTH = 0;
 	private static final int DEFAULT_MAX_HEALTH = 0;
-	
+
+	private String engineerName;
 	private String pilotName;
 	private Weapon torpedoWeapon;
 	private Weapon laserBlaster;
@@ -29,7 +30,7 @@ public class Ship extends Body{
 	 * Creates a new ship with a specific pilotName
 	 * @param pilotName The pilot name of the specific ship
 	 */
-	public Ship(String pilotName){
+	public Ship(String pilotName, String engineerName){
 		// Set mass and radius
 		super(100, 2);
 		
@@ -50,6 +51,10 @@ public class Ship extends Body{
 	
 	public String getPilotName(){
 		return this.pilotName;
+	}
+	
+	public String getEngineerName() {
+		return engineerName;
 	}
 	
 	//getters and setters
@@ -151,4 +156,5 @@ public class Ship extends Body{
 	public void thrustReverse() {
 	    this.exertForce(Vector.J.negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
 	}
+
 }
