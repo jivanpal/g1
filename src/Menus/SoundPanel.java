@@ -1,19 +1,16 @@
 package Menus;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.sound.sampled.*;
-
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
+import GameLogic.GameOptions;
 
 /**
  * The Sound Menu. Able to change the volume of the game.
@@ -89,21 +86,15 @@ public class SoundPanel extends JPanel {
 		slider.setForeground(Color.RED);
 		slider.setBackground(Color.WHITE);
 		slider.setOpaque(true);
+		
 		slider.addChangeListener(e -> {
 			float volume = (float) slider.getValue();
-			FloatControl musiccontrol = (FloatControl) AudioPlayer.getMusicClip().getControl(FloatControl.Type.MASTER_GAIN);
-			float musicvol = musiccontrol.getValue();
-			//FloatControl soundeffectcontrol = (FloatControl) AudioPlayer.getSoundEffectClip().getControl(FloatControl.Type.MASTER_GAIN);
 			switch (name) {
 			case "Master Volume":
-				musiccontrol.setValue(musicvol + volume);
-				//soundeffectcontrol.setValue(volume);
 				break;
 			case "Music Volume":
-				musiccontrol.setValue(musicvol + volume);
 				break;
 			case "Sound Effects":
-				//soundeffectcontrol.setValue(volume);
 				break;
 			}
 		});
