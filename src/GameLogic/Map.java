@@ -13,7 +13,7 @@ import Physics.*;
 public class Map extends ArrayList<Body> {
 /// FIELDS
     private Vector dimensions;
-    private ArrayList<Bot> bots;
+    private ArrayList<Bot> bots = new ArrayList<Bot>();
     
 /// CONSTRUCTORS
     
