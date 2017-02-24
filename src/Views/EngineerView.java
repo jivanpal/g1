@@ -126,16 +126,21 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         for(int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
             if(m.get(i) instanceof Ship) {
                 Ship s = (Ship) m.get(i);
-                if(s == null) {
-                    System.out.println("Ship is null? Oh dear oh dear.");
-                }
+
                 if(s.getEngineerName().equals(playerNickname)) {
+                    laserBlasterView.setMaxiumumAmmo();
+                    plasmaBlasterView.setMaxiumumAmmo();
+                    torpedosView.setMaxiumumAmmo();
                     laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
                     plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
                     torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
+
                     resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
                     resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
                     resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
+                    resourcesView.setMaximumResourceLevel(ResourcesView.ENGINE,);
+                    resourcesView.setMaximumResourceLevel(ResourcesView.HULL,);
+                    resourcesView.setMaximumResourceLevel(ResourcesView.SHIELDS,);
                 }
             }
         }

@@ -47,7 +47,6 @@ public class Ship extends Body{
 		//assigning the pilot name to the ship as a way of identifying the ship 
 		this.pilotName = pilotName;
 		this.engineerName = engineerName;
-	
 	}
 	
 	public String getPilotName(){
