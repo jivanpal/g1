@@ -130,13 +130,13 @@ public class Ship extends Body{
 		}
 	}
 	
-	public void getWeaponMaxAmmoByIndex(int index){
+	public int getWeaponMaxAmmoByIndex(int index){
 		if(index == LASER_BLASTER_INDEX){
-			laserBlaster.getMaxAmmo();
+			return laserBlaster.getMaxAmmo();
 		} else if(index == TORPEDO_WEAPON_INDEX){
-			torpedoWeapon.getMaxAmmo();
+			return torpedoWeapon.getMaxAmmo();
 		} else if(index == PLASMA_BLASTER_INDEX){
-			plasmaBlaster.getMaxAmmo();
+			return plasmaBlaster.getMaxAmmo();
 		}
 	}
 	

@@ -128,7 +128,7 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
                 Ship s = (Ship) m.get(i);
 
                 if(s.getEngineerName().equals(playerNickname)) {
-                    laserBlasterView.setMaxiumumAmmo();
+                    laserBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
                     plasmaBlasterView.setMaxiumumAmmo();
                     torpedosView.setMaxiumumAmmo();
                     laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
