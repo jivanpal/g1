@@ -93,17 +93,17 @@ public class SoundPanel extends JPanel {
 			float volume = (float) slider.getValue();
 			FloatControl musiccontrol = (FloatControl) AudioPlayer.getMusicClip().getControl(FloatControl.Type.MASTER_GAIN);
 			float musicvol = musiccontrol.getValue();
-			//FloatControl soundeffectcontrol = (FloatControl) AudioPlayer.getSoundEffectClip().getControl(FloatControl.Type.MASTER_GAIN);
+			FloatControl soundeffectcontrol = (FloatControl) AudioPlayer.getSoundEffectClip().getControl(FloatControl.Type.MASTER_GAIN);
 			switch (name) {
 			case "Master Volume":
-				musiccontrol.setValue(musicvol + volume);
-				//soundeffectcontrol.setValue(volume);
+				musiccontrol.setValue(volume);
+				soundeffectcontrol.setValue(volume);
 				break;
 			case "Music Volume":
-				musiccontrol.setValue(musicvol + volume);
+				musiccontrol.setValue(volume);
 				break;
 			case "Sound Effects":
-				//soundeffectcontrol.setValue(volume);
+				soundeffectcontrol.setValue(volume);
 				break;
 			}
 		});

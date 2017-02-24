@@ -82,6 +82,7 @@ public class HostLobbyPanel extends JPanel implements Observer {
 						"Create Game Error", JOptionPane.ERROR_MESSAGE);
 				PlayPanel ppanel = new PlayPanel(menu, client);
 				menu.changeFrame(ppanel);
+				client.setLobby(null);
 			}
 		} else {
 			System.out.println(client.getLobby().getID());
@@ -95,6 +96,7 @@ public class HostLobbyPanel extends JPanel implements Observer {
 			client.send(new Action(client.getLobby().getID(), player, player, 10));
 			PlayPanel ppanel = new PlayPanel(menu, client);
 			menu.changeFrame(ppanel);
+			client.setLobby(null);
 		});
 		add(backtostart, c);
 		c.anchor = GridBagConstraints.NORTHEAST;
@@ -197,7 +199,6 @@ public class HostLobbyPanel extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("Entered update method of HostLobbyPanel");
 		if (client.getLobby() == null) {
 			return;
 		}
