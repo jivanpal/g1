@@ -70,8 +70,10 @@ public class MapContainer {
 				break;
 			case "decelerate":
 				playerShip.thrustReverse();
+				break;
 			case "pitchDown":
 				playerShip.pitchDown();
+				break;
 			case "pitchUp":
 				playerShip.pitchUp();
 				break;
