@@ -2,15 +2,15 @@ package GeneralNetworking;
 
 import java.io.Serializable;
 import java.net.InetAddress;
-import java.util.Observable;
 import java.util.UUID;
 
 @SuppressWarnings("serial")
 public class Lobby implements Serializable
 {
+	public static int LOBBY_SIZE = 8;
 	private UUID id;
 	public boolean started ;
-	private Player[] players = new Player[8];
+	private Player[] players = new Player[LOBBY_SIZE];
 
 	/**
 	 * nickname - host nickname hA - host address (get it using
@@ -24,7 +24,7 @@ public class Lobby implements Serializable
 		started = false;
 		id = UUID.randomUUID(); 
 		players[0] = new Player(nickname, hostAddress, true);
-		for (int i = 1; i < 8; i++)
+		for (int i = 1; i < LOBBY_SIZE; i++)
 		{
 			players[i] = null;
 		}
@@ -33,7 +33,7 @@ public class Lobby implements Serializable
 	public void add(Player invitee)
 	{
 		int i = 0;
-		while (i < 8)
+		while (i < LOBBY_SIZE)
 		{
 			if (players[i] == null)
 			{
@@ -42,7 +42,7 @@ public class Lobby implements Serializable
 			}
 			i++;
 		}
-		if (i == 8)
+		if (i == LOBBY_SIZE)
 		{
 			System.out.println("ROOM IS FULL");
 		}
@@ -57,11 +57,11 @@ public class Lobby implements Serializable
 	 */
 	public void move(Player p, int pos)
 	{
-		if (pos > 7 || pos < 0)
+		if (pos > LOBBY_SIZE-1 || pos < 0)
 			System.out.println("INVALID POSITION NUMBER");
 		else
 		{
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < LOBBY_SIZE; i++)
 			{
 				if (players[i]!=null && players[i].equals(p))
 				{
@@ -102,7 +102,7 @@ public class Lobby implements Serializable
 	{
 		if (presser.equals(leaver) || presser.isHost)
 		{
-			for (int i = 0; i < players.length; i++)
+			for (int i = 0; i < LOBBY_SIZE; i++)
 			{
 				
 				if(players[i] != null && players[i].equals(leaver))
@@ -110,7 +110,7 @@ public class Lobby implements Serializable
 					if(players[i].isHost)
 					 	{
 							players[i]=null;
-							for (int j = 0; j < players.length; j++)
+							for (int j = 0; j < LOBBY_SIZE; j++)
 								if(players[j]!=null)
 								{
 									players[j].isHost=true;
@@ -143,7 +143,7 @@ public class Lobby implements Serializable
 	
 	public InetAddress getHostAddress(){
 		InetAddress hostAddress = null;
-		for(int i=0;i<players.length;i++){
+		for(int i=0;i<LOBBY_SIZE;i++){
 			if(players[i] != null &&  players[i].isHost){
 				hostAddress = players[i].address;
 			}
@@ -162,7 +162,7 @@ public class Lobby implements Serializable
 		return c;
 	}
 	public int getPlayerPosByName(String name){
-		for(int i =0; i< players.length;i++){
+		for(int i =0; i< LOBBY_SIZE;i++){
 			if(players[i].nickname.equals(name)){
 				return i;
 			}
