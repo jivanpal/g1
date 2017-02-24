@@ -17,9 +17,9 @@ public class MapContainer {
 		generateTerrain();
 	}
 
-	public int addShip(int position, String nickname) {
+	public int addShip(int position, String pilot,String engineer) {
 		if (position % 2 == 0) {
-			Ship ship = (new Ship(nickname));
+			Ship ship = (new Ship(pilot,engineer));
 			ship.setPosition(new Vector(position % 4 == 0 ? 0 : gameMap.getDimensions().getX() / 2,
 					position < 4 ? 0 : gameMap.getDimensions().getY() / 2, 0));
 			gameMap.add(ship);
@@ -80,6 +80,21 @@ public class MapContainer {
 				break;
 			case "rollRight":
 				playerShip.rollRight();
+				break;
+			case "shieldReplenish":
+				playerShip.increseShieldsLevel();
+			    break;
+			case "fuelReplenish":
+				playerShip.increaseFuel();
+				break;	
+			case "laserReplenish":
+				playerShip.increaseWeaponAmmoByIndex(Ship.LASER_BLASTER_INDEX);
+				break;
+			case "torpedoReplenish":
+				playerShip.increaseWeaponAmmoByIndex(Ship.TORPEDO_WEAPON_INDEX);
+				break;
+			case "plasmaReplenish":
+				playerShip.increaseWeaponAmmoByIndex(Ship.PLASMA_BLASTER_INDEX);
 				break;
 			default:
 				throw new IllegalArgumentException("You done sent the wrong string yo");
