@@ -88,10 +88,13 @@ public class MapContainer {
 				playerShip.increaseFuel();
 				break;	
 			case "laserReplenish":
+				playerShip.increaseWeaponAmmoByIndex(Ship.LASER_BLASTER_INDEX);
 				break;
 			case "torpedoReplenish":
+				playerShip.increaseWeaponAmmoByIndex(Ship.TORPEDO_WEAPON_INDEX);
 				break;
 			case "plasmaReplenish":
+				playerShip.increaseWeaponAmmoByIndex(Ship.PLASMA_BLASTER_INDEX);
 				break;
 			default:
 				throw new IllegalArgumentException("You done sent the wrong string yo");

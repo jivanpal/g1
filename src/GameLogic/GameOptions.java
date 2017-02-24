@@ -34,11 +34,9 @@ public class GameOptions {
 	public static final String DEFAULT_MANUAL_NEXT_BUTTON = String.valueOf(KeyEvent.VK_Z);
 	public static final String DEFAULT_MANUAL_PREV_BUTTON = String.valueOf(KeyEvent.VK_C);
 	
-	public static final String MASTER_VOLUME = "MASTER_VOLUME";
 	public static final String SOUND_VOLUME = "SOUND_VOLUME";
 	public static final String MUSIC_VOLUME = "MUSIC_VOLUME";
 	
-	public static final String DEFAULT_MASTER_VOLUME = "0";
 	public static final String DEFAULT_SOUND_VOLUME = "0";
 	public static final String DEFAULT_MUSIC_VOLUME = "0";
 
@@ -62,13 +60,13 @@ public class GameOptions {
 		GameOptions.fileWriter = new PrintWriter(new File(fileName));
 	}
 
-	// called when the game is started.
-	// if there is a file with key bindings - it sets the current values to
-	// those in the file
-	// if there isn't - sets the default values as current and saves them in a
-	// file
-	// ideally the defaults are going to be used just once - the first time the
-	// game is started
+	/** called when the game is started.
+	 if there is a file with key bindings - it sets the current values to
+	 those in the file
+	 if there isn't - sets the default values as current and saves them in a
+	 file
+	 ideally the defaults are going to be used just once - the first time the
+	 game is started */
 	public static void setKeyBindings() {
 
 		try {
@@ -94,7 +92,6 @@ public class GameOptions {
 	}
 	
 	public static void resetSoundValuesToDefaults() {
-		soundValues.setProperty(DEFAULT_MASTER_VOLUME, MASTER_VOLUME);
 		soundValues.setProperty(DEFAULT_SOUND_VOLUME, SOUND_VOLUME);
 		soundValues.setProperty(DEFAULT_MUSIC_VOLUME, MUSIC_VOLUME);
 	}
