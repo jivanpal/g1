@@ -1,40 +1,34 @@
 package Views;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
-import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.LinkedHashMap;
 import java.util.Observable;
 import java.util.Observer;
 
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
 import Graphics.Screen;
-import UI.ClientShipObservable;
-import javafx.scene.input.KeyCode;
 
 /**
  * Created by James on 01/02/17.
  */
-public class EngineerView extends JPanel implements KeyListener, Observer {
+public class EngineerView extends JPanel implements KeyListener, KeySequenceResponder, Observer {
     private boolean UIinitialised = false;
+
     private ShipState state = ShipState.NONE;
     private final KeySequenceManager keyManager;
 
+    private Screen screen;
     private WeaponView plasmaBlasterView;
     private WeaponView laserBlasterView;
     private WeaponView torpedosView;
-
-    private Screen screen;
     private ResourcesView resourcesView;
+
     private GameClient gameClient;
     private String playerNickname;
 
@@ -43,6 +37,11 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
     /*private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;*/
 
+    /**
+     * Creates a new EngineerView
+     * @param playerNickname The nickname of the player controlling this view.
+     * @param gameClient The GameClient handling network connections for this player.
+     */
     public EngineerView(String playerNickname, GameClient gameClient) {
         super();
 
@@ -87,6 +86,9 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         this.add(UILayeredPane);*/
     }
 
+    /**
+     * Creates all the elements of the UI and positions them on the screen. Sets all default values of the UI elements.
+     */
     public void initialiseUI() {
         try {
             Ship s = findPlayerShip();
@@ -95,6 +97,7 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
             initialiseResources(s);
             initialiseScreen();
             addAllComponents();
+            System.out.println("Done initialising the UI. I am the Engineer");
 
         } catch (Exception e) {
             System.out.println("Unable to find the Ship");
@@ -102,6 +105,9 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         }
     }
 
+    /**
+     * Adds all of the UI components to the JPanel.
+     */
     private void addAllComponents() {
         this.setLayout(new BorderLayout());
 
@@ -119,8 +125,6 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
         this.add(screen, BorderLayout.CENTER);
         this.add(UIPanel, BorderLayout.SOUTH);
-        System.out.println("Done creating the UI. I am the Engineer");
-
         this.revalidate();
         this.repaint();
     }
@@ -234,20 +238,22 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        System.out.println("Recieved a keypress");
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            // User wishes to escape out of this sequence.
+            System.out.println("Stopping this sequence");
             state = ShipState.NONE;
-            keyManager.deactiveate();
+            keyManager.deactivate();
         } else {
             if (keyManager.isActive()) {
-                System.out.println("Passing " + keyEvent.getKeyChar() + " to the sequence manager");
+                // If we're half way through a sequence, pass the key off to the key manager.
                 keyManager.keyPressed(keyEvent);
             } else {
+                // We're not in a sequence, see if this key was a keybind to start a new one.
                 switch (keyEvent.getKeyChar()) {
                     case 'l':
                         System.out.println("Starting a laser sequence");
                         this.state = ShipState.LASER_REPLENISH;
-                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[0]), false);
+                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[0]), true);
                         break;
                     case 't':
                         System.out.println("Starting a torpedo sequence");
@@ -262,12 +268,12 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
                     case 's':
                         System.out.println("Startng a shield sequence");
                         this.state = ShipState.SHIELD_REPLENISH;
-                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[3]), false);
+                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[3]), true);
                         break;
                     case 'f':
                         System.out.println("Starting a fuel sequence");
                         this.state = ShipState.FUEL_REPLENISH;
-                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[4]), false);
+                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[4]), true);
                         break;
 
                 }
@@ -275,6 +281,10 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         }
     }
 
+    /**
+     * Called by the KeyManager when a key sequence has been completed in it's entirety. Depending on the current state
+     * of the ship, we tell the server what the user has done.
+     */
     public void keySequencePassed() {
         System.out.println("Passed a sequence");
         switch (state) {
@@ -287,7 +297,6 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
                 gameClient.send("fuelReplenish");
                 break;
             case LASER_REPLENISH:
-                System.out.println("Adding more lasers");
                 gameClient.send("laserReplenish");
                 break;
             case TORPEDO_REPLENISH:
@@ -299,9 +308,19 @@ public class EngineerView extends JPanel implements KeyListener, Observer {
         }
     }
 
-    public void keySequenceFailed() {
-        System.out.println("Bad key!!!!!");
+    /**
+     * Called by the KeyManager when a key sequence has been failed but automatically restarted.
+     */
+    public void keySequenceSoftFailure() {
+        System.out.println("Soft failure of sequence");
+    }
 
+    /**
+     * Called by the KeyManager when a key sequence has been failed and /not/ automatically restarted. Depending on the
+     * current state of the ship, we may wish to show a message to the user.
+     */
+    public void keySequenceHardFailure() {
+        System.out.println("Hard failure of sequence");
         this.state = ShipState.NONE;
     }
 }

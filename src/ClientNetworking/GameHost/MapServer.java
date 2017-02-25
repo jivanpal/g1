@@ -31,7 +31,7 @@ public class MapServer extends Thread {
 
 	public void run() {
 		try {
-			ArrayList<char[][]> keySequences = KeySequenceGen.Generate(10,5);
+			ArrayList<char[][]> keySequences = KeySequenceGen.Generate(10,2);
 			
 			ClientTable clientTable = new ClientTable();
 			MapContainer gameMap = new MapContainer();

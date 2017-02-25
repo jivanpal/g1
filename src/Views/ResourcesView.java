@@ -82,7 +82,7 @@ public class ResourcesView extends JPanel {
         add(hullComponent);
 
         engineComponent = new ResourceComponent("Engines");
-        engineComponent.setResourceBarColor(Color.yellow);
+        engineComponent.setResourceBarColor(Color.YELLOW);
         add(engineComponent);
     }
 
