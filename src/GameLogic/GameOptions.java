@@ -37,8 +37,8 @@ public class GameOptions {
 	public static final String SOUND_VOLUME = "SOUND_VOLUME";
 	public static final String MUSIC_VOLUME = "MUSIC_VOLUME";
 	
-	public static final String DEFAULT_SOUND_VOLUME = "0";
-	public static final String DEFAULT_MUSIC_VOLUME = "0";
+	public static final String DEFAULT_SOUND_VOLUME = "65536";
+	public static final String DEFAULT_MUSIC_VOLUME = "65536";
 
 	// the default filename that the values are saved at
 	public final static String KEY_BINDINGS_FILE = System.getProperty("user.dir") + "/keybindings.txt";

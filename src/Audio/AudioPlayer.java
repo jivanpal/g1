@@ -1,10 +1,7 @@
 package Audio;
 
 import java.io.File;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.*;
 
 import GameLogic.GameOptions;
 /**
@@ -34,11 +31,26 @@ public class AudioPlayer {
 		try {
 			AudioInputStream audioInputStream = AudioSystem
 					.getAudioInputStream(new File(sound).getAbsoluteFile());
-			soundEffectClip = AudioSystem.getClip();
-			soundEffectClip.open(audioInputStream);
-			soundEffectVolumeControl = (FloatControl) AudioPlayer.getMusicClip().getControl(FloatControl.Type.MASTER_GAIN);
-			soundEffectVolumeControl.setValue(GameOptions.getCurrentSoundValueByDefault(GameOptions.SOUND_VOLUME));;
-			soundEffectClip.start();
+			AudioFormat format = audioInputStream.getFormat();
+			DataLine.Info info = new DataLine.Info(Clip.class, format);
+
+			Clip clip = (Clip) AudioSystem.getLine(info);
+			clip.open(audioInputStream);
+
+			//soundEffectClip = AudioSystem.getClip();
+			//soundEffectClip.open(audioInputStream);
+
+			try {
+				soundEffectVolumeControl = (FloatControl) clip.getControl(FloatControl.Type.VOLUME);
+				System.out.println(soundEffectVolumeControl.getMinimum());
+				System.out.println(soundEffectVolumeControl.getMaximum());
+				soundEffectVolumeControl.setValue(GameOptions.getCurrentSoundValueByDefault(GameOptions.SOUND_VOLUME));
+			} catch (IllegalArgumentException e) {
+				// If we've got here, James's computer sucks.
+				System.err.println("James's computer sucks");
+				e.printStackTrace();
+			}
+			clip.start();
 		} catch (Exception ex) {
 			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
@@ -61,11 +73,28 @@ public class AudioPlayer {
 		try {
 			AudioInputStream audioInputStream = AudioSystem
 					.getAudioInputStream(new File(sound).getAbsoluteFile());
-			musicClip = AudioSystem.getClip();
-			musicClip.open(audioInputStream);
-			musicVolumeControl = (FloatControl) AudioPlayer.getMusicClip().getControl(FloatControl.Type.MASTER_GAIN);
-			musicVolumeControl.setValue(GameOptions.getCurrentSoundValueByDefault(GameOptions.MUSIC_VOLUME));
-			musicClip.loop(Clip.LOOP_CONTINUOUSLY);
+			AudioFormat format = audioInputStream.getFormat();
+			DataLine.Info info = new DataLine.Info(Clip.class, format);
+
+			Clip clip = (Clip) AudioSystem.getLine(info);
+			clip.open(audioInputStream);
+
+			// musicClip = AudioSystem.getClip();
+			// musicClip.open(audioInputStream);
+
+			try {
+				musicVolumeControl = (FloatControl) clip.getControl(FloatControl.Type.VOLUME);
+				System.out.println(musicVolumeControl.getMinimum());
+				System.out.println(musicVolumeControl.getMaximum());
+				musicVolumeControl.setValue(GameOptions.getCurrentSoundValueByDefault(GameOptions.MUSIC_VOLUME));
+			} catch (IllegalArgumentException e) {
+				// If we've got here, James's computer sucks.
+				System.err.println("James's computer sucks");
+				e.printStackTrace();
+			}
+
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
+			// musicClip.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (Exception ex) {
 			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
