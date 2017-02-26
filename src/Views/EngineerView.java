@@ -38,18 +38,21 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     private JPanel UIBaseLayer;*/
 
     /**
-     * Creates a new EngineerView
+     * Creates a new EngineerView.
+     *
      * @param playerNickname The nickname of the player controlling this view.
-     * @param gameClient The GameClient handling network connections for this player.
+     * @param gameClient     The GameClient handling network connections for this player.
      */
     public EngineerView(String playerNickname, GameClient gameClient) {
         super();
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // Allow the server to fully initialise before we go and try get values from it.
+        // TODO: Show a loading screen? Do this more elegantly?
+//        try {
+//            Thread.sleep(4000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         this.playerNickname = playerNickname;
 
@@ -163,14 +166,13 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         resourcesView.setMaximumResourceLevel(ResourcesView.ENGINE, Engines.DEFAULT_FUEL_MAX_LEVEL);
         resourcesView.setMaximumResourceLevel(ResourcesView.HULL, ShipHealth.DEFAULT_MAX_SHIP_HEALTH_LEVEL);
         resourcesView.setMaximumResourceLevel(ResourcesView.SHIELDS, Shields.DEFAULT_MAX_SHIELDS_LEVEL);
-
     }
 
     /**
      * Initialise the Screen for the UI
      */
     private void initialiseScreen() {
-        screen = new Screen(playerNickname, false);
+        this.screen = new Screen(playerNickname, false);
         screen.setSize(1000, 800);
         screen.setMaximumSize(new Dimension(1000, 800));
         screen.setMinimumSize(new Dimension(1000, 800));
@@ -201,26 +203,26 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
     @Override
     public void update(Observable observable, Object o) {
-        if(!UIinitialised) {
+        if (!UIinitialised) {
             keySequences = gameClient.keySequence;
             initialiseUI();
             UIinitialised = true;
-        }
+        } else {
+            Map m = gameClient.getMap();
+            screen.setMap(m);
 
-        Map m = gameClient.getMap();
-        screen.setMap(m);
+            for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
+                if (m.get(i) instanceof Ship) {
+                    Ship s = (Ship) m.get(i);
 
-        for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
-            if (m.get(i) instanceof Ship) {
-                Ship s = (Ship) m.get(i);
-
-                if (s.getEngineerName().equals(playerNickname)) {
-                    laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
-                    plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
-                    torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
-                    resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
-                    resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
-                    resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
+                    if (s.getEngineerName().equals(playerNickname)) {
+                        laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
+                        plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
+                        torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
+                        resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
+                        resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
+                        resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
+                    }
                 }
             }
         }
