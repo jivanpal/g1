@@ -26,192 +26,152 @@ import java.util.Observer;
 /**
  * Created by James on 01/02/17.
  */
-public class PilotView extends JPanel implements KeyListener, Observer
-{
+public class PilotView extends JPanel implements KeyListener, Observer {
 
-	private final Screen screen;
-	private final SpeedometerView speedometerView;
-	private final WeaponView plasmaBlasterView;
-	private final WeaponView laserBlasterView;
-	private final WeaponView torpedosView;
+    private final Screen screen;
+    private final SpeedometerView speedometerView;
+    private final WeaponView plasmaBlasterView;
+    private final WeaponView laserBlasterView;
+    private final WeaponView torpedosView;
 
-	private final InstructionsView instructionsView;
+    private final InstructionsView instructionsView;
 
-	private GameClient gameClient;
+    private GameClient gameClient;
 
-	private JLayeredPane UIContainer;
-	private String playerNickname;
+    private JLayeredPane UIContainer;
+    private String playerNickname;
 
-	public PilotView(String playerNickname, GameClient gameClient)
-	{
-		super();
+    public PilotView(String playerNickname, GameClient gameClient) {
+        super();
 
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-		this.playerNickname = playerNickname;
-		this.setLayout(new BorderLayout());
-		this.gameClient = gameClient;
-		gameClient.addObserver(this);
-		screen = new Screen(playerNickname, true);
-		screen.setPreferredSize(new Dimension(1000, 800));
+        this.playerNickname = playerNickname;
+        this.setLayout(new BorderLayout());
+        this.gameClient = gameClient;
+        gameClient.addObserver(this);
+        screen = new Screen(playerNickname, true);
+        screen.setPreferredSize(new Dimension(1000, 800));
 
-		this.addMouseMotionListener(new MouseMotionListener() {
-			@Override
-			public void mouseDragged(MouseEvent mouseEvent)
-			{
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent mouseEvent) {
 
-			}
+            }
 
-			@Override
-			public void mouseMoved(MouseEvent mouseEvent)
-			{
-				final int x = mouseEvent.getX();
-				final int y = mouseEvent.getY();
+            @Override
+            public void mouseMoved(MouseEvent mouseEvent) {
+                final int x = mouseEvent.getX();
+                final int y = mouseEvent.getY();
 
-				final Rectangle screenBounds = screen.getBounds();
-				if (screenBounds != null && screenBounds.contains(x, y))
-				{
-					getParent().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-				}
-				else
-				{
-					getParent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				}
-			}
-		});
+                final Rectangle screenBounds = screen.getBounds();
+                if (screenBounds != null && screenBounds.contains(x, y)) {
+                    getParent().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+                } else {
+                    getParent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                }
+            }
+        });
 
-		this.add(screen, BorderLayout.CENTER);
+        this.add(screen, BorderLayout.CENTER);
 
-		speedometerView = new SpeedometerView();
+        speedometerView = new SpeedometerView();
 
-		plasmaBlasterView = new WeaponView("Plasma Blaster", false);
+        plasmaBlasterView = new WeaponView("Plasma Blaster", false);
 
-		// default plasma blaster to be highlighted, remove at a later date!
-		// plasmaBlasterView.setHighlightWeapon(true);
+        // default plasma blaster to be highlighted, remove at a later date!
+        // plasmaBlasterView.setHighlightWeapon(true);
 
-		laserBlasterView = new WeaponView("Laser Blaster", false);
-		torpedosView = new WeaponView("Torpedos", false);
+        laserBlasterView = new WeaponView("Laser Blaster", false);
+        torpedosView = new WeaponView("Torpedos", false);
 
-		instructionsView = new InstructionsView();
+        instructionsView = new InstructionsView();
 
-		for(int i = 0; i < gameClient.keySequence.length; i++) {
-			String instruction = String.valueOf(gameClient.keySequence[i]);
-			instructionsView.addInstruction(instruction);
-		}
+        for (int i = 0; i < gameClient.keySequence.length; i++) {
+            String instruction = String.valueOf(gameClient.keySequence[i]);
+            instructionsView.addInstruction(instruction);
+        }
 
-		Container weaponPanel = new Container();
-		weaponPanel.add(plasmaBlasterView);
-		weaponPanel.add(laserBlasterView);
-		weaponPanel.add(torpedosView);
-		weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
+        Container weaponPanel = new Container();
+        weaponPanel.add(plasmaBlasterView);
+        weaponPanel.add(laserBlasterView);
+        weaponPanel.add(torpedosView);
+        weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
 
-		Container UIpanel = new Container();
-		UIpanel.setPreferredSize(new Dimension(1920, 300));
-		UIpanel.setMinimumSize(new Dimension(1920, 300));
-		UIpanel.setMaximumSize(new Dimension(1920, 300));
-		UIpanel.setSize(new Dimension(1920, 300));
-		UIpanel.add(weaponPanel);
-		UIpanel.add(speedometerView);
-		UIpanel.add(instructionsView);
-		UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
+        Container UIpanel = new Container();
+        UIpanel.setPreferredSize(new Dimension(1920, 300));
+        UIpanel.setMinimumSize(new Dimension(1920, 300));
+        UIpanel.setMaximumSize(new Dimension(1920, 300));
+        UIpanel.setSize(new Dimension(1920, 300));
+        UIpanel.add(weaponPanel);
+        UIpanel.add(speedometerView);
+        UIpanel.add(instructionsView);
+        UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
 
-		System.out.println("Done creating UI. I am the Pilot");
-		this.add(UIpanel, BorderLayout.SOUTH);
+        System.out.println("Done creating UI. I am the Pilot");
+        this.add(UIpanel, BorderLayout.SOUTH);
 
-		addKeyListener(this);
-		setFocusable(true);
+        addKeyListener(this);
+        setFocusable(true);
 
-		// starting the in-game sounds
-		/*try {
-			AudioPlayer.stopMusic();
-			AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
-		} catch (Exception e) {
-			// TODO: Fix
-			// In game sound failed to load? Hopefully the game will no longer hang. This fix
-			// doesn't appear to work. Never starting the sound allows me to load though? - James
-			AudioPlayer.stopMusic();
-			AudioPlayer.stopSoundEffect();
-			e.printStackTrace();
+        // starting the in-game sounds
+        AudioPlayer.stopMusic();
+        AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
+    }
 
-			getParent().revalidate();
-			getParent().repaint();
-		}*/
-	}
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+    }
 
-	@Override
-	public void keyTyped(KeyEvent keyEvent)
-	{
-	}
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
+            gameClient.send("fireWeapon1");
+        } else if (keyEvent.getKeyCode() == GameOptions
+                .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON)) {
+            gameClient.send("fireWeapon2");
+        } else if (keyEvent.getKeyCode() == GameOptions
+                .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON)) {
+            gameClient.send("fireWeapon3");
+        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON)) {
+            gameClient.send("accelerate");
+        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON)) {
+            gameClient.send("decelerate");
+        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_DOWN_BUTTON)) {
+            gameClient.send("pitchDown");
+        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_UP_BUTTON)) {
+            gameClient.send("pitchUp");
+        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
+            gameClient.send("rollLeft");
+        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
+            gameClient.send("rollRight");
+        }
+    }
 
-	@Override
-	public void keyPressed(KeyEvent keyEvent)
-	{
-		if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON))
-		{
-			gameClient.send("fireWeapon1");
-		}
-		else if (keyEvent.getKeyCode() == GameOptions
-				.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON))
-		{
-			gameClient.send("fireWeapon2");
-		}
-		else if (keyEvent.getKeyCode() == GameOptions
-				.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON))
-		{
-			gameClient.send("fireWeapon3");
-		}
-		else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON))
-		{
-			gameClient.send("accelerate");
-		}
-		else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON))
-		{
-			gameClient.send("decelerate");
-		}
-		else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_DOWN_BUTTON))
-		{
-			gameClient.send("pitchDown");
-		}
-		else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_UP_BUTTON))
-		{
-			gameClient.send("pitchUp");
-		}
-		else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON))
-		{
-			gameClient.send("rollLeft");
-		}
-		else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON))
-		{
-			gameClient.send("rollRight");
-		}
-	}
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
 
-	@Override
-	public void keyReleased(KeyEvent keyEvent)
-	{
+    }
 
-	}
+    @Override
+    public void update(Observable observable, Object o) {
+        Map m = gameClient.getMap();
+        screen.setMap(m);
 
-	@Override
-	public void update(Observable observable, Object o)
-	{
-		Map m = gameClient.getMap();
-		screen.setMap(m);
-
-		for(int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
-			if(m.get(i) instanceof Ship) {
-				Ship s = (Ship) m.get(i);
-				if(s.getPilotName().equals(playerNickname)) {
-					speedometerView.updateSpeedLevel(s.getVelocity().length());
-					laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
-					plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
-					torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
-				}
-			}
-		}
-	}
+        for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
+            if (m.get(i) instanceof Ship) {
+                Ship s = (Ship) m.get(i);
+                if (s.getPilotName().equals(playerNickname)) {
+                    speedometerView.updateSpeedLevel(s.getVelocity().length());
+                    laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
+                    plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
+                    torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
+                }
+            }
+        }
+    }
 }
