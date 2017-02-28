@@ -53,6 +53,8 @@ public class MapContainer {
 	public synchronized void updateMap(String str, int position) {
 		Ship playerShip = (Ship) (gameMap.get(position));
 		System.out.println(str);
+		//updating the weapon cooldowns
+		playerShip.updateWeaponsCooldown();
 		try {
 			switch (str) {
 			case "fireWeapon1":

@@ -1,8 +1,6 @@
 package GameLogic;
 
 import java.io.Serializable;
-import Geometry.*;
-import Physics.*;
 
 /**
  * A class of objects that describe weapons to be added to a ship.
@@ -118,8 +116,14 @@ public abstract class Weapon implements Serializable {
     
 // Actions
     public Bullet fire(Ship parent) throws Exception {
-        ammo.down();
-        return getBulletInstance(parent);
+    	//not sure if the best way to do it
+    	Bullet bullet = null;
+    	if(canFire()){
+    		ammo.down();
+    		bullet = getBulletInstance(parent);
+    		remainingCooldown = cooldown;
+    	}
+    	return bullet;
     }
     
     public int getMaxAmmo(){
