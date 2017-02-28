@@ -18,12 +18,14 @@ public class ServerReceiver extends Thread
 	private ObjectInputStream clientIN;
 	public ClientTable clientTable;
 	public ArrayList<Lobby> lobbies;
+	private String name;
 
-	public ServerReceiver(ObjectInputStream reader, ClientTable cT, ArrayList<Lobby> lobbies)
+	public ServerReceiver(ObjectInputStream reader, ClientTable cT, ArrayList<Lobby> lobbies,String nickname)
 	{
 		clientIN = reader;
 		clientTable = cT;
 		this.lobbies = lobbies;
+		name = nickname;
 	}
 
 	public void run()
@@ -122,6 +124,7 @@ public class ServerReceiver extends Thread
 			catch (Exception e)
 			{
 				System.out.println("A client disconnected");
+				clientTable.remove(name);
 				runs=false;
 			}
 
