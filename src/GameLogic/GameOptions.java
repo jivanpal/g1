@@ -10,6 +10,8 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.Properties;
 
+import Audio.AudioPlayer;
+
 /**
  * Class which hold all of the key bindings as well as holds thier values on
  * close
@@ -34,11 +36,17 @@ public class GameOptions {
 	public static final String DEFAULT_MANUAL_NEXT_BUTTON = String.valueOf(KeyEvent.VK_Z);
 	public static final String DEFAULT_MANUAL_PREV_BUTTON = String.valueOf(KeyEvent.VK_C);
 	
-	public static final String SOUND_VOLUME = "SOUND_VOLUME";
-	public static final String MUSIC_VOLUME = "MUSIC_VOLUME";
+	public static final String SOUND_VOLUME_MASTER = "SOUND_VOLUME_MASTER";
+	public static final String MUSIC_VOLUME_MASTER = "MUSIC_VOLUME_MASTER";
+	
+	public static final String SOUND_VOLUME_VOLUME = "SOUND_VOLUME_VOLUME";
+	public static final String MUSIC_VOLUME_VOLUME = "MUSIC_VOLUME_VOLUME";
 	
 	public static final String DEFAULT_SOUND_VOLUME = "65536";
 	public static final String DEFAULT_MUSIC_VOLUME = "65536";
+	
+	public static final String DEFAULT_SOUND_MASTER = "0";
+	public static final String DEFAULT_MUSIC_MASTER = "0";
 
 	// the default filename that the values are saved at
 	public final static String KEY_BINDINGS_FILE = System.getProperty("user.dir") + "/keybindings.txt";
@@ -94,8 +102,10 @@ public class GameOptions {
 	
 	public static void resetSoundValuesToDefaults() {
 		System.out.println("resetting sound");
-		soundValues.setProperty(SOUND_VOLUME,DEFAULT_SOUND_VOLUME);
-		soundValues.setProperty(MUSIC_VOLUME, DEFAULT_MUSIC_VOLUME);
+		soundValues.setProperty(SOUND_VOLUME_VOLUME,DEFAULT_SOUND_VOLUME);
+		soundValues.setProperty(MUSIC_VOLUME_VOLUME,DEFAULT_MUSIC_VOLUME);
+		soundValues.setProperty(SOUND_VOLUME_MASTER,DEFAULT_SOUND_MASTER);
+		soundValues.setProperty(MUSIC_VOLUME_MASTER,DEFAULT_MUSIC_MASTER);
 	}
 
 	public static void resetKeysToDefaults() {
@@ -142,17 +152,45 @@ public class GameOptions {
 		GameOptions.keyBindings.setProperty(defaultValue, String.valueOf(newValue));
 	}
 	
-	public static void changeSoundByDefaultValue(String defaultValue, String newValue) {
-		GameOptions.soundValues.setProperty(defaultValue, String.valueOf(newValue));
+	public static void changeSound(String newValue) {
+		if(AudioPlayer.isUsingMaster){
+			GameOptions.soundValues.setProperty(SOUND_VOLUME_MASTER, String.valueOf(newValue));
+		} else {
+			GameOptions.soundValues.setProperty(SOUND_VOLUME_VOLUME, String.valueOf(newValue));
+		}
+	}
+	
+	public static void changeMusic(String newValue) {
+		if(AudioPlayer.isUsingMaster){
+			GameOptions.soundValues.setProperty(MUSIC_VOLUME_MASTER, String.valueOf(newValue));
+		} else {
+			GameOptions.soundValues.setProperty(MUSIC_VOLUME_VOLUME, String.valueOf(newValue));
+		}
 	}
 
 	public static int getCurrentKeyValueByDefault(String defaultValue) {
 		return Integer.valueOf(keyBindings.getProperty(defaultValue));
 	}
 	
-	public static float getCurrentSoundValueByDefault(String defaultValue) {
-		return Float.valueOf(soundValues.getProperty(defaultValue));
+	public static float getCurrentSoundValue() {
+		if(AudioPlayer.isUsingMaster){
+			return Float.valueOf(soundValues.getProperty(SOUND_VOLUME_MASTER));
+		} else {
+			return Float.valueOf(soundValues.getProperty(SOUND_VOLUME_VOLUME));
+		}
 	}
+	
+	public static float getCurrentMusicValue() {
+		if(AudioPlayer.isUsingMaster){
+			System.out.println("using master " + soundValues.getProperty(MUSIC_VOLUME_MASTER));
+			return Float.valueOf(soundValues.getProperty(MUSIC_VOLUME_MASTER));
+		} else {
+			System.out.println("using volume " + soundValues.getProperty(SOUND_VOLUME_MASTER));
+			return Float.valueOf(soundValues.getProperty(SOUND_VOLUME_VOLUME));
+		}
+	}
+	
+	
 
 	public static boolean checkIfKeyTaken(int keyCode) {
 		return keyBindings.containsValue(String.valueOf(keyCode));

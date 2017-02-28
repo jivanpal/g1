@@ -80,19 +80,28 @@ public class SoundPanel extends JPanel {
 		label.setForeground(Color.WHITE);
 		panel.add(label);
 
-		JSlider slider = new JSlider(0, 65536);
+		JSlider slider;
+		if(AudioPlayer.isUsingMaster){
+			slider = new JSlider(-80, 0);
+		} else {
+			slider = new JSlider(0, Integer.valueOf(GameOptions.DEFAULT_MUSIC_VOLUME));
+		}
 
 		switch (name) {
 			case "Master Volume":
-				// TODO: No idea where this is stored.
+				if(GameOptions.getCurrentMusicValue()==GameOptions.getCurrentSoundValue()){
+					slider.setValue((int)GameOptions.getCurrentMusicValue());
+				} else {
+					slider.setValue(AudioPlayer.isUsingMaster ? -40 : (Integer.valueOf(GameOptions.DEFAULT_MUSIC_VOLUME)/2));
+				}
 				break;
 
 			case "Sound Effects":
-				slider.setValue((int)GameOptions.getCurrentSoundValueByDefault(GameOptions.SOUND_VOLUME));
+				slider.setValue((int)GameOptions.getCurrentSoundValue());
 				break;
 
 			case "Music Volume":
-				slider.setValue((int)GameOptions.getCurrentSoundValueByDefault(GameOptions.MUSIC_VOLUME));
+				slider.setValue((int)GameOptions.getCurrentMusicValue());
 				break;
 
 			default:
@@ -109,16 +118,16 @@ public class SoundPanel extends JPanel {
 			if(name.equals("Master Volume")){
 				AudioPlayer.setMusicVolume(volume);
 				AudioPlayer.setSoundEffectVolume(volume);
-				GameOptions.changeSoundByDefaultValue(GameOptions.MUSIC_VOLUME, String.valueOf(volume));
-				GameOptions.changeSoundByDefaultValue(GameOptions.SOUND_VOLUME, String.valueOf(volume));
+				GameOptions.changeSound(String.valueOf(volume));
+				GameOptions.changeMusic(String.valueOf(volume));
 				GameOptions.saveSoundValuesInFile();
 			} else if (name.equals("Music Volume")) {
 				AudioPlayer.setMusicVolume(volume);
-				GameOptions.changeSoundByDefaultValue(GameOptions.MUSIC_VOLUME, String.valueOf(volume));
+				GameOptions.changeMusic(String.valueOf(volume));
 				GameOptions.saveSoundValuesInFile();
 			} else if(name.equals("Sound Effects")){
 				AudioPlayer.setSoundEffectVolume(volume);
-				GameOptions.changeSoundByDefaultValue(GameOptions.SOUND_VOLUME, String.valueOf(volume));
+				GameOptions.changeSound(String.valueOf(volume));
 				GameOptions.saveSoundValuesInFile();
 			}
 		});
