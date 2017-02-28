@@ -118,6 +118,7 @@ public class ServerReceiver extends Thread
 						infos[i++] = new LobbyInfo(l.getID(), hostname, count);
 						count = 0;
 					}
+					
 					LobbyList lList = new LobbyList(infos);
 					clientTable.getQueue((String) inObject).offer(lList);
 					//System.out.println(lList.getLobbies().length);
@@ -126,6 +127,14 @@ public class ServerReceiver extends Thread
 			catch (Exception e)
 			{
 				System.out.println("A client disconnected");
+				for (int i = 0; i < lobbies.size(); i++)
+				{
+					Lobby l =lobbies.get(i);
+					if(l.getPlayerPosByName(name)!=-1)
+					{	
+						l.leave(name);
+					}
+				}
 				clientTable.remove(name);
 				runs=false;
 			}

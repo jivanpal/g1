@@ -187,5 +187,31 @@ public class Lobby implements Serializable
 		}
 		return -1;
 	}
+	/**
+	 * Leave the game
+	 * @param name the player name
+	 */
+	public void leave(String name)
+	{
+		for (int i = 0; i < LOBBY_SIZE; i++)
+		{
+			
+			if(players[i] != null && players[i].nickname.equals(name))
+			{
+				if(players[i].isHost)
+				 	{
+						players[i]=null;
+						for (int j = 0; j < LOBBY_SIZE; j++)
+							if(players[j]!=null)
+							{
+								players[j].isHost=true;
+								break;
+							}
+				 	}
+				else players[i]=null;
+			}
+			
+		}
+	}
 }
 
