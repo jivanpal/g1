@@ -23,7 +23,7 @@ public class Calculations {
 	public static Point calcPos(Vector viewFrom, Vector viewTo, Vector p2){
 		Vector pInCamera = Matrix.multiplyVector(Screen.CM, p2);
 //		pInCamera = Matrix.multiplyVector(Matrix.getPper(10), pInCamera);
-		return new Point((pInCamera.getX()*10)/pInCamera.getZ(), (pInCamera.getY()*10)/pInCamera.getZ(), 10);
+		return new Point((pInCamera.getX()*100)/pInCamera.getZ(), (pInCamera.getY()*100)/pInCamera.getZ(), 100);
 	}
 	
 	private static Vector getRotationVector(Point viewFrom, Point viewTo){
