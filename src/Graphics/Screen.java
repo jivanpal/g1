@@ -173,7 +173,7 @@ public class Screen extends JPanel{
 			else if(bClass == Asteroid.class){
 //				System.out.println("Got an asteroid " + map.indexOf(b));
 				for(Vector v : map.getAllPositions(b.getPosition())){
-					AsteroidModel asteroid = new AsteroidModel(v, 5, b.getOrientation());
+					AsteroidModel asteroid = new AsteroidModel(v, 2, b.getOrientation());
 				}
 				asteroidDrawn  = true;
 			}
