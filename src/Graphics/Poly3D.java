@@ -1,5 +1,7 @@
 package Graphics;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+
 import Geometry.Vector;
 
 /**
@@ -14,6 +16,8 @@ public class Poly3D {
 	PolygonObj poly;
 	public double avgDistance;
 	private boolean draw = true;
+	private BufferedImage img;
+	private boolean imgPresent;
 	
 	
 	/**
@@ -28,14 +32,29 @@ public class Poly3D {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		imgPresent = false;
 		createPolygon();
 	}
 	
+	public Poly3D(double[] x, double[] y, double[] z, BufferedImage img) {
+		this.img = img;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		imgPresent = true;
+		createPolygon();
+	}
+
 	/**
 	 * Creates a new PolygonObj
 	 */
 	public void createPolygon(){
-		poly = new PolygonObj(new double[x.length], new double[x.length], c);
+		if(!imgPresent){
+			poly = new PolygonObj(new double[x.length], new double[x.length], c);
+		}
+		else{
+			poly = new PolygonObj(new double[x.length], new double[x.length], img);
+		}
 	}
 	
 	/**

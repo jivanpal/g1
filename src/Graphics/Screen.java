@@ -3,12 +3,18 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import GameLogic.Asteroid;
+import GameLogic.Global;
 import GameLogic.Map;
 import GameLogic.Ship;
 import Physics.Body;
@@ -29,8 +35,7 @@ public class Screen extends JPanel{
 	public static Vector N, U, V;
 	
 	private double lightPosition;
-	private static double moveSpeed = 0.01, verticalLook = 0;
-	private double verticalLookSpeed = 0.01, horizontalLookSpeed = 0.01;
+	private static double verticalLook = 0;
 	private double r;
 	
 	public static int nPoly = 0, nPoly3D = 0;
@@ -44,6 +49,7 @@ public class Screen extends JPanel{
 	private boolean pilot;
 	private boolean asteroidDrawn = false;
 	private int i = 0;
+	private BufferedImage skyboxImg;
 	
 	/**
 	 * Creates a new Screen object
@@ -58,6 +64,11 @@ public class Screen extends JPanel{
 		Body asteroid = new Body();
 		asteroid.move(new Vector(0, 2, 0));
 		map.add(asteroid);
+		try {
+		    skyboxImg = ImageIO.read(new File("bin/Graphics/spacebox.png"));
+		} catch (IOException e) {
+			System.err.println("Can't find skybox image");
+		}
 		
 		//Create starting vectors
 		viewFrom = new Vector(0, 0, 0);
@@ -100,8 +111,7 @@ public class Screen extends JPanel{
 //		Calculations.setInfo();
 		setLight();
 		
-		if(!asteroidDrawn)
-			createObjects();
+		createObjects();
 		
 		//Draw all polygons onto the screen
 		nPoly = poly3Ds.size();
@@ -129,7 +139,10 @@ public class Screen extends JPanel{
 		g.drawString("U: " + U.getX() + ", " + U.getY() + ", " + U.getZ(), 40, 120);
 		g.drawString("N: " + N.getX() + ", " + N.getY() + ", " + N.getZ(), 40, 140);
 		
-		g.setColor(Color.RED);
+		
+		//Taken this out for now because people kept ripping in to the stuff I'd spent ages on
+		
+		/*g.setColor(Color.RED);
 		Point origin = new Point(getWidth() - 40, 40, 1);
 		Vector uLine = (new Vector(0, 0, 0)).plus(U.scale(20));
 		Vector uLine2 = Matrix.multiplyVector(CM, uLine);
@@ -141,29 +154,33 @@ public class Screen extends JPanel{
 		g.setColor(Color.GREEN);
 		Vector nLine = (new Vector(0, 0, 0)).plus(N.scale(20));
 		Vector nLine2 = Matrix.multiplyVector(CM, nLine);
-		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (nLine2.getX())), (int)(origin.y + (-nLine2.getY())));
+		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (nLine2.getX())), (int)(origin.y + (-nLine2.getY())));*/
 		
 		sleepAndRefresh();
 	}
 	
 	private void createObjects() {
-//		poly3Ds = new ArrayList<Poly3D>();
+		poly3Ds.clear();
+		System.out.println(map.size());
 		for(Body b : map){
 			Class<? extends Body> bClass = b.getClass();
 			if(bClass == Ship.class && map.indexOf(b) != shipIndex){
 				for(Vector v : map.getAllPositions(b.getPosition())){
-					System.out.println("Drawing Ship: " + map.indexOf(b) + ", " + shipIndex);
+//					System.out.println("Drawing Ship: " + map.indexOf(b) + ", " + shipIndex);
 					Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
 				}
 			}
-			else if(bClass == Asteroid.class && !asteroidDrawn){
-//				System.out.println("Got an asteroid " + map.indexOf(b));
+			else if(bClass == Asteroid.class){
+				System.out.println("Got an asteroid " + map.indexOf(b));
 				for(Vector v : map.getAllPositions(b.getPosition())){
-					AsteroidModel asteroid = new AsteroidModel(v, 50, b.getOrientation());
+					AsteroidModel asteroid = new AsteroidModel(v, 5, b.getOrientation());
 				}
 				asteroidDrawn  = true;
 			}
 		}
+		Skybox skybox = new Skybox(viewFrom, Global.MAP_SIZE, skyboxImg);
+		System.out.println("Completed createObjects()");
+		
 	}
 
 	/**
