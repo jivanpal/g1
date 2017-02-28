@@ -133,6 +133,7 @@ public class ServerReceiver extends Thread
 					if(l.getPlayerPosByName(name)!=-1)
 					{	
 						l.leave(name);
+						break;
 					}
 				}
 				clientTable.remove(name);

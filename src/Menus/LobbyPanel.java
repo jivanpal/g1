@@ -264,9 +264,9 @@ public class LobbyPanel extends JPanel implements Observer {
 			{
 				PilotView pv;
 				if (players[pos + 1] == null) {
-					pv = new PilotView(client.name, gameClient);
+					pv = new PilotView(client.name, gameClient,true);
 				} else {
-					pv = new PilotView(client.name, gameClient);
+					pv = new PilotView(client.name, gameClient,false);
 				}
 				menu.changeFrame(pv);
 			} else // else player is engineer

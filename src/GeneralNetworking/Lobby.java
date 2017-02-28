@@ -195,7 +195,6 @@ public class Lobby implements Serializable
 	{
 		for (int i = 0; i < LOBBY_SIZE; i++)
 		{
-			
 			if(players[i] != null && players[i].nickname.equals(name))
 			{
 				if(players[i].isHost)
