@@ -166,12 +166,12 @@ public class Screen extends JPanel{
 			Class<? extends Body> bClass = b.getClass();
 			if(bClass == Ship.class && map.indexOf(b) != shipIndex){
 				for(Vector v : map.getAllPositions(b.getPosition())){
-//					System.out.println("Drawing Ship: " + map.indexOf(b) + ", " + shipIndex);
+					System.out.println("Drawing Ship: " + map.indexOf(b) + ", " + shipIndex);
 					Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
 				}
 			}
 			else if(bClass == Asteroid.class){
-				System.out.println("Got an asteroid " + map.indexOf(b));
+//				System.out.println("Got an asteroid " + map.indexOf(b));
 				for(Vector v : map.getAllPositions(b.getPosition())){
 					AsteroidModel asteroid = new AsteroidModel(v, 5, b.getOrientation());
 				}
@@ -258,13 +258,13 @@ public class Screen extends JPanel{
 				N = ship.getForwardVector();
 			}
 			else{
-				N = ship.getForwardVector();
+				N = ship.getBackwardVector();
 			}
 			viewFrom = ship.getPosition();
 			viewTo = viewFrom.plus(N);
 			
 			//Generate CM matrix for transforming points from global coordinate system to camera coordinate system
-			CM = Matrix.getCM(viewFrom, V, U, N, 2);
+			CM = Matrix.getCM(viewFrom, V, U, N, 10);
 		}
 		
 		
