@@ -3,3 +3,6 @@
 /files
 /keybindings.txt
 .idea/
+.classpath
+.project
+soundvalues.txt
