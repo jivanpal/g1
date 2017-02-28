@@ -44,7 +44,7 @@ public class ServerSender extends Thread
 			catch (IOException e)
 			{
 				runs = false;
-				e.printStackTrace();
+				System.out.println("A client disconnected");
 			}
 		}
 	}

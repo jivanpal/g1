@@ -121,9 +121,8 @@ public class ServerReceiver extends Thread
 			}
 			catch (Exception e)
 			{
-				System.out.println("client disconnected");
+				System.out.println("A client disconnected");
 				runs=false;
-				e.printStackTrace();
 			}
 
 		}
