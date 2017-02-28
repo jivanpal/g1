@@ -269,8 +269,6 @@ public class PilotView extends JPanel implements KeyListener, Observer {
             }
         } else {
             Map m = gameClient.getMap();
-            System.out.println("Screen is null : " + screen == null);
-            System.out.println("Map is null : " + m == null);
             screen.setMap(m);
         }
     }

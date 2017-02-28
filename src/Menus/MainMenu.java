@@ -51,6 +51,10 @@ public class MainMenu {
 		frame.revalidate();
 	}
 
+	public JFrame getFrame() {
+		return frame;
+	}
+
 	public static void main(String[] args) {
 		GameOptions.setKeyBindings();
 		GameOptions.setSoundValues();

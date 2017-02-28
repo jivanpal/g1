@@ -265,7 +265,7 @@ public class LobbyPanel extends JPanel implements Observer {
 				menu.changeFrame(pv);
 			} else // else player is engineer
 			{
-				EngineerView eview = new EngineerView(client.name, gameClient);
+				EngineerView eview = new EngineerView(client.name, gameClient, menu.getFrame());
 				menu.changeFrame(eview);
 			}
 		} else {
