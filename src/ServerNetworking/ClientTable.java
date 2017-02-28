@@ -52,4 +52,8 @@ public class ClientTable
 			queueTable.get(name).offer(o);
 		}
 	}
+	public void remove(String name)
+	{
+		queueTable.remove(name);
+	}
 }

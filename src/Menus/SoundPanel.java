@@ -79,9 +79,35 @@ public class SoundPanel extends JPanel {
 		label.setOpaque(false);
 		label.setForeground(Color.WHITE);
 		panel.add(label);
-		JSlider slider = new JSlider(-40, 0);
-		
-		slider.setValue(0);
+
+		JSlider slider;
+		if(AudioPlayer.isUsingMaster){
+			slider = new JSlider(-80, 0);
+		} else {
+			slider = new JSlider(0, Integer.valueOf(GameOptions.DEFAULT_MUSIC_VOLUME));
+		}
+
+		switch (name) {
+			case "Master Volume":
+				if(GameOptions.getCurrentMusicValue()==GameOptions.getCurrentSoundValue()){
+					slider.setValue((int)GameOptions.getCurrentMusicValue());
+				} else {
+					slider.setValue(AudioPlayer.isUsingMaster ? -40 : (Integer.valueOf(GameOptions.DEFAULT_MUSIC_VOLUME)/2));
+				}
+				break;
+
+			case "Sound Effects":
+				slider.setValue((int)GameOptions.getCurrentSoundValue());
+				break;
+
+			case "Music Volume":
+				slider.setValue((int)GameOptions.getCurrentMusicValue());
+				break;
+
+			default:
+				slider.setValue(0);
+		}
+
 		slider.setPaintTicks(true);
 		slider.setForeground(Color.RED);
 		slider.setBackground(Color.WHITE);
@@ -92,16 +118,16 @@ public class SoundPanel extends JPanel {
 			if(name.equals("Master Volume")){
 				AudioPlayer.setMusicVolume(volume);
 				AudioPlayer.setSoundEffectVolume(volume);
-				GameOptions.changeSoundByDefaultValue(GameOptions.MUSIC_VOLUME, String.valueOf(volume));
-				GameOptions.changeSoundByDefaultValue(GameOptions.SOUND_VOLUME, String.valueOf(volume));
+				GameOptions.changeSound(String.valueOf(volume));
+				GameOptions.changeMusic(String.valueOf(volume));
 				GameOptions.saveSoundValuesInFile();
 			} else if (name.equals("Music Volume")) {
-				AudioPlayer.setSoundEffectVolume(volume);
-				GameOptions.changeSoundByDefaultValue(GameOptions.SOUND_VOLUME, String.valueOf(volume));
+				AudioPlayer.setMusicVolume(volume);
+				GameOptions.changeMusic(String.valueOf(volume));
 				GameOptions.saveSoundValuesInFile();
 			} else if(name.equals("Sound Effects")){
-				AudioPlayer.setMusicVolume(volume);
-				GameOptions.changeSoundByDefaultValue(GameOptions.MUSIC_VOLUME, String.valueOf(volume));
+				AudioPlayer.setSoundEffectVolume(volume);
+				GameOptions.changeSound(String.valueOf(volume));
 				GameOptions.saveSoundValuesInFile();
 			}
 		});

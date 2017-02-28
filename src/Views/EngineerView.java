@@ -2,6 +2,7 @@ package Views;
 
 import javax.swing.*;
 
+import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 
 import java.awt.*;
@@ -38,6 +39,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     private JPanel UIBaseLayer;*/
 
     /**
+     * Creates a new EngineerView
      * Creates a new EngineerView.
      *
      * @param playerNickname The nickname of the player controlling this view.
@@ -67,8 +69,8 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         // initialiseUI();
 
         // starting the in-game sounds
-        /*AudioPlayer.stopMusic();
-        AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);*/
+        AudioPlayer.stopMusic();
+        AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
 
 
         /*UILayeredPane = new JLayeredPane();
