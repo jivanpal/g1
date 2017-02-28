@@ -1,5 +1,6 @@
 package Views;
 
+import AI.EngineerAI;
 import ClientNetworking.GameClient.GameClientReceiver;
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.Map;
@@ -39,6 +40,8 @@ public class PilotView extends JPanel implements KeyListener, Observer {
 
     private boolean UIinitialised = false;
 
+    private EngineerAI engAI;
+
     // private JLayeredPane UIContainer;
 
     /**
@@ -47,8 +50,12 @@ public class PilotView extends JPanel implements KeyListener, Observer {
      * @param playerNickname The nickname of the player controlling this view.
      * @param gameClient     The GameClient handling network connections for this player.
      */
-    public PilotView(String playerNickname, GameClient gameClient) {
+    public PilotView(String playerNickname, GameClient gameClient, boolean ai) {
         super();
+        if(ai) {
+            engAI = new EngineerAI(gameClient, playerNickname);
+            gameClient.addObserver(engAI);
+        }
 
         // Allow the server to fully initialise before we go and try get values from it.
         // TODO: Show a loading screen? Do this more elegantly?
@@ -269,8 +276,6 @@ public class PilotView extends JPanel implements KeyListener, Observer {
             }
         } else {
             Map m = gameClient.getMap();
-            System.out.println("Screen is null : " + screen == null);
-            System.out.println("Map is null : " + m == null);
             screen.setMap(m);
         }
     }
