@@ -169,7 +169,7 @@ public class Map extends ArrayList<Body> {
      * Update the state of the map.
      */
     public void update() {
-        // Get rid of destroyed bodies
+        // Get rid of destroyed bodies.
         for(int i = size() - 1; i >= 0; i--) {
             if( get(i).isDestroyed() ) {
                 remove(i);
@@ -182,17 +182,18 @@ public class Map extends ArrayList<Body> {
             b.update();
         }
         
-        // Make bots do their thing
+        // Make bots do their thing.
         for (Bot b : bots) {
             b.update();
         }
         
-        for (Body a : this) {
-            for (Body b : this) {
-                if (a.isTouching(b)) {
-                    a.rebound(b);
-                }
-            }
-        }
+        // Make touching bodies rebound.
+//        for (Body a : this) {
+//            for (Body b : this) {
+//                if (a.isTouching(b)) {
+//                    a.rebound(b);
+//                }
+//            }
+//        }
     }
 }

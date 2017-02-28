@@ -10,7 +10,7 @@ public class Body implements Cloneable, Serializable {
     private boolean destroyed = false;
     
     private double m = 1;       // Default mass is 1 kg.
-    private double radius = 10; // Defualt radius is 10 m.
+    private double radius = 10; // Default radius is 10 m.
     
     private Vector s = Vector.ZERO;             // Default position is at the origin.
     private Rotation orient = Rotation.NONE;    // Default orientation is on the x-y plane,
@@ -315,10 +315,12 @@ public class Body implements Cloneable, Serializable {
     
     public void alterVelocity(Vector delta) {
         v = v.plus(delta);
+        System.err.println("∆v = "+delta+".");
     }
 
     public void alterAngularVelocity(Vector delta) {
         omega = omega.plus(delta);
+        System.err.println("∆w = "+delta+".");
     }
     
     /**
