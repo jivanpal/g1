@@ -89,7 +89,6 @@ public class GameOptions {
 	}
 	
 	public static void setSoundValues() {
-		System.out.println("works?");
 		try {
 			initialiseReader(SOUND_VALUES_FILE);
 			soundValues.load(fileReader);
@@ -182,16 +181,12 @@ public class GameOptions {
 	
 	public static float getCurrentMusicValue() {
 		if(AudioPlayer.isUsingMaster){
-			System.out.println("using master " + soundValues.getProperty(MUSIC_VOLUME_MASTER));
 			return Float.valueOf(soundValues.getProperty(MUSIC_VOLUME_MASTER));
 		} else {
-			System.out.println("using volume " + soundValues.getProperty(SOUND_VOLUME_MASTER));
 			return Float.valueOf(soundValues.getProperty(SOUND_VOLUME_VOLUME));
 		}
 	}
 	
-	
-
 	public static boolean checkIfKeyTaken(int keyCode) {
 		return keyBindings.containsValue(String.valueOf(keyCode));
 
