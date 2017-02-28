@@ -92,6 +92,8 @@ public class ServerReceiver extends Thread
 								if (players[j] != null)
 									clientTable.getQueue(players[j].nickname).offer(l);
 							}
+							if(pos == Action.START)
+								lobbies.remove(i);
 							break;
 						}
 					}
