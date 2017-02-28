@@ -164,7 +164,7 @@ public class Screen extends JPanel{
 		System.out.println(map.size());
 		for(Body b : map){
 			Class<? extends Body> bClass = b.getClass();
-			if(bClass == Ship.class && map.indexOf(b) != shipIndex){
+			if(bClass == Ship.class && map.indexOf(b) != shipIndex && map.indexOf(b) >= 0){
 				for(Vector v : map.getAllPositions(b.getPosition())){
 					System.out.println("Drawing Ship: " + map.indexOf(b) + ", " + shipIndex);
 					Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
