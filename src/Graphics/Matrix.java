@@ -353,7 +353,7 @@ public class Matrix {
 	 * @param fov The distance from the camera to the projection plane
 	 * @return
 	 */
-	private static double[][] getPper(double fov){
+	public static double[][] getPper(double fov){
 		return new double[][] { {1, 0, 0, 0},
 								{0, 1, 0, 0},
 								{0, 0, 1, 0},
@@ -371,7 +371,7 @@ public class Matrix {
 	 */
 	public static double[][] getCM(Vector viewFrom, Vector V, Vector U, Vector N, double fov){
 		
-		double[][] m = multiply(getTM(viewFrom), getR(V, U, N));
+		double[][] m = multiply(getTM(viewFrom), getR(U, V, N));
 		m = multiply(m, getSM());
 //		m = multiply(m, getPper(fov));
 		return m;

@@ -68,7 +68,13 @@ public class WeaponView extends JPanel{
         }
     }
 
+    /**
+     * Set the maximum amount of ammo this weapon can have
+     * @param maxiumumAmmo The maximum amount of ammo
+     */
     public void setMaxiumumAmmo(int maxiumumAmmo) {
-        weaponAmmoLevel.setMaximum(maxiumumAmmo);
+        if(showAmmoLevel) {
+            weaponAmmoLevel.setMaximum(maxiumumAmmo);
+        }
     }
 }

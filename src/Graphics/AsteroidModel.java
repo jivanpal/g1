@@ -13,7 +13,7 @@ import Geometry.Vector;
 public class AsteroidModel {
 	
 	private double x, y, z, size;
-	private Vector[] vertices = new Vector[12];
+	private Vector[] vertices = new Vector[4];
 	private int[][] sides = {	{0, 1, 2},
 								{0, 1, 3},
 								{0, 2, 3},
@@ -40,12 +40,20 @@ public class AsteroidModel {
 	}
 	
 	private void createPoints(){
-		Random r = new Random();
+		vertices[0] = new Vector(x - (size/2), y, z + (size/2));
+		vertices[1] = new Vector(x + (size/2), y, z + (size/2));
+		vertices[2] = new Vector(x, y, z - (size/2));
+		vertices[3] = new Vector(x, y + (size/2), z);
 		
-		for(int i = 0; i < 4; i++){
-			vertices[i] = new Vector((r.nextDouble() - 0.5) * size + x, (r.nextDouble() - 0.5) * size + y, (r.nextDouble() - 0.5) * size + z);
-			orientation.apply(vertices[i]);
-			vertices[i] = new Vector(vertices[i].getX() + x, vertices[i].getY() + y, vertices[i].getZ() + z);
-		}
+//		Not sure why this doesn't work but it doesn't
+//		orientation.apply(vertices);
+		
+//		Random generation that I'm temporarily giving up on
+		
+//		Random r = new Random();
+//		for(int i = 0; i < 4; i++){
+//			vertices[i] = new Vector((r.nextDouble() - 0.5) * size + x, (r.nextDouble() - 0.5) * size + y, (r.nextDouble() - 0.5) * size + z);
+//			orientation.apply(vertices[i]);
+//		}
 	}
 }

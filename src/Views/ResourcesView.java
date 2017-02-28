@@ -110,8 +110,7 @@ public class ResourcesView extends JPanel {
             resourceProgressBar.setUI(new BasicProgressBarUI());
             resourceProgressBar.setIndeterminate(false);
 
-            // Find the maximum value for this kind of resource
-            // TODO
+            // TODO: Find the maximum value for this kind of resource
             resourceProgressBar.setMaximum(10);
 
             add(resourceProgressBar);

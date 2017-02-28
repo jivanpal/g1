@@ -10,7 +10,7 @@ import Physics.Body;
 
 public class MapContainer {
 	
-	public static int ASTEROID_NUMBER = 100;
+	public static int ASTEROID_NUMBER = 50;
 	public Map gameMap = new Map(100, 100, 100);
 
 	public MapContainer() {
