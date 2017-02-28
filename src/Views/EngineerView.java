@@ -6,6 +6,8 @@ import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
@@ -35,8 +37,9 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
     private char[][] keySequences;
 
-    /*private JLayeredPane UILayeredPane;
-    private JPanel UIBaseLayer;*/
+    private JLayeredPane UILayeredPane;
+    private JPanel UIBaseLayer;
+    private JFrame parentFrame;
 
     /**
      * Creates a new EngineerView
@@ -45,7 +48,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
      * @param playerNickname The nickname of the player controlling this view.
      * @param gameClient     The GameClient handling network connections for this player.
      */
-    public EngineerView(String playerNickname, GameClient gameClient) {
+    public EngineerView(String playerNickname, GameClient gameClient, JFrame parent) {
         super();
 
         // Allow the server to fully initialise before we go and try get values from it.
@@ -66,7 +69,32 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         addKeyListener(this);
         setFocusable(true);
 
-        // initialiseUI();
+        this.parentFrame = parent;
+        UILayeredPane = parent.getLayeredPane();
+
+        parent.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent componentEvent) {
+                //TODO: Resize when the frame changes size!
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent componentEvent) {
+
+            }
+
+            @Override
+            public void componentShown(ComponentEvent componentEvent) {
+
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent componentEvent) {
+
+            }
+        });
+
+        initialiseUI();
 
         // starting the in-game sounds
         AudioPlayer.stopMusic();
@@ -98,7 +126,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         try {
             Ship s = findPlayerShip();
 
-            initaliseWeapons(s);
+            initialiseWeapons(s);
             initialiseResources(s);
             initialiseScreen();
             addAllComponents();
@@ -128,8 +156,18 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         UIPanel.add(resourcesView);
         UIPanel.add(weaponPanel);
 
-        this.add(screen, BorderLayout.CENTER);
-        this.add(UIPanel, BorderLayout.SOUTH);
+        UIBaseLayer = new JPanel();
+        UIBaseLayer.setLayout(new BorderLayout());
+        UIBaseLayer.add(screen, BorderLayout.CENTER);
+        UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
+        UIBaseLayer.setBounds(0, 0, (int) parentFrame.getWidth(), (int) parentFrame.getHeight());
+        System.out.println("Width: " + parentFrame.getWidth());
+        System.out.println("Height: " + parentFrame.getHeight());
+        JLayeredPaneLayoutManager layoutManager = new JLayeredPaneLayoutManager();
+
+        UILayeredPane.setLayout(layoutManager);
+        UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+
         this.revalidate();
         this.repaint();
     }
@@ -139,7 +177,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
      *
      * @param s This players Ship object
      */
-    private void initaliseWeapons(Ship s) {
+    private void initialiseWeapons(Ship s) {
         plasmaBlasterView = new WeaponView("Plasma Blaster", true);
 
         // default plasma blaster to be highlighted, remove at a later date!

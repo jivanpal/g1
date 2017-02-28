@@ -13,9 +13,6 @@ public class Ship extends Body{
 	public static final byte LASER_BLASTER_INDEX = 0;
 	public static final byte PLASMA_BLASTER_INDEX = 1;
 	public static final byte TORPEDO_WEAPON_INDEX = 2;
-	
-	private static final int DEFAULT_HEALTH = 0;
-	private static final int DEFAULT_MAX_HEALTH = 0;
 
 	private String engineerName;
 	private String pilotName;
@@ -47,7 +44,7 @@ public class Ship extends Body{
 		//assigning the pilot name to the ship as a way of identifying the ship 
 		this.pilotName = pilotName;
 		this.engineerName = engineerName;
-	}
+	}	
 	
 	public String getPilotName(){
 		return this.pilotName;
