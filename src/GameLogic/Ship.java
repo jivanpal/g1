@@ -46,6 +46,12 @@ public class Ship extends Body{
 		this.engineerName = engineerName;
 	}	
 	
+	public void updateWeaponsCooldown(){
+		this.laserBlaster.update();
+		this.torpedoWeapon.update();
+		this.plasmaBlaster.update();
+	}
+	
 	public String getPilotName(){
 		return this.pilotName;
 	}
