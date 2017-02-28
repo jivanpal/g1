@@ -136,7 +136,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			startgame.setPreferredSize(new Dimension(300, 50));
 			add(startgame, c);
 		}
-		
+
 		c.anchor = GridBagConstraints.CENTER;
 		while (client.getLobby() == null) {
 			try {
@@ -232,7 +232,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			return;
 		} else {
 			l = client.getLobby();
-			
+
 		}
 		Player[] players = l.getPlayers();
 		boolean inlobby = false;
@@ -245,11 +245,12 @@ public class LobbyPanel extends JPanel implements Observer {
 			}
 		}
 		if (inlobby == false && leftserver == false) {
-			JOptionPane.showMessageDialog(this, "You have been kicked from the lobby!", "Kicked From Lobby", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "You have been kicked from the lobby!", "Kicked From Lobby",
+					JOptionPane.INFORMATION_MESSAGE);
 			ButtonPanel bpanel = new ButtonPanel(menu, client);
 			menu.changeFrame(bpanel);
 		} else if (l.started) {
-			
+
 			int pos = 0;
 			while (pos < players.length) {
 				if (player.equals(players[pos]))
@@ -261,7 +262,12 @@ public class LobbyPanel extends JPanel implements Observer {
 
 			if (pos % 2 == 0) // i.e. if player is pilot
 			{
-				PilotView pv = new PilotView(client.name, gameClient);
+				PilotView pv;
+				if (players[pos + 1] == null) {
+					pv = new PilotView(client.name, gameClient);
+				} else {
+					pv = new PilotView(client.name, gameClient);
+				}
 				menu.changeFrame(pv);
 			} else // else player is engineer
 			{
@@ -270,7 +276,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			}
 		} else {
 			while (lpanel == null) {
-				
+
 			}
 			this.remove(lpanel);
 			JPanel newpanel = displayplayers();

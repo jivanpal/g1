@@ -18,12 +18,14 @@ public class ServerReceiver extends Thread
 	private ObjectInputStream clientIN;
 	public ClientTable clientTable;
 	public ArrayList<Lobby> lobbies;
+	private String name;
 
-	public ServerReceiver(ObjectInputStream reader, ClientTable cT, ArrayList<Lobby> lobbies)
+	public ServerReceiver(ObjectInputStream reader, ClientTable cT, ArrayList<Lobby> lobbies,String nickname)
 	{
 		clientIN = reader;
 		clientTable = cT;
 		this.lobbies = lobbies;
+		name = nickname;
 	}
 
 	public void run()
@@ -90,6 +92,8 @@ public class ServerReceiver extends Thread
 								if (players[j] != null)
 									clientTable.getQueue(players[j].nickname).offer(l);
 							}
+							if(pos == Action.START)
+								lobbies.remove(i);
 							break;
 						}
 					}
@@ -121,9 +125,9 @@ public class ServerReceiver extends Thread
 			}
 			catch (Exception e)
 			{
-				System.out.println("client disconnected");
+				System.out.println("A client disconnected");
+				clientTable.remove(name);
 				runs=false;
-				e.printStackTrace();
 			}
 
 		}

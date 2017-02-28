@@ -135,7 +135,6 @@ public class PilotView extends JPanel implements KeyListener, Observer {
      */
     private void addAllComponents() {
         this.setLayout(new BorderLayout());
-
         Container weaponPanel = new Container();
         weaponPanel.add(plasmaBlasterView);
         weaponPanel.add(laserBlasterView);
@@ -257,6 +256,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
 
     @Override
     public void update(Observable observable, Object o) {
+
         if (!UIinitialised) {
             try {
                 initialiseUI();
