@@ -15,6 +15,7 @@ import java.util.Observer;
 
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
+import Graphics.Screen;
 
 /**
  * Created by James on 01/02/17.
