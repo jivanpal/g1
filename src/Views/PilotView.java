@@ -42,7 +42,9 @@ public class PilotView extends JPanel implements KeyListener, Observer {
 
     private EngineerAI engAI;
 
-    // private JLayeredPane UIContainer;
+    private JLayeredPane UILayeredPane;
+    private JPanel UIBaseLayer;
+    private JFrame parentFrame;
 
     /**
      * Creates a new PilotView.
@@ -50,20 +52,13 @@ public class PilotView extends JPanel implements KeyListener, Observer {
      * @param playerNickname The nickname of the player controlling this view.
      * @param gameClient     The GameClient handling network connections for this player.
      */
-    public PilotView(String playerNickname, GameClient gameClient, boolean ai) {
+    public PilotView(String playerNickname, GameClient gameClient, JFrame parentFrame, boolean ai) {
         super();
+
         if(ai) {
             engAI = new EngineerAI(gameClient, playerNickname);
             gameClient.addObserver(engAI);
         }
-
-        // Allow the server to fully initialise before we go and try get values from it.
-        // TODO: Show a loading screen? Do this more elegantly?
-//        try {
-//            Thread.sleep(4000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
 
         this.playerNickname = playerNickname;
 
@@ -73,12 +68,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         addKeyListener(this);
         setFocusable(true);
 
-        try {
-            initialiseUI();
-            UIinitialised = true;
-        } catch (Exception e) {
-            // Oh well.
-        }
+        initialiseUI();
 
         // starting the in-game sounds
         /*try {
@@ -100,41 +90,43 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     /**
      * Creates all the elements of the UI and positions them on the screen. Sets all default values of the UI elements.
      */
-    public void initialiseUI() throws Exception {
-        Ship s = findPlayerShip();
+    public void initialiseUI() {
+        try {
+            Ship s = findPlayerShip();
 
-        if(s == null) {
-            throw new Exception("Ship is null");
-        }
+            initialiseWeapons(s);
+            initialiseInstructions();
+            intialiseSpeedometer();
+            initialiseScreen();
 
-        initialiseWeapons(s);
-        initialiseInstructions();
-        intialiseSpeedometer();
-        initialiseScreen();
+            // Add mouse listener which swaps the cursor between being the default and a crosshair.
+            this.addMouseMotionListener(new MouseMotionListener() {
+                @Override
+                public void mouseDragged(MouseEvent mouseEvent) {
 
-        // Add mouse listener which swaps the cursor between being the default and a crosshair.
-        this.addMouseMotionListener(new MouseMotionListener() {
-            @Override
-            public void mouseDragged(MouseEvent mouseEvent) {
-
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent mouseEvent) {
-                final int x = mouseEvent.getX();
-                final int y = mouseEvent.getY();
-
-                final Rectangle screenBounds = screen.getBounds();
-                if (screenBounds != null && screenBounds.contains(x, y)) {
-                    getParent().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-                } else {
-                    getParent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
-            }
-        });
 
-        addAllComponents();
-        System.out.println("Done initialising the UI. I am the Pilot");
+                @Override
+                public void mouseMoved(MouseEvent mouseEvent) {
+                    final int x = mouseEvent.getX();
+                    final int y = mouseEvent.getY();
+
+                    final Rectangle screenBounds = screen.getBounds();
+                    if (screenBounds != null && screenBounds.contains(x, y)) {
+                        getParent().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+                    } else {
+                        getParent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    }
+                }
+            });
+
+            addAllComponents();
+            System.out.println("Done initialising the UI. I am the Pilot");
+
+        } catch (Exception e) {
+            System.out.println("Unable to find the Ship");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -149,15 +141,22 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
 
         Container UIpanel = new Container();
+        UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
         UIpanel.add(weaponPanel);
         UIpanel.add(speedometerView);
         UIpanel.add(instructionsView);
-        UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
 
-        this.add(screen, BorderLayout.CENTER);
-        this.add(UIpanel, BorderLayout.SOUTH);
-        this.add(new JButton("Test"), BorderLayout.NORTH);
-        System.out.println("Done adding all components");
+        UIBaseLayer = new JPanel();
+        UIBaseLayer.setLayout(new BorderLayout());
+        UIBaseLayer.add(screen, BorderLayout.CENTER);
+        UIBaseLayer.add(UIpanel, BorderLayout.SOUTH);
+        UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+
+        JLayeredPaneLayoutManager layoutManager = new JLayeredPaneLayoutManager();
+
+        UILayeredPane.setLayout(layoutManager);
+        UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+
         this.revalidate();
         this.repaint();
     }
