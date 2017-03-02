@@ -16,8 +16,6 @@ public class Poly3D {
 	PolygonObj poly;
 	public double avgDistance;
 	private boolean draw = true;
-	private BufferedImage img;
-	private boolean imgPresent;
 	
 	
 	/**
@@ -32,16 +30,6 @@ public class Poly3D {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		imgPresent = false;
-		createPolygon();
-	}
-	
-	public Poly3D(double[] x, double[] y, double[] z, BufferedImage img) {
-		this.img = img;
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		imgPresent = true;
 		createPolygon();
 	}
 
@@ -49,12 +37,7 @@ public class Poly3D {
 	 * Creates a new PolygonObj
 	 */
 	public void createPolygon(){
-		if(!imgPresent){
-			poly = new PolygonObj(new double[x.length], new double[x.length], c);
-		}
-		else{
-			poly = new PolygonObj(new double[x.length], new double[x.length], img);
-		}
+		poly = new PolygonObj(new double[x.length], new double[x.length], c);
 	}
 	
 	/**
@@ -69,7 +52,7 @@ public class Poly3D {
 			calcPos = Calculations.calcPos(Screen.viewFrom, Screen.viewTo, p);
 			newX[i] = calcPos.x + GameEngine.screenSize.getWidth()/2;
 			newY[i] = calcPos.y + GameEngine.screenSize.getHeight()/2;
-			if(!imgPresent && (calcPos.z < 0.1 || Calculations.t < 0)){
+			if(calcPos.z < 0.1 || Calculations.t < 0){
 				draw = false;
 			}
 		}

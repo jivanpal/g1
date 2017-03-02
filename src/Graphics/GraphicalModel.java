@@ -17,7 +17,6 @@ public class GraphicalModel {
 	private Poly3D[] polys;
 	private Color[] colors;
 	private BufferedImage img;
-	private boolean imgPresent;
 	
 	/**
 	 * @param vertices An array of vertices of the object
@@ -29,15 +28,6 @@ public class GraphicalModel {
 		this.sides = sides;
 		this.colors = colors;
 		polys = new Poly3D[sides.length];
-		imgPresent = false;
-	}
-	
-	public GraphicalModel(Vector[] vertices, int[][] sides, BufferedImage img){
-		this.vertices = vertices;
-		this.sides = sides;
-		this.img = img;
-		polys = new Poly3D[sides.length];
-		imgPresent = true;
 	}
 	
 	/**
@@ -55,12 +45,8 @@ public class GraphicalModel {
 				ys[j] = vertices[sides[i][j]].getY();
 				zs[j] = vertices[sides[i][j]].getZ();
 			}
-			if(!imgPresent){
-				polys[i] = new Poly3D(xs, ys, zs, colors[i]);
-			}
-			else{
-				polys[i] = new Poly3D(xs, ys, zs, img);
-			}
+			polys[i] = new Poly3D(xs, ys, zs, colors[i]);
+
 		}
 		for(int i = 0; i < polys.length; i++){
 			Screen.poly3Ds.add(polys[i]);
