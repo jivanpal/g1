@@ -125,6 +125,7 @@ public class ResourcesView extends JPanel {
 
             this.replenishButton = new JButton("Replenish");
             replenishButton.setEnabled(false);
+            replenishButton.setFocusable(false);
 
             add(resourceProgressBar);
             add(replenishButton);
@@ -147,13 +148,7 @@ public class ResourcesView extends JPanel {
         }
 
         public void setReplenishAction(ShipState state) {
-            replenishButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    parent.setState(state);
-                }
-            });
-
+            replenishButton.addActionListener(actionEvent -> parent.setState(state));
             replenishButton.setEnabled(true);
         }
     }

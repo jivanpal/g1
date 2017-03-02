@@ -68,7 +68,7 @@ public class Screen extends JPanel{
 		starMap = new Map(2000, 2000, 2000);
 		Random r = new Random();
 		r.ints(0, (int) starMap.getDimensions().getX());
-		for(int i = 0; i < starMap.getDimensions().getX(); i++){
+		for(int i = 0; i < 5000; i++){
 			starMap.add(new Star(r.nextInt(), r.nextInt(), r.nextInt()));
 		}
 		
@@ -118,8 +118,10 @@ public class Screen extends JPanel{
 			Star s = (Star) b;
 			Vector v = s.getPosition();
 			Point p = Calculations.calcPos(viewFrom, viewTo, v);
-			g.fillOval((int)p.x, (int)p.y, 1, 1);
-			g.drawOval((int)p.x, (int)p.y, 1, 1);
+			if(p.x > 0 && p.x < Global.SCREEN_WIDTH && p.y > 0 && p.y < Global.SCREEN_HEIGHT){
+				g.fillOval((int)p.x, (int)p.y, 1, 1);
+				g.drawOval((int)p.x, (int)p.y, 1, 1);
+			}
 		}
 		
 		createObjects();

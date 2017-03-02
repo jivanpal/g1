@@ -14,6 +14,7 @@ public class WeaponView extends JPanel{
 
     private JLabel weaponNameLabel;
     private JProgressBar weaponAmmoLevel;
+    private JButton replenishAmmo;
 
     private boolean showAmmoLevel = false;
     private boolean highlighted = false;
@@ -41,6 +42,12 @@ public class WeaponView extends JPanel{
         if(showAmmoLevel) {
             weaponAmmoLevel = new JProgressBar();
             this.add(weaponAmmoLevel);
+
+            this.replenishAmmo = new JButton("Replenish");
+            replenishAmmo.setEnabled(false);
+            replenishAmmo.setFocusable(false);
+
+            add(replenishAmmo);
         }
     }
 
@@ -76,5 +83,10 @@ public class WeaponView extends JPanel{
         if(showAmmoLevel) {
             weaponAmmoLevel.setMaximum(maxiumumAmmo);
         }
+    }
+
+    public void setReplenishAmmo(EngineerView parent, ShipState state) {
+        replenishAmmo.addActionListener(actionEvent -> parent.setState(state));
+        replenishAmmo.setEnabled(true);
     }
 }
