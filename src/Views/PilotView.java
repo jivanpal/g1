@@ -68,6 +68,9 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         addKeyListener(this);
         setFocusable(true);
 
+        this.parentFrame = parentFrame;
+        this.UILayeredPane = parentFrame.getLayeredPane();
+
         initialiseUI();
 
         // starting the in-game sounds
