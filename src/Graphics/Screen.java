@@ -161,7 +161,7 @@ public class Screen extends JPanel{
 	
 	private void createObjects() {
 		poly3Ds.clear();
-		System.out.println(map.size());
+//		System.out.println(map.size());
 		for(Body b : map){
 			Class<? extends Body> bClass = b.getClass();
 			if(bClass == Ship.class && map.indexOf(b) != shipIndex && map.indexOf(b) >= 0){
@@ -179,7 +179,7 @@ public class Screen extends JPanel{
 			}
 		}
 		Skybox skybox = new Skybox(viewFrom, Global.MAP_SIZE, skyboxImg);
-		System.out.println("Completed createObjects()");
+//		System.out.println("Completed createObjects()");
 		
 	}
 
