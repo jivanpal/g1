@@ -1,26 +1,17 @@
 package Views;
 
 import AI.EngineerAI;
-import ClientNetworking.GameClient.GameClientReceiver;
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.Map;
 import GameLogic.Ship;
-import Graphics.Screen;
-import UI.ClientShipObservable;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
-import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 import GameLogic.GameOptions;
-import sun.swing.UIClientPropertyKey;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -69,6 +60,31 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         setFocusable(true);
 
         this.parentFrame = parentFrame;
+        UIBaseLayer = new JPanel();
+        parentFrame.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent componentEvent) {
+                UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+                UIBaseLayer.revalidate();
+                UIBaseLayer.repaint();
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent componentEvent) {
+                UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+            }
+
+            @Override
+            public void componentShown(ComponentEvent componentEvent) {
+                UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent componentEvent) {
+                UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+            }
+        });
+
         this.UILayeredPane = parentFrame.getLayeredPane();
 
         initialiseUI();
@@ -149,7 +165,6 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         UIpanel.add(speedometerView);
         UIpanel.add(instructionsView);
 
-        UIBaseLayer = new JPanel();
         UIBaseLayer.setLayout(new BorderLayout());
         UIBaseLayer.add(screen, BorderLayout.CENTER);
         UIBaseLayer.add(UIpanel, BorderLayout.SOUTH);

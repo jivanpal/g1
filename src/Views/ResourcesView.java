@@ -3,6 +3,8 @@ package Views;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by James on 27/01/17.
@@ -17,15 +19,18 @@ public class ResourcesView extends JPanel {
     // Each component has a resource label, resource bar and 2 buttons to increment / decrement (to be removed later).
     private ResourceComponent shieldsComponent;
     private ResourceComponent hullComponent;
-    public ResourceComponent engineComponent;
+    private ResourceComponent engineComponent;
+
+    private EngineerView parent;
 
     /**
      * Instantiates a new ResourceView which shows details about the amount of shields, hull health and engine fuel
      * to the user
      */
-    public ResourcesView() {
+    public ResourcesView(EngineerView parent) {
         super();
 
+        this.parent = parent;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         makeUI();
@@ -75,15 +80,17 @@ public class ResourcesView extends JPanel {
     public void makeUI() {
         shieldsComponent = new ResourceComponent("Shields");
         shieldsComponent.setResourceBarColor(Color.blue);
+        shieldsComponent.setReplenishAction(ShipState.SHIELD_REPLENISH);
         add(shieldsComponent);
+
+        engineComponent = new ResourceComponent("Engines");
+        engineComponent.setResourceBarColor(Color.YELLOW);
+        engineComponent.setReplenishAction(ShipState.FUEL_REPLENISH);
+        add(engineComponent);
 
         hullComponent = new ResourceComponent("Hull");
         hullComponent.setResourceBarColor(Color.red);
         add(hullComponent);
-
-        engineComponent = new ResourceComponent("Engines");
-        engineComponent.setResourceBarColor(Color.YELLOW);
-        add(engineComponent);
     }
 
     public int getMaxFuelLevel() {
@@ -96,6 +103,7 @@ public class ResourcesView extends JPanel {
      */
     private class ResourceComponent extends JPanel {
         public JProgressBar resourceProgressBar;
+        public JButton replenishButton;
 
         /**
          * Creates a ResourceComponent which displays info about a particular resource to the player.
@@ -103,6 +111,8 @@ public class ResourcesView extends JPanel {
          */
         public ResourceComponent(String name) {
             super();
+
+            this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
             this.resourceProgressBar = new JProgressBar();
             resourceProgressBar.setString(name);
@@ -113,7 +123,11 @@ public class ResourcesView extends JPanel {
             // TODO: Find the maximum value for this kind of resource
             resourceProgressBar.setMaximum(10);
 
+            this.replenishButton = new JButton("Replenish");
+            replenishButton.setEnabled(false);
+
             add(resourceProgressBar);
+            add(replenishButton);
         }
 
         /**
@@ -130,6 +144,17 @@ public class ResourcesView extends JPanel {
 
         public void setMaximumResourceLevel(int maximumResourceLevel) {
             this.resourceProgressBar.setMaximum(maximumResourceLevel);
+        }
+
+        public void setReplenishAction(ShipState state) {
+            replenishButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    parent.setState(state);
+                }
+            });
+
+            replenishButton.setEnabled(true);
         }
     }
 }

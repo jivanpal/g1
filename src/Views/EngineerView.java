@@ -15,7 +15,6 @@ import java.util.Observer;
 
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
-import Graphics.Screen;
 
 /**
  * Created by James on 01/02/17.
@@ -63,26 +62,29 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
         this.parentFrame = parent;
         UILayeredPane = parent.getLayeredPane();
+        UIBaseLayer = new JPanel();
 
         parent.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent componentEvent) {
-                //TODO: Resize when the frame changes size!
+                UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+                UIBaseLayer.revalidate();
+                UIBaseLayer.repaint();
             }
 
             @Override
             public void componentMoved(ComponentEvent componentEvent) {
-
+                UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
             }
 
             @Override
             public void componentShown(ComponentEvent componentEvent) {
-
+                UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
             }
 
             @Override
             public void componentHidden(ComponentEvent componentEvent) {
-
+                UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
             }
         });
 
@@ -130,7 +132,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         UIPanel.add(resourcesView);
         UIPanel.add(weaponPanel);
 
-        UIBaseLayer = new JPanel();
         UIBaseLayer.setLayout(new BorderLayout());
         UIBaseLayer.add(screen, BorderLayout.CENTER);
         UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
@@ -171,7 +172,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
      * @param s This players Ship object
      */
     private void initialiseResources(Ship s) {
-        resourcesView = new ResourcesView();
+        resourcesView = new ResourcesView(this);
         resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
         resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
         resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
@@ -336,6 +337,38 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     public void keySequenceHardFailure() {
         System.out.println("Hard failure of sequence");
         this.state = ShipState.NONE;
+    }
+
+    public void setState(ShipState newState) {
+        this.state = newState;
+
+        switch (state) {
+            case NONE:
+                break;
+            case SHIELD_REPLENISH:
+                System.out.println("Startng a shield sequence");
+                this.state = ShipState.SHIELD_REPLENISH;
+                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[3]), true);
+                break;
+            case FUEL_REPLENISH:
+                System.out.println("Starting a fuel sequence");
+                this.state = ShipState.FUEL_REPLENISH;
+                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[4]), true);
+                break;
+            case LASER_REPLENISH:
+                System.out.println("Starting a laser sequence");
+                this.state = ShipState.LASER_REPLENISH;
+                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[0]), true);
+            case TORPEDO_REPLENISH:
+                System.out.println("Starting a torpedo sequence");
+                this.state = ShipState.TORPEDO_REPLENISH;
+                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[1]), false);
+            case PLASMA_REPLENISH:
+                System.out.println("Starting a plasma sequence");
+                this.state = ShipState.PLASMA_REPLENISH;
+                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[2]), false);
+                break;
+        }
     }
 }
 
