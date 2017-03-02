@@ -1,8 +1,9 @@
 package ClientNetworking.GameHost;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class KeySequence {
+public class KeySequence implements Serializable {
 	private ArrayList<char[][]> keys = new ArrayList<char[][]>();;
 	public KeySequence(int minLength,int maxLength,int number)
 	{

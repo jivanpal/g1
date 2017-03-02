@@ -44,7 +44,7 @@ public class GameClient
 			toServer.writeObject(player.nickname);
 			fromServer = new ObjectInputStream(server.getInputStream());
 			System.err.println("Created `fromServer` and 'toServer'");
-			keySequence = (KeySequence)fromServer.readObject();
+			keySequence = (KeySequence) fromServer.readObject();
 		}
 		catch (UnknownHostException e)
 		{

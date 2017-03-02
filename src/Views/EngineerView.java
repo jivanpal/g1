@@ -230,7 +230,12 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     @Override
     public void update(Observable observable, Object o) {
         if (!UIinitialised) {
-            keySequences = gameClient.keySequence;
+            // TODO: Swap the over to the proper Manual view. This is just a temporary solution.
+            try {
+                keySequences = gameClient.keySequence.getSequencesByLength(2);
+            } catch (Exception e) {
+                // Should never get here
+            }
             initialiseUI();
             UIinitialised = true;
         } else {
