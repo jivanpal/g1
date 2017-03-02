@@ -50,6 +50,7 @@ public class Screen extends JPanel{
 	private boolean asteroidDrawn = false;
 	private int i = 0;
 	private BufferedImage skyboxImg;
+	private Map starMap;
 	
 	/**
 	 * Creates a new Screen object
@@ -68,6 +69,13 @@ public class Screen extends JPanel{
 		    skyboxImg = ImageIO.read(new File("bin/Graphics/spacebox.png"));
 		} catch (IOException e) {
 			System.err.println("Can't find skybox image");
+		}
+		
+		starMap = new Map(2000, 2000, 2000);
+		Random r = new Random();
+		r.ints(0, (int) starMap.getDimensions().getX());
+		for(int i = 0; i < starMap.getDimensions().getX(); i++){
+			starMap.add(new Star(r.nextInt(), r.nextInt(), r.nextInt()));
 		}
 		
 		//Create starting vectors
@@ -110,6 +118,15 @@ public class Screen extends JPanel{
 		camera();
 //		Calculations.setInfo();
 		setLight();
+		
+		g.setColor(Color.WHITE);
+		for(Body b : starMap){
+			Star s = (Star) b;
+			Vector v = s.getPosition();
+			Point p = Calculations.calcPos(viewFrom, viewTo, v);
+			g.fillOval((int)p.x, (int)p.y, 1, 1);
+			g.drawOval((int)p.x, (int)p.y, 1, 1);
+		}
 		
 		createObjects();
 		

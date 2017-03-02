@@ -90,21 +90,13 @@ public class PolygonObj {
 //			screenTest();
 		}
 		else if(draw && imgPresent){
-			TexturePaint tp = new TexturePaint(img, new Rectangle(img.getWidth(), img.getHeight()));
-			Graphics2D g2 = (Graphics2D) g;
-			g2.setPaint(tp);
-			g2.fillPolygon(p);
-			
-//			for(int i = 0; i < img.getWidth(); i++){
-//				for(int j = 0; j < img.getHeight(); j++){
-//					img.getRGB(i, j);
-//					p.pa
-//				}
-//			}
-			
-			
-//			g.setClip(p);
-//			g.drawImage(img, p.xpoints[0], p.ypoints[0], null);
+//			javaxt.io.Image image = new javaxt.io.Image("bin/Graphics/spacebox.png");
+//			image.setCorners(p.xpoints[0], p.ypoints[0],
+//			                 p.xpoints[1], p.ypoints[1],
+//			                 p.xpoints[2], p.ypoints[2],
+//			                 p.xpoints[3], p.ypoints[3]);
+//			BufferedImage bi = image.getBufferedImage();
+//			g.drawImage(bi, 0, 0, null);
 		}
 	}
 }
