@@ -31,7 +31,14 @@ public class MapServer extends Thread {
 
 	public void run() {
 		try {
-			ArrayList<char[][]> keySequences = KeySequenceGen.Generate(10,2);
+			int minLength = 2;
+			int maxLength = 7;
+			int sequenceNumber = 10;
+			ArrayList<KeySequence> keySequences = new ArrayList<KeySequence>();
+			for(int  i=0;i<4;i++)
+			{
+				keySequences.add(new KeySequence(minLength, maxLength, sequenceNumber ));
+			}
 			
 			ClientTable clientTable = new ClientTable();
 			MapContainer gameMap = new MapContainer();

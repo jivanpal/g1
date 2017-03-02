@@ -8,6 +8,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import ClientNetworking.GameHost.KeySequence;
 import GameLogic.Map;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
@@ -16,7 +18,7 @@ public class GameClient
 {
 	private int port = GameVariables.PORT;
 	private InetAddress hostname = null;
-	public char[][] keySequence;
+	public KeySequence keySequence;
 	private LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
 	GameClientReceiver receiver;
 	GameClientSender sender;
@@ -42,7 +44,7 @@ public class GameClient
 			toServer.writeObject(player.nickname);
 			fromServer = new ObjectInputStream(server.getInputStream());
 			System.err.println("Created `fromServer` and 'toServer'");
-			keySequence = (char[][])fromServer.readObject();
+			keySequence = (KeySequence)fromServer.readObject();
 		}
 		catch (UnknownHostException e)
 		{
