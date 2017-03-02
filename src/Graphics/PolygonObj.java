@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -88,20 +89,22 @@ public class PolygonObj {
 			g.drawPolygon(p);
 //			screenTest();
 		}
-		else if(draw){
-			Rectangle r = p.getBounds();
-//			System.out.println(r.getWidth() + ", " + r.getHeight());
-			Graphics2D g2 = img.createGraphics();
-			AffineTransform centerTransform = AffineTransform.getTranslateInstance(-r.x+1, -r.y+1);
-	        g2.setTransform(centerTransform);
-	        g2.setClip(p);
-	        g2.drawImage(img, 0, 0, null);
-	        g2.setClip(null);
-	        g2.draw(p);
-	        g2.dispose();
-//			g.fillPolygon(p);
-//			g.setColor(Color.BLACK);
-//			g.drawPolygon(p);
+		else if(draw && imgPresent){
+			TexturePaint tp = new TexturePaint(img, new Rectangle(img.getWidth(), img.getHeight()));
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setPaint(tp);
+			g2.fillPolygon(p);
+			
+//			for(int i = 0; i < img.getWidth(); i++){
+//				for(int j = 0; j < img.getHeight(); j++){
+//					img.getRGB(i, j);
+//					p.pa
+//				}
+//			}
+			
+			
+//			g.setClip(p);
+//			g.drawImage(img, p.xpoints[0], p.ypoints[0], null);
 		}
 	}
 }

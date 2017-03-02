@@ -69,7 +69,7 @@ public class Poly3D {
 			calcPos = Calculations.calcPos(Screen.viewFrom, Screen.viewTo, p);
 			newX[i] = calcPos.x + GameEngine.screenSize.getWidth()/2;
 			newY[i] = calcPos.y + GameEngine.screenSize.getHeight()/2;
-			if(calcPos.z < 0.1 || Calculations.t < 0){
+			if(!imgPresent && (calcPos.z < 0.1 || Calculations.t < 0)){
 				draw = false;
 			}
 		}
