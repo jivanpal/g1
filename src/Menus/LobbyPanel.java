@@ -280,10 +280,10 @@ public class LobbyPanel extends JPanel implements Observer {
 			while (lpanel == null) {
 
 			}
-			if (player.nickname.equals(l.getHost().nickname)) {
-				LobbyPanel lpanel2 = new LobbyPanel(menu, client, l.getID(), player, true);
-				menu.changeFrame(lpanel2);
-			} else {
+			//if (player.nickname.equals(l.getHost().nickname)) {
+				//LobbyPanel lpanel2 = new LobbyPanel(menu, client, l.getID(), player, true);
+				//menu.changeFrame(lpanel2);
+			//} else {
 				this.remove(lpanel);
 				JPanel newpanel = displayplayers();
 				newpanel.setOpaque(false);
@@ -291,7 +291,7 @@ public class LobbyPanel extends JPanel implements Observer {
 				this.invalidate();
 				this.validate();
 				this.lpanel = newpanel;
-			}
+			//}
 		}
 
 	}
