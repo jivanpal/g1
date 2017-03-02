@@ -135,6 +135,13 @@ public class ServerReceiver extends Thread
 						l.leave(name);
 						if(l.countPlayers()==0)
 							lobbies.remove(i);
+						else
+						{
+							for(Player p : l.getPlayers())
+							{
+								clientTable.getQueue(p.nickname).offer(l);
+							}
+						}
 						break;
 					}
 					

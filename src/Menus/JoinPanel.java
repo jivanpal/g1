@@ -103,6 +103,7 @@ public class JoinPanel extends JPanel {
 		for (int i = model.getRowCount()-1; i > -1; i--) {
 			model.removeRow(i);
 		}
+		
 		for (LobbyInfo lobby : lobbies) {
 			if(lobby==null) {
 				break;

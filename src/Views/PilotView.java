@@ -4,6 +4,7 @@ import AI.EngineerAI;
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.Map;
 import GameLogic.Ship;
+import Graphics.Screen;
 
 import Graphics.Screen;
 
