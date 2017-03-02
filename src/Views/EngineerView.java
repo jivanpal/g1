@@ -51,14 +51,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     public EngineerView(String playerNickname, GameClient gameClient, JFrame parent) {
         super();
 
-        // Allow the server to fully initialise before we go and try get values from it.
-        // TODO: Show a loading screen? Do this more elegantly?
-//        try {
-//            Thread.sleep(4000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
         this.playerNickname = playerNickname;
 
         this.gameClient = gameClient;
@@ -99,24 +91,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         // starting the in-game sounds
         AudioPlayer.stopMusic();
         AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
-
-
-        /*UILayeredPane = new JLayeredPane();
-        JLayeredPaneLayoutManager layeredLayoutManager = new JLayeredPaneLayoutManager();
-        UILayeredPane.setLayout(layeredLayoutManager);
-
-        UIBaseLayer = new JPanel();
-        UIBaseLayer.setLayout(new BorderLayout());*/
-
-
-        // UIBaseLayer.add(screen, BorderLayout.CENTER);
-
-
-        // UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
-
-        /*UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
-        layeredLayoutManager.setBounds(UIBaseLayer, new Rectangle(1000, 1000, 1000, 1000));
-        this.add(UILayeredPane);*/
     }
 
     /**
@@ -161,8 +135,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         UIBaseLayer.add(screen, BorderLayout.CENTER);
         UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
         UIBaseLayer.setBounds(0, 0, (int) parentFrame.getWidth(), (int) parentFrame.getHeight());
-        System.out.println("Width: " + parentFrame.getWidth());
-        System.out.println("Height: " + parentFrame.getHeight());
         JLayeredPaneLayoutManager layoutManager = new JLayeredPaneLayoutManager();
 
         UILayeredPane.setLayout(layoutManager);
