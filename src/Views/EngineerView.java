@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
+import Graphics.Screen;
 
 import java.awt.*;
 import java.awt.event.ComponentEvent;
@@ -42,8 +43,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
     /**
      * Creates a new EngineerView
-     * Creates a new EngineerView.
-     *
      * @param playerNickname The nickname of the player controlling this view.
      * @param gameClient     The GameClient handling network connections for this player.
      */
@@ -56,9 +55,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         gameClient.addObserver(this);
 
         keyManager = new KeySequenceManager(this);
-
-        addKeyListener(this);
-        setFocusable(true);
 
         this.parentFrame = parent;
         UILayeredPane = parent.getLayeredPane();
@@ -75,20 +71,29 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
             @Override
             public void componentMoved(ComponentEvent componentEvent) {
                 UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+                UIBaseLayer.revalidate();
+                UIBaseLayer.repaint();
             }
 
             @Override
             public void componentShown(ComponentEvent componentEvent) {
                 UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+                UIBaseLayer.revalidate();
+                UIBaseLayer.repaint();
             }
 
             @Override
             public void componentHidden(ComponentEvent componentEvent) {
                 UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+                UIBaseLayer.revalidate();
+                UIBaseLayer.repaint();
             }
         });
 
         initialiseUI();
+
+        addKeyListener(this);
+        setFocusable(true);
 
         // starting the in-game sounds
         AudioPlayer.stopMusic();
@@ -107,10 +112,10 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
             initialiseScreen();
             addAllComponents();
             System.out.println("Done initialising the UI. I am the Engineer");
+            UIinitialised = true;
 
         } catch (Exception e) {
             System.out.println("Unable to find the Ship");
-            e.printStackTrace();
         }
     }
 
@@ -135,7 +140,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         UIBaseLayer.setLayout(new BorderLayout());
         UIBaseLayer.add(screen, BorderLayout.CENTER);
         UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
-        UIBaseLayer.setBounds(0, 0, (int) parentFrame.getWidth(), (int) parentFrame.getHeight());
+        UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
         JLayeredPaneLayoutManager layoutManager = new JLayeredPaneLayoutManager();
 
         UILayeredPane.setLayout(layoutManager);
@@ -152,12 +157,19 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
      */
     private void initialiseWeapons(Ship s) {
         plasmaBlasterView = new WeaponView("Plasma Blaster", true);
+        plasmaBlasterView.setReplenishAmmo(this, ShipState.PLASMA_REPLENISH);
 
         // default plasma blaster to be highlighted, remove at a later date!
         // plasmaBlasterView.setHighlightWeapon(true);
 
         laserBlasterView = new WeaponView("Laser Blaster", true);
+        laserBlasterView.setReplenishAmmo(this, ShipState.LASER_REPLENISH);
+
         torpedosView = new WeaponView("Torpedos", true);
+        torpedosView.setReplenishAmmo(this, ShipState.TORPEDO_REPLENISH);
+
+        System.out.println("Created all weapons");
+
         laserBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
         plasmaBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
         torpedosView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.TORPEDO_WEAPON_INDEX));
@@ -253,6 +265,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
+        System.out.println("Key was pressed");
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             // User wishes to escape out of this sequence.
             System.out.println("Stopping this sequence");
@@ -347,25 +360,22 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
                 break;
             case SHIELD_REPLENISH:
                 System.out.println("Startng a shield sequence");
-                this.state = ShipState.SHIELD_REPLENISH;
                 keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[3]), true);
                 break;
             case FUEL_REPLENISH:
                 System.out.println("Starting a fuel sequence");
-                this.state = ShipState.FUEL_REPLENISH;
                 keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[4]), true);
                 break;
             case LASER_REPLENISH:
                 System.out.println("Starting a laser sequence");
-                this.state = ShipState.LASER_REPLENISH;
                 keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[0]), true);
+                break;
             case TORPEDO_REPLENISH:
                 System.out.println("Starting a torpedo sequence");
-                this.state = ShipState.TORPEDO_REPLENISH;
                 keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[1]), false);
+                break;
             case PLASMA_REPLENISH:
                 System.out.println("Starting a plasma sequence");
-                this.state = ShipState.PLASMA_REPLENISH;
                 keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[2]), false);
                 break;
         }

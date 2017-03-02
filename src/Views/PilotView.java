@@ -5,6 +5,8 @@ import ClientNetworking.GameHost.MapContainer;
 import GameLogic.Map;
 import GameLogic.Ship;
 
+import Graphics.Screen;
+
 import javax.swing.*;
 
 import ClientNetworking.GameClient.GameClient;
