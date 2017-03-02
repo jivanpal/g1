@@ -8,7 +8,6 @@ import java.awt.Rectangle;
 import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 import GameLogic.Global;
 
@@ -23,8 +22,6 @@ public class PolygonObj {
 	public double avgDist = 0;
 	public double light = 1;
 	public boolean draw = true;
-	private BufferedImage img;
-	private boolean imgPresent;
 	
 	/**
 	 * Creates a polygon from given arrays of x and y coordinates
@@ -38,17 +35,6 @@ public class PolygonObj {
 			p.addPoint((int)x[i], (int)y[i]);
 		}
 		this.c = c;
-		imgPresent = false;
-	}
-	
-	public PolygonObj(double[] x, double[] y, BufferedImage img){
-		p = new Polygon();
-		for(int i = 0; i < x.length; i++){
-			p.addPoint((int)x[i], (int)y[i]);
-		}
-		this.c = Color.BLACK;
-		this.img = img;
-		imgPresent = true;
 	}
 	
 	/**
@@ -82,21 +68,12 @@ public class PolygonObj {
 	 * @param g The Graphics object
 	 */
 	public void drawPoly(Graphics g){
-		if(draw && !imgPresent && screenTest()){
+		if(draw && screenTest()){
 			g.setColor(new Color((int)(c.getRed() * light), (int)(c.getGreen() * light), (int)(c.getBlue() * light)));
 			g.fillPolygon(p);
 			g.setColor(Color.BLACK);
 			g.drawPolygon(p);
 //			screenTest();
-		}
-		else if(draw && imgPresent){
-//			javaxt.io.Image image = new javaxt.io.Image("bin/Graphics/spacebox.png");
-//			image.setCorners(p.xpoints[0], p.ypoints[0],
-//			                 p.xpoints[1], p.ypoints[1],
-//			                 p.xpoints[2], p.ypoints[2],
-//			                 p.xpoints[3], p.ypoints[3]);
-//			BufferedImage bi = image.getBufferedImage();
-//			g.drawImage(bi, 0, 0, null);
 		}
 	}
 }

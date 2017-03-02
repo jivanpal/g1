@@ -49,7 +49,6 @@ public class Screen extends JPanel{
 	private boolean pilot;
 	private boolean asteroidDrawn = false;
 	private int i = 0;
-	private BufferedImage skyboxImg;
 	private Map starMap;
 	
 	/**
@@ -65,11 +64,6 @@ public class Screen extends JPanel{
 		Body asteroid = new Body();
 		asteroid.move(new Vector(0, 2, 0));
 		map.add(asteroid);
-		try {
-		    skyboxImg = ImageIO.read(new File("bin/Graphics/spacebox.png"));
-		} catch (IOException e) {
-			System.err.println("Can't find skybox image");
-		}
 		
 		starMap = new Map(2000, 2000, 2000);
 		Random r = new Random();
@@ -195,7 +189,6 @@ public class Screen extends JPanel{
 				asteroidDrawn  = true;
 			}
 		}
-		Skybox skybox = new Skybox(viewFrom, Global.MAP_SIZE, skyboxImg);
 //		System.out.println("Completed createObjects()");
 		
 	}
