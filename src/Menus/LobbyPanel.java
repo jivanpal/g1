@@ -106,6 +106,7 @@ public class LobbyPanel extends JPanel implements Observer {
 		backtostart.addActionListener(e -> {
 			client.send(new Action(client.getLobby().getID(), this.player, this.player, Action.KICK));
 			leftserver = true;
+			//this.player.isHost = false;
 			PlayPanel ppanel = new PlayPanel(menu, client);
 			menu.changeFrame(ppanel);
 			client.setLobby(null);
@@ -234,7 +235,10 @@ public class LobbyPanel extends JPanel implements Observer {
 			l = client.getLobby();
 
 		}
+		// System.out.println("Lobby Host: " + l.getHost().nickname);
+
 		Player[] players = l.getPlayers();
+
 		boolean inlobby = false;
 		for (Player p : players) {
 			if (p == null) {
@@ -251,6 +255,13 @@ public class LobbyPanel extends JPanel implements Observer {
 			menu.changeFrame(bpanel);
 			client.setLobby(null);
 
+		} else if (leftserver) {
+			return;
+		} else if (inlobby && l.getHost().nickname.equals(player.nickname)) {
+			player.isHost = true;
+			LobbyPanel lpanel = new LobbyPanel(menu, client, l.getID(), player, true);
+			menu.changeFrame(lpanel);
+			
 		} else if (l.started) {
 
 			int pos = 0;
@@ -280,18 +291,19 @@ public class LobbyPanel extends JPanel implements Observer {
 			while (lpanel == null) {
 
 			}
-			//if (player.nickname.equals(l.getHost().nickname)) {
-				//LobbyPanel lpanel2 = new LobbyPanel(menu, client, l.getID(), player, true);
-				//menu.changeFrame(lpanel2);
-			//} else {
-				this.remove(lpanel);
-				JPanel newpanel = displayplayers();
-				newpanel.setOpaque(false);
-				this.add(newpanel, c);
-				this.invalidate();
-				this.validate();
-				this.lpanel = newpanel;
-			//}
+			// if (player.nickname.equals(l.getHost().nickname)) {
+			// LobbyPanel lpanel2 = new LobbyPanel(menu, client, l.getID(),
+			// player, true);
+			// menu.changeFrame(lpanel2);
+			// } else {
+			this.remove(lpanel);
+			JPanel newpanel = displayplayers();
+			newpanel.setOpaque(false);
+			this.add(newpanel, c);
+			this.invalidate();
+			this.validate();
+			this.lpanel = newpanel;
+			// }
 		}
 
 	}
