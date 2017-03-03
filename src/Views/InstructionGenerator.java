@@ -10,15 +10,11 @@ public class InstructionGenerator {
 	private final String FILE_NAME = System.getProperty("user.dir") + "/instuctions.txt";
 	
 	private Reader fileReader;
-	private Random randomGenerator;
+	private Random randomGenerator = new Random();
 	private ArrayList<Object[]> data;
 	
-	public InstructionGenerator(){
-		try {
+	public InstructionGenerator() throws FileNotFoundException{
 			fileReader = new FileReader(FILE_NAME);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private void readFromFile(){
@@ -31,6 +27,14 @@ public class InstructionGenerator {
 	
 	private void addToData(int num, String instruction){
 		
+	}
+	
+	public Object[][] getData(){
+		Object[][] o = new Object[data.size()][ManualInstructionsView.columnNames.length];
+		for(int i = 0; i<data.size();i++){
+			o[i] = data.get(i);
+		}
+		return o;
 	}
 	
 }

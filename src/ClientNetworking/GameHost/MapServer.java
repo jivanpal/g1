@@ -38,8 +38,7 @@ public class MapServer extends Thread {
 			for(int  i=0;i<4;i++)
 			{
 				keySequences.add(new KeySequence(minLength, maxLength, sequenceNumber ));
-			}
-			
+			}			
 			ClientTable clientTable = new ClientTable();
 			MapContainer gameMap = new MapContainer();
 			System.out.println(serverSocket.getInetAddress());
