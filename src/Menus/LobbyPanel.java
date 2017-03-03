@@ -250,7 +250,12 @@ public class LobbyPanel extends JPanel implements Observer {
 			ButtonPanel bpanel = new ButtonPanel(menu, client);
 			menu.changeFrame(bpanel);
 			client.setLobby(null);
-
+		} else if (leftserver) {
+			return;
+		} else if (inlobby && l.getHost().nickname.equals(player.nickname)) {
+			player.isHost = true;
+			LobbyPanel lpanel = new LobbyPanel(menu, client, l.getID(), player, true);
+			menu.changeFrame(lpanel);
 		} else if (l.started) {
 
 			int pos = 0;
