@@ -14,7 +14,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import GameLogic.Asteroid;
+import GameLogic.Bullet;
 import GameLogic.Global;
+import GameLogic.LaserBlaster;
 import GameLogic.Map;
 import GameLogic.Ship;
 import Physics.Body;
@@ -189,6 +191,11 @@ public class Screen extends JPanel{
 					AsteroidModel asteroid = new AsteroidModel(v, 2, b.getOrientation());
 				}
 				asteroidDrawn  = true;
+			}
+			else if(bClass == Bullet.class){
+				for(Vector v : map.getAllPositions(b.getPosition())){
+					Laser laser = new Laser(v, 2, b.getOrientation());
+				}
 			}
 		}
 //		System.out.println("Completed createObjects()");
