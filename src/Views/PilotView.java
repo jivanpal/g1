@@ -1,6 +1,7 @@
 package Views;
 
 import AI.EngineerAI;
+import Audio.AudioPlayer;
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.Map;
 import GameLogic.Ship;
@@ -75,16 +76,22 @@ public class PilotView extends JPanel implements KeyListener, Observer {
             @Override
             public void componentMoved(ComponentEvent componentEvent) {
                 UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+                UIBaseLayer.revalidate();
+                UIBaseLayer.repaint();
             }
 
             @Override
             public void componentShown(ComponentEvent componentEvent) {
                 UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+                UIBaseLayer.revalidate();
+                UIBaseLayer.repaint();
             }
 
             @Override
             public void componentHidden(ComponentEvent componentEvent) {
                 UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+                UIBaseLayer.revalidate();
+                UIBaseLayer.repaint();
             }
         });
 
@@ -93,20 +100,8 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         initialiseUI();
 
         // starting the in-game sounds
-        /*try {
-            AudioPlayer.stopMusic();
-			AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
-		} catch (Exception e) {
-			// TODO: Fix
-			// In game sound failed to load? Hopefully the game will no longer hang. This fix
-			// doesn't appear to work. Never starting the sound allows me to load though? - James
-			AudioPlayer.stopMusic();
-			AudioPlayer.stopSoundEffect();
-			e.printStackTrace();
-
-			getParent().revalidate();
-			getParent().repaint();
-		}*/
+        AudioPlayer.stopMusic();
+        AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
     }
 
     /**
@@ -148,7 +143,6 @@ public class PilotView extends JPanel implements KeyListener, Observer {
 
         } catch (Exception e) {
             System.out.println("Unable to find the Ship");
-            e.printStackTrace();
         }
     }
 
@@ -218,9 +212,15 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     private void initialiseInstructions() {
         instructionsView = new InstructionsView();
 
-        for (int i = 0; i < gameClient.keySequence.length; i++) {
-            String instruction = String.valueOf(gameClient.keySequence[i]);
-            instructionsView.addInstruction(instruction);
+     // TODO: Swap the over to the proper Manual view. This is just a temporary solution.
+        try {
+	
+            for (int i = 0; i < gameClient.keySequence.getSequencesByLength(2).length; i++) {
+                String instruction = String.valueOf(gameClient.keySequence.getSequencesByLength(2)[i]);
+                instructionsView.addInstruction(instruction);
+            }
+        } catch (Exception e) {
+            // Should never get here
         }
 
     }
