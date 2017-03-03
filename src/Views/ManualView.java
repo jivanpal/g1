@@ -23,6 +23,7 @@ public class ManualView extends JPanel {
 		add(nextPage, BorderLayout.EAST);
 		
 		instuctions = new ManualInstructionsView(data);
+
 		add(instuctions,BorderLayout.CENTER);
 		
 	}
