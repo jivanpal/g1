@@ -217,12 +217,16 @@ public class PilotView extends JPanel implements KeyListener, Observer {
      */
     private void initialiseInstructions() {
         instructionsView = new InstructionsView();
-
-        for (int i = 0; i < gameClient.keySequence.length; i++) {
-            String instruction = String.valueOf(gameClient.keySequence[i]);
-            instructionsView.addInstruction(instruction);
+        
+        // TODO: Swap the over to the proper Manual view. This is just a temporary solution.
+        try {
+            for (int i = 0; i < gameClient.keySequence.getSequencesByLength(2).length; i++) {
+                String instruction = String.valueOf(gameClient.keySequence.getSequencesByLength(2)[i]);
+                instructionsView.addInstruction(instruction);
+            }
+        } catch (Exception e) {
+            // Should never get here
         }
-
     }
 
     /**

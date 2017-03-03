@@ -218,8 +218,13 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     @Override
     public void update(Observable observable, Object o) {
         if (!UIinitialised) {
-            keySequences = gameClient.keySequence;
-            initialiseUI();
+        	try {
+                keySequences = gameClient.keySequence.getSequencesByLength(2);
+            } catch (Exception e) {
+                // Should never get here
+            }
+        	
+        	initialiseUI();
             UIinitialised = true;
         } else {
             Map m = gameClient.getMap();
