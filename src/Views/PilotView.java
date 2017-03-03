@@ -26,6 +26,8 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     private WeaponView laserBlasterView;
     private WeaponView torpedosView;
     private InstructionsView instructionsView;
+    
+    private JButton manual;
 
     private GameClient gameClient;
     private String playerNickname;
@@ -115,7 +117,8 @@ public class PilotView extends JPanel implements KeyListener, Observer {
             Ship s = findPlayerShip();
 
             initialiseWeapons(s);
-            initialiseInstructions();
+            //initialiseInstructions();
+            initialiseManualButton();
             intialiseSpeedometer();
             initialiseScreen();
 
@@ -164,6 +167,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
         UIpanel.add(weaponPanel);
         UIpanel.add(speedometerView);
+        //UIpanel.add(instructionsView);
         UIpanel.add(instructionsView);
 
         UIBaseLayer.setLayout(new BorderLayout());
@@ -194,8 +198,21 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     private void intialiseSpeedometer() {
         speedometerView = new SpeedometerView();
     }
+    
+    private void initialiseManualButton(){
+    	this.manual = new JButton("Manual");
+    	this.manual.addActionListener(e -> showManual());
+    }
 
-    /**
+    private void showManual() {
+		
+	}
+    
+    private void initialiseManualView(){
+    	
+    }
+
+	/**
      * Initialises the InstructionsView with all of the relevant instructions for this ship.
      */
     private void initialiseInstructions() {
