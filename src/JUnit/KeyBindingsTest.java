@@ -12,8 +12,7 @@ import org.junit.Test;
 
 import GameLogic.GameOptions;
 
-public class KeyBidingsTest {
-	
+public class KeyBindingsTest {
 	Properties defaultKeyBindings;
 	Properties keyBindingsFromFile;
 	
@@ -42,7 +41,6 @@ public class KeyBidingsTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 	@SuppressWarnings("static-access")
@@ -55,5 +53,5 @@ public class KeyBidingsTest {
 		actualKeyBindigns.resetKeysToDefaults();
 		assertEquals(defaultKeyBindings, actualKeyBindigns.getKeyBindings());
 	}
-
 }
+
