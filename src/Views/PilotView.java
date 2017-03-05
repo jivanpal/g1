@@ -2,6 +2,7 @@
 package Views;
 
 import AI.EngineerAI;
+import Audio.AudioPlayer;
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.Map;
 import GameLogic.Ship;
@@ -94,28 +95,20 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         initialiseUI();
 
         // starting the in-game sounds
-        /*try {
-            AudioPlayer.stopMusic();
-			AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
-		} catch (Exception e) {
-			// TODO: Fix
-			// In game sound failed to load? Hopefully the game will no longer hang. This fix
-			// doesn't appear to work. Never starting the sound allows me to load though? - James
-			AudioPlayer.stopMusic();
-			AudioPlayer.stopSoundEffect();
-			e.printStackTrace();
-
-			getParent().revalidate();
-			getParent().repaint();
-		}*/
+        AudioPlayer.stopMusic();
+        AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
     }
 
     /**
      * Creates all the elements of the UI and positions them on the screen. Sets all default values of the UI elements.
      */
     public void initialiseUI() {
+        System.out.println("Initialising the UI");
         try {
             Ship s = findPlayerShip();
+            while(s == null) {
+                s = findPlayerShip();
+            }
 
             initialiseWeapons(s);
             //initialiseInstructions();
@@ -169,7 +162,6 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         UIpanel.add(weaponPanel);
         UIpanel.add(speedometerView);
         //UIpanel.add(instructionsView);
-        UIpanel.add(instructionsView);
 
         UIBaseLayer.setLayout(new BorderLayout());
         UIBaseLayer.add(screen, BorderLayout.CENTER);
@@ -251,10 +243,10 @@ public class PilotView extends JPanel implements KeyListener, Observer {
      * @return The players Ship object
      * @throws Exception No ship could be found, in theory this should never be called! Hopefully...
      */
-    private Ship findPlayerShip() throws Exception {
+    private Ship findPlayerShip(){
         Map m = gameClient.getMap();
 
-        for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
+        for (int i = 0; i < m.size(); i++) {
             if (m.get(i) instanceof Ship) {
                 Ship s = (Ship) m.get(i);
 
@@ -264,7 +256,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
             }
         }
 
-        throw new Exception("ERROR: Couldn't find the players ship!");
+        return null;
     }
 
     @Override

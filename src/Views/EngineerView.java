@@ -103,6 +103,11 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     public void initialiseUI() {
         try {
             Ship s = findPlayerShip();
+            while(s == null) {
+                System.out.println("ship is null");
+                Thread.sleep(250);
+                s = findPlayerShip();
+            }
 
             initialiseWeapons(s);
             initialiseResources(s);
@@ -200,10 +205,10 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
      * @return The players Ship object
      * @throws Exception No ship could be found, in theory this should never be called! Hopefully...
      */
-    private Ship findPlayerShip() throws Exception {
+    private Ship findPlayerShip() {
         Map m = gameClient.getMap();
 
-        for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
+        for (int i = 0; i < m.size(); i++) {
             if (m.get(i) instanceof Ship) {
                 Ship s = (Ship) m.get(i);
 
@@ -213,7 +218,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
             }
         }
 
-        throw new Exception("ERROR: Couldn't find the players ship!");
+        return null;
     }
 
     @Override

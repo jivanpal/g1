@@ -257,7 +257,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			LobbyPanel lpanel = new LobbyPanel(menu, client, l.getID(), player, true);
 			menu.changeFrame(lpanel);
 		} else if (l.started) {
-
+			System.out.println("Game started");
 			int pos = 0;
 			while (pos < players.length) {
 				if (player.equals(players[pos]))
@@ -266,19 +266,23 @@ public class LobbyPanel extends JPanel implements Observer {
 			}
 			System.out.println(pos);
 			GameClient gameClient = new GameClient(client.getLobby(), player);
-
+			System.out.println("Pos: " + String.valueOf(pos % 2 == 0));
 			if (pos % 2 == 0) // i.e. if player is pilot
 			{
+				System.out.println("Player is a pilot");
 				PilotView pv;
 				if (players[pos + 1] == null) {
 					pv = new PilotView(client.name, gameClient, menu.getFrame(), true);
 				} else {
 					pv = new PilotView(client.name, gameClient, menu.getFrame(), false);
 				}
+				System.out.println("Swapping to PilotView");
 				menu.changeFrame(pv);
 			} else // else player is engineer
 			{
+				System.out.println("Player is an Engineer");
 				EngineerView eview = new EngineerView(client.name, gameClient, menu.getFrame());
+				System.out.println("Swapping to EngineerView");
 				menu.changeFrame(eview);
 			}
 		} else {
