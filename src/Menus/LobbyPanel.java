@@ -232,7 +232,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			return;
 		} else {
 			l = client.getLobby();
-
+			System.out.println("Lobby has started is "+l.started);
 		}
 		Player[] players = l.getPlayers();
 		boolean inlobby = false;
@@ -252,12 +252,11 @@ public class LobbyPanel extends JPanel implements Observer {
 			client.setLobby(null);
 		} else if (leftserver) {
 			return;
-		} else if (inlobby && l.getHost().nickname.equals(player.nickname)) {
+		} else if (inlobby && l.getHost().nickname.equals(player.nickname) && !l.started) {
 			player.isHost = true;
 			LobbyPanel lpanel = new LobbyPanel(menu, client, l.getID(), player, true);
 			menu.changeFrame(lpanel);
 		} else if (l.started) {
-			System.out.println("Game started");
 			int pos = 0;
 			while (pos < players.length) {
 				if (player.equals(players[pos]))

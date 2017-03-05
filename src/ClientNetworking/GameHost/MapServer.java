@@ -17,7 +17,7 @@ public class MapServer extends Thread {
 	private final int PORT = 1273;
 	private final Lobby lobby;
 	private ServerSocket serverSocket = null;
-
+	private ArrayList<KeySequence> keySequences= new ArrayList<KeySequence>();;
 	public MapServer(Lobby l) {
 		lobby = l;
 		
@@ -27,21 +27,20 @@ public class MapServer extends Thread {
 		} catch (IOException e) {
 			System.err.println("Couldn't listen on port " + PORT);
 		}
+		int minLength = 2;
+		int maxLength = 7;
+		int sequenceNumber = 10;
+		for(int  i=0;i<4;i++)
+		{
+			keySequences.add(new KeySequence(minLength, maxLength, sequenceNumber ));
+		}	
 	}
 
 	public void run() {
 		try {
-			int minLength = 2;
-			int maxLength = 7;
-			int sequenceNumber = 10;
-			ArrayList<KeySequence> keySequences = new ArrayList<KeySequence>();
-			for(int  i=0;i<4;i++)
-			{
-				keySequences.add(new KeySequence(minLength, maxLength, sequenceNumber ));
-			}			
+		
 			ClientTable clientTable = new ClientTable();
 			MapContainer gameMap = new MapContainer();
-			System.out.println(serverSocket.getInetAddress());
 			System.out.println("I HAVE STARTED THE SERVER");
 			while (true) {
 				// Listen to the socket, accepting connections from new clients:
