@@ -155,6 +155,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         weaponPanel.add(torpedosView);
 
         UIPanel.add(resourcesView);
+
         UIPanel.add(weaponPanel);
 
         UIBaseLayer.setLayout(new BorderLayout());
@@ -264,6 +265,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         } else {
             Map m = gameClient.getMap();
             screen.setMap(m);
+            radarView.updateMap(m);
 
             for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
                 if (m.get(i) instanceof Ship) {

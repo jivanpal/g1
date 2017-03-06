@@ -21,6 +21,7 @@ public class RadarView extends JPanel{
     private final Color ASTEROID_COLOR = Color.red;
     private final Color PLAYER_SHIP_COLOR = Color.green;
     private final Color ENEMY_SHIP_COLOR = Color.blue;
+    private final Color BACKGROUND_COLOR = Color.black;
 
     private final int CIRCLE_DRAW_DIAMETER = 5;
 
@@ -36,16 +37,15 @@ public class RadarView extends JPanel{
         this.playerName = playerName;
         this.map = map;
 
-        this.setBackground(Color.black);
+        this.setBackground(BACKGROUND_COLOR);
         this.setBorder(BorderFactory.createLineBorder(Color.red));
     }
 
     /**
      * Redraws the entire RadarView map with the new positions of asteroids and
      * enemy ships.
-     * @param map The current game map.
      */
-    public void update(Map map) {
+    public void updateMap(Map map) {
         this.map = map;
 
         // calls paintComponent
@@ -66,8 +66,7 @@ public class RadarView extends JPanel{
      * @param y The y coordinate
      */
     private void drawCircle(Graphics2D g, double x, double y) {
-        Ellipse2D.Double circle = new Ellipse2D.Double(x, y, CIRCLE_DRAW_DIAMETER, CIRCLE_DRAW_DIAMETER);
-        g.fill(circle);
+
     }
 
     /**
@@ -85,6 +84,9 @@ public class RadarView extends JPanel{
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
+
+        this.setBackground(BACKGROUND_COLOR);
+        graphics.clearRect(0, 0, getWidth(), getHeight());
 
         Graphics2D g = (Graphics2D) graphics;
 
@@ -111,7 +113,8 @@ public class RadarView extends JPanel{
 
             // Draw the circle on the map
             Tuple<Integer, Integer> position = circleDrawPositionFromCenter(b.getPosition().getX(), b.getPosition().getY());
-            drawCircle(g, position.getX(), position.getY());
+            Ellipse2D.Double circle = new Ellipse2D.Double(position.getX(), position.getY(), CIRCLE_DRAW_DIAMETER, CIRCLE_DRAW_DIAMETER);
+            g.fill(circle);
         }
     }
 }
