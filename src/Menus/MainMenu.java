@@ -58,15 +58,23 @@ public class MainMenu {
 	public static void main(String[] args) {
 		GameOptions.setKeyBindings();
 		GameOptions.setSoundValues();
-		String name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
-		if (name == null) {
-			System.exit(0);
-		}
-		while (name.equals("")) {
+
+		String name = "test";
+
+		if(args.length == 0) {
 			name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
+			if (name == null) {
+				System.exit(0);
+			}
+			while (name.equals("")) {
+				name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
+			}
+
+		} else {
+			name = args[0];
 		}
+
 		MainMenu menu = new MainMenu(name);
 		AudioPlayer.playMusic(AudioPlayer.MENU_SCREEN_TUNE);
-		
 	}
 }

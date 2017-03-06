@@ -9,6 +9,7 @@ import java.awt.*;
  * By default the Weapon is unhighlighted and shows no ammo bar.
  */
 public class WeaponView extends JPanel{
+    private JButton replenishAmmo;
     private Color HIGHLIGHT_COLOUR = Color.red;
     private Color DEFAULT_COLOUR = Color.black;
 
@@ -16,7 +17,6 @@ public class WeaponView extends JPanel{
     private JProgressBar weaponAmmoLevel;
 
     private boolean showAmmoLevel = false;
-    private boolean highlighted = false;
 
     /**
      * Creates a WeaponView with the given label name. Ammo bar does not exist.
@@ -41,6 +41,12 @@ public class WeaponView extends JPanel{
         if(showAmmoLevel) {
             weaponAmmoLevel = new JProgressBar();
             this.add(weaponAmmoLevel);
+
+            this.replenishAmmo = new JButton("Replenish");
+            replenishAmmo.setEnabled(false);
+            replenishAmmo.setFocusable(false);
+
+            add(replenishAmmo);
         }
     }
 
@@ -56,11 +62,9 @@ public class WeaponView extends JPanel{
 
     /**
      * Set whether the Weapon is highlighted or not
-     * @param newHighlight New value for whether the weapon is highlighted or not
+     * @param highlighted New value for whether the weapon is highlighted or not
      */
-    public void setHighlightWeapon(boolean newHighlight) {
-        this.highlighted = newHighlight;
-
+    public void setHighlightWeapon(boolean highlighted) {
         if(highlighted) {
             weaponNameLabel.setForeground(HIGHLIGHT_COLOUR);
         } else {
@@ -76,5 +80,10 @@ public class WeaponView extends JPanel{
         if(showAmmoLevel) {
             weaponAmmoLevel.setMaximum(maxiumumAmmo);
         }
+    }
+
+    public void setReplenishAmmo(EngineerView parent, ShipState state) {
+        replenishAmmo.addActionListener(actionEvent -> parent.setState(state));
+        replenishAmmo.setEnabled(true);
     }
 }

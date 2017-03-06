@@ -1,13 +1,108 @@
 package Views;
 
+import ClientNetworking.GameHost.MapContainer;
+import GameLogic.Asteroid;
+import GameLogic.Map;
+import GameLogic.Ship;
+import Physics.Body;
+import Utils.Tuple;
+
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 /**
- * Created by james on 14/02/17.
+ * Created by James on 14/02/17.
+ * This view shows a top down view of the entire battlefield, showing locations of enemy
+ * ships and asteroids.
  */
-public class RadarView extends JLayeredPane{
+public class RadarView extends JPanel{
+    private final Color ASTEROID_COLOR = Color.red;
+    private final Color PLAYER_SHIP_COLOR = Color.green;
+    private final Color ENEMY_SHIP_COLOR = Color.blue;
 
-    public RadarView() {
+    private final int CIRCLE_DRAW_DIAMETER = 4;
+
+    private Map map;
+    private String playerName;
+
+    /**
+     * Creates a new RadarView
+     */
+    public RadarView(String playerName, Map map) {
         super();
+
+        this.playerName = playerName;
+        this.map = map;
+
+        this.setBackground(Color.black);
+        this.setBorder(BorderFactory.createLineBorder(Color.red));
+    }
+
+    /**
+     * Redraws the entire RadarView map with the new positions of asteroids and
+     * enemy ships.
+     * @param map The current game map.
+     */
+    public void update(Map map) {
+        this.map = map;
+
+        // calls paintComponent
+        repaint();
+    }
+
+    /**
+     * Draws an equilateral triangle centered on the given coordinates
+     * @param x The x coordinate of the triangle
+     * @param y The y coordinate of the triangle
+     */
+    private void drawTriangle(int x, int y) {
+    }
+
+    /**
+     * Draws a circle centered on the given coordinates
+     * @param x The x coordinate
+     * @param y The y coordinate
+     */
+    private void drawCircle(int x, int y) {
+    }
+
+    /**
+     * Given the center position of for a body in the map, return the position at which we should
+     * draw a circle in the RadarView for the resulting circle to be centered on the same spot.
+     * @param x The x coordinate of the center of the circle in the map
+     * @param y The y coordinate of the center of the circle in the map
+     * @return The position at which we should draw this circle
+     */
+    private Tuple<Integer, Integer> circleDrawPositionFromCenter(int x, int y) {
+        return new Tuple<>(0, 0);
+    }
+
+    @Override
+    protected void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+
+        Graphics2D g = (Graphics2D) graphics;
+
+        for(Body b : map) {
+
+            if(b instanceof Asteroid) {
+
+            } else if (b instanceof Ship) {
+                Ship s = (Ship) b;
+
+                // Check if this ship is ours so we can draw it a different color
+                if(s.getPilotName().equals(playerName) || s.getEngineerName().equals(playerName)) {
+
+                } else {
+
+                }
+
+            } else {
+                // What has happened here? This is really bad.
+                System.err.println("Views:RadarView:paintComponent() - Something has gone quite wrong here");
+            }
+        }
     }
 }

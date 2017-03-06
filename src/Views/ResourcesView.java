@@ -77,7 +77,7 @@ public class ResourcesView extends JPanel {
      * Instantiates all of the components of the UI and adds them to the JPanel.
      * Must be called before displaying, otherwise nothing will showup!
      */
-    public void makeUI() {
+    private void makeUI() {
         shieldsComponent = new ResourceComponent("Shields");
         shieldsComponent.setResourceBarColor(Color.blue);
         shieldsComponent.setReplenishAction(ShipState.SHIELD_REPLENISH);
@@ -93,23 +93,19 @@ public class ResourcesView extends JPanel {
         add(hullComponent);
     }
 
-    public int getMaxFuelLevel() {
-        return engineComponent.resourceProgressBar.getMaximum();
-    }
-
     /**
      * A ResourceComponent is a constituent of the ResourceView. Each ResourceComponent shows the details about just
      * one type of resource
      */
     private class ResourceComponent extends JPanel {
-        public JProgressBar resourceProgressBar;
-        public JButton replenishButton;
+        JProgressBar resourceProgressBar;
+        JButton replenishButton;
 
         /**
          * Creates a ResourceComponent which displays info about a particular resource to the player.
          * @param name The name of the resource.
          */
-        public ResourceComponent(String name) {
+        ResourceComponent(String name) {
             super();
 
             this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -120,11 +116,11 @@ public class ResourcesView extends JPanel {
             resourceProgressBar.setUI(new BasicProgressBarUI());
             resourceProgressBar.setIndeterminate(false);
 
-            // TODO: Find the maximum value for this kind of resource
             resourceProgressBar.setMaximum(10);
 
             this.replenishButton = new JButton("Replenish");
             replenishButton.setEnabled(false);
+            replenishButton.setFocusable(false);
 
             add(resourceProgressBar);
             add(replenishButton);
@@ -134,26 +130,20 @@ public class ResourcesView extends JPanel {
          * Sets the resource bar to the appropriate amount
          * @param currentLevel The level to set the resource bar to
          */
-        public void updateResourceLevel(float currentLevel) {
+        void updateResourceLevel(float currentLevel) {
             resourceProgressBar.setValue((int) currentLevel);
         }
 
-        public void setResourceBarColor(Color c) {
+        void setResourceBarColor(Color c) {
             this.resourceProgressBar.setForeground(c);
         }
 
-        public void setMaximumResourceLevel(int maximumResourceLevel) {
+        void setMaximumResourceLevel(int maximumResourceLevel) {
             this.resourceProgressBar.setMaximum(maximumResourceLevel);
         }
 
-        public void setReplenishAction(ShipState state) {
-            replenishButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    parent.setState(state);
-                }
-            });
-
+        void setReplenishAction(ShipState state) {
+            replenishButton.addActionListener(actionEvent -> parent.setState(state));
             replenishButton.setEnabled(true);
         }
     }
