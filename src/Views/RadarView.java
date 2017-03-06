@@ -22,7 +22,7 @@ public class RadarView extends JPanel{
     private final Color PLAYER_SHIP_COLOR = Color.green;
     private final Color ENEMY_SHIP_COLOR = Color.blue;
 
-    private final int CIRCLE_DRAW_DIAMETER = 4;
+    private final int CIRCLE_DRAW_DIAMETER = 5;
 
     private Map map;
     private String playerName;
@@ -65,7 +65,9 @@ public class RadarView extends JPanel{
      * @param x The x coordinate
      * @param y The y coordinate
      */
-    private void drawCircle(int x, int y) {
+    private void drawCircle(Graphics2D g, double x, double y) {
+        Ellipse2D.Double circle = new Ellipse2D.Double(x, y, CIRCLE_DRAW_DIAMETER, CIRCLE_DRAW_DIAMETER);
+        g.fill(circle);
     }
 
     /**
@@ -75,8 +77,9 @@ public class RadarView extends JPanel{
      * @param y The y coordinate of the center of the circle in the map
      * @return The position at which we should draw this circle
      */
-    private Tuple<Integer, Integer> circleDrawPositionFromCenter(int x, int y) {
-        return new Tuple<>(0, 0);
+    private Tuple<Integer, Integer> circleDrawPositionFromCenter(double x, double y) {
+        return new Tuple<Integer, Integer>((int) Math.round(Utils.Utils.scaleValueToRange(x, 0, MapContainer.MAP_SIZE, 0, this.getWidth())),
+                (int) Math.round(Utils.Utils.scaleValueToRange(y, 0, MapContainer.MAP_SIZE, 0, this.getHeight())));
     }
 
     @Override
@@ -87,22 +90,28 @@ public class RadarView extends JPanel{
 
         for(Body b : map) {
 
+            // Select the correct color to paint
             if(b instanceof Asteroid) {
+                g.setPaint(ASTEROID_COLOR);
 
             } else if (b instanceof Ship) {
                 Ship s = (Ship) b;
 
                 // Check if this ship is ours so we can draw it a different color
                 if(s.getPilotName().equals(playerName) || s.getEngineerName().equals(playerName)) {
-
+                    g.setPaint(PLAYER_SHIP_COLOR);
                 } else {
-
+                    g.setPaint(ENEMY_SHIP_COLOR);
                 }
 
             } else {
                 // What has happened here? This is really bad.
                 System.err.println("Views:RadarView:paintComponent() - Something has gone quite wrong here");
             }
+
+            // Draw the circle on the map
+            Tuple<Integer, Integer> position = circleDrawPositionFromCenter(b.getPosition().getX(), b.getPosition().getY());
+            drawCircle(g, position.getX(), position.getY());
         }
     }
 }

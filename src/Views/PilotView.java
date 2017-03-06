@@ -1,4 +1,3 @@
-
 package Views;
 
 import AI.EngineerAI;
@@ -28,6 +27,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     private WeaponView laserBlasterView;
     private WeaponView torpedosView;
     private InstructionsView instructionsView;
+    private RadarView radarView;
 
     private JButton manual;
 
@@ -182,6 +182,12 @@ public class PilotView extends JPanel implements KeyListener, Observer {
 
         UILayeredPane.setLayout(layoutManager);
         UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+
+        radarView = new RadarView(playerNickname, gameClient.getMap());
+        radarView.setBounds(parentFrame.getWidth() - (int) (parentFrame.getHeight() / 2.5), 0, (int) (parentFrame.getHeight() / 2.5), (int) (parentFrame.getHeight() / 2.5));
+        radarView.setPreferredSize(new Dimension((int) (parentFrame.getHeight() / 2.5), (int) (parentFrame.getHeight() / 2.5)));
+
+        UILayeredPane.add(radarView, JLayeredPane.PALETTE_LAYER);
     }
 
     /**
@@ -302,7 +308,6 @@ public class PilotView extends JPanel implements KeyListener, Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-
         if (!UIinitialised) {
             try {
                 initialiseUI();

@@ -38,6 +38,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     private WeaponView laserBlasterView;
     private WeaponView torpedosView;
     private ResourcesView resourcesView;
+    private RadarView radarView;
 
     private GameClient gameClient;
     private String playerNickname;
@@ -47,7 +48,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;
     private JFrame parentFrame;
-    private RadarView radarView;
 
     /**
      * Creates a new EngineerView
@@ -166,8 +166,8 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         UILayeredPane.setLayout(layoutManager);
         UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
 
-        radarView.setBounds(parentFrame.getWidth() - (int) (parentFrame.getHeight() / 2.5), 0, (int) (parentFrame.getHeight() / 2.5), (int) (parentFrame.getHeight() / 2.5));
-        radarView.setPreferredSize(new Dimension((int) (parentFrame.getHeight() / 2.5), (int) (parentFrame.getHeight() / 2.5)));
+        radarView.setBounds(parentFrame.getWidth() - parentFrame.getHeight() / 4, 0, parentFrame.getHeight() / 4, parentFrame.getHeight() / 4);
+        radarView.setPreferredSize(new Dimension(parentFrame.getHeight() / 4, parentFrame.getHeight() / 4));
 
         UILayeredPane.add(radarView, JLayeredPane.PALETTE_LAYER);
     }
@@ -322,7 +322,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
                         keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[2]), false);
                         break;
                     case 's':
-                        System.out.println("Startng a shield sequence");
+                        System.out.println("Starting a shield sequence");
                         this.state = ShipState.SHIELD_REPLENISH;
                         keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[3]), true);
                         break;
@@ -387,7 +387,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
             case NONE:
                 break;
             case SHIELD_REPLENISH:
-                System.out.println("Startng a shield sequence");
+                System.out.println("Starting a shield sequence");
                 keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[3]), true);
                 break;
             case FUEL_REPLENISH:
