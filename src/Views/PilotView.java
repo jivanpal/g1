@@ -101,8 +101,10 @@ public class PilotView extends JPanel implements KeyListener, Observer {
      * Creates all the elements of the UI and positions them on the screen. Sets all default values of the UI elements.
      */
     public void initialiseUI() {
-        UILayeredPane.removeAll();
-        UIBaseLayer.removeAll();
+        if(UIinitialised) {
+            UILayeredPane.removeAll();
+            UIBaseLayer.removeAll();
+        }
 
         Ship s = findPlayerShip();
         while (s == null) {
@@ -150,6 +152,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         this.revalidate();
         this.repaint();
 
+        UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Pilot");
     }
 

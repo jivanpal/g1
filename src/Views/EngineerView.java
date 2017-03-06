@@ -106,8 +106,10 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
      * Creates all the elements of the UI and positions them on the screen. Sets all default values of the UI elements.
      */
     private void initialiseUI() {
-        UILayeredPane.removeAll();
-        UIBaseLayer.removeAll();
+        if(UIinitialised) {
+            UILayeredPane.removeAll();
+            UIBaseLayer.removeAll();
+        }
 
         Ship s = findPlayerShip();
         while (s == null) {
@@ -133,6 +135,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         this.revalidate();
         this.repaint();
 
+        this.UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Engineer");
     }
 
