@@ -85,7 +85,8 @@ public class RadarView extends JPanel{
         super.paintComponent(graphics);
 
         this.setBackground(BACKGROUND_COLOR);
-        graphics.clearRect(0, 0, getWidth(), getHeight());
+        graphics.setColor(BACKGROUND_COLOR);
+        graphics.fillRect(0, 0, getWidth(), getHeight());
 
         Graphics2D g = (Graphics2D) graphics;
 
