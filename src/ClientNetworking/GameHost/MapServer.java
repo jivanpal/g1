@@ -43,7 +43,8 @@ public class MapServer extends Thread {
 			MapContainer gameMap = new MapContainer();
 			Player[] p = lobby.getPlayers();
 			for(int i=0;i<lobby.getPlayers().length;i+=2)
-				gameMap.addShip(i/2, p[i]==null? "":p[i].nickname, p[i+1] == null? "" : p[i+1].nickname);
+				if(p[i]!=null || p[i+1]!=null)
+					gameMap.addShip(i/2, p[i]==null? "":p[i].nickname, p[i+1] == null? "" : p[i+1].nickname);
 			gameMap.generateTerrain();
 			System.out.println("I HAVE STARTED THE SERVER");
 			while (true) {
