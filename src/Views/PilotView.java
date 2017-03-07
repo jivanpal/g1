@@ -223,7 +223,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     }
 
     private void initialiseManualView() {
-    	this.instructions = new ManualView(gameClient.keySequence.getAllKeys());
+    	this.instructions = new ManualView(gameClient.keySequence.getAllKeys(), gameClient.keySequence.getKeysSize());
     }
 
 

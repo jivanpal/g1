@@ -13,14 +13,15 @@ public class ManualInstructionsView extends JPanel {
 	public static int MAX_PAGE = 10;
 	
 	public static final String[] columnNames = {"Number", "Instruction", "KeySeq"};
-	private Object[][] data = new Object[MAX_PAGE][columnNames.length];
+	private Object[][] data;
 	
 	private int pageNumber;
 	private JTable leftPage;
 	private JTable rightPage;
 	
-	public ManualInstructionsView(ArrayList<char[][]> data){
+	public ManualInstructionsView(ArrayList<char[][]> data,int size){
 		pageNumber = 1;
+		this.data = new Object[size][columnNames.length];
 		setData(data);
 		
 		leftPage = new JTable(getDataForPage(pageNumber),columnNames);
@@ -54,8 +55,10 @@ public class ManualInstructionsView extends JPanel {
 	
 	private Object[][] getDataForPage(int page){
 		Object[][] o = new Object[INSTRUCTIONS_PER_PAGE][columnNames.length];
-		for(int i = page*INSTRUCTIONS_PER_PAGE;i<(page+1)*INSTRUCTIONS_PER_PAGE;i++){
-			o[i] = data[i];
+		int num = page*INSTRUCTIONS_PER_PAGE;
+		for(int i = 0;i<INSTRUCTIONS_PER_PAGE;i++){
+			//System.out.println("print data" + data[i]);
+			o[i] = data[i + num];
 		}
 		return o;
 	}
