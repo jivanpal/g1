@@ -26,10 +26,10 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     private WeaponView plasmaBlasterView;
     private WeaponView laserBlasterView;
     private WeaponView torpedosView;
-    private InstructionsView instructionsView;
     private RadarView radarView;
 
     private JButton manual;
+    private ManualView instructions;
 
     private GameClient gameClient;
     private String playerNickname;
@@ -121,6 +121,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         initialiseManualButton();
         intialiseSpeedometer();
         initialiseScreen();
+        initialiseManualView();
 
         // Add mouse listener which swaps the cursor between being the default and a crosshair.
         this.addMouseMotionListener(new MouseMotionListener() {
@@ -173,6 +174,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
         UIpanel.add(weaponPanel);
         UIpanel.add(speedometerView);
+        UIpanel.add(manual);
         //UIpanel.add(instructionsView);
 
         UIBaseLayer.setLayout(new BorderLayout());
@@ -184,6 +186,10 @@ public class PilotView extends JPanel implements KeyListener, Observer {
 
         UILayeredPane.setLayout(layoutManager);
         UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+        
+        this.instructions.setBounds(50,50,300,300);
+        this.instructions.setVisible(false);
+    	UILayeredPane.add(instructions, JLayeredPane.PALETTE_LAYER);
 
         radarView = new RadarView(playerNickname, gameClient.getMap());
         radarView.setBounds(parentFrame.getWidth() - (int) (parentFrame.getHeight() / 2.5), 0, (int) (parentFrame.getHeight() / 2.5), (int) (parentFrame.getHeight() / 2.5));
@@ -213,29 +219,13 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     }
 
     private void showManual() {
-
+    	this.instructions.setVisible(!instructions.isVisible());
     }
 
     private void initialiseManualView() {
-
+    	this.instructions = new ManualView(gameClient.keySequence.getAllKeys());
     }
 
-    /**
-     * Initialises the InstructionsView with all of the relevant instructions for this ship.
-     */
-    private void initialiseInstructions() {
-        instructionsView = new InstructionsView();
-
-        // TODO: Swap the over to the proper Manual view. This is just a temporary solution.
-        try {
-            for (int i = 0; i < gameClient.keySequence.getSequencesByLength(2).length; i++) {
-                String instruction = String.valueOf(gameClient.keySequence.getSequencesByLength(2)[i]);
-                instructionsView.addInstruction(instruction);
-            }
-        } catch (Exception e) {
-            // Should never get here
-        }
-    }
 
     /**
      * Given a Ship, this will initialise the weapon progress bars to their initial values and set their maximum values

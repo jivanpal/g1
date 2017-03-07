@@ -115,6 +115,10 @@ public class ClientReceiver extends Thread
 	{
 		clientLobby.addObserver(obs);
 	}
+	
+	public void deleteObserver(Observer obs) {
+		clientLobby.deleteObserver(obs);
+	}
 }
 /**
  * 
