@@ -177,7 +177,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
     /**
      * Given a Ship, this will initialise the weapon progress bars to their initial values and set their maximum values
-     *
      * @param s This players Ship object
      */
     private void initialiseWeapons(Ship s) {
