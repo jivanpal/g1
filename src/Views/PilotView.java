@@ -11,6 +11,7 @@ import javax.swing.*;
 
 import ClientNetworking.GameClient.GameClient;
 import GameLogic.GameOptions;
+import Physics.Body;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -26,7 +27,6 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     private WeaponView plasmaBlasterView;
     private WeaponView laserBlasterView;
     private WeaponView torpedosView;
-    private RadarView radarView;
 
     private JButton manual;
     private ManualView instructions;
@@ -43,8 +43,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     private JFrame parentFrame;
 
     /**
-     * Creates a new PilotView.
-     *
+     * Creates a new PilotView. This encapsulates the entire View of the Pilot player.
      * @param playerNickname The nickname of the player controlling this view.
      * @param gameClient     The GameClient handling network connections for this player.
      */
@@ -100,7 +99,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     /**
      * Creates all the elements of the UI and positions them on the screen. Sets all default values of the UI elements.
      */
-    public void initialiseUI() {
+    private void initialiseUI() {
         if(UIinitialised) {
             UILayeredPane.removeAll();
             UIBaseLayer.removeAll();
@@ -119,7 +118,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         initialiseWeapons(s);
         //initialiseInstructions();
         initialiseManualButton();
-        intialiseSpeedometer();
+        initialiseSpeedometer();
         initialiseScreen();
         initialiseManualView();
 
@@ -154,6 +153,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         this.repaint();
 
         this.addKeyListener(this);
+        this.setFocusable(true);
 
         UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Pilot");
@@ -171,10 +171,11 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
 
         Container UIpanel = new Container();
+        UIpanel.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() / 5));
         UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
+        UIpanel.add(manual);
         UIpanel.add(weaponPanel);
         UIpanel.add(speedometerView);
-        UIpanel.add(manual);
         //UIpanel.add(instructionsView);
 
         UIBaseLayer.setLayout(new BorderLayout());
@@ -187,15 +188,9 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         UILayeredPane.setLayout(layoutManager);
         UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
         
-        this.instructions.setBounds(50,50,600,600);
+        this.instructions.setBounds(50,50, getWidth() - 100, getHeight() - 100);
         this.instructions.setVisible(false);
     	UILayeredPane.add(instructions, JLayeredPane.PALETTE_LAYER);
-
-        radarView = new RadarView(playerNickname, gameClient.getMap());
-        radarView.setBounds(parentFrame.getWidth() - (int) (parentFrame.getHeight() / 2.5), 0, (int) (parentFrame.getHeight() / 2.5), (int) (parentFrame.getHeight() / 2.5));
-        radarView.setPreferredSize(new Dimension((int) (parentFrame.getHeight() / 2.5), (int) (parentFrame.getHeight() / 2.5)));
-
-        UILayeredPane.add(radarView, JLayeredPane.PALETTE_LAYER);
     }
 
     /**
@@ -203,19 +198,20 @@ public class PilotView extends JPanel implements KeyListener, Observer {
      */
     private void initialiseScreen() {
         this.screen = new Screen(playerNickname, true);
-        screen.setPreferredSize(new Dimension(1000, 800));
+        screen.setPreferredSize(new Dimension(this.getWidth(), 4 * (this.getHeight() / 5)));
     }
 
     /**
      * Initialises the speedometer to its initial values.
      */
-    private void intialiseSpeedometer() {
+    private void initialiseSpeedometer() {
         speedometerView = new SpeedometerView();
     }
 
     private void initialiseManualButton() {
         this.manual = new JButton("Manual");
         this.manual.addActionListener(e -> showManual());
+        this.manual.setFocusable(false);
     }
 
     private void showManual() {
@@ -243,17 +239,15 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     }
 
     /**
-     * Finds the players Ship within all of the objects in the Map
-     *
-     * @return The players Ship object
-     * @throws Exception No ship could be found, in theory this should never be called! Hopefully...
+     * Finds the players Ship within all of the objects in the Map.
+     * @return The players Ship object. If the ship could not be found, this will return null.
      */
     private Ship findPlayerShip() {
         Map m = gameClient.getMap();
 
-        for (int i = 0; i < m.size(); i++) {
-            if (m.get(i) instanceof Ship) {
-                Ship s = (Ship) m.get(i);
+        for (Body b : m) {
+            if (b instanceof Ship) {
+                Ship s = (Ship) b;
 
                 if (s.getPilotName().equals(playerNickname)) {
                     return s;
@@ -270,6 +264,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
+        System.out.println("Key press!");
         if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
             gameClient.send("fireWeapon1");
         } else if (keyEvent.getKeyCode() == GameOptions
