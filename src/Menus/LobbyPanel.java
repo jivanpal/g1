@@ -94,13 +94,6 @@ public class LobbyPanel extends JPanel implements Observer {
 				client.setLobby(null);
 			}
 		}
-		/*
-		 * System.out.println(client.getLobby().getID()); System.out.println(
-		 * "Changed from clientlobby to hostlobby"); player =
-		 * client.getLobby().getHost();
-		 * 
-		 * }
-		 */
 		c.anchor = GridBagConstraints.NORTHWEST;
 		JButton backtostart = new JButton("Back To Play Menu");
 		backtostart.addActionListener(e -> {
@@ -216,9 +209,6 @@ public class LobbyPanel extends JPanel implements Observer {
 					move.setEnabled(false);
 				}
 			}
-			/*
-			 * kick.addActionListener(e -> { client.send(new Action(,10)); });
-			 */
 			panel.add(move);
 			panel.add(kick);
 		}
@@ -232,7 +222,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			return;
 		} else {
 			l = client.getLobby();
-			System.out.println("Lobby has started is "+l.started);
+			System.out.println("Lobby has started is " + l.started);
 		}
 		Player[] players = l.getPlayers();
 		boolean inlobby = false;
@@ -247,13 +237,18 @@ public class LobbyPanel extends JPanel implements Observer {
 		if (inlobby == false && leftserver == false) {
 			JOptionPane.showMessageDialog(this, "You have been kicked from the lobby!", "Kicked From Lobby",
 					JOptionPane.INFORMATION_MESSAGE);
+			client.deleteLobbyObserver(this);
+			client.setLobby(null);
 			ButtonPanel bpanel = new ButtonPanel(menu, client);
 			menu.changeFrame(bpanel);
-			client.setLobby(null);
+
 		} else if (leftserver) {
+			client.deleteLobbyObserver(this);
+			client.setLobby(null);
 			return;
 		} else if (inlobby && l.getHost().nickname.equals(player.nickname) && !l.started) {
 			player.isHost = true;
+			client.deleteLobbyObserver(this);
 			LobbyPanel lpanel = new LobbyPanel(menu, client, l.getID(), player, true);
 			menu.changeFrame(lpanel);
 		} else if (l.started) {
@@ -288,18 +283,13 @@ public class LobbyPanel extends JPanel implements Observer {
 			while (lpanel == null) {
 
 			}
-			//if (player.nickname.equals(l.getHost().nickname)) {
-				//LobbyPanel lpanel2 = new LobbyPanel(menu, client, l.getID(), player, true);
-				//menu.changeFrame(lpanel2);
-			//} else {
-				this.remove(lpanel);
-				JPanel newpanel = displayplayers();
-				newpanel.setOpaque(false);
-				this.add(newpanel, c);
-				this.invalidate();
-				this.validate();
-				this.lpanel = newpanel;
-			//}
+			this.remove(lpanel);
+			JPanel newpanel = displayplayers();
+			newpanel.setOpaque(false);
+			this.add(newpanel, c);
+			this.invalidate();
+			this.validate();
+			this.lpanel = newpanel;
 		}
 
 	}

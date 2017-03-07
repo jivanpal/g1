@@ -148,4 +148,8 @@ public class Client extends Thread
 		System.out.println("HostLobbyPanel added as observer to ClientReceiver");
 		receiver.addObserver(obs);
 	}
+	
+	public void deleteLobbyObserver(Observer obs) {
+		receiver.deleteObserver(obs);
+	}
 } 

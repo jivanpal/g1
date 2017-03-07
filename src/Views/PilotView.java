@@ -26,7 +26,6 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     private WeaponView plasmaBlasterView;
     private WeaponView laserBlasterView;
     private WeaponView torpedosView;
-    private InstructionsView instructionsView;
     private RadarView radarView;
 
     private JButton manual;
@@ -122,7 +121,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         initialiseManualButton();
         intialiseSpeedometer();
         initialiseScreen();
-        
+        initialiseManualView();
 
         // Add mouse listener which swaps the cursor between being the default and a crosshair.
         this.addMouseMotionListener(new MouseMotionListener() {
@@ -153,6 +152,8 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         UIBaseLayer.repaint();
         this.revalidate();
         this.repaint();
+
+        this.addKeyListener(this);
 
         UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Pilot");
@@ -185,6 +186,10 @@ public class PilotView extends JPanel implements KeyListener, Observer {
 
         UILayeredPane.setLayout(layoutManager);
         UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+        
+        this.instructions.setBounds(50,50,300,300);
+        this.instructions.setVisible(false);
+    	UILayeredPane.add(instructions, JLayeredPane.PALETTE_LAYER);
 
         radarView = new RadarView(playerNickname, gameClient.getMap());
         radarView.setBounds(parentFrame.getWidth() - (int) (parentFrame.getHeight() / 2.5), 0, (int) (parentFrame.getHeight() / 2.5), (int) (parentFrame.getHeight() / 2.5));
@@ -214,9 +219,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     }
 
     private void showManual() {
-    	initialiseManualView();
-    	this.instructions.setBounds(50,50,300,300);
-    	UILayeredPane.add(instructions, JLayeredPane.PALETTE_LAYER);
+    	this.instructions.setVisible(!instructions.isVisible());
     }
 
     private void initialiseManualView() {
