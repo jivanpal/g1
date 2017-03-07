@@ -64,29 +64,42 @@ public class ButtonPanel extends JPanel {
 	public JPanel createButtons() {
 		JPanel panel = new JPanel();
 		JButton play = new JButton("Play");
-		play.addActionListener(e -> {
-			PlayPanel ppanel = new PlayPanel(menu, client);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(ppanel);
-		});
+		play = createButton(play, "Play");
 		JButton settings = new JButton("Settings");
-		settings.addActionListener(e -> {
-			SettingsPanel spanel = new SettingsPanel(menu, client);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(spanel);
-		});
+		settings = createButton(settings, "Settings");
 		JButton exit = new JButton("Exit");
-		exit.addActionListener(e -> {
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			System.exit(0);
-		});
-
+		exit = createButton(exit, "Exit");
 		panel.setLayout(new BorderLayout());
-		Dimension d = new Dimension(300, 50);
-		play.setPreferredSize(d);
 		panel.add(play, BorderLayout.NORTH);
 		panel.add(settings, BorderLayout.CENTER);
 		panel.add(exit, BorderLayout.SOUTH);
 		return panel;
+	}
+	
+	public JButton createButton(JButton button, String action) {
+		button.setForeground(Color.WHITE);
+		button.setFont(new Font(button.getFont().getName(), Font.BOLD, 30));
+		button.setBorderPainted(false);
+		button.setOpaque(false);
+		button.addActionListener(e -> {
+			switch(action) {
+			case "Play":
+				PlayPanel ppanel = new PlayPanel(menu, client);
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				menu.changeFrame(ppanel);
+				break;
+			case "Settings":
+				SettingsPanel spanel = new SettingsPanel(menu, client);
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				menu.changeFrame(spanel);
+				break;
+			case "Exit":
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				System.exit(0);
+				break;
+			}
+		});
+		
+		return button;
 	}
 }
