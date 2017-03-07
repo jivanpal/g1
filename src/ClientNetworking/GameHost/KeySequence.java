@@ -23,4 +23,8 @@ public class KeySequence implements Serializable {
 	public ArrayList<char[][]> getAllKeys(){
 		return this.keys;
 	}
+	
+	public int getKeysSize(){
+		return this.keys.size()*keys.get(0).length;
+	}
 }
