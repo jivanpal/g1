@@ -1,5 +1,6 @@
 package GameLogic;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,6 +52,9 @@ public class GameOptions {
 	// the default filename that the values are saved at
 	public final static String KEY_BINDINGS_FILE = System.getProperty("user.dir") + "/keybindings.txt";
 	public final static String SOUND_VALUES_FILE = System.getProperty("user.dir") + "/soundvalues.txt";
+	public final static String XIROD_FONT_FILE = System.getProperty("user.dir") + "/res/fonts/xirod/xirod.ttf";
+	public static Font REGULAR_TEXT_FONT;
+	public static Font LARGE_BOLD_TEXT_FONT;
 
 	// hashtable which holds the current values
 	private static Properties keyBindings = new Properties();

@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
+import GameLogic.GameOptions;
 
 /**
  * The Main Menu of the game.
@@ -47,8 +48,9 @@ public class ButtonPanel extends JPanel {
 		JLabel title = new JLabel("<html>Space Flying 101<br><br>Welcome <font color='#66e0ff'>" + client.name +"</font></html>");
 		title.setForeground(Color.WHITE);
 		title.setOpaque(false);
-		Font titlefont = title.getFont();
-		title.setFont(new Font(titlefont.getName(), Font.BOLD, 36));
+		title.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
+		// Font titlefont = title.getFont();
+		// title.setFont(new Font(titlefont.getName(), Font.BOLD, 36));
 		c.anchor = GridBagConstraints.NORTH;
 		add(title, c);
 		setBackground(Color.BLACK);
@@ -78,7 +80,7 @@ public class ButtonPanel extends JPanel {
 	
 	public JButton createButton(JButton button, String action) {
 		button.setForeground(Color.WHITE);
-		button.setFont(new Font(button.getFont().getName(), Font.BOLD, 30));
+		button.setFont(GameOptions.REGULAR_TEXT_FONT);
 		button.setBorderPainted(false);
 		button.setOpaque(false);
 		button.addActionListener(e -> {
