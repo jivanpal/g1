@@ -371,8 +371,10 @@ public class Matrix {
 	 */
 	public static double[][] getCM(Vector viewFrom, Vector V, Vector U, Vector N, double fov){
 		
-		double[][] m = multiply(getTM(viewFrom), getR(U, V, N));
-		m = multiply(m, getSM());
+//		double[][] m = multiply(getTM(viewFrom), getR(U, V, N));
+//		m = multiply(m, getSM());
+		double[][] m = multiply(getSM(), getR(U, V, N));
+		m = multiply(m, getTM(viewFrom));
 //		m = multiply(m, getPper(fov));
 		return m;
 	}
