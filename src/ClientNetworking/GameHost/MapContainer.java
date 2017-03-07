@@ -15,7 +15,6 @@ public class MapContainer {
 	public Map gameMap = new Map(MAP_SIZE, MAP_SIZE, MAP_SIZE);
 
 	public MapContainer() {
-		generateTerrain();
 	}
 
 	public int addShip(int position, String pilot,String engineer) {
@@ -28,7 +27,7 @@ public class MapContainer {
 		return gameMap.size()-1;
 	}
 
-	private void generateTerrain() {
+	public void generateTerrain() {
 		Random r = new Random();
 		for (int i = 0; i < ASTEROID_NUMBER; i++) {
 			Asteroid a = new Asteroid();

@@ -41,6 +41,10 @@ public class MapServer extends Thread {
 		
 			ClientTable clientTable = new ClientTable();
 			MapContainer gameMap = new MapContainer();
+			Player[] p = lobby.getPlayers();
+			for(int i=0;i<lobby.getPlayers().length;i+=2)
+				gameMap.addShip(i/2, p[i]==null? "":p[i].nickname, p[i+1] == null? "" : p[i+1].nickname);
+			gameMap.generateTerrain();
 			System.out.println("I HAVE STARTED THE SERVER");
 			while (true) {
 				// Listen to the socket, accepting connections from new clients:
@@ -84,9 +88,9 @@ public class MapServer extends Thread {
 				{
 					clientTable.add(String.valueOf(String.valueOf(position)));
 
-					int mapEntry = gameMap.addShip(position, clientName, players[position+1] == null? "" : players[position+1].nickname);
+					
 
-					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,clientName, mapEntry);
+					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,clientName, lobby.getPlayerPosByName(clientName));
 					clientInput.start();
 
 					GameHostSender clientOutput = new GameHostSender(toClient, clientTable, String.valueOf(position));
