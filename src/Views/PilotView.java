@@ -21,7 +21,7 @@ import java.util.Observer;
 /**
  * Created by James on 01/02/17.
  */
-public class PilotView extends JPanel implements KeyListener, Observer {
+public class PilotView extends JPanel implements Observer {
     private Screen screen;
     private SpeedometerView speedometerView;
     private WeaponView plasmaBlasterView;
@@ -31,16 +31,16 @@ public class PilotView extends JPanel implements KeyListener, Observer {
     private JButton manual;
     private ManualView instructions;
 
-    private GameClient gameClient;
+    public GameClient gameClient;
     private String playerNickname;
 
     private boolean UIinitialised = false;
 
     private EngineerAI engAI;
 
-    private JLayeredPane UILayeredPane;
-    private JPanel UIBaseLayer;
-    private JFrame parentFrame;
+    public JLayeredPane UILayeredPane;
+    public JPanel UIBaseLayer;
+    public JFrame parentFrame;
 
     /**
      * Creates a new PilotView. This encapsulates the entire View of the Pilot player.
@@ -60,7 +60,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         this.gameClient = gameClient;
         gameClient.addObserver(this);
 
-        addKeyListener(this);
+        //addKeyListener(this);
         setFocusable(true);
 
         this.parentFrame = parentFrame;
@@ -86,11 +86,49 @@ public class PilotView extends JPanel implements KeyListener, Observer {
                 initialiseUI();
             }
         });
+        parentFrame.addKeyListener(new KeyListener() {
 
+        	@Override
+            public void keyTyped(KeyEvent keyEvent) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+                System.out.println("Key press!");
+                if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
+                    gameClient.send("fireWeapon1");
+                } else if (keyEvent.getKeyCode() == GameOptions
+                        .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON)) {
+                    gameClient.send("fireWeapon2");
+                } else if (keyEvent.getKeyCode() == GameOptions
+                        .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON)) {
+                    gameClient.send("fireWeapon3");
+                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON)) {
+                    gameClient.send("accelerate");
+                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON)) {
+                    gameClient.send("decelerate");
+                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_DOWN_BUTTON)) {
+                    gameClient.send("pitchDown");
+                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_UP_BUTTON)) {
+                    gameClient.send("pitchUp");
+                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
+                    gameClient.send("rollLeft");
+                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
+                    gameClient.send("rollRight");
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+
+            }
+
+        	
+        });
         this.UILayeredPane = parentFrame.getLayeredPane();
-
+        parentFrame.setFocusable(true);
+        parentFrame.requestFocus();
         initialiseUI();
-
         // starting the in-game sounds
         AudioPlayer.stopMusic();
         AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
@@ -152,8 +190,9 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         this.revalidate();
         this.repaint();
 
-        this.addKeyListener(this);
-        this.setFocusable(true);
+        //this.addKeyListener(this);
+        //this.setFocusable(true);
+        
 
         UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Pilot");
@@ -258,41 +297,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         return null;
     }
 
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-        System.out.println("Key press!");
-        if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
-            gameClient.send("fireWeapon1");
-        } else if (keyEvent.getKeyCode() == GameOptions
-                .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON)) {
-            gameClient.send("fireWeapon2");
-        } else if (keyEvent.getKeyCode() == GameOptions
-                .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON)) {
-            gameClient.send("fireWeapon3");
-        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON)) {
-            gameClient.send("accelerate");
-        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON)) {
-            gameClient.send("decelerate");
-        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_DOWN_BUTTON)) {
-            gameClient.send("pitchDown");
-        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_UP_BUTTON)) {
-            gameClient.send("pitchUp");
-        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
-            gameClient.send("rollLeft");
-        } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
-            gameClient.send("rollRight");
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-
-    }
-
+    
     @Override
     public void update(Observable observable, Object o) {
         if (!UIinitialised) {
