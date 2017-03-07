@@ -81,7 +81,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
             @Override
             public void componentMoved(ComponentEvent componentEvent) {
-                initialiseUI();
             }
 
             @Override
@@ -92,6 +91,63 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
             @Override
             public void componentHidden(ComponentEvent componentEvent) {
                 initialiseUI();
+            }
+        });
+
+        parent.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    // User wishes to escape out of this sequence.
+                    System.out.println("Stopping this sequence");
+                    state = ShipState.NONE;
+                    keyManager.deactivate();
+                } else {
+                    if (keyManager.isActive()) {
+                        // If we're half way through a sequence, pass the key off to the key manager.
+                        keyManager.keyPressed(keyEvent);
+                    } else {
+                        // We're not in a sequence, see if this key was a keybind to start a new one.
+                        switch (keyEvent.getKeyChar()) {
+                            case 'l':
+                                System.out.println("Starting a laser sequence");
+                                state = ShipState.LASER_REPLENISH;
+                                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[0]), true);
+                                break;
+                            case 't':
+                                System.out.println("Starting a torpedo sequence");
+                                state = ShipState.TORPEDO_REPLENISH;
+                                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[1]), false);
+                                break;
+                            case 'p':
+                                System.out.println("Starting a plasma sequence");
+                                state = ShipState.PLASMA_REPLENISH;
+                                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[2]), false);
+                                break;
+                            case 's':
+                                System.out.println("Starting a shield sequence");
+                                state = ShipState.SHIELD_REPLENISH;
+                                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[3]), true);
+                                break;
+                            case 'f':
+                                System.out.println("Starting a fuel sequence");
+                                state = ShipState.FUEL_REPLENISH;
+                                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[4]), true);
+                                break;
+
+                        }
+                    }
+                }
             }
         });
 
@@ -221,10 +277,9 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
      */
     private void initialiseScreen() {
         this.screen = new Screen(playerNickname, false);
-        screen.setSize(1000, 800);
-        screen.setMaximumSize(new Dimension(1000, 800));
-        screen.setMinimumSize(new Dimension(1000, 800));
-        screen.setPreferredSize(new Dimension(1000, 800));
+        screen.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() - (this.getHeight() / 5)));
+        Global.SCREEN_WIDTH = this.getWidth();
+        Global.SCREEN_HEIGHT = this.getHeight() - (this.getHeight() / 5);
     }
 
     private void initialiseRadar() {
@@ -233,7 +288,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
     /**
      * Finds the players Ship within all of the objects in the Map
-     *
      * @return The players Ship object
      */
     private Ship findPlayerShip() {
@@ -297,47 +351,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            // User wishes to escape out of this sequence.
-            System.out.println("Stopping this sequence");
-            state = ShipState.NONE;
-            keyManager.deactivate();
-        } else {
-            if (keyManager.isActive()) {
-                // If we're half way through a sequence, pass the key off to the key manager.
-                keyManager.keyPressed(keyEvent);
-            } else {
-                // We're not in a sequence, see if this key was a keybind to start a new one.
-                switch (keyEvent.getKeyChar()) {
-                    case 'l':
-                        System.out.println("Starting a laser sequence");
-                        this.state = ShipState.LASER_REPLENISH;
-                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[0]), true);
-                        break;
-                    case 't':
-                        System.out.println("Starting a torpedo sequence");
-                        this.state = ShipState.TORPEDO_REPLENISH;
-                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[1]), false);
-                        break;
-                    case 'p':
-                        System.out.println("Starting a plasma sequence");
-                        this.state = ShipState.PLASMA_REPLENISH;
-                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[2]), false);
-                        break;
-                    case 's':
-                        System.out.println("Starting a shield sequence");
-                        this.state = ShipState.SHIELD_REPLENISH;
-                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[3]), true);
-                        break;
-                    case 'f':
-                        System.out.println("Starting a fuel sequence");
-                        this.state = ShipState.FUEL_REPLENISH;
-                        keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[4]), true);
-                        break;
 
-                }
-            }
-        }
     }
 
     /**

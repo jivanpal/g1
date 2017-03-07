@@ -24,7 +24,7 @@ public class ManualView extends JPanel{
 		add(previousPage, BorderLayout.WEST);
 		add(nextPage, BorderLayout.EAST);
 		
-		instuctions = new ManualInstructionsView(data, size);
+		instuctions = new ManualInstructionsView(data, size, this.getHeight());
 
 		add(instuctions,BorderLayout.CENTER);
 		
