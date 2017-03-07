@@ -5,12 +5,15 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class ManualInstructionsView extends JPanel {
 	private final int INSTRUCTIONS_PER_PAGE = 5;
 	
 	public static int MIN_PAGE = 1;
-	public static int MAX_PAGE = 10;
+	public static int MAX_PAGE = 11;
 	
 	public static final String[] columnNames = {"Number", "Instruction", "KeySeq"};
 	private Object[][] data;
@@ -20,21 +23,23 @@ public class ManualInstructionsView extends JPanel {
 	private JTable rightPage;
 	
 	public ManualInstructionsView(ArrayList<char[][]> data,int size){
+		
 		pageNumber = 1;
 		this.data = new Object[size][columnNames.length];
 		setData(data);
-		
 		leftPage = new JTable(getDataForPage(pageNumber),columnNames);
 		rightPage = new JTable(getDataForPage(pageNumber + 1), columnNames);
 		
 		setLayout(new BorderLayout());
 		add(leftPage,BorderLayout.WEST);
 		add(rightPage,BorderLayout.EAST);
+		
+		printData();
 	}
 	
-	public void update(){
-		leftPage = new JTable(getDataForPage(pageNumber),columnNames);
-		rightPage = new JTable(getDataForPage(pageNumber + 1), columnNames);
+	private void update(){
+		leftPage.setModel(new DefaultTableModel(getDataForPage(pageNumber),columnNames));
+		rightPage.setModel(new DefaultTableModel(getDataForPage(pageNumber + 1),columnNames));
 		this.validate();
 		this.repaint();
 	}
@@ -44,6 +49,7 @@ public class ManualInstructionsView extends JPanel {
 		if(pageNumber < MIN_PAGE){
 			this.pageNumber = MIN_PAGE;
 		}
+		update();
 	}
 	
 	public void pageUp(){
@@ -51,11 +57,12 @@ public class ManualInstructionsView extends JPanel {
 		if(pageNumber > MAX_PAGE){
 			this.pageNumber = MAX_PAGE;
 		}
+		update();
 	}
 	
 	private Object[][] getDataForPage(int page){
 		Object[][] o = new Object[INSTRUCTIONS_PER_PAGE][columnNames.length];
-		int num = page*INSTRUCTIONS_PER_PAGE;
+		int num = (page-1)*INSTRUCTIONS_PER_PAGE;
 		for(int i = 0;i<INSTRUCTIONS_PER_PAGE;i++){
 			//System.out.println("print data" + data[i]);
 			o[i] = data[i + num];
@@ -112,5 +119,15 @@ public class ManualInstructionsView extends JPanel {
 				break;				
 		}
 		return ("If you want to " + replenish + ", do this key sequence:");
+	}
+	
+	private void printData(){
+		for (int i = 0; i < data.length; i++) {
+			System.out.println("Num:" + data[i][0] + " Str:" + data[i][1] + " Inst:" + data[i][2]);
+		}
+	}
+	
+	public int getPage(){
+		return this.pageNumber;
 	}
 }

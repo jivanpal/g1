@@ -187,7 +187,7 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         UILayeredPane.setLayout(layoutManager);
         UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
         
-        this.instructions.setBounds(50,50,300,300);
+        this.instructions.setBounds(50,50,600,600);
         this.instructions.setVisible(false);
     	UILayeredPane.add(instructions, JLayeredPane.PALETTE_LAYER);
 
