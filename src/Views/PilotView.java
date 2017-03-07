@@ -72,9 +72,7 @@ public class PilotView extends JPanel implements Observer {
             }
 
             @Override
-            public void componentMoved(ComponentEvent componentEvent) {
-                initialiseUI();
-            }
+            public void componentMoved(ComponentEvent componentEvent) { }
 
             @Override
             public void componentShown(ComponentEvent componentEvent) {
@@ -86,6 +84,7 @@ public class PilotView extends JPanel implements Observer {
                 initialiseUI();
             }
         });
+
         parentFrame.addKeyListener(new KeyListener() {
 
         	@Override
@@ -94,7 +93,6 @@ public class PilotView extends JPanel implements Observer {
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-                System.out.println("Key press!");
                 if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
                     gameClient.send("fireWeapon1");
                 } else if (keyEvent.getKeyCode() == GameOptions
@@ -210,12 +208,10 @@ public class PilotView extends JPanel implements Observer {
         weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
 
         Container UIpanel = new Container();
-        UIpanel.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() / 5));
         UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
         UIpanel.add(manual);
         UIpanel.add(weaponPanel);
         UIpanel.add(speedometerView);
-        //UIpanel.add(instructionsView);
 
         UIBaseLayer.setLayout(new BorderLayout());
         UIBaseLayer.add(screen, BorderLayout.CENTER);
