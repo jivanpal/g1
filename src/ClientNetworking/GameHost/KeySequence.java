@@ -19,4 +19,8 @@ public class KeySequence implements Serializable {
 		else
 			throw (new Exception("Length of requested key sequence array is invalid"));
 	}
+	
+	public ArrayList<char[][]> getAllKeys(){
+		return this.keys;
+	}
 }
