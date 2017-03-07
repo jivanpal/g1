@@ -135,6 +135,8 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         this.revalidate();
         this.repaint();
 
+        this.addKeyListener(this);
+
         this.UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Engineer");
     }

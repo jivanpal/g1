@@ -152,6 +152,8 @@ public class PilotView extends JPanel implements KeyListener, Observer {
         this.revalidate();
         this.repaint();
 
+        this.addKeyListener(this);
+
         UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Pilot");
     }

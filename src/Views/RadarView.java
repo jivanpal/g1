@@ -8,7 +8,6 @@ import Physics.Body;
 import Utils.Tuple;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
