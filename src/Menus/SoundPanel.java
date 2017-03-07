@@ -46,6 +46,12 @@ public class SoundPanel extends JPanel {
 		c.anchor = GridBagConstraints.CENTER;
 		spanel.setOpaque(false);
 		add(spanel, c);
+		
+		c.anchor = GridBagConstraints.NORTH;
+		JLabel name = new JLabel("<html><b><font size='24'>Player:     <font color='#66e0ff'>" + client.name + "</font></font></b></html>");
+		name.setForeground(Color.WHITE);
+		add(name, c);
+		
 		setBackground(Color.BLACK);
 	}
 

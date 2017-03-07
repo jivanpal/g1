@@ -3,6 +3,7 @@ package Menus;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -71,12 +72,6 @@ public class LobbyPanel extends JPanel implements Observer {
 		c.gridx = 0;
 		c.gridy = 0;
 
-		if (ishost) {
-			JLabel host = new JLabel("Host");
-			host.setForeground(Color.WHITE);
-			add(host, c);
-		}
-
 		if (lobbyid == null) {
 
 			try {
@@ -143,6 +138,12 @@ public class LobbyPanel extends JPanel implements Observer {
 		ppanel.setOpaque(false);
 		this.lpanel = ppanel;
 		add(ppanel, c);
+		
+		c.anchor = GridBagConstraints.NORTH;
+		JLabel name = new JLabel("<html><b><font size='24'>Player:     <font color='#66e0ff'>" + client.name + "</font></font></b></html>");
+		name.setForeground(Color.WHITE);
+		add(name, c);
+		
 		setBackground(Color.BLACK);
 
 	}
@@ -179,6 +180,10 @@ public class LobbyPanel extends JPanel implements Observer {
 			panel.add(label);
 			if (p != null) {
 				JLabel name = new JLabel(p.nickname);
+				if (p.nickname.equals(this.player.nickname)) {
+					name.setFont(new Font(name.getName(), Font.BOLD, 12));
+				}
+				
 				name.setForeground(Color.WHITE);
 				panel.add(name);
 			} else {

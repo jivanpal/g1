@@ -44,7 +44,7 @@ public class ButtonPanel extends JPanel {
 		JPanel bpanel = createButtons();
 		bpanel.setOpaque(false);
 		add(bpanel, c);
-		JLabel title = new JLabel("<html>Space Flying 101<br><br>Welcome " + client.name +"</html>");
+		JLabel title = new JLabel("<html>Space Flying 101<br><br>Welcome <font color='#66e0ff'>" + client.name +"</font></html>");
 		title.setForeground(Color.WHITE);
 		title.setOpaque(false);
 		Font titlefont = title.getFont();
