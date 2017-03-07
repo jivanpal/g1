@@ -277,10 +277,9 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
      */
     private void initialiseScreen() {
         this.screen = new Screen(playerNickname, false);
-        screen.setSize(1000, 800);
-        screen.setMaximumSize(new Dimension(1000, 800));
-        screen.setMinimumSize(new Dimension(1000, 800));
-        screen.setPreferredSize(new Dimension(1000, 800));
+        screen.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() - (this.getHeight() / 5)));
+        Global.SCREEN_WIDTH = this.getWidth();
+        Global.SCREEN_HEIGHT = this.getHeight() - (this.getHeight() / 5);
     }
 
     private void initialiseRadar() {
@@ -289,7 +288,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
     /**
      * Finds the players Ship within all of the objects in the Map
-     *
      * @return The players Ship object
      */
     private Ship findPlayerShip() {
