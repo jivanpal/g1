@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
+import GameLogic.GameOptions;
 
 /**
  * The Main Menu of the game.
@@ -47,8 +48,9 @@ public class ButtonPanel extends JPanel {
 		JLabel title = new JLabel("<html>Space Flying 101<br><br>Welcome <font color='#66e0ff'>" + client.name +"</font></html>");
 		title.setForeground(Color.WHITE);
 		title.setOpaque(false);
-		Font titlefont = title.getFont();
-		title.setFont(new Font(titlefont.getName(), Font.BOLD, 36));
+		title.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
+		// Font titlefont = title.getFont();
+		// title.setFont(new Font(titlefont.getName(), Font.BOLD, 36));
 		c.anchor = GridBagConstraints.NORTH;
 		add(title, c);
 		setBackground(Color.BLACK);
@@ -64,18 +66,21 @@ public class ButtonPanel extends JPanel {
 	public JPanel createButtons() {
 		JPanel panel = new JPanel();
 		JButton play = new JButton("Play");
+		play.setFont(GameOptions.REGULAR_TEXT_FONT);
 		play.addActionListener(e -> {
 			PlayPanel ppanel = new PlayPanel(menu, client);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
 		});
 		JButton settings = new JButton("Settings");
+		settings.setFont(GameOptions.REGULAR_TEXT_FONT);
 		settings.addActionListener(e -> {
 			SettingsPanel spanel = new SettingsPanel(menu, client);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
 		});
 		JButton exit = new JButton("Exit");
+		exit.setFont(GameOptions.REGULAR_TEXT_FONT);
 		exit.addActionListener(e -> {
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			System.exit(0);

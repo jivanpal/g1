@@ -1,12 +1,11 @@
 package Menus;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
@@ -25,6 +24,21 @@ public class MainMenu {
 	 * Constructor method of the main frame
 	 */
 	public MainMenu(String name) {
+
+		try {
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			Font xirod = Font.createFont(Font.TRUETYPE_FONT, new File(GameOptions.XIROD_FONT_FILE));
+			ge.registerFont(xirod);
+
+			GameOptions.LARGE_BOLD_TEXT_FONT = new Font("xirod", Font.BOLD, 36);
+			GameOptions.REGULAR_TEXT_FONT = new Font("xirod", Font.PLAIN, 12);
+
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		frame = new JFrame();
 		Client client = new Client(name);
 		client.start();
