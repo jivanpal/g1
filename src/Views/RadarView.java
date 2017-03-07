@@ -104,6 +104,7 @@ public class RadarView extends JPanel{
                     g.setPaint(PLAYER_SHIP_COLOR);
                 } else {
                     g.setPaint(ENEMY_SHIP_COLOR);
+                    g.setPaint(ENEMY_SHIP_COLOR);
                 }
 
             } else {

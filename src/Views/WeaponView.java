@@ -1,5 +1,7 @@
 package Views;
 
+import GameLogic.GameOptions;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -43,6 +45,7 @@ public class WeaponView extends JPanel{
             this.add(weaponAmmoLevel);
 
             this.replenishAmmo = new JButton("Replenish");
+            replenishAmmo.setFont(GameOptions.REGULAR_TEXT_FONT);
             replenishAmmo.setEnabled(false);
             replenishAmmo.setFocusable(false);
 

@@ -1,5 +1,7 @@
 package Views;
 
+import GameLogic.GameOptions;
+
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
@@ -12,9 +14,9 @@ import java.awt.event.ActionListener;
  */
 public class ResourcesView extends JPanel {
     // Resource type constants
-    public static final int SHIELDS = 0;
-    public static final int HULL = 1;
-    public static final int ENGINE = 2;
+    static final int SHIELDS = 0;
+    static final int HULL = 1;
+    static final int ENGINE = 2;
 
     // Each component has a resource label, resource bar and 2 buttons to increment / decrement (to be removed later).
     private ResourceComponent shieldsComponent;
@@ -115,10 +117,11 @@ public class ResourcesView extends JPanel {
             resourceProgressBar.setStringPainted(true);
             resourceProgressBar.setUI(new BasicProgressBarUI());
             resourceProgressBar.setIndeterminate(false);
-
             resourceProgressBar.setMaximum(10);
+            resourceProgressBar.setFont(GameOptions.REGULAR_TEXT_FONT);
 
             this.replenishButton = new JButton("Replenish");
+            replenishButton.setFont(GameOptions.REGULAR_TEXT_FONT);
             replenishButton.setEnabled(false);
             replenishButton.setFocusable(false);
 
