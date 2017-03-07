@@ -82,7 +82,7 @@ public class MapServer extends Thread {
 				}
 				if (!gameShouldStart) 
 				{
-					System.out.println("I CLOSED THE SOCKET XD");
+					System.out.println("I CLOSED THE SOCKET FOR UNAUTHORISED PLAYER: "+ clientName);
 					socket.close();
 				} 
 				else 
