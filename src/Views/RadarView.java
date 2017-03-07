@@ -22,10 +22,13 @@ public class RadarView extends JPanel{
     private final Color ENEMY_SHIP_COLOR = Color.blue;
     private final Color BACKGROUND_COLOR = Color.black;
 
-    private final int CIRCLE_DRAW_DIAMETER = 5;
+    private final int CIRCLE_DRAW_DIAMETER_SMALL = 5;
+    private final int CIRCLE_DRAW_DIAMETER_LARGE = 15;
 
     private Map map;
     private String playerName;
+
+    private boolean largeView;
 
     /**
      * Creates a new RadarView
@@ -38,6 +41,7 @@ public class RadarView extends JPanel{
 
         this.setBackground(BACKGROUND_COLOR);
         this.setBorder(BorderFactory.createLineBorder(Color.red));
+        largeView = false;
     }
 
     /**
@@ -49,6 +53,14 @@ public class RadarView extends JPanel{
 
         // calls paintComponent
         repaint();
+    }
+
+    public boolean isLargeView() {
+        return largeView;
+    }
+
+    public void setLargeView(boolean inLargeView) {
+        this.largeView = inLargeView;
     }
 
     /**
@@ -114,7 +126,17 @@ public class RadarView extends JPanel{
 
             // Draw the circle on the map
             Tuple<Integer, Integer> position = circleDrawPositionFromCenter(b.getPosition().getX(), b.getPosition().getY());
-            Ellipse2D.Double circle = new Ellipse2D.Double(position.getX(), position.getY(), CIRCLE_DRAW_DIAMETER, CIRCLE_DRAW_DIAMETER);
+
+            Ellipse2D.Double circle;
+
+            if(largeView) {
+                circle = new Ellipse2D.Double(position.getX(), position.getY(),
+                        CIRCLE_DRAW_DIAMETER_LARGE, CIRCLE_DRAW_DIAMETER_LARGE);
+            } else {
+                circle = new Ellipse2D.Double(position.getX(), position.getY(),
+                        CIRCLE_DRAW_DIAMETER_SMALL, CIRCLE_DRAW_DIAMETER_SMALL);
+            }
+
             g.fill(circle);
         }
     }

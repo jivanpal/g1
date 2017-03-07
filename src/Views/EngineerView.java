@@ -11,10 +11,7 @@ import ClientNetworking.GameClient.GameClient;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -284,6 +281,35 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
     private void initialiseRadar() {
         this.radarView = new RadarView(playerNickname, gameClient.getMap());
+        this.radarView.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) { }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) { }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {
+                if(!radarView.isLargeView()) {
+                    radarView.setLargeView(true);
+                    radarView.setBounds(50, 50, getWidth() - 100, getHeight() - 100);
+                    radarView.setPreferredSize(new Dimension(getWidth() - 100, getHeight() - 100));
+                } else {
+                    radarView.setLargeView(false);
+                    radarView.setBounds(parentFrame.getWidth() - parentFrame.getHeight() / 4, 0, parentFrame.getHeight() / 4, parentFrame.getHeight() / 4);
+                    radarView.setPreferredSize(new Dimension(parentFrame.getHeight() / 4, parentFrame.getHeight() / 4));
+                }
+
+                radarView.revalidate();
+                radarView.repaint();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) { }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) { }
+        });
     }
 
     /**
