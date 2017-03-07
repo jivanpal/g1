@@ -81,9 +81,7 @@ public class Lobby implements Serializable
 	}
 
 	/**
-	 * 
-	 * @param player
-	 *            the player who pressed the start button
+	 * @param p the player who pressed the start button
 	 */
 	public void start(Player p)
 	{

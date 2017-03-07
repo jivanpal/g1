@@ -172,9 +172,9 @@ public class PilotView extends JPanel implements KeyListener, Observer {
 
         Container UIpanel = new Container();
         UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
+        UIpanel.add(manual);
         UIpanel.add(weaponPanel);
         UIpanel.add(speedometerView);
-        UIpanel.add(manual);
         //UIpanel.add(instructionsView);
 
         UIBaseLayer.setLayout(new BorderLayout());
