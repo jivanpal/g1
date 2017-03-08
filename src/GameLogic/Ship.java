@@ -146,118 +146,37 @@ public class Ship extends Body{
 		return -1;
 	}
 	
-// Engine-affecting, user-friendly movement methods
-	
-	final int PUSH_INTENSITY = 5;
-	final double FRAMES_TO_WAIT = 2;
+// Movement methods
 	
 	public void pitchUp() {
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-	        _pitchUp();
-	    }
-	    sleep();
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-            _pitchDown();
-        }
-	    decreaseFuel();
-	}
-	
-	public void pitchDown() {
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-            _pitchDown();
-        }
-	    sleep();
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-            _pitchUp();
-        }
-	    decreaseFuel();
-	}
-	
-	public void rollLeft() {
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-            _rollLeft();
-        }
-	    sleep();
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-            _rollRight();
-        }
-        decreaseFuel();
-	}
-	
-	public void rollRight() {
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-            _rollRight();
-        }
-        sleep();
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-            _rollLeft();
-        }
-        decreaseFuel();
-	}
-	
-	public void thrustForward() {
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-            _thrustForward();
-        }
-	    sleep();
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-            _thrustReverse();
-        }
-        decreaseFuel();
-	}
-	
-	public void thrustReverse() {
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-            _thrustReverse();
-        }
-	    sleep();
-	    for (int i = 0; i < PUSH_INTENSITY; i++) {
-            _thrustForward();
-        }
-        decreaseFuel();
-	}
-	
-// Old movement methods
-	
-	private void _pitchUp() {
 	    System.err.println("PitchUp!");
 	    this.exertForce(Vector.K.scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
 	}
 	
-	private void _pitchDown() {
+	public void pitchDown() {
 	    System.err.println("PitchDown!");
 	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
 	}
 	
-	private void _rollLeft() {
+	public void rollLeft() {
 	    System.err.println("RollLeft!");
 	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
 	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
 	}
 	
-	private void _rollRight() {
+	public void rollRight() {
 	    System.err.println("RollRight!");
 	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
         this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
 	}
-	private void _thrustForward() {
+	public void thrustForward() {
 	    System.err.println("ThrustForward!");
 	    this.exertForce(Vector.J.scale(ENGINE_FORCE), Vector.J.negate().scale(this.getRadius()));
 	}
 	
-	private void _thrustReverse() {
+	public void thrustReverse() {
 	    System.err.println("ThrustReverse!");
 	    this.exertForce(Vector.J.negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
 	}
-	
-// Nice sleep method
-	
-	private void sleep() {
-	    try {
-	        Thread.sleep((long)(Global.REFRESH_PERIOD * FRAMES_TO_WAIT));
-	    } catch (InterruptedException e) {
-	        System.err.println("Couldn't sleep between exertion of forces when controlling ship\n"+e.getMessage());
-	        e.printStackTrace();
-	    }
-	}
+
 }
