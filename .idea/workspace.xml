@@ -2,9 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2b4d6e27-42db-4e45-9bfa-daa21c4b299f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Views/ViewConstants.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ClientNetworking/GameHost/ChatMessage.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Views/GameChat.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Views/EngineerView.java" afterPath="$PROJECT_DIR$/src/Views/EngineerView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Audio/AudioPlayer.java" afterPath="$PROJECT_DIR$/src/Audio/AudioPlayer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ClientNetworking/GameClient/GameClient.java" afterPath="$PROJECT_DIR$/src/ClientNetworking/GameClient/GameClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ClientNetworking/GameClient/GameClientReceiver.java" afterPath="$PROJECT_DIR$/src/ClientNetworking/GameClient/GameClientReceiver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ClientNetworking/GameClient/GameClientSender.java" afterPath="$PROJECT_DIR$/src/ClientNetworking/GameClient/GameClientSender.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ClientNetworking/GameHost/GameHostReceiver.java" afterPath="$PROJECT_DIR$/src/ClientNetworking/GameHost/GameHostReceiver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ClientNetworking/GameHost/MapContainer.java" afterPath="$PROJECT_DIR$/src/ClientNetworking/GameHost/MapContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameLogic/Asteroid.java" afterPath="$PROJECT_DIR$/src/GameLogic/Asteroid.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameLogic/GameOptions.java" afterPath="$PROJECT_DIR$/src/GameLogic/GameOptions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameLogic/Map.java" afterPath="$PROJECT_DIR$/src/GameLogic/Map.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GameLogic/Ship.java" afterPath="$PROJECT_DIR$/src/GameLogic/Ship.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Graphics/AsteroidModel.java" afterPath="$PROJECT_DIR$/src/Graphics/AsteroidModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Graphics/Screen.java" afterPath="$PROJECT_DIR$/src/Graphics/Screen.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Menus/ButtonPanel.java" afterPath="$PROJECT_DIR$/src/Menus/ButtonPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Menus/ControlsPanel.java" afterPath="$PROJECT_DIR$/src/Menus/ControlsPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Menus/LobbyPanel.java" afterPath="$PROJECT_DIR$/src/Menus/LobbyPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Menus/MainMenu.java" afterPath="$PROJECT_DIR$/src/Menus/MainMenu.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Menus/PlayPanel.java" afterPath="$PROJECT_DIR$/src/Menus/PlayPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Menus/SettingsPanel.java" afterPath="$PROJECT_DIR$/src/Menus/SettingsPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Views/ManualView.java" afterPath="$PROJECT_DIR$/src/Views/ManualView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Views/PilotView.java" afterPath="$PROJECT_DIR$/src/Views/PilotView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Views/RadarView.java" afterPath="$PROJECT_DIR$/src/Views/RadarView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Views/ResourcesView.java" afterPath="$PROJECT_DIR$/src/Views/ResourcesView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Views/WeaponView.java" afterPath="$PROJECT_DIR$/src/Views/WeaponView.java" />
     </list>
@@ -101,9 +122,6 @@
         <option value="$PROJECT_DIR$/src/Views/ShipMoveAction.java" />
         <option value="$PROJECT_DIR$/src/Menus/MainMenu.java" />
         <option value="$PROJECT_DIR$/src/GameLogic/GameOptions.java" />
-        <option value="$PROJECT_DIR$/src/Views/ResourcesView.java" />
-        <option value="$PROJECT_DIR$/src/Views/WeaponView.java" />
-        <option value="$PROJECT_DIR$/src/Views/RadarView.java" />
         <option value="$PROJECT_DIR$/src/Menus/ButtonPanel.java" />
         <option value="$PROJECT_DIR$/src/Views/PilotView.java" />
         <option value="$PROJECT_DIR$/src/ClientNetworking/ClientVariables.java" />
@@ -144,6 +162,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
@@ -226,6 +245,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Menus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="g1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="g1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="ClientNetworking" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -254,7 +291,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -733,7 +769,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18409818" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18623266" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -750,6 +786,37 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24149108" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38425198" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
@@ -766,6 +833,42 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/Views/EngineerView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3570">
+          <caret line="232" column="32" lean-forward="false" selection-start-line="232" selection-start-column="32" selection-end-line="232" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Views/ViewConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Views/ResourcesView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="docComment;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;method#ResourcesView#0;class#ResourcesView#0" expanded="false" />
+            <element signature="method#ResourcesView#0;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;method#updateResourceLevels#0;class#ResourcesView#0" expanded="false" />
+            <element signature="method#updateResourceLevels#0;class#ResourcesView#0" expanded="false" />
+            <element signature="method#setMaximumResourceLevel#0;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;method#makeUI#0;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;method#ResourceComponent#0;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;method#updateResourceLevel#0;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
+            <element signature="method#setMaximumResourceLevel#0;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Views/EngineerView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3570">
@@ -845,14 +948,6 @@
           <caret line="31" column="22" lean-forward="false" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2404#2405#0" expanded="true" />
-            <element signature="e#2450#2451#0" expanded="true" />
-            <element signature="e#2642#2643#0" expanded="true" />
-            <element signature="e#2688#2689#0" expanded="true" />
-            <element signature="e#2784#2785#0" expanded="true" />
-            <element signature="e#2830#2831#0" expanded="true" />
-            <element signature="e#9114#9115#0" expanded="true" />
-            <element signature="e#9169#9170#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -914,23 +1009,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Views/ShipMoveAction.java" />
-    <entry file="file://$PROJECT_DIR$/src/Views/ResourcesView.java">
+    <entry file="file://$PROJECT_DIR$/src/ClientNetworking/GameClient/GameVariables.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="104" column="45" lean-forward="false" selection-start-line="104" selection-start-column="45" selection-end-line="104" selection-end-column="45" />
-          <folding>
-            <element signature="docComment;class#ResourcesView#0" expanded="false" />
-            <element signature="docComment;method#ResourcesView#0;class#ResourcesView#0" expanded="false" />
-            <element signature="method#ResourcesView#0;class#ResourcesView#0" expanded="false" />
-            <element signature="docComment;method#updateResourceLevels#0;class#ResourcesView#0" expanded="false" />
-            <element signature="method#updateResourceLevels#0;class#ResourcesView#0" expanded="false" />
-            <element signature="method#setMaximumResourceLevel#0;class#ResourcesView#0" expanded="false" />
-            <element signature="docComment;method#makeUI#0;class#ResourcesView#0" expanded="false" />
-            <element signature="docComment;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
-            <element signature="docComment;method#ResourceComponent#0;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
-            <element signature="docComment;method#updateResourceLevel#0;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
-            <element signature="method#setMaximumResourceLevel#0;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -998,29 +1081,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Views/EngineerView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1497">
+          <caret line="318" column="7" lean-forward="true" selection-start-line="318" selection-start-column="7" selection-end-line="318" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameLogic/Ship.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="200" column="9" lean-forward="true" selection-start-line="200" selection-start-column="9" selection-end-line="200" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Views/PilotView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="883">
-          <caret line="144" column="0" lean-forward="false" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+        <state relative-caret-position="25">
+          <caret line="105" column="13" lean-forward="true" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2404#2405#0" expanded="true" />
-            <element signature="e#2450#2451#0" expanded="true" />
-            <element signature="e#2642#2643#0" expanded="true" />
-            <element signature="e#2688#2689#0" expanded="true" />
-            <element signature="e#2784#2785#0" expanded="true" />
-            <element signature="e#2830#2831#0" expanded="true" />
-            <element signature="e#9114#9115#0" expanded="true" />
-            <element signature="e#9169#9170#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Views/EngineerView.java">
+    <entry file="file://$PROJECT_DIR$/src/Views/ResourcesView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
-          <caret line="104" column="45" lean-forward="true" selection-start-line="104" selection-start-column="45" selection-end-line="104" selection-end-column="45" />
-          <folding />
+          <caret line="104" column="45" lean-forward="false" selection-start-line="104" selection-start-column="45" selection-end-line="104" selection-end-column="45" />
+          <folding>
+            <element signature="docComment;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;method#ResourcesView#0;class#ResourcesView#0" expanded="false" />
+            <element signature="method#ResourcesView#0;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;method#updateResourceLevels#0;class#ResourcesView#0" expanded="false" />
+            <element signature="method#updateResourceLevels#0;class#ResourcesView#0" expanded="false" />
+            <element signature="method#setMaximumResourceLevel#0;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;method#makeUI#0;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;method#ResourceComponent#0;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
+            <element signature="docComment;method#updateResourceLevel#0;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
+            <element signature="method#setMaximumResourceLevel#0;class#ResourceComponent#0;class#ResourcesView#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

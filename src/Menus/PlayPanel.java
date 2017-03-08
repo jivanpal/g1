@@ -46,11 +46,8 @@ public class PlayPanel extends JPanel {
 		c.weighty = 0.5;
 		c.gridx = 0;
 		c.gridy = 0;
-		JButton backtostart = new JButton("Back To Start");
-		backtostart.addActionListener(e -> {
-			ButtonPanel bpanel = new ButtonPanel(menu, client);
-			menu.changeFrame(bpanel);
-		});
+		JButton backtostart = new JButton("Back");
+		backtostart = createButton(backtostart, "Back");
 		add(backtostart, c);
 		c.anchor = GridBagConstraints.CENTER;
 		JPanel bpanel = createButtons();
@@ -58,7 +55,8 @@ public class PlayPanel extends JPanel {
 		add(bpanel, c);
 		
 		c.anchor = GridBagConstraints.NORTH;
-		JLabel name = new JLabel("<html><b><font size='24'>Player:     <font color='#66e0ff'>" + client.name + "</font></font></b></html>");
+		JLabel name = new JLabel("<html><b><font size='16'>Player:     <font color='#66e0ff'>" + client.name + "</font></font></b></html>");
+		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
 		
@@ -79,10 +77,14 @@ public class PlayPanel extends JPanel {
 	
 	public JButton createButton(JButton button, String action) {
 		button.setForeground(Color.WHITE);
-		button.setFont(new Font(GameOptions.REGULAR_TEXT_FONT.getName(), Font.PLAIN, 24));
+		button.setFont(GameOptions.BUTTON_FONT);
 		button.setBorderPainted(false);
+		button.setContentAreaFilled(false);
 		button.setOpaque(false);
-		button.setPreferredSize(new Dimension(300, 50));
+		button.setFocusable(false);
+		if (!action.equals("Back")) {
+			button.setPreferredSize(new Dimension(300, 50));
+		}
 		button.addActionListener(e -> {
 			switch(action) {
 			case "create":
@@ -94,6 +96,11 @@ public class PlayPanel extends JPanel {
 				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 				JoinPanel jlpanel = new JoinPanel(menu, client);
 				menu.changeFrame(jlpanel);
+				break;
+			case "Back":
+				ButtonPanel bpanel = new ButtonPanel(menu, client);
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				menu.changeFrame(bpanel);
 				break;
 			}
 		});

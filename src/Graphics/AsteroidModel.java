@@ -45,8 +45,7 @@ public class AsteroidModel {
 		vertices[2] = new Vector(x, y, z - (size/2));
 		vertices[3] = new Vector(x, y + (size/2), z);
 		
-//		Not sure why this doesn't work but it doesn't
-//		orientation.apply(vertices);
+		orientation.apply(vertices);
 		
 //		Random generation that I'm temporarily giving up on
 		

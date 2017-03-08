@@ -6,9 +6,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class GameClientSender extends Thread
 {
-	private LinkedBlockingQueue<String> clientQueue;
+	private LinkedBlockingQueue<Object> clientQueue;
 	private ObjectOutputStream out;
-	public GameClientSender(ObjectOutputStream server, LinkedBlockingQueue<String> queue)
+	public GameClientSender(ObjectOutputStream server, LinkedBlockingQueue<Object> queue)
 	{
 		this.clientQueue = queue;
 		out = server;	
@@ -18,11 +18,11 @@ public class GameClientSender extends Thread
 	{
 		while (true)
 		{
-			String str;
+			Object o;
 			try {
-				str = clientQueue.take();
+				o = clientQueue.take();
 				out.reset();
-				out.writeObject(str);
+				out.writeObject(o);
 				out.flush();
 			} catch (InterruptedException | IOException e) {
 				e.printStackTrace();

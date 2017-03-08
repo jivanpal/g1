@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
@@ -28,6 +29,7 @@ import ServerNetworking.Server;
 import Views.EngineerView;
 import Views.PilotView;
 import ClientNetworking.GameHost.*;
+import GameLogic.GameOptions;
 
 /**
  * Panel for the host of the game
@@ -90,38 +92,18 @@ public class LobbyPanel extends JPanel implements Observer {
 			}
 		}
 		c.anchor = GridBagConstraints.NORTHWEST;
-		JButton backtostart = new JButton("Back To Play Menu");
-		backtostart.addActionListener(e -> {
-			client.send(new Action(client.getLobby().getID(), this.player, this.player, Action.KICK));
-			leftserver = true;
-			PlayPanel ppanel = new PlayPanel(menu, client);
-			menu.changeFrame(ppanel);
-			client.setLobby(null);
-		});
+		JButton backtostart = new JButton("Back");
+		backtostart = createButton(backtostart, "Back");
 		add(backtostart, c);
 		c.anchor = GridBagConstraints.NORTHEAST;
-		JButton inviteplayers = new JButton("Invite Players");
-		inviteplayers.addActionListener(e -> {
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-		});
+		JButton inviteplayers = new JButton("Invite");
+		inviteplayers = createButton(inviteplayers, "Invite");
 		add(inviteplayers, c);
 
 		if (ishost) {
 			c.anchor = GridBagConstraints.SOUTH;
 			JButton startgame = new JButton("Start Game");
-			startgame.addActionListener(e -> {
-				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				try {
-					MapServer game = new MapServer(client.getLobby());
-					game.start();
-					client.send(new Action(client.getLobby().getID(), this.player, Action.START));
-
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-
-			});
-			startgame.setPreferredSize(new Dimension(300, 50));
+			startgame = createButton(startgame, "Start");
 			add(startgame, c);
 		}
 
@@ -138,14 +120,72 @@ public class LobbyPanel extends JPanel implements Observer {
 		ppanel.setOpaque(false);
 		this.lpanel = ppanel;
 		add(ppanel, c);
-		
+
 		c.anchor = GridBagConstraints.NORTH;
-		JLabel name = new JLabel("<html><b><font size='24'>Player:     <font color='#66e0ff'>" + client.name + "</font></font></b></html>");
+		JLabel name = new JLabel("<html><b><font size='16'>Player:     <font color='#66e0ff'>" + client.name
+				+ "</font></font></b></html>");
+		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
-		
+
 		setBackground(Color.BLACK);
 
+	}
+
+	public JButton createButton(JButton button, String action) {
+		button.setForeground(Color.WHITE);
+		button.setFont(GameOptions.BUTTON_FONT);
+
+		button.setBorderPainted(false);
+		button.setContentAreaFilled(false);
+		button.setOpaque(false);
+		button.setFocusable(false);
+		if (action.equals("Back") || action.equals("Invite")) {
+
+		} else {
+			button.setPreferredSize(new Dimension(300, 50));
+		}
+		button.addActionListener(e -> {
+			switch (action) {
+			case "Back":
+				int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to leave the lobby?",
+						"Leave Lobby", JOptionPane.YES_NO_OPTION);
+				if (confirm == JOptionPane.YES_OPTION) {
+					client.send(new Action(client.getLobby().getID(), this.player, this.player, Action.KICK));
+					leftserver = true;
+					PlayPanel ppanel = new PlayPanel(menu, client);
+					menu.changeFrame(ppanel);
+					client.setLobby(null);
+				}
+				break;
+			case "Start":
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				try {
+					MapServer game = new MapServer(client.getLobby());
+					game.start();
+					client.send(new Action(client.getLobby().getID(), this.player, Action.START));
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				break;
+			case "Invite":
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				break;
+			}
+		});
+		button.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				button.setForeground(Color.GREEN);
+			}
+
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				button.setForeground(UIManager.getColor("control"));
+			}
+		});
+		return button;
 	}
 
 	/**
@@ -183,7 +223,7 @@ public class LobbyPanel extends JPanel implements Observer {
 				if (p.nickname.equals(this.player.nickname)) {
 					name.setFont(new Font(name.getName(), Font.BOLD, 12));
 				}
-				
+
 				name.setForeground(Color.WHITE);
 				panel.add(name);
 			} else {
@@ -244,8 +284,8 @@ public class LobbyPanel extends JPanel implements Observer {
 					JOptionPane.INFORMATION_MESSAGE);
 			client.deleteLobbyObserver(this);
 			client.setLobby(null);
-			ButtonPanel bpanel = new ButtonPanel(menu, client);
-			menu.changeFrame(bpanel);
+			PlayPanel ppanel = new PlayPanel(menu, client);
+			menu.changeFrame(ppanel);
 
 		} else if (leftserver) {
 			client.deleteLobbyObserver(this);

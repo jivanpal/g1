@@ -36,7 +36,7 @@ public class SettingsPanel extends JPanel {
 		c.weighty = 0.5;
 		c.gridx = 0;
 		c.gridy = 0;
-		JButton backtomenu = new JButton("Back To Start");
+		JButton backtomenu = new JButton("Back");
 		backtomenu = createButton(backtomenu, "Back");
 		add(backtomenu, c);
 		JPanel bpanel = createButtons();
@@ -45,7 +45,7 @@ public class SettingsPanel extends JPanel {
 		add(bpanel, c);
 
 		c.anchor = GridBagConstraints.NORTH;
-		JLabel name = new JLabel("<html><b><font size='20'>Player:     <font color='#66e0ff'>" + client.name
+		JLabel name = new JLabel("<html><b><font size='16'>Player:     <font color='#66e0ff'>" + client.name
 				+ "</font></font></b></html>");
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
@@ -74,9 +74,11 @@ public class SettingsPanel extends JPanel {
 
 	public JButton createButton(JButton button, String action) {
 		button.setForeground(Color.WHITE);
-		button.setFont(new Font(GameOptions.REGULAR_TEXT_FONT.getName(), Font.PLAIN, 24));
+		button.setFont(GameOptions.BUTTON_FONT);
 		button.setBorderPainted(false);
+		button.setContentAreaFilled(false);
 		button.setOpaque(false);
+		button.setFocusable(false);
 		if (!action.equals("Back")) {
 			button.setPreferredSize(new Dimension(300, 50));
 		}
@@ -96,7 +98,7 @@ public class SettingsPanel extends JPanel {
 				ButtonPanel bpanel = new ButtonPanel(menu, client);
 				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 				menu.changeFrame(bpanel);
-
+				break;
 			}
 		});
 		button.addMouseListener(new java.awt.event.MouseAdapter() {

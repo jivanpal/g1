@@ -25,6 +25,10 @@ public class ResourcesView extends JPanel {
 
     private EngineerView parent;
 
+    private static final Color HULL_COLOR = new Color(255, 0, 0);
+    private static final Color ENGINE_COLOR = new Color(255, 252, 25);
+    private static final Color SHIELD_COLOR = new Color(20, 133, 204);
+
     /**
      * Instantiates a new ResourceView which shows details about the amount of shields, hull health and engine fuel
      * to the user
@@ -90,13 +94,13 @@ public class ResourcesView extends JPanel {
         c.ipady = 10;
 
         shieldsComponent = new ResourceComponent("Shields");
-        shieldsComponent.setResourceBarColor(Color.blue);
+        shieldsComponent.setResourceBarColor(SHIELD_COLOR);
         shieldsComponent.setReplenishAction(ShipState.SHIELD_REPLENISH);
         c.anchor = GridBagConstraints.NORTH;
         add(shieldsComponent, c);
 
         engineComponent = new ResourceComponent("Engines");
-        engineComponent.setResourceBarColor(Color.YELLOW);
+        engineComponent.setResourceBarColor(ENGINE_COLOR);
         engineComponent.setReplenishAction(ShipState.FUEL_REPLENISH);
         c.anchor = GridBagConstraints.CENTER;
         add(engineComponent, c);
@@ -105,6 +109,7 @@ public class ResourcesView extends JPanel {
         hullComponent.setResourceBarColor(HULL_COLOR);
         c.anchor = GridBagConstraints.SOUTH;
         add(hullComponent, c);
+
     }
 
     /**

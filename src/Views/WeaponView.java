@@ -16,6 +16,8 @@ public class WeaponView extends JPanel{
     private Color HIGHLIGHT_COLOUR = Color.red;
     private Color DEFAULT_COLOUR = Color.black;
 
+    private static final Color PROGRESS_BAR_COLOR = new Color(0, 255, 72);
+
     private JLabel weaponNameLabel;
     private JProgressBar weaponAmmoLevel;
 
@@ -51,8 +53,10 @@ public class WeaponView extends JPanel{
 
         this.showAmmoLevel = showAmmoLevel;
         if(showAmmoLevel) {
-            weaponAmmoLevel = new JProgressBar();
+            this.remove(weaponNameLabel);
+            weaponNameLabel = null;
 
+            weaponAmmoLevel = new JProgressBar();
             weaponAmmoLevel.setString(weaponName);
             weaponAmmoLevel.setStringPainted(true);
             weaponAmmoLevel.setUI(new BasicProgressBarUI());
@@ -61,6 +65,7 @@ public class WeaponView extends JPanel{
             weaponAmmoLevel.setFont(GameOptions.REGULAR_TEXT_FONT);
             weaponAmmoLevel.setForeground(PROGRESS_BAR_COLOR);
             this.add(weaponAmmoLevel, c);
+
 
             this.replenishAmmo = new JButton("Replenish");
             replenishAmmo.setFont(GameOptions.REGULAR_TEXT_FONT);

@@ -55,6 +55,7 @@ public class GameOptions {
 	public final static String XIROD_FONT_FILE = System.getProperty("user.dir") + "/res/fonts/xirod/xirod.ttf";
 	public static Font REGULAR_TEXT_FONT;
 	public static Font LARGE_BOLD_TEXT_FONT;
+	public static Font BUTTON_FONT;
 
 	// hashtable which holds the current values
 	private static Properties keyBindings = new Properties();
