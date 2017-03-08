@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import GameLogic.GameOptions;
+
 public class ManualInstructionsView extends JPanel {
 	private final int INSTRUCTIONS_PER_PAGE = 5;
 
@@ -21,17 +23,20 @@ public class ManualInstructionsView extends JPanel {
 	private JTable rightPage;
 
 	public ManualInstructionsView(ArrayList<char[][]> data, int size, int height) {
-		System.out.println("height is: " + height);
 		pageNumber = 1;
 		this.data = new Object[size][columnNames.length];
 		setData(data);
-
+		
 		leftPage = new MyJTable();
+		leftPage.setShowGrid(false);
+		leftPage.setFont(GameOptions.REGULAR_TEXT_FONT);
 		leftPage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		leftPage.setModel(new DefaultTableModel(getDataForPage(pageNumber), columnNames));
 		leftPage.setRowHeight(height / 5);
 
 		rightPage = new MyJTable();
+		rightPage.setShowGrid(false);
+		rightPage.setFont(GameOptions.REGULAR_TEXT_FONT);
 		rightPage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		rightPage.setModel(new DefaultTableModel(getDataForPage(pageNumber + 1), columnNames));
 		rightPage.setRowHeight(height / 5);
@@ -39,8 +44,6 @@ public class ManualInstructionsView extends JPanel {
 		setLayout(new GridLayout(1, 2));
 		add(leftPage);
 		add(rightPage);
-
-		// printData();
 	}
 
 	private void update() {
@@ -127,13 +130,8 @@ public class ManualInstructionsView extends JPanel {
 		return ("If you want to " + replenish + ", do this key sequence:");
 	}
 
-	private void printData() {
-		for (int i = 0; i < data.length; i++) {
-			System.out.println("Num:" + data[i][0] + " Str:" + data[i][1] + " Inst:" + data[i][2]);
-		}
-	}
-
 	public int getPage() {
 		return this.pageNumber;
 	}
+	
 }
