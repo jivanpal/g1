@@ -40,18 +40,18 @@ public class AudioPlayer {
 			AudioFormat format = audioInputStream.getFormat();
 			DataLine.Info info = new DataLine.Info(Clip.class, format);
 
-			Clip clip = (Clip) AudioSystem.getLine(info);
-			clip.open(audioInputStream);
+			soundEffectClip = (Clip) AudioSystem.getLine(info);
+			soundEffectClip.open(audioInputStream);
 			
 			try {
-				soundEffectVolumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				soundEffectVolumeControl = (FloatControl) soundEffectClip.getControl(FloatControl.Type.MASTER_GAIN);
 				isUsingMaster = true;
 			} catch (IllegalArgumentException e) {
-				soundEffectVolumeControl = (FloatControl) clip.getControl(FloatControl.Type.VOLUME);
+				soundEffectVolumeControl = (FloatControl) soundEffectClip.getControl(FloatControl.Type.VOLUME);
 				isUsingMaster = false;
 			}
 			soundEffectVolumeControl.setValue(GameOptions.getCurrentSoundValue());
-			clip.start();
+			soundEffectClip.start();
 		} catch (Exception ex) {
 			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
@@ -78,25 +78,21 @@ public class AudioPlayer {
 			AudioFormat format = audioInputStream.getFormat();
 			DataLine.Info info = new DataLine.Info(Clip.class, format);
 
-			Clip clip = (Clip) AudioSystem.getLine(info);
-			clip.open(audioInputStream);
-
-			// musicClip = AudioSystem.getClip();
-			// musicClip.open(audioInputStream);
+			musicClip = (Clip) AudioSystem.getLine(info);
+			musicClip.open(audioInputStream);
 
 			try {
-				musicVolumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				musicVolumeControl = (FloatControl) musicClip.getControl(FloatControl.Type.MASTER_GAIN);
 				isUsingMaster = true;
 			} catch (IllegalArgumentException e) {
-				musicVolumeControl = (FloatControl) clip.getControl(FloatControl.Type.VOLUME);
+				musicVolumeControl = (FloatControl) musicClip.getControl(FloatControl.Type.VOLUME);
 				isUsingMaster = false;
 			}
 
 			System.out.println(musicVolumeControl.getMinimum());
 			System.out.println(musicVolumeControl.getMaximum());
 			musicVolumeControl.setValue(GameOptions.getCurrentMusicValue());
-			clip.loop(Clip.LOOP_CONTINUOUSLY);
-			// musicClip.loop(Clip.LOOP_CONTINUOUSLY);
+			musicClip.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (Exception ex) {
 			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
