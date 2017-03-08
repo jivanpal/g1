@@ -103,7 +103,6 @@ public class MapContainer {
 			default:
 				throw new IllegalArgumentException("You done sent the wrong string yo");
 			}
-			gameMap.update();
 		} catch (Exception e) {
 			System.out.println("error in updateMap()");
 		}
