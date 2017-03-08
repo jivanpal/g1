@@ -209,6 +209,7 @@ public class PilotView extends JPanel implements Observer {
 
         Container UIpanel = new Container();
         UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
+        UIpanel.setPreferredSize(new Dimension(getWidth(), getHeight() / 5));
         UIpanel.add(manual);
         UIpanel.add(weaponPanel);
         UIpanel.add(speedometerView);

@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import GameLogic.GameOptions;
+
 public class ManualInstructionsView extends JPanel {
 	private final int INSTRUCTIONS_PER_PAGE = 5;
 
@@ -21,17 +23,18 @@ public class ManualInstructionsView extends JPanel {
 	private JTable rightPage;
 
 	public ManualInstructionsView(ArrayList<char[][]> data, int size, int height) {
-		System.out.println("height is: " + height);
 		pageNumber = 1;
 		this.data = new Object[size][columnNames.length];
 		setData(data);
-
+		
 		leftPage = new MyJTable();
+		leftPage.setFont(GameOptions.REGULAR_TEXT_FONT);
 		leftPage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		leftPage.setModel(new DefaultTableModel(getDataForPage(pageNumber), columnNames));
 		leftPage.setRowHeight(height / 5);
 
 		rightPage = new MyJTable();
+		rightPage.setFont(GameOptions.REGULAR_TEXT_FONT);
 		rightPage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		rightPage.setModel(new DefaultTableModel(getDataForPage(pageNumber + 1), columnNames));
 		rightPage.setRowHeight(height / 5);
@@ -136,4 +139,5 @@ public class ManualInstructionsView extends JPanel {
 	public int getPage() {
 		return this.pageNumber;
 	}
+	
 }
