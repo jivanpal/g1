@@ -33,7 +33,6 @@ public class ResourcesView extends JPanel {
         super();
 
         this.parent = parent;
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         makeUI();
     }
@@ -80,19 +79,32 @@ public class ResourcesView extends JPanel {
      * Must be called before displaying, otherwise nothing will showup!
      */
     private void makeUI() {
+        this.setLayout(new GridBagLayout());
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridwidth = 0;
+        c.gridheight = 2;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.ipady = 10;
+
         shieldsComponent = new ResourceComponent("Shields");
         shieldsComponent.setResourceBarColor(Color.blue);
         shieldsComponent.setReplenishAction(ShipState.SHIELD_REPLENISH);
-        add(shieldsComponent);
+        c.anchor = GridBagConstraints.NORTH;
+        add(shieldsComponent, c);
 
         engineComponent = new ResourceComponent("Engines");
         engineComponent.setResourceBarColor(Color.YELLOW);
         engineComponent.setReplenishAction(ShipState.FUEL_REPLENISH);
-        add(engineComponent);
+        c.anchor = GridBagConstraints.CENTER;
+        add(engineComponent, c);
 
         hullComponent = new ResourceComponent("Hull");
-        hullComponent.setResourceBarColor(Color.red);
-        add(hullComponent);
+        hullComponent.setResourceBarColor(HULL_COLOR);
+        c.anchor = GridBagConstraints.SOUTH;
+        add(hullComponent, c);
     }
 
     /**

@@ -3,6 +3,7 @@ package Views;
 import GameLogic.GameOptions;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
 
 /**
@@ -27,29 +28,48 @@ public class WeaponView extends JPanel{
     public WeaponView(String weaponName) {
         weaponNameLabel = new JLabel(weaponName);
 
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+
         this.add(weaponNameLabel);
     }
 
     /**
      * Creates a WeaponView with the given label name and shows the ammo bar if appropriate.
-     * @param weaponName The name of the weapon
-     * @param showAmmoLevel Whether to create and show the ammo bar
+     * @param weaponName The name of the weapon.
+     * @param showAmmoLevel Whether to create and show the ammo bar or not.
      */
     public WeaponView(String weaponName, boolean showAmmoLevel) {
-        this(weaponName);
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.weightx = 0.75;
+        c.weighty = 0.5;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.WEST;
+
+        weaponNameLabel = new JLabel(weaponName);
 
         this.showAmmoLevel = showAmmoLevel;
-
         if(showAmmoLevel) {
             weaponAmmoLevel = new JProgressBar();
-            this.add(weaponAmmoLevel);
+
+            weaponAmmoLevel.setString(weaponName);
+            weaponAmmoLevel.setStringPainted(true);
+            weaponAmmoLevel.setUI(new BasicProgressBarUI());
+            weaponAmmoLevel.setIndeterminate(false);
+            weaponAmmoLevel.setMaximum(10);
+            weaponAmmoLevel.setFont(GameOptions.REGULAR_TEXT_FONT);
+            weaponAmmoLevel.setForeground(PROGRESS_BAR_COLOR);
+            this.add(weaponAmmoLevel, c);
 
             this.replenishAmmo = new JButton("Replenish");
             replenishAmmo.setFont(GameOptions.REGULAR_TEXT_FONT);
             replenishAmmo.setEnabled(false);
             replenishAmmo.setFocusable(false);
 
-            add(replenishAmmo);
+            c.anchor = GridBagConstraints.EAST;
+            c.weightx = 0.25;
+            this.add(replenishAmmo, c);
         }
     }
 

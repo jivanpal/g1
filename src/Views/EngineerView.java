@@ -8,9 +8,7 @@ import javax.swing.JPanel;
 import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -201,18 +199,42 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     private void addAllComponents() {
         this.setLayout(new BorderLayout());
 
-        Container UIPanel = new Container();
-        UIPanel.setLayout(new BoxLayout(UIPanel, BoxLayout.X_AXIS));
+        JPanel weaponPanel = new JPanel();
+        weaponPanel.setLayout(new GridBagLayout());
+        GridBagConstraints weaponConstraints = new GridBagConstraints();
+        weaponConstraints.weightx = 0;
+        weaponConstraints.weighty = 0.5;
+        weaponConstraints.gridwidth = 0;
+        weaponConstraints.fill = GridBagConstraints.HORIZONTAL;
+        weaponConstraints.ipady = 10;
+        weaponConstraints.anchor = GridBagConstraints.NORTH;
+        weaponPanel.add(plasmaBlasterView, weaponConstraints);
+        weaponConstraints.anchor = GridBagConstraints.CENTER;
+        weaponPanel.add(laserBlasterView, weaponConstraints);
+        weaponConstraints.anchor = GridBagConstraints.SOUTH;
+        weaponPanel.add(torpedosView, weaponConstraints);
 
-        Container weaponPanel = new Container();
-        weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
-        weaponPanel.add(plasmaBlasterView);
-        weaponPanel.add(laserBlasterView);
-        weaponPanel.add(torpedosView);
+        JPanel UIPanel = new JPanel();
+        UIPanel.setLayout(new GridBagLayout());
+        GridBagConstraints uiPanelContstraints = new GridBagConstraints();
+        uiPanelContstraints.weightx = 0.5;
+        uiPanelContstraints.weighty = 0.5;
+        uiPanelContstraints.gridwidth = 1;
+        uiPanelContstraints.gridheight = 0;
+        uiPanelContstraints.fill = GridBagConstraints.HORIZONTAL;
+        uiPanelContstraints.ipadx = 30;
 
-        UIPanel.add(resourcesView);
+        uiPanelContstraints.anchor = GridBagConstraints.WEST;
+        UIPanel.add(resourcesView, uiPanelContstraints);
 
+        uiPanelContstraints.anchor = GridBagConstraints.EAST;
         UIPanel.add(weaponPanel);
+
+        // TODO: Make this work.
+        /*UIPanel.setOpaque(true);
+        UIPanel.setForeground(ViewConstants.UI_BACKGROUND_COLOR);
+        UIPanel.setBackground(ViewConstants.UI_BACKGROUND_COLOR);
+        UIPanel.paintComponents(getGraphics());*/
 
         UIBaseLayer.setLayout(new BorderLayout());
         UIBaseLayer.add(screen, BorderLayout.CENTER);
