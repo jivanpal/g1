@@ -148,11 +148,15 @@ public class LobbyPanel extends JPanel implements Observer {
 		button.addActionListener(e -> {
 			switch (action) {
 			case "Back":
-				client.send(new Action(client.getLobby().getID(), this.player, this.player, Action.KICK));
-				leftserver = true;
-				PlayPanel ppanel = new PlayPanel(menu, client);
-				menu.changeFrame(ppanel);
-				client.setLobby(null);
+				int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to leave the lobby?",
+						"Leave Lobby", JOptionPane.YES_NO_OPTION);
+				if (confirm == JOptionPane.YES_OPTION) {
+					client.send(new Action(client.getLobby().getID(), this.player, this.player, Action.KICK));
+					leftserver = true;
+					PlayPanel ppanel = new PlayPanel(menu, client);
+					menu.changeFrame(ppanel);
+					client.setLobby(null);
+				}
 				break;
 			case "Start":
 				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
@@ -280,8 +284,8 @@ public class LobbyPanel extends JPanel implements Observer {
 					JOptionPane.INFORMATION_MESSAGE);
 			client.deleteLobbyObserver(this);
 			client.setLobby(null);
-			ButtonPanel bpanel = new ButtonPanel(menu, client);
-			menu.changeFrame(bpanel);
+			PlayPanel ppanel = new PlayPanel(menu, client);
+			menu.changeFrame(ppanel);
 
 		} else if (leftserver) {
 			client.deleteLobbyObserver(this);
