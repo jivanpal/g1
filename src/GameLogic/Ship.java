@@ -149,13 +149,13 @@ public class Ship extends Body{
 // Engine-affecting, user-friendly movement methods
 	
 	final int PUSH_INTENSITY = 5;
-	final int FRAMES_TO_WAIT = 0.2;
+	final double FRAMES_TO_WAIT = 0.2;
 	
 	public void pitchUp() {
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
 	        _pitchUp();
 	    }
-	    wait();
+	    sleep();
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _pitchDown();
         }
@@ -166,7 +166,7 @@ public class Ship extends Body{
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _pitchDown();
         }
-	    wait();
+	    sleep();
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _pitchUp();
         }
@@ -177,7 +177,7 @@ public class Ship extends Body{
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _rollLeft();
         }
-	    wait();
+	    sleep();
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _rollRight();
         }
@@ -188,7 +188,7 @@ public class Ship extends Body{
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _rollRight();
         }
-        wait()
+        sleep();
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _rollLeft();
         }
@@ -199,7 +199,7 @@ public class Ship extends Body{
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _thrustForward();
         }
-	    wait();
+	    sleep();
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _thrustReverse();
         }
@@ -210,7 +210,7 @@ public class Ship extends Body{
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _thrustReverse();
         }
-	    wait()
+	    sleep();
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _thrustForward();
         }
@@ -252,7 +252,7 @@ public class Ship extends Body{
 	
 // Nice sleep method
 	
-	private void wait() {
+	private void sleep() {
 	    try {
 	        Thread.sleep((long)(Global.REFRESH_PERIOD * FRAMES_TO_WAIT));
 	    } catch (InterruptedException e) {
