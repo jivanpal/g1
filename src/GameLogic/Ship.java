@@ -149,7 +149,7 @@ public class Ship extends Body{
 // Engine-affecting, user-friendly movement methods
 	
 	final int PUSH_INTENSITY = 5;
-	final double FRAMES_TO_WAIT = 0.2;
+	final double FRAMES_TO_WAIT = 2;
 	
 	public void pitchUp() {
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
