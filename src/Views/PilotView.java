@@ -42,6 +42,8 @@ public class PilotView extends JPanel implements Observer {
     public JPanel UIBaseLayer;
     public JFrame parentFrame;
 
+    private MouseMotionListener screenMouseListener;
+
     /**
      * Creates a new PilotView. This encapsulates the entire View of the Pilot player.
      * @param playerNickname The nickname of the player controlling this view.
@@ -65,6 +67,7 @@ public class PilotView extends JPanel implements Observer {
 
         this.parentFrame = parentFrame;
         UIBaseLayer = new JPanel();
+
         parentFrame.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent componentEvent) {
@@ -123,6 +126,7 @@ public class PilotView extends JPanel implements Observer {
 
         	
         });
+
         this.UILayeredPane = parentFrame.getLayeredPane();
         parentFrame.setFocusable(true);
         parentFrame.requestFocus();
@@ -159,7 +163,8 @@ public class PilotView extends JPanel implements Observer {
         //initialiseManualView(getHeight() - 100);
 
         // Add mouse listener which swaps the cursor between being the default and a crosshair.
-        this.addMouseMotionListener(new MouseMotionListener() {
+        this.removeMouseMotionListener(screenMouseListener);
+        screenMouseListener = new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent mouseEvent) {
 
@@ -170,14 +175,18 @@ public class PilotView extends JPanel implements Observer {
                 final int x = mouseEvent.getX();
                 final int y = mouseEvent.getY();
 
-                final Rectangle screenBounds = screen.getBounds();
-                if (screenBounds != null && screenBounds.contains(x, y)) {
+                final Dimension screenDimension = screen.getSize();
+                final Rectangle screenBounds = new Rectangle(0, 0, (int) screenDimension.getWidth(), (int) screenDimension.getHeight());
+                System.out.println(screenBounds);
+                if (screenBounds.contains(x, y)) {
                     getParent().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
                 } else {
                     getParent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
             }
-        });
+        };
+        this.addMouseMotionListener(screenMouseListener);
+
 
         addAllComponents();
 
@@ -187,10 +196,6 @@ public class PilotView extends JPanel implements Observer {
         UIBaseLayer.repaint();
         this.revalidate();
         this.repaint();
-
-        //this.addKeyListener(this);
-        //this.setFocusable(true);
-        
 
         UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Pilot");
