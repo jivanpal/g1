@@ -181,12 +181,13 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         initialiseRadar();
         addAllComponents();
 
-        UILayeredPane.revalidate();
-        UILayeredPane.repaint();
-        UIBaseLayer.revalidate();
-        UIBaseLayer.repaint();
+
         this.revalidate();
         this.repaint();
+        UIBaseLayer.revalidate();
+        UIBaseLayer.repaint();
+        UILayeredPane.revalidate();
+        UILayeredPane.repaint();
 
         this.addKeyListener(this);
 

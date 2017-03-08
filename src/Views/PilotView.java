@@ -142,6 +142,7 @@ public class PilotView extends JPanel implements Observer {
         parentFrame.setFocusable(true);
         parentFrame.requestFocus();
         initialiseUI();
+
         // starting the in-game sounds
         AudioPlayer.stopMusic();
         AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
