@@ -27,8 +27,17 @@ public class GameHostReceiver extends Thread
 		{
 			try
 			{
-				String str = (String)clientIn.readObject();
-				gameMap.updateMap(str, mapEntryNumber);
+				Object obj = clientIn.readObject();
+				if(obj instanceof String)
+				{
+					String str = (String)obj;
+					gameMap.updateMap(str, mapEntryNumber);
+				}
+				else
+				{
+					ChatMessage m = (ChatMessage) obj;
+					clientTable.queueToAll(m);
+				}
 			}
 
 			catch (Exception e)

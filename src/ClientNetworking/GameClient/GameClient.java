@@ -80,4 +80,12 @@ public class GameClient
 	{
 	    receiver.setObserver(o);
 	}
+	public String getMessage()
+	{
+		 return receiver.getMessage();
+	};
+	public void addChatObserver(Observer o)
+	{
+	    receiver.addChatObserver(o);
+	}
 }
