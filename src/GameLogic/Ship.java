@@ -148,35 +148,80 @@ public class Ship extends Body{
 	
 // Movement methods
 	
+	final int PUSH_INTENSITY = 5;
+	
 	public void pitchUp() {
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
+	        _pitchUp();
+	        _pitchDown();
+	    }
+	}
+	
+	public void pitchDown() {
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
+            _pitchDown();
+            _pitchUp();
+        }
+	}
+	
+	public void rollLeft() {
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
+            _rollLeft();
+            _rollRight();
+        }
+	}
+	
+	public void rollRight() {
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
+            _rollRight();
+            _rollLeft();
+        }
+	}
+	
+	public void thrustForward() {
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
+            _thrustForward();
+            _thrustReverse();
+        }
+	}
+	
+	public void thrustReverse() {
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
+            _thrustReverse();
+            _thrustForward();
+        }
+	}
+	
+// Old movement methods
+	
+	private void _pitchUp() {
 	    System.err.println("PitchUp!");
 	    this.exertForce(Vector.K.scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
 	}
 	
-	public void pitchDown() {
+	private void _pitchDown() {
 	    System.err.println("PitchDown!");
 	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
 	}
 	
-	public void rollLeft() {
+	private void _rollLeft() {
 	    System.err.println("RollLeft!");
 	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
 	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
 	}
 	
-	public void rollRight() {
+	private void _rollRight() {
 	    System.err.println("RollRight!");
 	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
         this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
 	}
-	public void thrustForward() {
+	private void _thrustForward() {
 	    System.err.println("ThrustForward!");
 	    this.exertForce(Vector.J.scale(ENGINE_FORCE), Vector.J.negate().scale(this.getRadius()));
 	}
 	
-	public void thrustReverse() {
+	private void _thrustReverse() {
 	    System.err.println("ThrustReverse!");
 	    this.exertForce(Vector.J.negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
 	}
-
 }
