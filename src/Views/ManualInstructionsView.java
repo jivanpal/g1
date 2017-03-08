@@ -29,12 +29,12 @@ public class ManualInstructionsView extends JPanel {
 		leftPage = new MyJTable();
 		leftPage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		leftPage.setModel(new DefaultTableModel(getDataForPage(pageNumber), columnNames));
-		//leftPage.setRowHeight(height / 10);
+		leftPage.setRowHeight(height / 5);
 
 		rightPage = new MyJTable();
 		rightPage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		rightPage.setModel(new DefaultTableModel(getDataForPage(pageNumber + 1), columnNames));
-		//rightPage.setRowHeight(height / 10);
+		rightPage.setRowHeight(height / 5);
 
 		setLayout(new GridLayout(1, 2));
 		add(leftPage);
