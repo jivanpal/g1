@@ -293,11 +293,11 @@ public class Screen extends JPanel{
 
          while (i <= j) {
 
-                 while (numbers[i] < pivot) {
+                 while (numbers[i] > pivot) {
                          i++;
                  }
 
-                 while (numbers[j] > pivot) {
+                 while (numbers[j] < pivot) {
                          j--;
                  }
 
