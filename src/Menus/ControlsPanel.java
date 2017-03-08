@@ -94,10 +94,14 @@ public class ControlsPanel extends JPanel {
 				menu.changeFrame(spanel);
 				break;
 			case "Reset":
-				GameOptions.resetKeysToDefaults();
-				GameOptions.saveKeyBindingsInFile();
-				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				changebuttons(bpanel, true);
+				int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to reset key bindings?",
+						"Reset Key Bindings", JOptionPane.YES_NO_OPTION);
+				if (confirm == JOptionPane.YES_OPTION) {
+					GameOptions.resetKeysToDefaults();
+					GameOptions.saveKeyBindingsInFile();
+					AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+					changebuttons(bpanel, true);
+				}
 				break;
 			case "Apply":
 				changebuttons(bpanel, false);
