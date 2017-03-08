@@ -19,7 +19,7 @@ public class GameClient
 	private int port = GameVariables.PORT;
 	private InetAddress hostname = null;
 	public KeySequence keySequence;
-	private LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
+	private LinkedBlockingQueue<Object> queue = new LinkedBlockingQueue<Object>();
 	GameClientReceiver receiver;
 	GameClientSender sender;
 	
@@ -62,15 +62,15 @@ public class GameClient
 			e.printStackTrace();
 		}
 		sender = new GameClientSender(toServer,queue);
-		receiver = new GameClientReceiver(fromServer,queue);
+		receiver = new GameClientReceiver(fromServer);
 		sender.start();
 		receiver.start();
 		System.out.println("end of gameclient const");
 	}
 
-	public synchronized void send(String str)
+	public synchronized void send(Object o)
 	{
-		queue.offer(str);
+		queue.offer(o);
 	}
 	public Map getMap()
 	{

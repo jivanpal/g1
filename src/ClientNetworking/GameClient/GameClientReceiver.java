@@ -12,16 +12,14 @@ import GameLogic.Map;
 public class GameClientReceiver extends Thread
 {
 	ObjectInputStream fromServer;
-	private LinkedBlockingQueue<String> queue;
 	private MapContainer gameMap = new MapContainer();
 	private ChatContainer chatContainer = new ChatContainer();
 	private boolean running=true;
 	
 
-	GameClientReceiver(ObjectInputStream reader, LinkedBlockingQueue<String> q)
+	GameClientReceiver(ObjectInputStream reader)
 	{
 		fromServer = reader;
-		queue = q;
 	}
 
 	public void run()
@@ -33,6 +31,7 @@ public class GameClientReceiver extends Thread
 				try
 				{
 					Object inObject = fromServer.readObject();
+					
 					if(inObject instanceof Map)
 						gameMap.setMap((Map) inObject);
 					else

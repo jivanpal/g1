@@ -14,6 +14,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import ClientNetworking.GameClient.GameClient;
+import ClientNetworking.GameHost.ChatMessage;
 
 /**
  * 
@@ -25,7 +26,7 @@ public class GameChat extends JPanel implements Observer{
 	private GameClient gameClient;
 	private JLabel chat = new JLabel("");
 	private String messages = "";
-	public GameChat(GameClient client)
+	public GameChat(GameClient client,String nickname)
 	{
 		client.addChatObserver(this);
 		
@@ -48,7 +49,10 @@ public class GameChat extends JPanel implements Observer{
 			public void changedUpdate(DocumentEvent e) {
 				String text = input.getDocument().toString();
 				if(text.contains("\r") || text.contains("\n"))
-					client.send(text);
+				{
+					ChatMessage message = new ChatMessage(nickname,text);
+					client.send(message);
+				}
 			}
 		});
 		JScrollPane scroller = new JScrollPane(chat, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
