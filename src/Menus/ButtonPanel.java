@@ -82,8 +82,7 @@ public class ButtonPanel extends JPanel {
 	
 	public JButton createButton(JButton button, String action) {
 		button.setForeground(Color.WHITE);
-		//button.setFont(GameOptions.REGULAR_TEXT_FONT);
-		button.setFont(new Font(GameOptions.REGULAR_TEXT_FONT.getName(), Font.PLAIN, 24));
+		button.setFont(GameOptions.BUTTON_FONT);
 		button.setBorderPainted(false);
 		button.setContentAreaFilled(false);
 		button.setOpaque(false);
