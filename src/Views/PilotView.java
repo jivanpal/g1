@@ -134,8 +134,6 @@ public class PilotView extends JPanel implements Observer {
             public void keyReleased(KeyEvent keyEvent) {
 
             }
-
-        	
         });
 
         this.UILayeredPane = parentFrame.getLayeredPane();
@@ -168,11 +166,9 @@ public class PilotView extends JPanel implements Observer {
         }
 
         initialiseWeapons(s);
-        //initialiseInstructions();
         initialiseManualButton();
         initialiseSpeedometer();
         initialiseScreen();
-        //initialiseManualView(getHeight() - 100);
 
         // Add mouse listener which swaps the cursor between being the default and a crosshair.
         this.removeMouseMotionListener(screenMouseListener);
@@ -240,10 +236,6 @@ public class PilotView extends JPanel implements Observer {
 
         UILayeredPane.setLayout(layoutManager);
         UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
-        
-        //this.instructions.setBounds(50,50, getWidth() - 100, getHeight() - 100);
-        //this.instructions.setVisible(false);
-    	//UILayeredPane.add(instructions, JLayeredPane.PALETTE_LAYER);
     }
 
     /**
