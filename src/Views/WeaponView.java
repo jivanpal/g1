@@ -3,6 +3,7 @@ package Views;
 import GameLogic.GameOptions;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
 
 /**
@@ -14,6 +15,8 @@ public class WeaponView extends JPanel{
     private JButton replenishAmmo;
     private Color HIGHLIGHT_COLOUR = Color.red;
     private Color DEFAULT_COLOUR = Color.black;
+
+    private static final Color PROGRESS_BAR_COLOR = new Color(0, 255, 72);
 
     private JLabel weaponNameLabel;
     private JProgressBar weaponAmmoLevel;
@@ -41,7 +44,17 @@ public class WeaponView extends JPanel{
         this.showAmmoLevel = showAmmoLevel;
 
         if(showAmmoLevel) {
+            this.remove(weaponNameLabel);
+            weaponNameLabel = null;
+
             weaponAmmoLevel = new JProgressBar();
+            weaponAmmoLevel.setString(weaponName);
+            weaponAmmoLevel.setStringPainted(true);
+            weaponAmmoLevel.setUI(new BasicProgressBarUI());
+            weaponAmmoLevel.setIndeterminate(false);
+            weaponAmmoLevel.setMaximum(10);
+            weaponAmmoLevel.setFont(GameOptions.REGULAR_TEXT_FONT);
+            weaponAmmoLevel.setForeground(PROGRESS_BAR_COLOR);
             this.add(weaponAmmoLevel);
 
             this.replenishAmmo = new JButton("Replenish");

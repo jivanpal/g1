@@ -41,7 +41,8 @@ public class RadarView extends JPanel{
 
         this.setBackground(BACKGROUND_COLOR);
         this.setBorder(BorderFactory.createLineBorder(Color.red));
-        largeView = false;
+
+        this.largeView = false;
     }
 
     /**
