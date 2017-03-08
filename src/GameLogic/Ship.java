@@ -146,50 +146,75 @@ public class Ship extends Body{
 		return -1;
 	}
 	
-// Movement methods
+// Engine-affecting, user-friendly movement methods
 	
 	final int PUSH_INTENSITY = 5;
+	final int FRAMES_TO_WAIT = 0.2;
 	
 	public void pitchUp() {
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
 	        _pitchUp();
-	        _pitchDown();
 	    }
+	    wait();
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
+            _pitchDown();
+        }
+	    decreaseFuel();
 	}
 	
 	public void pitchDown() {
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _pitchDown();
+        }
+	    wait();
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _pitchUp();
         }
+	    decreaseFuel();
 	}
 	
 	public void rollLeft() {
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _rollLeft();
+        }
+	    wait();
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _rollRight();
         }
+        decreaseFuel();
 	}
 	
 	public void rollRight() {
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _rollRight();
+        }
+        wait()
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _rollLeft();
         }
+        decreaseFuel();
 	}
 	
 	public void thrustForward() {
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _thrustForward();
+        }
+	    wait();
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _thrustReverse();
         }
+        decreaseFuel();
 	}
 	
 	public void thrustReverse() {
 	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _thrustReverse();
+        }
+	    wait()
+	    for (int i = 0; i < PUSH_INTENSITY; i++) {
             _thrustForward();
         }
+        decreaseFuel();
 	}
 	
 // Old movement methods
@@ -223,5 +248,16 @@ public class Ship extends Body{
 	private void _thrustReverse() {
 	    System.err.println("ThrustReverse!");
 	    this.exertForce(Vector.J.negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
+	}
+	
+// Nice sleep method
+	
+	private void wait() {
+	    try {
+	        Thread.sleep((long)(Global.REFRESH_PERIOD * FRAMES_TO_WAIT));
+	    } catch (InterruptedException e) {
+	        System.err.println("Couldn't sleep between exertion of forces when controlling ship\n"+e.getMessage());
+	        e.printStackTrace();
+	    }
 	}
 }
