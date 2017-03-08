@@ -11,9 +11,11 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
+import GameLogic.GameOptions;
 
 /**
  * PLay Menu after the 'Play' button is clicked from the Main Menu
@@ -67,21 +69,44 @@ public class PlayPanel extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		JButton creategame = new JButton("Create Game");
-		creategame.setPreferredSize(new Dimension(300, 50));
 		panel.add(creategame, BorderLayout.NORTH);
-		creategame.addActionListener(e -> {
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			LobbyPanel lpanel = new LobbyPanel(menu, client, null, null, true);
-			menu.changeFrame(lpanel);
-		});
+		creategame = createButton(creategame, "create");
 		JButton joingame = new JButton("Join Game");
-		joingame.setPreferredSize(new Dimension(300, 50));
-		joingame.addActionListener(e -> {
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			JoinPanel jlpanel = new JoinPanel(menu, client);
-			menu.changeFrame(jlpanel);
-		});
+		joingame = createButton(joingame, "join");
 		panel.add(joingame, BorderLayout.CENTER);
 		return panel;
+	}
+	
+	public JButton createButton(JButton button, String action) {
+		button.setForeground(Color.WHITE);
+		button.setFont(new Font(GameOptions.REGULAR_TEXT_FONT.getName(), Font.PLAIN, 24));
+		button.setBorderPainted(false);
+		button.setOpaque(false);
+		button.setPreferredSize(new Dimension(300, 50));
+		button.addActionListener(e -> {
+			switch(action) {
+			case "create":
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				LobbyPanel lpanel = new LobbyPanel(menu, client, null, null, true);
+				menu.changeFrame(lpanel);
+				break;
+			case "join":
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				JoinPanel jlpanel = new JoinPanel(menu, client);
+				menu.changeFrame(jlpanel);
+				break;
+			}
+		});
+		button.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+		        button.setForeground(Color.GREEN);
+		    }
+			@Override
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		        button.setForeground(UIManager.getColor("control"));
+		    }
+		});
+		return button;
 	}
 }

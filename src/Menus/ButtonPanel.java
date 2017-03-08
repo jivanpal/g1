@@ -85,7 +85,9 @@ public class ButtonPanel extends JPanel {
 		//button.setFont(GameOptions.REGULAR_TEXT_FONT);
 		button.setFont(new Font(GameOptions.REGULAR_TEXT_FONT.getName(), Font.PLAIN, 24));
 		button.setBorderPainted(false);
+		button.setContentAreaFilled(false);
 		button.setOpaque(false);
+		button.setFocusable(false);
 		button.setPreferredSize(new Dimension(300, 50));
 		button.addActionListener(e -> {
 			switch(action) {

@@ -48,7 +48,8 @@ public class SoundPanel extends JPanel {
 		add(spanel, c);
 		
 		c.anchor = GridBagConstraints.NORTH;
-		JLabel name = new JLabel("<html><b><font size='24'>Player:     <font color='#66e0ff'>" + client.name + "</font></font></b></html>");
+		JLabel name = new JLabel("<html><b><font size='20'>Player:     <font color='#66e0ff'>" + client.name + "</font></font></b></html>");
+		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
 		
@@ -83,6 +84,7 @@ public class SoundPanel extends JPanel {
 	public JPanel createSwL(JPanel panel, String name) {
 		JLabel label = new JLabel(name);
 		label.setOpaque(false);
+		label.setFont(GameOptions.REGULAR_TEXT_FONT);
 		label.setForeground(Color.WHITE);
 		panel.add(label);
 

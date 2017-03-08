@@ -10,9 +10,11 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
+import GameLogic.GameOptions;
 
 /**
  * The menu when Settings is clicked in the Main Menu.
@@ -35,22 +37,20 @@ public class SettingsPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 0;
 		JButton backtomenu = new JButton("Back To Start");
-		backtomenu.addActionListener(e -> {
-			ButtonPanel bpanel = new ButtonPanel(menu, client);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(bpanel);
-		});
+		backtomenu = createButton(backtomenu, "Back");
 		add(backtomenu, c);
 		JPanel bpanel = createButtons();
 		c.anchor = GridBagConstraints.CENTER;
 		bpanel.setOpaque(false);
 		add(bpanel, c);
-		
+
 		c.anchor = GridBagConstraints.NORTH;
-		JLabel name = new JLabel("<html><b><font size='24'>Player:     <font color='#66e0ff'>" + client.name + "</font></font></b></html>");
+		JLabel name = new JLabel("<html><b><font size='20'>Player:     <font color='#66e0ff'>" + client.name
+				+ "</font></font></b></html>");
+		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
-		
+
 		setBackground(Color.BLACK);
 	}
 
@@ -63,23 +63,54 @@ public class SettingsPanel extends JPanel {
 	public JPanel createButtons() {
 		JPanel panel = new JPanel();
 		JButton gotosound = new JButton("Sound");
-		gotosound.addActionListener(e -> {
-			SoundPanel spanel = new SoundPanel(menu, client);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(spanel);
-		});
+		gotosound = createButton(gotosound, "Sound");
 		JButton gotocontrols = new JButton("Controls");
-		gotocontrols.addActionListener(e -> {
-			ControlsPanel cpanel = new ControlsPanel(menu, client);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(cpanel);
-		});
+		gotocontrols = createButton(gotocontrols, "Controls");
 		panel.setLayout(new BorderLayout());
-		Dimension d = new Dimension(300, 50);
-		gotosound.setPreferredSize(d);
-		gotocontrols.setPreferredSize(d);
 		panel.add(gotosound, BorderLayout.NORTH);
 		panel.add(gotocontrols, BorderLayout.CENTER);
 		return panel;
+	}
+
+	public JButton createButton(JButton button, String action) {
+		button.setForeground(Color.WHITE);
+		button.setFont(new Font(GameOptions.REGULAR_TEXT_FONT.getName(), Font.PLAIN, 24));
+		button.setBorderPainted(false);
+		button.setOpaque(false);
+		if (!action.equals("Back")) {
+			button.setPreferredSize(new Dimension(300, 50));
+		}
+		button.addActionListener(e -> {
+			switch (action) {
+			case "Sound":
+				SoundPanel spanel = new SoundPanel(menu, client);
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				menu.changeFrame(spanel);
+				break;
+			case "Controls":
+				ControlsPanel cpanel = new ControlsPanel(menu, client);
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				menu.changeFrame(cpanel);
+				break;
+			case "Back":
+				ButtonPanel bpanel = new ButtonPanel(menu, client);
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				menu.changeFrame(bpanel);
+
+			}
+		});
+		button.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				button.setForeground(Color.GREEN);
+			}
+
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				button.setForeground(UIManager.getColor("control"));
+			}
+		});
+
+		return button;
 	}
 }
