@@ -5,7 +5,7 @@ import java.util.Random;
 import GameLogic.Asteroid;
 import GameLogic.Map;
 import GameLogic.Ship;
-import Geometry.Vector;
+import Geometry.*;
 import Physics.Body;
 
 public class MapContainer {
@@ -30,9 +30,14 @@ public class MapContainer {
 	public void generateTerrain() {
 		Random r = new Random();
 		for (int i = 0; i < ASTEROID_NUMBER; i++) {
-			Asteroid a = new Asteroid();
-			a.setPosition(new Vector(r.nextDouble() * gameMap.getDimensions().getX(),
-					r.nextDouble() * gameMap.getDimensions().getY(), r.nextDouble() * gameMap.getDimensions().getZ()));
+			Asteroid a = new Asteroid(
+				new Vector(
+					r.nextDouble() * gameMap.getDimensions().getX(),
+					r.nextDouble() * gameMap.getDimensions().getY(),
+					r.nextDouble() * gameMap.getDimensions().getZ()
+				),
+				new Rotation(r.nextDouble()*Math.PI*2, r.nextDouble()*Math.PI, r.nextDouble()*Math.PI*2)
+			);
 			boolean overlaps = false;
 			for (Body b : gameMap) {
 				if (a.isTouching(b)) {

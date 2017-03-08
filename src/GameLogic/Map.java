@@ -188,12 +188,12 @@ public class Map extends ArrayList<Body> {
         }
         
         // Make touching bodies rebound.
-//        for (Body a : this) {
-//            for (Body b : this) {
-//                if (a.isTouching(b)) {
-//                    a.rebound(b);
-//                }
-//            }
-//        }
+        for (Body a : this) {
+            for (Body b : this) {
+                if (a.isTouching(b)) {
+                    a.rebound(b);
+                }
+            }
+        }
     }
 }

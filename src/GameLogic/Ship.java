@@ -160,23 +160,23 @@ public class Ship extends Body{
 	
 	public void rollLeft() {
 	    System.err.println("RollLeft!");
-	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
-	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
+	    this.exertForce(Vector.K.scale(ENGINE_FORCE), Vector.I.scale(this.getRadius()));
+	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE), Vector.I.negate().scale(this.getRadius()));
 	}
 	
 	public void rollRight() {
 	    System.err.println("RollRight!");
-	    this.exertForce(Vector.K.scale(ENGINE_FORCE/2), Vector.I.negate().scale(this.getRadius()));
-        this.exertForce(Vector.K.negate().scale(ENGINE_FORCE/2), Vector.I.scale(this.getRadius()));
+	    this.exertForce(Vector.K.scale(ENGINE_FORCE), Vector.I.negate().scale(this.getRadius()));
+        this.exertForce(Vector.K.negate().scale(ENGINE_FORCE), Vector.I.scale(this.getRadius()));
 	}
 	public void thrustForward() {
 	    System.err.println("ThrustForward!");
-	    this.exertForce(Vector.J.scale(ENGINE_FORCE), Vector.J.negate().scale(this.getRadius()));
+	    this.exertForce(Vector.J.scale(ENGINE_FORCE*10), Vector.J.negate().scale(this.getRadius()));
 	}
 	
 	public void thrustReverse() {
 	    System.err.println("ThrustReverse!");
-	    this.exertForce(Vector.J.negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
+	    this.exertForce(Vector.J.negate().scale(ENGINE_FORCE*10), Vector.J.scale(this.getRadius()));
 	}
 
 }
