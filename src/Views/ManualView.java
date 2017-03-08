@@ -47,13 +47,11 @@ public class ManualView extends JPanel{
 	private void goToNextPage() {
 		instuctions.pageUp();
 		update();
-		System.out.println(instuctions.getPage());
 	}
 
 	private void goToPreviousPage() {
 		instuctions.pageDown();
 		update();
-		System.out.println(instuctions.getPage());
 	}
 
 	private void update(){

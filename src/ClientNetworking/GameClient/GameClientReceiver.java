@@ -5,19 +5,21 @@ import java.io.ObjectInputStream;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import ClientNetworking.GameHost.ChatMessage;
 import GameLogic.Map;
 
 public class GameClientReceiver extends Thread
 {
 	ObjectInputStream fromServer;
-	private LinkedBlockingQueue<String> queue;
 	private MapContainer gameMap = new MapContainer();
+	private ChatContainer chatContainer = new ChatContainer();
 	private boolean running=true;
+	
 
-	GameClientReceiver(ObjectInputStream reader, LinkedBlockingQueue<String> q)
+	GameClientReceiver(ObjectInputStream reader)
 	{
 		fromServer = reader;
-		queue = q;
 	}
 
 	public void run()
@@ -29,7 +31,16 @@ public class GameClientReceiver extends Thread
 				try
 				{
 					Object inObject = fromServer.readObject();
-					gameMap.setMap((Map) inObject);
+					
+					if(inObject instanceof Map)
+						gameMap.setMap((Map) inObject);
+					else
+					{
+						ChatMessage m =(ChatMessage)inObject;
+						String message = m.nickname + ": " + m.message; 
+						chatContainer.setMessage(message);
+					}
+						
 				}
 				catch (ClassNotFoundException e)
 				{
@@ -54,6 +65,14 @@ public class GameClientReceiver extends Thread
 	{
 		gameMap.addObserver(o);
 	}
+	public String getMessage()
+	{
+		return chatContainer.getMessage();
+	}
+	public void addChatObserver(Observer o)
+	{
+		chatContainer.addObserver(o);
+	}
 }
 
 class MapContainer extends Observable
@@ -74,5 +93,25 @@ class MapContainer extends Observable
 	public Map getMap()
 	{
 		return map;
+	}
+}
+class ChatContainer extends Observable
+{
+	private String lastMessage="";
+	
+	public ChatContainer()
+	{
+
+	}
+	
+	public void setMessage(String s)
+	{
+		lastMessage=s;
+		setChanged();
+		notifyObservers();
+	}
+	public String getMessage()
+	{
+		return lastMessage;
 	}
 }
