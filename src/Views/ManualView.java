@@ -17,20 +17,12 @@ public class ManualView extends JPanel{
 	
 	public ManualView(ArrayList<char[][]> data, int size, int heigth){
 		setLayout(new BorderLayout());
-		previousPage = new JButton("<");
-		previousPage.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
-		previousPage.setOpaque(false);
-		previousPage.setContentAreaFilled(false);
-		previousPage.setBorderPainted(false);
-		previousPage.setFocusable(false);
 		
+		previousPage = new JButton("<");
+		styleButton(previousPage);
 		
 		nextPage = new JButton(">");
-		nextPage.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
-		nextPage.setOpaque(false);
-		nextPage.setContentAreaFilled(false);
-		nextPage.setBorderPainted(false);
-		nextPage.setFocusable(false);
+		styleButton(nextPage);
 		
 		previousPage.addActionListener(e -> goToPreviousPage());
 		nextPage.addActionListener(e -> goToNextPage());
@@ -42,6 +34,14 @@ public class ManualView extends JPanel{
 
 		add(instuctions,BorderLayout.CENTER);
 		
+	}
+	
+	private void styleButton(JButton button){
+		button.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
+		button.setOpaque(false);
+		button.setContentAreaFilled(false);
+		button.setBorderPainted(false);
+		button.setFocusable(false);
 	}
 
 	private void goToNextPage() {
