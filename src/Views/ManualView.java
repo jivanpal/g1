@@ -8,6 +8,8 @@ import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import GameLogic.GameOptions;
+
 public class ManualView extends JPanel{
 	private JButton previousPage;
 	private JButton nextPage;
@@ -16,7 +18,19 @@ public class ManualView extends JPanel{
 	public ManualView(ArrayList<char[][]> data, int size, int heigth){
 		setLayout(new BorderLayout());
 		previousPage = new JButton("<");
+		previousPage.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
+		previousPage.setOpaque(false);
+		previousPage.setContentAreaFilled(false);
+		previousPage.setBorderPainted(false);
+		previousPage.setFocusable(false);
+		
+		
 		nextPage = new JButton(">");
+		nextPage.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
+		nextPage.setOpaque(false);
+		nextPage.setContentAreaFilled(false);
+		nextPage.setBorderPainted(false);
+		nextPage.setFocusable(false);
 		
 		previousPage.addActionListener(e -> goToPreviousPage());
 		nextPage.addActionListener(e -> goToNextPage());
