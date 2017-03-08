@@ -1,22 +1,33 @@
 package Views;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+
 import AI.EngineerAI;
 import Audio.AudioPlayer;
-import ClientNetworking.GameHost.MapContainer;
+import ClientNetworking.GameClient.GameClient;
+import GameLogic.GameOptions;
 import GameLogic.Map;
 import GameLogic.Ship;
 import Graphics.Screen;
-
-import javax.swing.*;
-
-import ClientNetworking.GameClient.GameClient;
-import GameLogic.GameOptions;
 import Physics.Body;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by James on 01/02/17.
@@ -255,8 +266,9 @@ public class PilotView extends JPanel implements Observer {
     		initialiseManualView(getHeight() - 100);
     		this.instructions.setBounds(50,50, getWidth() - 100, getHeight() - 100);
     		UILayeredPane.add(instructions, JLayeredPane.PALETTE_LAYER);
+    	} else {
+    		this.instructions.setVisible(!instructions.isVisible());
     	}
-    	this.instructions.setVisible(!instructions.isVisible());
     }
 
     private void initialiseManualView(int height) {
