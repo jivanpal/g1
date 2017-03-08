@@ -2,8 +2,15 @@ package Graphics;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import javax.swing.JPanel;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import GameLogic.Asteroid;
 import GameLogic.Bullet;
@@ -97,7 +104,7 @@ public class Screen extends JPanel{
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	public void paintComponent(Graphics g){
-		
+		long startTime = System.currentTimeMillis();
 		//Draw the background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
@@ -143,8 +150,8 @@ public class Screen extends JPanel{
 		g.drawString("V: " + V.getX() + ", " + V.getY() + ", " + V.getZ(), 40, 100);
 		g.drawString("U: " + U.getX() + ", " + U.getY() + ", " + U.getZ(), 40, 120);
 		g.drawString("N: " + N.getX() + ", " + N.getY() + ", " + N.getZ(), 40, 140);
-		
-		
+	
+	
 		//Taken this out for now because people kept ripping in to the stuff I'd spent ages on
 		
 		/*g.setColor(Color.RED);
@@ -160,7 +167,7 @@ public class Screen extends JPanel{
 		Vector nLine = (new Vector(0, 0, 0)).plus(N.scale(20));
 		Vector nLine2 = Matrix.multiplyVector(CM, nLine);
 		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (nLine2.getX())), (int)(origin.y + (-nLine2.getY())));*/
-		
+		System.out.println("Time this frame " + (System.currentTimeMillis()-startTime));
 		sleepAndRefresh();
 	}
 	
@@ -210,6 +217,7 @@ public class Screen extends JPanel{
 					
 				}
 			}
+
 		}
 	}
 	
@@ -217,30 +225,16 @@ public class Screen extends JPanel{
 	 * Create the order that the polygons should be drawn in in order to make sure hidden sides are hidden
 	 */
 	private void setDrawOrder(){
+		nPoly = poly3Ds.size();
 		double[] k = new double[nPoly];
 		drawOrder = new int[nPoly];
-		nPoly = poly3Ds.size();
-		
+
 		for(int i = 0; i < nPoly; i++){
 			k[i] = poly3Ds.get(i).avgDistance;
 			drawOrder[i] = i;
 		}
 		
-		double temp;
-		int tempr;
-		for(int a = 0; a < k.length; a++){
-			for(int b = 0; b < k.length - 1; b++){
-				if(k[b] < k[b+1]){
-					temp = k[b];
-					tempr = drawOrder[b];
-					drawOrder[b] = drawOrder[b+1];
-					k[b] = k[b+1];
-					
-					drawOrder[b+1] = tempr;
-					k[b+1] = temp;
-				}
-			}
-		}
+		quicksort(k,0,k.length-1);
 //		for(int i : drawOrder){
 //			System.out.println(poly3Ds.get(i).avgDistance);
 //		}
@@ -291,5 +285,36 @@ public class Screen extends JPanel{
 				}
 			}
 		}
+	}
+	public void quicksort(double[] numbers, int low, int high)
+	{
+		 int i = low, j = high;
+         double pivot = numbers[low + (high-low)/2];
+
+         while (i <= j) {
+
+                 while (numbers[i] < pivot) {
+                         i++;
+                 }
+
+                 while (numbers[j] > pivot) {
+                         j--;
+                 }
+
+                 if (i <= j) {
+                	 	double temp = numbers[i];
+                	 	numbers[i] = numbers[j];
+                	 	numbers[j] = temp;
+                	 	int temp2 = drawOrder[i];
+                	 	drawOrder[i]=drawOrder[j];
+                	 	drawOrder[j]=temp2;
+                         i++;
+                         j--;
+                 }
+         }
+         if (low < j)
+                 quicksort(numbers,low, j);
+         if (i < high)
+                 quicksort(numbers,i, high);
 	}
 }
