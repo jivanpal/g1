@@ -156,7 +156,7 @@ public class PilotView extends JPanel implements Observer {
         initialiseManualButton();
         initialiseSpeedometer();
         initialiseScreen();
-        initialiseManualView();
+        //initialiseManualView(getHeight() - 100);
 
         // Add mouse listener which swaps the cursor between being the default and a crosshair.
         this.addMouseMotionListener(new MouseMotionListener() {
@@ -224,9 +224,9 @@ public class PilotView extends JPanel implements Observer {
         UILayeredPane.setLayout(layoutManager);
         UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
         
-        this.instructions.setBounds(50,50, getWidth() - 100, getHeight() - 100);
-        this.instructions.setVisible(false);
-    	UILayeredPane.add(instructions, JLayeredPane.PALETTE_LAYER);
+        //this.instructions.setBounds(50,50, getWidth() - 100, getHeight() - 100);
+        //this.instructions.setVisible(false);
+    	//UILayeredPane.add(instructions, JLayeredPane.PALETTE_LAYER);
     }
 
     /**
@@ -251,11 +251,16 @@ public class PilotView extends JPanel implements Observer {
     }
 
     private void showManual() {
+    	if(this.instructions == null){
+    		initialiseManualView(getHeight() - 100);
+    		this.instructions.setBounds(50,50, getWidth() - 100, getHeight() - 100);
+    		UILayeredPane.add(instructions, JLayeredPane.PALETTE_LAYER);
+    	}
     	this.instructions.setVisible(!instructions.isVisible());
     }
 
-    private void initialiseManualView() {
-    	this.instructions = new ManualView(gameClient.keySequence.getAllKeys(), gameClient.keySequence.getKeysSize());
+    private void initialiseManualView(int height) {
+    	this.instructions = new ManualView(gameClient.keySequence.getAllKeys(), gameClient.keySequence.getKeysSize(), height);
     }
 
 

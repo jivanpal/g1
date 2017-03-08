@@ -13,7 +13,7 @@ public class ManualView extends JPanel{
 	private JButton nextPage;
 	private ManualInstructionsView instuctions;
 	
-	public ManualView(ArrayList<char[][]> data, int size){
+	public ManualView(ArrayList<char[][]> data, int size, int heigth){
 		setLayout(new BorderLayout());
 		previousPage = new JButton("<");
 		nextPage = new JButton(">");
@@ -24,7 +24,7 @@ public class ManualView extends JPanel{
 		add(previousPage, BorderLayout.WEST);
 		add(nextPage, BorderLayout.EAST);
 		
-		instuctions = new ManualInstructionsView(data, size, this.getHeight());
+		instuctions = new ManualInstructionsView(data, size, heigth);
 
 		add(instuctions,BorderLayout.CENTER);
 		

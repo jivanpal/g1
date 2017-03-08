@@ -9,6 +9,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
 import GameLogic.GameOptions;
@@ -80,9 +82,11 @@ public class ButtonPanel extends JPanel {
 	
 	public JButton createButton(JButton button, String action) {
 		button.setForeground(Color.WHITE);
-		button.setFont(GameOptions.REGULAR_TEXT_FONT);
+		//button.setFont(GameOptions.REGULAR_TEXT_FONT);
+		button.setFont(new Font(GameOptions.REGULAR_TEXT_FONT.getName(), Font.PLAIN, 24));
 		button.setBorderPainted(false);
 		button.setOpaque(false);
+		button.setPreferredSize(new Dimension(300, 50));
 		button.addActionListener(e -> {
 			switch(action) {
 			case "Play":
@@ -100,6 +104,17 @@ public class ButtonPanel extends JPanel {
 				System.exit(0);
 				break;
 			}
+		});
+		
+		button.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+		        button.setForeground(Color.GREEN);
+		    }
+			@Override
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		        button.setForeground(UIManager.getColor("control"));
+		    }
 		});
 		
 		return button;
