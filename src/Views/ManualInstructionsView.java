@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import GameLogic.GameOptions;
