@@ -6,12 +6,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -54,7 +49,7 @@ public class PilotView extends JPanel implements Observer {
 
     private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;
-    private JFrame parentFrame;
+    public JFrame parentFrame;
     private JPanel UIpanel;
 
     private MouseMotionListener screenMouseListener;
@@ -79,7 +74,6 @@ public class PilotView extends JPanel implements Observer {
         this.gameClient = gameClient;
         gameClient.addObserver(this);
 
-        //addKeyListener(this);
         setFocusable(true);
 
         this.parentFrame = parentFrame;
@@ -145,6 +139,52 @@ public class PilotView extends JPanel implements Observer {
             	}
             }
         });
+        
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse clicked outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse clicked inside chat");
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse pressed outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse pressed inside chat");
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse released outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse released inside chat");
+                }
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+
+            }
+        });
 
         this.UILayeredPane = parentFrame.getLayeredPane();
         parentFrame.setFocusable(true);
@@ -196,8 +236,7 @@ public class PilotView extends JPanel implements Observer {
 
                 final Dimension screenDimension = screen.getSize();
                 final Rectangle screenBounds = new Rectangle(0, 0, (int) screenDimension.getWidth(), (int) screenDimension.getHeight());
-                System.out.println(screenBounds);
-                if (screenBounds.contains(x, y)) {
+                 if (screenBounds.contains(x, y)) {
                     getParent().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
                 } else {
                     getParent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -260,8 +299,12 @@ public class PilotView extends JPanel implements Observer {
             UILayeredPane.setLayout(layoutManager);
             UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
 
-            chatWindow.setBounds(300, 300, 300, 300);
-            chatWindow.setPreferredSize(new Dimension(300, 300));
+            chatWindow.setBounds(0,
+                    parentFrame.getHeight() - ((int) UIpanel.getPreferredSize().getHeight() + (parentFrame.getHeight() / 6)),
+                    parentFrame.getWidth() / 6,
+                    parentFrame.getHeight() / 6);
+
+            chatWindow.setPreferredSize(new Dimension(parentFrame.getWidth() / 6, parentFrame.getHeight() / 6));
             UILayeredPane.add(chatWindow, JLayeredPane.PALETTE_LAYER);
 
         } catch (IOException e) {
@@ -271,7 +314,7 @@ public class PilotView extends JPanel implements Observer {
     }
 
     private void initialiseChatWindow(GameClient gameClient, String nickname) {
-        this.chatWindow = new GameChat(gameClient, nickname);
+        this.chatWindow = new GameChat(this, gameClient, nickname);
         this.chatWindow.setFocusable(false);
     }
 

@@ -21,8 +21,8 @@ import ClientNetworking.GameHost.ChatMessage;
  * A JPanel for the in-game chat
  */
 public class GameChat extends JPanel implements Observer{
+	private final JPanel parent;
 
-	private GameClient gameClient;
 	private JLabel chat = new JLabel("");
 	private String messages = "";
 
@@ -32,7 +32,8 @@ public class GameChat extends JPanel implements Observer{
 	private GameClient client;
 
 
-	public GameChat(GameClient client,String nickname) {
+	public GameChat(JPanel parent, GameClient client,String nickname) {
+		this.parent = parent;
 		this.nickname = nickname;
 		this.client = client;
 
@@ -51,6 +52,8 @@ public class GameChat extends JPanel implements Observer{
 					ChatMessage message = new ChatMessage(nickname, input.getText());
 					input.setText("");
 					client.send(message);
+
+					sendFocusBackToFrame();
 				}
 			}
 		});
@@ -69,6 +72,19 @@ public class GameChat extends JPanel implements Observer{
 
 	public void enterPressed() {
 
+	}
+
+	public void sendFocusBackToFrame() {
+		if(parent instanceof EngineerView) {
+			EngineerView p = (EngineerView) parent;
+			p.parentFrame.requestFocusInWindow();
+		} else if (parent instanceof PilotView) {
+			PilotView p = (PilotView) parent;
+			p.parentFrame.requestFocusInWindow();
+		} else {
+			// This is bad.
+			// I guess we just don't do anything?
+		}
 	}
 
 	@Override

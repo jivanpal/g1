@@ -48,7 +48,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
     private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;
-    private JFrame parentFrame;
+    public JFrame parentFrame;
     private GameChat chatWindow;
 
     /**
@@ -268,13 +268,16 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
         UILayeredPane.add(radarView, JLayeredPane.PALETTE_LAYER);
 
-        chatWindow.setBounds(300, 300, 300, 300);
-        chatWindow.setPreferredSize(new Dimension(300, 300));
+        chatWindow.setBounds(0,
+                parentFrame.getHeight() - ((int) UIPanel.getPreferredSize().getHeight() + (parentFrame.getHeight() / 6)),
+                parentFrame.getWidth() / 6,
+                parentFrame.getHeight() / 6);
+        chatWindow.setPreferredSize(new Dimension(parentFrame.getWidth() / 6, parentFrame.getHeight() / 6));
         UILayeredPane.add(chatWindow, JLayeredPane.PALETTE_LAYER);
     }
 
     private void initialiseChatWindow(GameClient gameClient, String nickname) {
-        this.chatWindow = new GameChat(gameClient, nickname);
+        this.chatWindow = new GameChat(this, gameClient, nickname);
         this.chatWindow.setFocusable(false);
     }
 
