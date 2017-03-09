@@ -50,6 +50,7 @@ public class GameChat extends JPanel implements Observer{
 				String text = input.getDocument().toString();
 				if(text.contains("\r") || text.contains("\n"))
 				{
+					input.setText("");
 					ChatMessage message = new ChatMessage(nickname,text);
 					client.send(message);
 				}
