@@ -28,31 +28,31 @@ public class MapContainer {
 	}
 
 	public void generateTerrain() {
-		Random r = new Random();
-		for (int i = 0; i < ASTEROID_NUMBER; i++) {
-			Asteroid a = new Asteroid(
-				new Vector(
-					r.nextDouble() * gameMap.getDimensions().getX(),
-					r.nextDouble() * gameMap.getDimensions().getY(),
-					r.nextDouble() * gameMap.getDimensions().getZ()
-				),
-				new Rotation(r.nextDouble()*Math.PI*2, r.nextDouble()*Math.PI, r.nextDouble()*Math.PI*2)
-			);
-			boolean overlaps = false;
-			for (Body b : gameMap) {
-				if (a.isTouching(b)) {
-					overlaps = true;
-					break;
-				}
-			}
-
-			if (!overlaps) {
-//				a.setVelocity(new Vector(r.nextDouble(), r.nextDouble(), r.nextDouble()).scale(10));
-				gameMap.add(a);
-			} else {
-				i--;
-			}
-		}
+        Random r = new Random();
+        for (int i = 0; i < ASTEROID_NUMBER; i++) {
+            Asteroid a = new Asteroid(
+                new Vector(
+                    r.nextDouble() * gameMap.getDimensions().getX(),
+                    r.nextDouble() * gameMap.getDimensions().getY(),
+                    r.nextDouble() * gameMap.getDimensions().getZ()
+                ),
+                new Rotation(r.nextDouble()*Math.PI*2, r.nextDouble()*Math.PI, r.nextDouble()*Math.PI*2)
+            );
+            
+            boolean overlaps = false;
+            for (Body b : gameMap) {
+                if (a.isTouching(b)) {
+                    overlaps = true;
+                    break;
+                }
+            }
+            
+            if (overlaps) {
+                i--;
+            } else {
+                gameMap.add(a);
+            }
+        }
 	}
 
 	public synchronized void updateMap(String str, int position) {

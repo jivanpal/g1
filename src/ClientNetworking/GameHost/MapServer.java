@@ -33,7 +33,7 @@ public class MapServer extends Thread {
 		for(int  i=0;i<4;i++)
 		{
 			keySequences.add(new KeySequence(minLength, maxLength, sequenceNumber));
-		}	
+		}
 	}
 
 	public void run() {
@@ -42,9 +42,12 @@ public class MapServer extends Thread {
 			ClientTable clientTable = new ClientTable();
 			MapContainer gameMap = new MapContainer();
 			Player[] p = lobby.getPlayers();
-			for(int i=0;i<lobby.getPlayers().length;i+=2)
-				if(p[i]!=null || p[i+1]!=null)
+			for(int i=0;i<lobby.getPlayers().length;i+=2) {
+				if(p[i]!=null || p[i+1]!=null) {
 					gameMap.addShip(i/2, p[i]==null? "":p[i].nickname, p[i+1] == null? "" : p[i+1].nickname);
+				}
+		    }
+			System.err.println("Problem here!!");
 			gameMap.generateTerrain();
 			System.out.println("I HAVE STARTED THE SERVER");
 			while (true) {

@@ -24,10 +24,14 @@ import java.io.Serializable;
  */
 public class Basis implements Serializable {
 /// CONSTANTS
-    /**
-     * The basis XYZ; the global basis.
-     */
-    public static final Basis GLOBAL = new Basis (Vector.ZERO, Rotation.NONE);
+    
+    // This caused a super hard-to-find bug with the physics engine, where this "constant" was
+    // the default basis, and was subsequently altered by movement methods. Since this static
+    // instance was being used by all bodies, consequently all bodies shared the same basis. 
+//    /**
+//     * The basis XYZ; the global basis.
+//     */
+//    public static final Basis GLOBAL = new Basis (Vector.ZERO, Rotation.NONE);
     
 /// FIELDS
     private Vector o;
@@ -64,6 +68,11 @@ public class Basis implements Serializable {
         Basis b = (Basis) obj;
         return o.equals(b.getO())
             && r.equals(b.getR());
+    }
+    
+    @Override
+    public String toString() {
+        return "[ "+o+", "+r.getAxisAngle()+" ]";
     }
     
 // Getters
