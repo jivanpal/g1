@@ -11,14 +11,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import AI.EngineerAI;
 import Audio.AudioPlayer;
@@ -213,29 +213,38 @@ public class PilotView extends JPanel implements Observer {
      * Add all of the UI components to the JPanel.
      */
     private void addAllComponents() {
-        this.setLayout(new BorderLayout());
-        Container weaponPanel = new Container();
-        weaponPanel.add(plasmaBlasterView);
-        weaponPanel.add(laserBlasterView);
-        weaponPanel.add(torpedosView);
-        weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
+        try {
+            this.setLayout(new BorderLayout());
+            Container weaponPanel = new Container();
+            weaponPanel.add(plasmaBlasterView);
+            weaponPanel.add(laserBlasterView);
+            weaponPanel.add(torpedosView);
+            weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
 
-        Container UIpanel = new Container();
-        UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
-        UIpanel.setPreferredSize(new Dimension(getWidth(), getHeight() / 5));
-        UIpanel.add(manual);
-        UIpanel.add(weaponPanel);
-        UIpanel.add(speedometerView);
+            Container UIpanel = new Container();
+            UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
+            UIpanel.setPreferredSize(new Dimension(getWidth(), getHeight() / 5));
+            UIpanel.add(manual);
 
-        UIBaseLayer.setLayout(new BorderLayout());
-        UIBaseLayer.add(screen, BorderLayout.CENTER);
-        UIBaseLayer.add(UIpanel, BorderLayout.SOUTH);
-        UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+            BufferedImage steeringWheelImage = ImageIO.read(new File(System.getProperty("user.dir") + "/res/img/steeringwheel.png"));
+            JLabel steeringWheelView = new JLabel(new ImageIcon(steeringWheelImage));
+            UIpanel.add(steeringWheelView);
 
-        JLayeredPaneLayoutManager layoutManager = new JLayeredPaneLayoutManager();
+            UIpanel.add(speedometerView);
 
-        UILayeredPane.setLayout(layoutManager);
-        UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+            UIBaseLayer.setLayout(new BorderLayout());
+            UIBaseLayer.add(screen, BorderLayout.CENTER);
+            UIBaseLayer.add(UIpanel, BorderLayout.SOUTH);
+            UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+
+            JLayeredPaneLayoutManager layoutManager = new JLayeredPaneLayoutManager();
+
+            UILayeredPane.setLayout(layoutManager);
+            UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+        } catch (IOException e) {
+            // should never get here.
+            e.printStackTrace();
+        }
     }
 
     /**

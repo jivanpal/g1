@@ -37,7 +37,6 @@ public class ResourcesView extends JPanel {
         super();
 
         this.parent = parent;
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         makeUI(shieldReplenishNumber, fuelReplenishNumber);
     }
@@ -83,20 +82,38 @@ public class ResourcesView extends JPanel {
      * Instantiates all of the components of the UI and adds them to the JPanel.
      * Must be called before displaying, otherwise nothing will showup!
      */
+
     private void makeUI(String shieldReplenishNumber, String fuelReplenishNumber) {
+        this.setLayout(new GridBagLayout());
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridwidth = 0;
+        c.gridheight = 2;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.ipady = 10;
+
+
+
         shieldsComponent = new ResourceComponent("Shields", shieldReplenishNumber);
+
         shieldsComponent.setResourceBarColor(SHIELD_COLOR);
         shieldsComponent.setReplenishAction(ShipState.SHIELD_REPLENISH);
-        add(shieldsComponent);
+        c.anchor = GridBagConstraints.NORTH;
+        add(shieldsComponent, c);
 
         engineComponent = new ResourceComponent("Engines", fuelReplenishNumber);
         engineComponent.setResourceBarColor(ENGINE_COLOR);
         engineComponent.setReplenishAction(ShipState.FUEL_REPLENISH);
-        add(engineComponent);
+        c.anchor = GridBagConstraints.CENTER;
+        add(engineComponent, c);
 
         hullComponent = new ResourceComponent("Hull", "N/A");
         hullComponent.setResourceBarColor(HULL_COLOR);
-        add(hullComponent);
+        c.anchor = GridBagConstraints.SOUTH;
+        add(hullComponent, c);
+
     }
 
     /**

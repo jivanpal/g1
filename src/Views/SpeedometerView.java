@@ -1,5 +1,6 @@
 package Views;
 
+import GameLogic.GameOptions;
 import Interfaces.ShipPresenter;
 
 import javax.swing.*;
@@ -19,7 +20,9 @@ public class SpeedometerView extends JPanel {
         super();
 
         this.speedometerLabel = new JLabel("Speed:");
+        this.speedometerLabel.setFont(GameOptions.REGULAR_TEXT_FONT);
         this.currentSpeedLabel = new JLabel("0");
+        this.currentSpeedLabel.setFont(GameOptions.REGULAR_TEXT_FONT);
 
         this.add(speedometerLabel);
         this.add(currentSpeedLabel);
