@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -11,6 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -55,6 +58,8 @@ public class PilotView extends JPanel implements Observer {
     private JPanel UIpanel;
 
     private MouseMotionListener screenMouseListener;
+    
+    private double steeringWheelAngle = 0;
 
     /**
      * Creates a new PilotView. This encapsulates the entire View of the Pilot player.
@@ -126,14 +131,18 @@ public class PilotView extends JPanel implements Observer {
                     gameClient.send("pitchUp");
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
                     gameClient.send("rollLeft");
+                    steeringWheelAngle = -Math.PI/4;
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
                     gameClient.send("rollRight");
+                    steeringWheelAngle = Math.PI/4;
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
-
+            	if(keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON) || keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)){
+            		steeringWheelAngle = 0;
+            	}
             }
         });
 
@@ -230,7 +239,12 @@ public class PilotView extends JPanel implements Observer {
             UIpanel.add(manual);
 
             BufferedImage steeringWheelImage = ImageIO.read(new File(System.getProperty("user.dir") + "/res/img/steeringwheel.png"));
-            JLabel steeringWheelView = new JLabel(new ImageIcon(steeringWheelImage));
+            AffineTransform t = new AffineTransform();
+            t.rotate(steeringWheelAngle);
+            AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
+            steeringWheelImage = op.filter(steeringWheelImage, null);
+            Image resizedWheel = steeringWheelImage.getScaledInstance(parentFrame.getHeight()/5, parentFrame.getHeight()/5, Image.SCALE_SMOOTH);
+            JLabel steeringWheelView = new JLabel(new ImageIcon(resizedWheel));
             UIpanel.add(steeringWheelView);
 
             UIpanel.add(speedometerView);
