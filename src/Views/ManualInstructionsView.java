@@ -3,6 +3,7 @@ package Views;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -12,8 +13,8 @@ import GameLogic.GameOptions;
 public class ManualInstructionsView extends JPanel {
 	private final int INSTRUCTIONS_PER_PAGE = 5;
 
-	public static int MIN_PAGE = 1;
-	public static int MAX_PAGE = 11;
+	public static final int MIN_PAGE = 1;
+	public static final int MAX_PAGE = 11;
 
 	public static final String[] columnNames = { "Number", "Instruction", "KeySeq" };
 	private Object[][] data;
@@ -23,31 +24,29 @@ public class ManualInstructionsView extends JPanel {
 	private JTable rightPage;
 
 	public ManualInstructionsView(ArrayList<String> data, int size, int height) {
-		for(String inst : data){
-			System.out.println(inst);
-		}
-		
 		pageNumber = 1;
 		this.data = new Object[size][columnNames.length];
 		setData(data);
 		
 		leftPage = new MyJTable();
-		leftPage.setShowGrid(false);
-		leftPage.setFont(GameOptions.REGULAR_TEXT_FONT);
-		leftPage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		styleTable(leftPage, height);
 		leftPage.setModel(new DefaultTableModel(getDataForPage(pageNumber), columnNames));
-		leftPage.setRowHeight(height / 5);
+		
 
 		rightPage = new MyJTable();
-		rightPage.setShowGrid(false);
-		rightPage.setFont(GameOptions.REGULAR_TEXT_FONT);
-		rightPage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		styleTable(rightPage, height);
 		rightPage.setModel(new DefaultTableModel(getDataForPage(pageNumber + 1), columnNames));
-		rightPage.setRowHeight(height / 5);
 
-		setLayout(new GridLayout(1, 2));
+		setLayout(new GridLayout(2, 2));
 		add(leftPage);
 		add(rightPage);
+	}
+	
+	private void styleTable(JTable table, int height){
+		table.setShowGrid(false);
+		table.setFont(GameOptions.REGULAR_TEXT_FONT);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setRowHeight(height / 5);
 	}
 
 	private void update() {
