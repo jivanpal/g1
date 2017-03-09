@@ -190,7 +190,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         initialiseRadar();
         addAllComponents();
 
-
         this.revalidate();
         this.repaint();
         UIBaseLayer.revalidate();

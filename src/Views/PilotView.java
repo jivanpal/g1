@@ -42,16 +42,17 @@ public class PilotView extends JPanel implements Observer {
     private JButton manual;
     private ManualView instructions;
 
-    public GameClient gameClient;
+    private GameClient gameClient;
     private String playerNickname;
 
     private boolean UIinitialised = false;
 
     private EngineerAI engAI;
 
-    public JLayeredPane UILayeredPane;
-    public JPanel UIBaseLayer;
-    public JFrame parentFrame;
+    private JLayeredPane UILayeredPane;
+    private JPanel UIBaseLayer;
+    private JFrame parentFrame;
+    private JPanel UIpanel;
 
     private MouseMotionListener screenMouseListener;
 
@@ -198,12 +199,12 @@ public class PilotView extends JPanel implements Observer {
 
         addAllComponents();
 
-        UILayeredPane.revalidate();
-        UILayeredPane.repaint();
-        UIBaseLayer.revalidate();
-        UIBaseLayer.repaint();
-        this.revalidate();
         this.repaint();
+        this.revalidate();
+        UIBaseLayer.repaint();
+        UIBaseLayer.revalidate();
+        UILayeredPane.repaint();
+        UILayeredPane.revalidate();
 
         UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Pilot");
@@ -221,9 +222,11 @@ public class PilotView extends JPanel implements Observer {
             weaponPanel.add(torpedosView);
             weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
 
-            Container UIpanel = new Container();
+            System.out.println("Width: " + parentFrame.getWidth());
+            System.out.println("Height: " + parentFrame.getHeight() / 5);
+            UIpanel = new JPanel();
             UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
-            UIpanel.setPreferredSize(new Dimension(getWidth(), getHeight() / 5));
+            UIpanel.setPreferredSize(new Dimension(parentFrame.getWidth(), parentFrame.getHeight() / 5));
             UIpanel.add(manual);
 
             BufferedImage steeringWheelImage = ImageIO.read(new File(System.getProperty("user.dir") + "/res/img/steeringwheel.png"));
@@ -280,6 +283,7 @@ public class PilotView extends JPanel implements Observer {
 
     private void initialiseManualView(int height) {
     	this.instructions = new ManualView(gameClient.keySequence.getAllKeys(), gameClient.keySequence.getKeysSize(), height);
+        this.instructions.setVisible(false);
     }
 
 
