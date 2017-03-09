@@ -134,7 +134,10 @@ public class ServerReceiver extends Thread
 					{	
 						l.leave(name);
 						if(l.countPlayers()==0)
+						{
 							lobbies.remove(i);
+							System.out.println("I deleted the lobby");
+						}
 						else
 						{
 							for(Player p : l.getPlayers())

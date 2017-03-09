@@ -73,7 +73,6 @@ public class ManualInstructionsView extends JPanel {
 		Object[][] o = new Object[INSTRUCTIONS_PER_PAGE][columnNames.length];
 		int num = (page - 1) * INSTRUCTIONS_PER_PAGE;
 		for (int i = 0; i < INSTRUCTIONS_PER_PAGE; i++) {
-			// System.out.println("print data" + data[i]);
 			o[i] = data[i + num];
 		}
 		return o;
@@ -85,10 +84,11 @@ public class ManualInstructionsView extends JPanel {
 			}
 	}
 
-	private void addToData(int pos, String keySeq) {
+	private void addToData(int realPos, String keySeq) {
 		String[] split = keySeq.split(":");
-		data[pos][0] = Integer.valueOf(split[0]) + 1;
-		data[pos][1] = getInstructionStringByPos(pos);
+		int pos = Integer.valueOf(split[0]);
+		data[pos][0] = pos + 1;
+		data[pos][1] = getInstructionStringByPos(realPos);
 		data[pos][2] = split[1];
 	}
 
