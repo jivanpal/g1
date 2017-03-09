@@ -91,9 +91,9 @@ public class Screen extends JPanel{
 										{0,        0,        0,        1}};
 										
 		CM = Matrix.getCM(viewFrom, V, U, N, 2);
-		Matrix.printMatrix(CM);
+//		Matrix.printMatrix(CM);
 						
-		Matrix.printMatrix(cameraSystem);
+//		Matrix.printMatrix(cameraSystem);
 	}
 	
 	/* (non-Javadoc)
@@ -101,8 +101,8 @@ public class Screen extends JPanel{
 	 */
 	public void paintComponent(Graphics g){
 		Dimension size = getPreferredSize();
-		Global.SCREEN_WIDTH = (int) size.getWidth();
-		Global.SCREEN_HEIGHT = (int) size.getHeight();
+//		Global.SCREEN_WIDTH = (int) size.getWidth();
+//		Global.SCREEN_HEIGHT = (int) size.getHeight();
 		long startTime = System.currentTimeMillis();
 		//Draw the background
 		g.setColor(Color.BLACK);
