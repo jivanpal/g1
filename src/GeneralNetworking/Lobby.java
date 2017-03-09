@@ -179,7 +179,7 @@ public class Lobby implements Serializable
 	 */
 	public int getPlayerPosByName(String name){
 		for(int i =0; i< LOBBY_SIZE;i++){
-			if(players[i].nickname.equals(name)){
+			if(players[i]!=null && players[i].nickname.equals(name)){
 				return i;
 			}
 		}
