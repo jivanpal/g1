@@ -44,8 +44,8 @@ public class Screen extends JPanel{
 	private boolean asteroidDrawn = false;
 	private int i = 0;
 	private Map starMap;
-	private boolean selfDestruct = false;
-	private int destructCount = 0;
+	private boolean selfDestruct = true;
+	private int destructCount = 1;
 	
 	/**
 	 * Creates a new Screen object
@@ -134,29 +134,7 @@ public class Screen extends JPanel{
 			poly3Ds.get(drawOrder[i]).poly.drawPoly(g);
 		}
 		
-		if(selfDestruct){
-			if(destructCount <= 10){
-				Color warning = new Color(255 * destructCount / 10, 0, 0, 100);
-				g.setColor(warning);
-				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
-				destructCount++;
-			}
-			else if(destructCount >10 && destructCount <= 20){
-				Color warning = new Color(255, 0, 0, 100);
-				g.setColor(warning);
-				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
-				destructCount++;
-			}
-			else if(destructCount >20 && destructCount <= 30){
-				Color warning = new Color(255 * (30 - destructCount) / 10, 0, 0, 100);
-				g.setColor(warning);
-				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
-				destructCount++;
-			}
-			else{
-				destructCount = 0;
-			}
-		}
+		warningLight(g);
 		
 		
 		
@@ -192,6 +170,38 @@ public class Screen extends JPanel{
 		sleepAndRefresh();
 	}
 	
+	private void warningLight(Graphics g) {
+		if(selfDestruct){
+			if(destructCount <= 10){
+				Color warning = new Color(255 * destructCount / 10, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
+				destructCount++;
+			}
+			else if(destructCount > 10 && destructCount <= 20){
+				Color warning = new Color(255, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
+				destructCount++;
+			}
+			else if(destructCount > 20 && destructCount <= 30){
+				Color warning = new Color(255 * (30 - destructCount) / 10, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
+				destructCount++;
+			}
+			else if(destructCount > 30 && destructCount <= 40){
+				Color warning = new Color(25, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
+				destructCount++;
+			}
+			else{
+				destructCount = 1;
+			}
+		}
+	}
+
 	private void createObjects() {
 		poly3Ds.clear();
 //		System.out.println(map.size());
