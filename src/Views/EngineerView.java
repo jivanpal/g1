@@ -23,7 +23,7 @@ import Physics.Body;
  * Created by James on 01/02/17.
  * This View contains the entire UI for the Engineer once they are in game.
  */
-public class EngineerView extends JPanel implements KeyListener, KeySequenceResponder, Observer {
+public class EngineerView extends JPanel implements KeySequenceResponder, Observer {
     private boolean UIinitialised = false;
 
     private ShipState state = ShipState.NONE;
@@ -68,7 +68,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
         keyManager = new KeySequenceManager(this);
 
-        addKeyListener(this);
         setFocusable(true);
 
         this.parentFrame = parent;
@@ -245,9 +244,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         UIBaseLayer.repaint();
         UILayeredPane.revalidate();
         UILayeredPane.repaint();
-
-        this.addKeyListener(this);
-
+        
         this.UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Engineer");
     }
@@ -469,21 +466,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
                 }
             }
         }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-
     }
 
     /**

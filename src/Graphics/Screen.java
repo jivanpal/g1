@@ -322,6 +322,7 @@ public class Screen extends JPanel{
 			}
 		}
 	}
+
 	public void quicksort(double[] numbers, int low, int high)
 	{
 		 int i = low, j = high;

@@ -39,9 +39,7 @@ public class GameChat extends JPanel implements Observer{
 
 		client.addChatObserver(this);
 
-
 		JPanel southPanel = new JPanel();
-
 
 		input = new JTextField();
 		input.setActionCommand("enter");
@@ -60,6 +58,8 @@ public class GameChat extends JPanel implements Observer{
 
 
 		JScrollPane scroller = new JScrollPane(chat, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroller.setOpaque(false);
+		scroller.getViewport().setOpaque(false);
 
 		input.setEditable(true);
 		input.setEnabled(true);
@@ -92,8 +92,11 @@ public class GameChat extends JPanel implements Observer{
 			if(client.getMessage() == null) {
 				System.err.print("Oh no message is null");
 			} else {
+				// TODO: Replace once transparency works.
+				// messages += "<br><font color=\"rgb(255,255,255)\">" + client.getMessage()+"</font>";
+
 				messages += "<br>" + client.getMessage();
-				chat.setText("<html>+" + messages + "</html>");
+				chat.setText("<html>" + messages + "</html>");
 				this.revalidate();
 				this.repaint();
 			}
