@@ -48,8 +48,8 @@ public class GameChat extends JPanel implements Observer{
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (actionEvent.getActionCommand().equals("enter")) {
-					input.setText("");
 					ChatMessage message = new ChatMessage(nickname, input.getText());
+					input.setText("");
 					client.send(message);
 				}
 			}
