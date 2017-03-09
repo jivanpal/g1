@@ -27,31 +27,29 @@ public class ManualInstructionsView extends JPanel {
 		pageNumber = 1;
 		this.data = new Object[size][columnNames.length];
 		setData(data);
-		
+
 		leftPage = new MyJTable();
-		styleTable(leftPage, height);
-		leftPage.setModel(new DefaultTableModel(getDataForPage(pageNumber), columnNames));
+		styleTable(leftPage, height,pageNumber);
 		
-
 		rightPage = new MyJTable();
-		styleTable(rightPage, height);
-		rightPage.setModel(new DefaultTableModel(getDataForPage(pageNumber + 1), columnNames));
+		styleTable(rightPage, height, pageNumber +1);
 
-		setLayout(new GridLayout(2, 2));
+		setLayout(new GridLayout(1, 2));
 		add(leftPage);
 		add(rightPage);
 	}
-	
-	private void styleTable(JTable table, int height){
+
+	private void styleTable(JTable table, int height, int pageNumber) {
 		table.setShowGrid(false);
 		table.setFont(GameOptions.REGULAR_TEXT_FONT);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.setRowHeight(height / 5);
+		table.setRowHeight(height / INSTRUCTIONS_PER_PAGE);
+		table.setModel(new MyJTableModel(getDataForPage(pageNumber), columnNames));
 	}
 
 	private void update() {
-		leftPage.setModel(new DefaultTableModel(getDataForPage(pageNumber), columnNames));
-		rightPage.setModel(new DefaultTableModel(getDataForPage(pageNumber + 1), columnNames));
+		leftPage.setModel(new MyJTableModel(getDataForPage(pageNumber), columnNames));
+		rightPage.setModel(new MyJTableModel(getDataForPage(pageNumber + 1), columnNames));
 		this.validate();
 		this.repaint();
 	}
@@ -73,7 +71,7 @@ public class ManualInstructionsView extends JPanel {
 	}
 
 	private Object[][] getDataForPage(int page) {
-		Object[][] o = new Object[INSTRUCTIONS_PER_PAGE][columnNames.length];
+		Object[][] o = new Object[INSTRUCTIONS_PER_PAGE + 1][columnNames.length];
 		int num = (page - 1) * INSTRUCTIONS_PER_PAGE;
 		for (int i = 0; i < INSTRUCTIONS_PER_PAGE; i++) {
 			o[i] = data[i + num];
@@ -82,9 +80,9 @@ public class ManualInstructionsView extends JPanel {
 	}
 
 	private void setData(ArrayList<String> data) {
-			for (int j = 0; j < data.size(); j++) {
-				addToData(j,data.get(j));
-			}
+		for (int j = 0; j < data.size(); j++) {
+			addToData(j, data.get(j));
+		}
 	}
 
 	private void addToData(int realPos, String keySeq) {
@@ -97,25 +95,25 @@ public class ManualInstructionsView extends JPanel {
 
 	private String getInstructionStringByPos(int pos) {
 		String replenish = "";
-		if(pos < 7){
+		if (pos < 7) {
 			replenish = "replenish Shields";
-		} else if(pos < 14){
+		} else if (pos < 14) {
 			replenish = "replenish Fuel";
-		}else if(pos < 21){
+		} else if (pos < 21) {
 			replenish = "replenish Laser Blaster";
-		}else if(pos < 28){
+		} else if (pos < 28) {
 			replenish = "replenish Plasma Blaster";
-		}else if(pos < 35){
+		} else if (pos < 35) {
 			replenish = "replenish Torpedo Weapon";
-		}else if(pos < 42){
+		} else if (pos < 42) {
 			replenish = "turn on the heating";
-		}else if(pos < 49){
+		} else if (pos < 49) {
 			replenish = "empty your bins";
-		}else if(pos < 56){
+		} else if (pos < 56) {
 			replenish = "clean the windscreen";
-		}else if(pos < 63){
+		} else if (pos < 63) {
 			replenish = "refill the coffee machine";
-		}else {
+		} else {
 			replenish = "do the laundry";
 		}
 		return ("If you want to " + replenish + ", do this key sequence:");
@@ -124,5 +122,5 @@ public class ManualInstructionsView extends JPanel {
 	public int getPage() {
 		return this.pageNumber;
 	}
-	
+
 }
