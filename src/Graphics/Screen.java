@@ -1,5 +1,6 @@
 package Graphics;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
@@ -99,6 +100,9 @@ public class Screen extends JPanel{
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	public void paintComponent(Graphics g){
+		Dimension size = getPreferredSize();
+		Global.SCREEN_WIDTH = (int) size.getWidth();
+		Global.SCREEN_HEIGHT = (int) size.getHeight();
 		long startTime = System.currentTimeMillis();
 		//Draw the background
 		g.setColor(Color.BLACK);
@@ -166,7 +170,7 @@ public class Screen extends JPanel{
 		Vector nLine = (new Vector(0, 0, 0)).plus(N.scale(20));
 		Vector nLine2 = Matrix.multiplyVector(CM, nLine);
 		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (nLine2.getX())), (int)(origin.y + (-nLine2.getY())));*/
-		System.out.println("Time this frame " + (System.currentTimeMillis()-startTime));
+//		System.out.println("Time this frame " + (System.currentTimeMillis()-startTime));
 		sleepAndRefresh();
 	}
 	
