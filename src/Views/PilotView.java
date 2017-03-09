@@ -55,6 +55,7 @@ public class PilotView extends JPanel implements Observer {
     private JPanel UIpanel;
 
     private MouseMotionListener screenMouseListener;
+    private GameChat chatWindow;
 
     /**
      * Creates a new PilotView. This encapsulates the entire View of the Pilot player.
@@ -170,6 +171,7 @@ public class PilotView extends JPanel implements Observer {
         initialiseManualButton();
         initialiseSpeedometer();
         initialiseScreen();
+        initialiseChatWindow(gameClient, playerNickname);
 
         // Add mouse listener which swaps the cursor between being the default and a crosshair.
         this.removeMouseMotionListener(screenMouseListener);
@@ -244,10 +246,20 @@ public class PilotView extends JPanel implements Observer {
 
             UILayeredPane.setLayout(layoutManager);
             UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+
+            chatWindow.setBounds(300, 300, 300, 300);
+            chatWindow.setPreferredSize(new Dimension(300, 300));
+            UILayeredPane.add(chatWindow, JLayeredPane.PALETTE_LAYER);
+
         } catch (IOException e) {
             // should never get here.
             e.printStackTrace();
         }
+    }
+
+    private void initialiseChatWindow(GameClient gameClient, String nickname) {
+        this.chatWindow = new GameChat(gameClient, nickname);
+        this.chatWindow.setFocusable(false);
     }
 
     /**
