@@ -44,7 +44,7 @@ public class Screen extends JPanel{
 	private boolean asteroidDrawn = false;
 	private int i = 0;
 	private Map starMap;
-	private boolean selfDestruct = true;
+	private boolean selfDestruct = false;
 	private int destructCount = 1;
 	
 	/**
