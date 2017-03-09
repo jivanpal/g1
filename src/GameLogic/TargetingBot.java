@@ -73,7 +73,7 @@ public class TargetingBot extends Bot {
         
         // If the target is in range, fire.
         if (
-                bot.getForwardVector().angleWith(pathToTarget) < IN_RANGE_ANGLE
+                bot.getFrontVector().angleWith(pathToTarget) < IN_RANGE_ANGLE
             &&  pathToTarget.length() < IN_RANGE_DISTANCE
         ) {
             try {

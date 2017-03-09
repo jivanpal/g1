@@ -1,14 +1,17 @@
 package GameLogic;
 
-import Geometry.Vector;
-import Physics.Body;
+import Geometry.*;
+import Physics.*;
+
 /**
  * Class which represents the ship object in the game
  * @author Ivan Panchev
  *
  */
 public class Ship extends Body{
-	private final int ENGINE_FORCE = 30; // newtons
+	private static final int PITCH_SPEED  = 30;    // radians per second
+    private static final int ROLL_SPEED   = 50;    // radians per second
+    private static final int THRUST_SPEED = 10;    // meters  per second
 	
 	public static final byte LASER_BLASTER_INDEX = 0;
 	public static final byte PLASMA_BLASTER_INDEX = 1;
@@ -109,7 +112,6 @@ public class Ship extends Body{
 		this.shields.cusomChangeShieldsLevel(change);
 	}
 	
-	
 	public Bullet fire(int weaponIndex) throws Exception {
 		switch(weaponIndex){
 		case LASER_BLASTER_INDEX:
@@ -148,35 +150,40 @@ public class Ship extends Body{
 	
 // Movement methods
 	
+	private static final Rotation  PITCH_UP    = new Rotation(Vector.I.scale(PITCH_SPEED));
+	private static final Rotation  PITCH_DOWN  = new Rotation(Vector.I.negate().scale(PITCH_SPEED));
+	private static final Rotation  ROLL_RIGHT  = new Rotation(Vector.J.scale(ROLL_SPEED));
+	private static final Rotation  ROLL_LEFT   = new Rotation(Vector.J.negate().scale(ROLL_SPEED));
+	private static final Vector    THRUST_FWD  = Vector.J.scale(THRUST_SPEED);
+	private static final Vector    THRUST_REV  = Vector.J.negate().scale(THRUST_SPEED);
+	
 	public void pitchUp() {
 	    System.err.println("PitchUp!");
-	    this.exertForce(Vector.K.scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
+	    rotate(PITCH_UP);
 	}
 	
 	public void pitchDown() {
 	    System.err.println("PitchDown!");
-	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE), Vector.J.scale(this.getRadius()));
-	}
-	
-	public void rollLeft() {
-	    System.err.println("RollLeft!");
-	    this.exertForce(Vector.K.scale(ENGINE_FORCE), Vector.I.scale(this.getRadius()));
-	    this.exertForce(Vector.K.negate().scale(ENGINE_FORCE), Vector.I.negate().scale(this.getRadius()));
+	    rotate(PITCH_DOWN);
 	}
 	
 	public void rollRight() {
-	    System.err.println("RollRight!");
-	    this.exertForce(Vector.K.scale(ENGINE_FORCE), Vector.I.negate().scale(this.getRadius()));
-        this.exertForce(Vector.K.negate().scale(ENGINE_FORCE), Vector.I.scale(this.getRadius()));
+        System.err.println("RollRight!");
+        rotate(ROLL_RIGHT);
+    }
+	
+	public void rollLeft() {
+	    System.err.println("RollLeft!");
+	    rotate(ROLL_LEFT);
 	}
+	
 	public void thrustForward() {
 	    System.err.println("ThrustForward!");
-	    this.exertForce(Vector.J.scale(ENGINE_FORCE*10), Vector.J.negate().scale(this.getRadius()));
+	    alterVelocityLocally(THRUST_FWD);
 	}
 	
 	public void thrustReverse() {
 	    System.err.println("ThrustReverse!");
-	    this.exertForce(Vector.J.negate().scale(ENGINE_FORCE*10), Vector.J.scale(this.getRadius()));
+	    alterVelocityLocally(THRUST_REV);
 	}
-
 }
