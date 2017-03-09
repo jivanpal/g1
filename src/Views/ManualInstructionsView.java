@@ -22,7 +22,11 @@ public class ManualInstructionsView extends JPanel {
 	private JTable leftPage;
 	private JTable rightPage;
 
-	public ManualInstructionsView(ArrayList<char[][]> data, int size, int height) {
+	public ManualInstructionsView(ArrayList<String> data, int size, int height) {
+		for(String inst : data){
+			System.out.println(inst);
+		}
+		
 		pageNumber = 1;
 		this.data = new Object[size][columnNames.length];
 		setData(data);
@@ -73,59 +77,47 @@ public class ManualInstructionsView extends JPanel {
 		Object[][] o = new Object[INSTRUCTIONS_PER_PAGE][columnNames.length];
 		int num = (page - 1) * INSTRUCTIONS_PER_PAGE;
 		for (int i = 0; i < INSTRUCTIONS_PER_PAGE; i++) {
-			// System.out.println("print data" + data[i]);
 			o[i] = data[i + num];
 		}
 		return o;
 	}
 
-	private void setData(ArrayList<char[][]> data) {
-		for (int i = 0; i < data.size(); i++) {
-			for (int j = 0; j < data.get(0).length; j++) {
-				addToData(i * 10 + j, new String(data.get(i)[j]));
+	private void setData(ArrayList<String> data) {
+			for (int j = 0; j < data.size(); j++) {
+				addToData(j,data.get(j));
 			}
-		}
 	}
 
-	private void addToData(int pos, String keySeq) {
+	private void addToData(int realPos, String keySeq) {
+		String[] split = keySeq.split(":");
+		int pos = Integer.valueOf(split[0]) - 1;
 		data[pos][0] = pos + 1;
-		data[pos][1] = getInstructionStringByPos(pos);
-		data[pos][2] = keySeq;
+		data[pos][1] = getInstructionStringByPos(realPos);
+		data[pos][2] = split[1];
 	}
 
 	private String getInstructionStringByPos(int pos) {
 		String replenish = "";
-		switch (pos % 10) {
-		case 0:
-			replenish = "replenish Laser Blaster";
-			break;
-		case 1:
-			replenish = "replenish Torpedo Weapon";
-			break;
-		case 2:
-			replenish = "replenish Plasma Blaster";
-			break;
-		case 3:
+		if(pos < 7){
 			replenish = "replenish Shields";
-			break;
-		case 4:
+		} else if(pos < 14){
 			replenish = "replenish Fuel";
-			break;
-		case 5:
+		}else if(pos < 21){
+			replenish = "replenish Laser Blaster";
+		}else if(pos < 28){
+			replenish = "replenish Plasma Blaster";
+		}else if(pos < 35){
+			replenish = "replenish Torpedo Weapon";
+		}else if(pos < 42){
 			replenish = "turn on the heating";
-			break;
-		case 6:
+		}else if(pos < 49){
 			replenish = "empty your bins";
-			break;
-		case 7:
+		}else if(pos < 56){
 			replenish = "clean the windscreen";
-			break;
-		case 8:
+		}else if(pos < 63){
 			replenish = "refill the coffee machine";
-			break;
-		case 9:
+		}else {
 			replenish = "do the laundry";
-			break;
 		}
 		return ("If you want to " + replenish + ", do this key sequence:");
 	}

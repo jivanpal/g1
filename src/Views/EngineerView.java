@@ -10,6 +10,7 @@ import ClientNetworking.GameClient.GameClient;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -38,7 +39,12 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     private GameClient gameClient;
     private String playerNickname;
 
-    private char[][] keySequences;
+    private ArrayList<String> keySequences;
+    private int shieldSequenceNum = 0;
+    private int fuelSequenceNum = 6;
+    private int laserSequenceNum = 13;
+    private int plasmaSequenceNum = 20;
+    private int torpedoSequenceNum = 27;
 
     private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;
@@ -113,33 +119,38 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
                         keyManager.keyPressed(keyEvent);
                     } else {
                         // We're not in a sequence, see if this key was a keybind to start a new one.
+                        String sequence = "";
                         switch (keyEvent.getKeyChar()) {
                             case 'l':
                                 System.out.println("Starting a laser sequence");
                                 state = ShipState.LASER_REPLENISH;
-                                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[0]), true);
+                                sequence = parseSequence(keySequences.get(laserSequenceNum));
+                                keyManager.initialiseKeySequenceManager(sequence, true);
                                 break;
                             case 't':
                                 System.out.println("Starting a torpedo sequence");
                                 state = ShipState.TORPEDO_REPLENISH;
-                                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[1]), false);
+                                sequence = parseSequence(keySequences.get(torpedoSequenceNum));
+                                keyManager.initialiseKeySequenceManager(sequence, false);
                                 break;
                             case 'p':
                                 System.out.println("Starting a plasma sequence");
                                 state = ShipState.PLASMA_REPLENISH;
-                                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[2]), false);
+                                sequence = parseSequence(keySequences.get(plasmaSequenceNum));
+                                keyManager.initialiseKeySequenceManager(sequence, false);
                                 break;
                             case 's':
                                 System.out.println("Starting a shield sequence");
                                 state = ShipState.SHIELD_REPLENISH;
-                                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[3]), true);
+                                sequence = parseSequence(keySequences.get(shieldSequenceNum));
+                                keyManager.initialiseKeySequenceManager(sequence, true);
                                 break;
                             case 'f':
                                 System.out.println("Starting a fuel sequence");
                                 state = ShipState.FUEL_REPLENISH;
-                                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[4]), true);
+                                sequence = parseSequence(keySequences.get(fuelSequenceNum));
+                                keyManager.initialiseKeySequenceManager(sequence, true);
                                 break;
-
                         }
                     }
                 }
@@ -284,7 +295,13 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
      * @param s This players Ship object
      */
     private void initialiseResources(Ship s) {
-        resourcesView = new ResourcesView(this);
+        System.out.println("Shield sequence: " + keySequences.get(shieldSequenceNum));
+        System.out.println("Fuel sequence: " + keySequences.get(fuelSequenceNum));
+
+        String shieldSequenceNumber = parseNumber(keySequences.get(shieldSequenceNum));
+        String fuelSequenceNumber = parseNumber(keySequences.get(fuelSequenceNum));
+
+        resourcesView = new ResourcesView(this, shieldSequenceNumber, fuelSequenceNumber);
         resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
         resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
         resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
@@ -360,7 +377,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     public void update(Observable observable, Object o) {
         if (!UIinitialised) {
             try {
-                keySequences = gameClient.keySequence.getSequencesByLength(2);
+                keySequences = gameClient.keySequence.getAllKeys();
             } catch (Exception e) {
                 // Should never get here
             }
@@ -450,30 +467,45 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     void setState(ShipState newState) {
         this.state = newState;
 
+        String sequence = "";
+
         switch (state) {
             case NONE:
                 break;
             case SHIELD_REPLENISH:
                 System.out.println("Starting a shield sequence");
-                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[3]), true);
+                sequence = parseSequence(keySequences.get(shieldSequenceNum));
+                keyManager.initialiseKeySequenceManager(sequence, true);
                 break;
             case FUEL_REPLENISH:
                 System.out.println("Starting a fuel sequence");
-                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[4]), true);
+                sequence = parseSequence(keySequences.get(fuelSequenceNum));
+                keyManager.initialiseKeySequenceManager(sequence, true);
                 break;
             case LASER_REPLENISH:
                 System.out.println("Starting a laser sequence");
-                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[0]), true);
+                sequence = parseSequence(keySequences.get(laserSequenceNum));
+                keyManager.initialiseKeySequenceManager(sequence, true);
                 break;
             case TORPEDO_REPLENISH:
                 System.out.println("Starting a torpedo sequence");
-                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[1]), false);
+                sequence = parseSequence(keySequences.get(shieldSequenceNum));
+                keyManager.initialiseKeySequenceManager(sequence, false);
                 break;
             case PLASMA_REPLENISH:
                 System.out.println("Starting a plasma sequence");
-                keyManager.initialiseKeySequenceManager(String.valueOf(keySequences[2]), false);
+                sequence = parseSequence(keySequences.get(shieldSequenceNum));
+                keyManager.initialiseKeySequenceManager(sequence, false);
                 break;
         }
+    }
+
+    private String parseNumber(String sequenceWithNum) {
+        return sequenceWithNum.split(":")[0];
+    }
+
+    private String parseSequence(String sequenceWithNum) {
+        return sequenceWithNum.split(":")[1];
     }
 }
 

@@ -33,12 +33,12 @@ public class ResourcesView extends JPanel {
      * Instantiates a new ResourceView which shows details about the amount of shields, hull health and engine fuel
      * to the user
      */
-    public ResourcesView(EngineerView parent) {
+    public ResourcesView(EngineerView parent, String shieldReplenishNumber, String fuelReplenishNumber) {
         super();
 
         this.parent = parent;
 
-        makeUI();
+        makeUI(shieldReplenishNumber, fuelReplenishNumber);
     }
 
     /**
@@ -82,7 +82,8 @@ public class ResourcesView extends JPanel {
      * Instantiates all of the components of the UI and adds them to the JPanel.
      * Must be called before displaying, otherwise nothing will showup!
      */
-    private void makeUI() {
+
+    private void makeUI(String shieldReplenishNumber, String fuelReplenishNumber) {
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
@@ -93,19 +94,22 @@ public class ResourcesView extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 10;
 
-        shieldsComponent = new ResourceComponent("Shields");
+
+
+        shieldsComponent = new ResourceComponent("Shields", shieldReplenishNumber);
+
         shieldsComponent.setResourceBarColor(SHIELD_COLOR);
         shieldsComponent.setReplenishAction(ShipState.SHIELD_REPLENISH);
         c.anchor = GridBagConstraints.NORTH;
         add(shieldsComponent, c);
 
-        engineComponent = new ResourceComponent("Engines");
+        engineComponent = new ResourceComponent("Engines", fuelReplenishNumber);
         engineComponent.setResourceBarColor(ENGINE_COLOR);
         engineComponent.setReplenishAction(ShipState.FUEL_REPLENISH);
         c.anchor = GridBagConstraints.CENTER;
         add(engineComponent, c);
 
-        hullComponent = new ResourceComponent("Hull");
+        hullComponent = new ResourceComponent("Hull", "N/A");
         hullComponent.setResourceBarColor(HULL_COLOR);
         c.anchor = GridBagConstraints.SOUTH;
         add(hullComponent, c);
@@ -124,7 +128,7 @@ public class ResourcesView extends JPanel {
          * Creates a ResourceComponent which displays info about a particular resource to the player.
          * @param name The name of the resource.
          */
-        ResourceComponent(String name) {
+        ResourceComponent(String name, String replenishNumber) {
             super();
 
             this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -137,7 +141,7 @@ public class ResourcesView extends JPanel {
             resourceProgressBar.setMaximum(10);
             resourceProgressBar.setFont(GameOptions.REGULAR_TEXT_FONT);
 
-            this.replenishButton = new JButton("Replenish");
+            this.replenishButton = new JButton("Replenish: " + replenishNumber);
             replenishButton.setFont(GameOptions.REGULAR_TEXT_FONT);
             replenishButton.setEnabled(false);
             replenishButton.setFocusable(false);
@@ -165,6 +169,10 @@ public class ResourcesView extends JPanel {
         void setReplenishAction(ShipState state) {
             replenishButton.addActionListener(actionEvent -> parent.setState(state));
             replenishButton.setEnabled(true);
+        }
+
+        void setReplenishNumber(String number) {
+            replenishButton.setText("Replenish: " + number);
         }
     }
 }

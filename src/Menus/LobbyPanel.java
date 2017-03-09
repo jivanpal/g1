@@ -92,18 +92,34 @@ public class LobbyPanel extends JPanel implements Observer {
 			}
 		}
 		c.anchor = GridBagConstraints.NORTHWEST;
-		JButton backtostart = new JButton("Back");
-		backtostart = createButton(backtostart, "Back");
+		MyButton backtostart = new MyButton("Back");
+		backtostart.addActionListener(e -> {
+			int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to leave the lobby?",
+					"Leave Lobby", JOptionPane.YES_NO_OPTION);
+			if (confirm == JOptionPane.YES_OPTION) {
+				client.send(new Action(client.getLobby().getID(), this.player, this.player, Action.KICK));
+				leftserver = true;
+				PlayPanel ppanel = new PlayPanel(menu, client);
+				menu.changeFrame(ppanel);
+				client.setLobby(null);
+			}
+		});
 		add(backtostart, c);
-		c.anchor = GridBagConstraints.NORTHEAST;
-		JButton inviteplayers = new JButton("Invite");
-		inviteplayers = createButton(inviteplayers, "Invite");
-		add(inviteplayers, c);
 
 		if (ishost) {
 			c.anchor = GridBagConstraints.SOUTH;
-			JButton startgame = new JButton("Start Game");
-			startgame = createButton(startgame, "Start");
+			MyButton startgame = new MyButton("Start Game");
+			startgame.addActionListener(e -> {
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				try {
+					MapServer game = new MapServer(client.getLobby());
+					game.start();
+					client.send(new Action(client.getLobby().getID(), this.player, Action.START));
+
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			});
 			add(startgame, c);
 		}
 
@@ -132,62 +148,6 @@ public class LobbyPanel extends JPanel implements Observer {
 
 	}
 
-	public JButton createButton(JButton button, String action) {
-		button.setForeground(Color.WHITE);
-		button.setFont(GameOptions.BUTTON_FONT);
-
-		button.setBorderPainted(false);
-		button.setContentAreaFilled(false);
-		button.setOpaque(false);
-		button.setFocusable(false);
-		if (action.equals("Back") || action.equals("Invite")) {
-
-		} else {
-			button.setPreferredSize(new Dimension(300, 50));
-		}
-		button.addActionListener(e -> {
-			switch (action) {
-			case "Back":
-				int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to leave the lobby?",
-						"Leave Lobby", JOptionPane.YES_NO_OPTION);
-				if (confirm == JOptionPane.YES_OPTION) {
-					client.send(new Action(client.getLobby().getID(), this.player, this.player, Action.KICK));
-					leftserver = true;
-					PlayPanel ppanel = new PlayPanel(menu, client);
-					menu.changeFrame(ppanel);
-					client.setLobby(null);
-				}
-				break;
-			case "Start":
-				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				try {
-					MapServer game = new MapServer(client.getLobby());
-					game.start();
-					client.send(new Action(client.getLobby().getID(), this.player, Action.START));
-
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				break;
-			case "Invite":
-				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				break;
-			}
-		});
-		button.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				button.setForeground(Color.GREEN);
-			}
-
-			@Override
-			public void mouseExited(java.awt.event.MouseEvent evt) {
-				button.setForeground(UIManager.getColor("control"));
-			}
-		});
-		return button;
-	}
-
 	/**
 	 * Displays the lobby itself with the player names, move and kick button.
 	 * 
@@ -208,21 +168,20 @@ public class LobbyPanel extends JPanel implements Observer {
 				role = "Engineer";
 			}
 			JLabel label = new JLabel(role);
+			label.setFont(GameOptions.REGULAR_TEXT_FONT);
 			if (position < 2) {
-				label.setForeground(Color.RED);
+				label.setForeground(Color.decode("#ff4d4d"));
 			} else if (position < 4) {
-				label.setForeground(Color.YELLOW);
+				label.setForeground(Color.decode("#ffff66"));
 			} else if (position < 6) {
-				label.setForeground(Color.GREEN);
+				label.setForeground(Color.decode("#80ff80"));
 			} else {
 				label.setForeground(Color.WHITE);
 			}
 			panel.add(label);
 			if (p != null) {
 				JLabel name = new JLabel(p.nickname);
-				if (p.nickname.equals(this.player.nickname)) {
-					name.setFont(new Font(name.getName(), Font.BOLD, 12));
-				}
+				name.setFont(GameOptions.REGULAR_TEXT_FONT);
 
 				name.setForeground(Color.WHITE);
 				panel.add(name);
@@ -230,12 +189,12 @@ public class LobbyPanel extends JPanel implements Observer {
 				JLabel blank = new JLabel(" ");
 				panel.add(blank);
 			}
-			JButton move = new JButton("Move");
+			MyButton move = new MyButton("Move");
 			move.addActionListener(e -> {
 				client.send(new Action(client.getLobby().getID(), player, position));
 
 			});
-			JButton kick = new JButton("Kick");
+			MyButton kick = new MyButton("Kick");
 			kick.addActionListener(e -> {
 				client.send(new Action(client.getLobby().getID(), player, players[position], Action.KICK));
 			});
@@ -331,6 +290,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			this.remove(lpanel);
 			JPanel newpanel = displayplayers();
 			newpanel.setOpaque(false);
+			c.anchor = GridBagConstraints.CENTER;
 			this.add(newpanel, c);
 			this.invalidate();
 			this.validate();

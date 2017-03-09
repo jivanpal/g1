@@ -1,16 +1,10 @@
 package Graphics;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
 import javax.swing.JPanel;
-
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import GameLogic.Asteroid;
 import GameLogic.Bullet;
@@ -51,6 +45,8 @@ public class Screen extends JPanel{
 	private boolean asteroidDrawn = false;
 	private int i = 0;
 	private Map starMap;
+	private boolean selfDestruct = false;
+	private int destructCount = 1;
 	
 	/**
 	 * Creates a new Screen object
@@ -77,17 +73,17 @@ public class Screen extends JPanel{
 		viewFrom = new Vector(0, 0, 0);
 		viewTo = new Vector(0, 0, 1);
 		lightDir = new Vector(1, 1, 1);
-		lightDir.normalise();
+		lightDir = lightDir.normalise();
 		
 		//Create camera vectors
 		N = viewTo.plus(viewFrom);
-		N.normalise();
+		N = N.normalise();
 		U = new Vector(0, 1, 0);
-		U.normalise();
+		U = U.normalise();
 		V = U.cross(N);
-		V.normalise();
+		V = V.normalise();
 		U = N.cross(V);
-		U.normalise();
+		U = U.normalise();
 		
 		cameraSystem = new double[][] { {V.getX(), V.getY(), V.getZ(), 0},
 										{U.getX(), U.getY(), U.getZ(), 0},
@@ -104,6 +100,9 @@ public class Screen extends JPanel{
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	public void paintComponent(Graphics g){
+		Dimension size = getPreferredSize();
+		Global.SCREEN_WIDTH = (int) size.getWidth();
+		Global.SCREEN_HEIGHT = (int) size.getHeight();
 		long startTime = System.currentTimeMillis();
 		//Draw the background
 		g.setColor(Color.BLACK);
@@ -139,6 +138,10 @@ public class Screen extends JPanel{
 			poly3Ds.get(drawOrder[i]).poly.drawPoly(g);
 		}
 		
+		warningLight(g);
+		
+		
+		
 		//Draw debugging information
 		Vector camCoords = Matrix.multiplyVector(cameraSystem, new Vector(0, 0, 0));
 		g.setColor(Color.WHITE);
@@ -167,10 +170,42 @@ public class Screen extends JPanel{
 		Vector nLine = (new Vector(0, 0, 0)).plus(N.scale(20));
 		Vector nLine2 = Matrix.multiplyVector(CM, nLine);
 		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (nLine2.getX())), (int)(origin.y + (-nLine2.getY())));*/
-		System.out.println("Time this frame " + (System.currentTimeMillis()-startTime));
+//		System.out.println("Time this frame " + (System.currentTimeMillis()-startTime));
 		sleepAndRefresh();
 	}
 	
+	private void warningLight(Graphics g) {
+		if(selfDestruct){
+			if(destructCount <= 10){
+				Color warning = new Color(255 * destructCount / 10, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
+				destructCount++;
+			}
+			else if(destructCount > 10 && destructCount <= 20){
+				Color warning = new Color(255, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
+				destructCount++;
+			}
+			else if(destructCount > 20 && destructCount <= 30){
+				Color warning = new Color(255 * (30 - destructCount) / 10, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
+				destructCount++;
+			}
+			else if(destructCount > 30 && destructCount <= 40){
+				Color warning = new Color(25, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
+				destructCount++;
+			}
+			else{
+				destructCount = 1;
+			}
+		}
+	}
+
 	private void createObjects() {
 		poly3Ds.clear();
 //		System.out.println(map.size());

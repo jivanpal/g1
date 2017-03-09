@@ -3,6 +3,7 @@ bin
 files
 .classpath
 .project
+.idea
 keybindings.txt
 soundvalues.txt
 /bin1/

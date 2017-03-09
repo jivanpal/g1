@@ -51,8 +51,6 @@ public class ButtonPanel extends JPanel {
 		title.setForeground(Color.WHITE);
 		title.setOpaque(false);
 		title.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
-		// Font titlefont = title.getFont();
-		// title.setFont(new Font(titlefont.getName(), Font.BOLD, 36));
 		c.anchor = GridBagConstraints.NORTH;
 		add(title, c);
 		setBackground(Color.BLACK);
@@ -67,12 +65,23 @@ public class ButtonPanel extends JPanel {
 	 */
 	public JPanel createButtons() {
 		JPanel panel = new JPanel();
-		JButton play = new JButton("Play");
-		play = createButton(play, "Play");
-		JButton settings = new JButton("Settings");
-		settings = createButton(settings, "Settings");
-		JButton exit = new JButton("Exit");
-		exit = createButton(exit, "Exit");
+		MyButton play = new MyButton("Play");
+		play.addActionListener(e -> {
+			PlayPanel ppanel = new PlayPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			menu.changeFrame(ppanel);
+		});
+		MyButton settings = new MyButton("Settings");
+		settings.addActionListener(e -> {
+			SettingsPanel spanel = new SettingsPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			menu.changeFrame(spanel);
+		});
+		MyButton exit = new MyButton("Exit");
+		exit.addActionListener(e -> {
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			System.exit(0);
+		});
 		panel.setLayout(new BorderLayout());
 		panel.add(play, BorderLayout.NORTH);
 		panel.add(settings, BorderLayout.CENTER);
@@ -80,44 +89,4 @@ public class ButtonPanel extends JPanel {
 		return panel;
 	}
 	
-	public JButton createButton(JButton button, String action) {
-		button.setForeground(Color.WHITE);
-		button.setFont(GameOptions.BUTTON_FONT);
-		button.setBorderPainted(false);
-		button.setContentAreaFilled(false);
-		button.setOpaque(false);
-		button.setFocusable(false);
-		button.setPreferredSize(new Dimension(300, 50));
-		button.addActionListener(e -> {
-			switch(action) {
-			case "Play":
-				PlayPanel ppanel = new PlayPanel(menu, client);
-				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				menu.changeFrame(ppanel);
-				break;
-			case "Settings":
-				SettingsPanel spanel = new SettingsPanel(menu, client);
-				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				menu.changeFrame(spanel);
-				break;
-			case "Exit":
-				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				System.exit(0);
-				break;
-			}
-		});
-		
-		button.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseEntered(java.awt.event.MouseEvent evt) {
-		        button.setForeground(Color.GREEN);
-		    }
-			@Override
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		        button.setForeground(UIManager.getColor("control"));
-		    }
-		});
-		
-		return button;
-	}
 }
