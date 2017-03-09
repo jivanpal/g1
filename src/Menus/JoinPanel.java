@@ -2,6 +2,7 @@ package Menus;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -10,15 +11,18 @@ import java.util.Observer;
 import java.util.Scanner;
 import java.util.UUID;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
+import GameLogic.GameOptions;
 import GeneralNetworking.Action;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.LobbyInfo;
@@ -71,12 +75,35 @@ public class JoinPanel extends JPanel {
 		}
 		System.out.println("Finished updating");
 		table = new JTable(model);
+		table.setOpaque(true);
+		table.setFillsViewportHeight(true);
+		
+		table.setBackground(Color.BLACK);
+		table.setForeground(Color.WHITE);
+		table.setFont(GameOptions.REGULAR_TEXT_FONT);
+		
+		table.getTableHeader().setBackground(Color.BLACK);
+		table.getTableHeader().setForeground(Color.WHITE);
+		table.getTableHeader().setFont(GameOptions.REGULAR_TEXT_FONT);
+		table.setSelectionBackground(Color.decode("#999999"));
+		table.setDefaultRenderer(Object.class, new MyTableRenderer());
+		
 		JScrollPane pane = new JScrollPane(table);
+		pane.setBorder(BorderFactory.createLineBorder(Color.decode("#333333")));
 		add(pane, BorderLayout.CENTER);
 		JPanel bpanel = createButtons();
 		bpanel.setOpaque(false);
 		add(bpanel, BorderLayout.SOUTH);
 		setBackground(Color.black);
+	}
+	
+	public class MyTableRenderer extends DefaultTableCellRenderer {
+		@Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            setBorder(noFocusBorder);
+            return this;
+        }
 	}
 	
 	/**
@@ -132,13 +159,13 @@ public class JoinPanel extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 
-		JButton backtoplay = new JButton("Back To Play Menu");
+		MyButton backtoplay = new MyButton("Back");
 		backtoplay.addActionListener(e -> {
 			PlayPanel ppanel = new PlayPanel(menu, client);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
 		});
-		JButton join = new JButton("Join");
+		MyButton join = new MyButton("Join");
 		join.addActionListener(e -> {
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			int selected = table.getSelectedRow();
@@ -158,7 +185,7 @@ public class JoinPanel extends JPanel {
 				e1.printStackTrace();
 			}
 		});
-		JButton refresh = new JButton("Refresh");
+		MyButton refresh = new MyButton("Refresh");
 		refresh.addActionListener(e -> {
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			client.updateList();
@@ -166,7 +193,7 @@ public class JoinPanel extends JPanel {
 			repaintlobbies();
 		});
 		join.setPreferredSize(new Dimension(500, 50));
-		refresh.setPreferredSize(new Dimension(200, 50));
+		refresh.setPreferredSize(new Dimension(230, 50));
 		backtoplay.setPreferredSize(new Dimension(200, 50));
 		panel.add(backtoplay, BorderLayout.WEST);
 		panel.add(join, BorderLayout.CENTER);
