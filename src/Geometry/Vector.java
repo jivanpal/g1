@@ -101,7 +101,7 @@ public class Vector implements Serializable {
      *          values of the vector's components.
      */
     public String toString() {
-        return "("+x+", "+y+", "+z+")";
+        return "("+String.format("%.5f", x)+", "+String.format("%.5f", y)+", "+String.format("%.5f", z)+")";
     }
 
 // Getters
