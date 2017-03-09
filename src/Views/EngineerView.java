@@ -109,6 +109,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
+                System.out.println("Key pressed");
                 if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     // User wishes to escape out of this sequence.
                     System.out.println("Stopping this sequence");
@@ -155,6 +156,52 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
                         }
                     }
                 }
+            }
+        });
+
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse clicked outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse clicked inside chat");
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse pressed outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse pressed inside chat");
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse released outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse released inside chat");
+                }
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+
             }
         });
 

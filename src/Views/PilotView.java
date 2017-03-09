@@ -139,7 +139,7 @@ public class PilotView extends JPanel implements Observer {
             	}
             }
         });
-        
+
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
