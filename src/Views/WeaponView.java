@@ -28,12 +28,12 @@ public class WeaponView extends JPanel{
      * @param weaponName The name of the weapon
      */
     public WeaponView(String weaponName) {
-        weaponNameLabel = new JLabel(weaponName);
+        // weaponNameLabel = new JLabel(weaponName);
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        this.add(weaponNameLabel);
+        // this.add(weaponNameLabel);
     }
 
     /**
@@ -49,12 +49,12 @@ public class WeaponView extends JPanel{
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.WEST;
 
-        weaponNameLabel = new JLabel(weaponName);
+        // weaponNameLabel = new JLabel(weaponName);
 
         this.showAmmoLevel = showAmmoLevel;
         if(showAmmoLevel) {
-            this.remove(weaponNameLabel);
-            weaponNameLabel = null;
+            //this.remove(weaponNameLabel);
+            //weaponNameLabel = null;
 
             weaponAmmoLevel = new JProgressBar();
             weaponAmmoLevel.setString(weaponName);
