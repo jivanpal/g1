@@ -235,12 +235,14 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         uiPanelConstraints.gridx = 0;
         uiPanelConstraints.gridy = 0;
         uiPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
-        uiPanelConstraints.insets = new Insets(10, 20, 10, 20);
-
+        uiPanelConstraints.insets = new Insets(10, 20, 30, 20);
+       // uiPanelConstraints.anchor = GridBagConstraints.WEST;
         UIPanel.add(resourcesView, uiPanelConstraints);
 
         uiPanelConstraints.gridx = 1;
-        UIPanel.add(weaponPanel);
+        
+        //uiPanelConstraints.anchor = GridBagConstraints.EAST;
+        UIPanel.add(weaponPanel, uiPanelConstraints);
 
         // TODO: Make this work.
         /*UIPanel.setOpaque(true);
