@@ -2,15 +2,8 @@ package Graphics;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
 import javax.swing.JPanel;
-
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import GameLogic.Asteroid;
 import GameLogic.Bullet;
@@ -51,6 +44,8 @@ public class Screen extends JPanel{
 	private boolean asteroidDrawn = false;
 	private int i = 0;
 	private Map starMap;
+	private boolean selfDestruct = false;
+	private int destructCount = 0;
 	
 	/**
 	 * Creates a new Screen object
@@ -77,17 +72,17 @@ public class Screen extends JPanel{
 		viewFrom = new Vector(0, 0, 0);
 		viewTo = new Vector(0, 0, 1);
 		lightDir = new Vector(1, 1, 1);
-		lightDir.normalise();
+		lightDir = lightDir.normalise();
 		
 		//Create camera vectors
 		N = viewTo.plus(viewFrom);
-		N.normalise();
+		N = N.normalise();
 		U = new Vector(0, 1, 0);
-		U.normalise();
+		U = U.normalise();
 		V = U.cross(N);
-		V.normalise();
+		V = V.normalise();
 		U = N.cross(V);
-		U.normalise();
+		U = U.normalise();
 		
 		cameraSystem = new double[][] { {V.getX(), V.getY(), V.getZ(), 0},
 										{U.getX(), U.getY(), U.getZ(), 0},
@@ -138,6 +133,32 @@ public class Screen extends JPanel{
 //			System.out.println("Drawing Polygon " + i);
 			poly3Ds.get(drawOrder[i]).poly.drawPoly(g);
 		}
+		
+		if(selfDestruct){
+			if(destructCount <= 10){
+				Color warning = new Color(255 * destructCount / 10, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
+				destructCount++;
+			}
+			else if(destructCount >10 && destructCount <= 20){
+				Color warning = new Color(255, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
+				destructCount++;
+			}
+			else if(destructCount >20 && destructCount <= 30){
+				Color warning = new Color(255 * (30 - destructCount) / 10, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
+				destructCount++;
+			}
+			else{
+				destructCount = 0;
+			}
+		}
+		
+		
 		
 		//Draw debugging information
 		Vector camCoords = Matrix.multiplyVector(cameraSystem, new Vector(0, 0, 0));
