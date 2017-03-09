@@ -181,9 +181,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			panel.add(label);
 			if (p != null) {
 				JLabel name = new JLabel(p.nickname);
-				if (p.nickname.equals(this.player.nickname)) {
-					name.setFont(GameOptions.REGULAR_TEXT_FONT);
-				}
+				name.setFont(GameOptions.REGULAR_TEXT_FONT);
 
 				name.setForeground(Color.WHITE);
 				panel.add(name);
@@ -292,6 +290,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			this.remove(lpanel);
 			JPanel newpanel = displayplayers();
 			newpanel.setOpaque(false);
+			c.anchor = GridBagConstraints.CENTER;
 			this.add(newpanel, c);
 			this.invalidate();
 			this.validate();
