@@ -33,6 +33,7 @@ public class WeaponView extends JPanel{
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
+        setOpaque(false);
         // this.add(weaponNameLabel);
     }
 
@@ -42,6 +43,7 @@ public class WeaponView extends JPanel{
      * @param showAmmoLevel Whether to create and show the ammo bar or not.
      */
     public WeaponView(String weaponName, boolean showAmmoLevel) {
+        setOpaque(false);
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 0.75;

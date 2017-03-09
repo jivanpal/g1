@@ -49,6 +49,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
     private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;
     private JFrame parentFrame;
+    private GameChat chatWindow;
 
     /**
      * Creates a new EngineerView
@@ -188,6 +189,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         initialiseResources(s);
         initialiseScreen();
         initialiseRadar();
+        initialiseChatWindow(gameClient, playerNickname);
         addAllComponents();
 
         this.revalidate();
@@ -211,6 +213,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
         JPanel weaponPanel = new JPanel();
         weaponPanel.setLayout(new GridBagLayout());
+        weaponPanel.setOpaque(false);
         GridBagConstraints weaponConstraints = new GridBagConstraints();
         weaponConstraints.weightx = 0;
         weaponConstraints.weighty = 0.5;
@@ -236,6 +239,8 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         uiPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
         uiPanelConstraints.insets = new Insets(10, 20, 30, 20);
        // uiPanelConstraints.anchor = GridBagConstraints.WEST;
+
+        resourcesView.setOpaque(false);
         UIPanel.add(resourcesView, uiPanelConstraints);
 
         uiPanelConstraints.gridx = 1;
@@ -244,10 +249,10 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         UIPanel.add(weaponPanel, uiPanelConstraints);
 
         // TODO: Make this work.
-        /*UIPanel.setOpaque(true);
+        UIPanel.setOpaque(true);
         UIPanel.setForeground(ViewConstants.UI_BACKGROUND_COLOR);
         UIPanel.setBackground(ViewConstants.UI_BACKGROUND_COLOR);
-        UIPanel.paintComponents(getGraphics());*/
+        UIPanel.paintComponents(getGraphics());
 
         UIBaseLayer.setLayout(new BorderLayout());
         UIBaseLayer.add(screen, BorderLayout.CENTER);
@@ -262,6 +267,15 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         radarView.setPreferredSize(new Dimension(parentFrame.getHeight() / 4, parentFrame.getHeight() / 4));
 
         UILayeredPane.add(radarView, JLayeredPane.PALETTE_LAYER);
+
+        chatWindow.setBounds(300, 300, 300, 300);
+        chatWindow.setPreferredSize(new Dimension(300, 300));
+        UILayeredPane.add(chatWindow, JLayeredPane.PALETTE_LAYER);
+    }
+
+    private void initialiseChatWindow(GameClient gameClient, String nickname) {
+        this.chatWindow = new GameChat(gameClient, nickname);
+        this.chatWindow.setFocusable(false);
     }
 
     /**
