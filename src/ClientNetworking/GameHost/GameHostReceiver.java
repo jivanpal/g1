@@ -36,7 +36,9 @@ public class GameHostReceiver extends Thread
 				else
 				{
 					ChatMessage m = (ChatMessage) obj;
-					clientTable.queueToAll(m);
+					int teammatePos = position + position%2==0? 1 : -1; 
+					clientTable.getQueue(""+position).offer(m);
+					clientTable.getQueue(""+teammatePos).offer(m);
 				}
 			}
 
