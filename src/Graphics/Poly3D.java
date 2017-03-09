@@ -2,6 +2,7 @@ package Graphics;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import GameLogic.Global;
 import Geometry.Vector;
 
 /**
@@ -50,8 +51,8 @@ public class Poly3D {
 		for(int i = 0; i < x.length; i++){
 			Vector p = new Vector(x[i], y[i], z[i]);
 			calcPos = Calculations.calcPos(Screen.viewFrom, Screen.viewTo, p);
-			newX[i] = calcPos.x + GameEngine.screenSize.getWidth()/2;
-			newY[i] = calcPos.y + GameEngine.screenSize.getHeight()/2;
+			newX[i] = calcPos.x + Global.SCREEN_WIDTH/2;
+			newY[i] = calcPos.y + Global.SCREEN_HEIGHT/2;
 			if(calcPos.z < 0.1 || Calculations.t < 0){
 				draw = false;
 			}
