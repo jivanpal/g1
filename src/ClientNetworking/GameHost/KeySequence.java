@@ -12,13 +12,12 @@ public class KeySequence implements Serializable {
 	private Random r = new Random();
 
 	public KeySequence(int minLength, int maxLength, int blocks) {
-		ArrayList<Integer> a = generateRandomNumber(blocks*(maxLength-minLength));
+		ArrayList<Integer> a = generateRandomNumber(blocks*(maxLength-minLength + 1));
 		for (int j = 0; j < blocks; j++) {
 			for (int i = minLength; i <= maxLength; i++) {
 				keys.add(generate(i, String.valueOf(a.get(0))));
 				a.remove(0);
 			}
-
 		}
 	}
 
@@ -39,6 +38,7 @@ public class KeySequence implements Serializable {
 	}
 	
 	private ArrayList<Integer> generateRandomNumber(int num){
+		System.out.println("number of inst. " + num);
 		ArrayList<Integer> a = new ArrayList<>();
 		for(int i= 0; i< num;i++){
 			a.add(i);

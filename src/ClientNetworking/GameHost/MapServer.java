@@ -17,7 +17,7 @@ public class MapServer extends Thread {
 	private final int PORT = 1273;
 	private final Lobby lobby;
 	private ServerSocket serverSocket = null;
-	private ArrayList<KeySequence> keySequences= new ArrayList<KeySequence>();;
+	private ArrayList<KeySequence> keySequences= new ArrayList<KeySequence>();
 	public MapServer(Lobby l) {
 		lobby = l;
 		
@@ -32,7 +32,7 @@ public class MapServer extends Thread {
 		int sequenceNumber = 10;
 		for(int  i=0;i<4;i++)
 		{
-			keySequences.add(new KeySequence(minLength, maxLength, sequenceNumber ));
+			keySequences.add(new KeySequence(minLength, maxLength, sequenceNumber));
 		}	
 	}
 

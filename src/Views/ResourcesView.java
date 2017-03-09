@@ -33,13 +33,13 @@ public class ResourcesView extends JPanel {
      * Instantiates a new ResourceView which shows details about the amount of shields, hull health and engine fuel
      * to the user
      */
-    public ResourcesView(EngineerView parent) {
+    public ResourcesView(EngineerView parent, String shieldReplenishNumber, String fuelReplenishNumber) {
         super();
 
         this.parent = parent;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        makeUI();
+        makeUI(shieldReplenishNumber, fuelReplenishNumber);
     }
 
     /**
@@ -83,18 +83,18 @@ public class ResourcesView extends JPanel {
      * Instantiates all of the components of the UI and adds them to the JPanel.
      * Must be called before displaying, otherwise nothing will showup!
      */
-    private void makeUI() {
-        shieldsComponent = new ResourceComponent("Shields");
+    private void makeUI(String shieldReplenishNumber, String fuelReplenishNumber) {
+        shieldsComponent = new ResourceComponent("Shields", shieldReplenishNumber);
         shieldsComponent.setResourceBarColor(SHIELD_COLOR);
         shieldsComponent.setReplenishAction(ShipState.SHIELD_REPLENISH);
         add(shieldsComponent);
 
-        engineComponent = new ResourceComponent("Engines");
+        engineComponent = new ResourceComponent("Engines", fuelReplenishNumber);
         engineComponent.setResourceBarColor(ENGINE_COLOR);
         engineComponent.setReplenishAction(ShipState.FUEL_REPLENISH);
         add(engineComponent);
 
-        hullComponent = new ResourceComponent("Hull");
+        hullComponent = new ResourceComponent("Hull", "N/A");
         hullComponent.setResourceBarColor(HULL_COLOR);
         add(hullComponent);
     }
@@ -111,7 +111,7 @@ public class ResourcesView extends JPanel {
          * Creates a ResourceComponent which displays info about a particular resource to the player.
          * @param name The name of the resource.
          */
-        ResourceComponent(String name) {
+        ResourceComponent(String name, String replenishNumber) {
             super();
 
             this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -124,7 +124,7 @@ public class ResourcesView extends JPanel {
             resourceProgressBar.setMaximum(10);
             resourceProgressBar.setFont(GameOptions.REGULAR_TEXT_FONT);
 
-            this.replenishButton = new JButton("Replenish");
+            this.replenishButton = new JButton("Replenish: " + replenishNumber);
             replenishButton.setFont(GameOptions.REGULAR_TEXT_FONT);
             replenishButton.setEnabled(false);
             replenishButton.setFocusable(false);
@@ -152,6 +152,10 @@ public class ResourcesView extends JPanel {
         void setReplenishAction(ShipState state) {
             replenishButton.addActionListener(actionEvent -> parent.setState(state));
             replenishButton.setEnabled(true);
+        }
+
+        void setReplenishNumber(String number) {
+            replenishButton.setText("Replenish: " + number);
         }
     }
 }
