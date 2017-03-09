@@ -91,9 +91,9 @@ public class Screen extends JPanel{
 										{0,        0,        0,        1}};
 										
 		CM = Matrix.getCM(viewFrom, V, U, N, 2);
-		Matrix.printMatrix(CM);
+//		Matrix.printMatrix(CM);
 						
-		Matrix.printMatrix(cameraSystem);
+//		Matrix.printMatrix(cameraSystem);
 	}
 	
 	/* (non-Javadoc)
@@ -101,8 +101,8 @@ public class Screen extends JPanel{
 	 */
 	public void paintComponent(Graphics g){
 		Dimension size = getPreferredSize();
-		Global.SCREEN_WIDTH = (int) size.getWidth();
-		Global.SCREEN_HEIGHT = (int) size.getHeight();
+//		Global.SCREEN_WIDTH = (int) size.getWidth();
+//		Global.SCREEN_HEIGHT = (int) size.getHeight();
 		long startTime = System.currentTimeMillis();
 		//Draw the background
 		g.setColor(Color.BLACK);
@@ -145,16 +145,17 @@ public class Screen extends JPanel{
 		//Draw debugging information
 		Vector camCoords = Matrix.multiplyVector(cameraSystem, new Vector(0, 0, 0));
 		g.setColor(Color.WHITE);
-		g.drawString("x: " + viewFrom.getX() + ", y: " + viewFrom.getY() + ", z: " + viewFrom.getZ() + " x: " + camCoords.getX() + ", y: " + camCoords.getY() + ", z: " + camCoords.getZ(), 40, 40);
-		g.drawString("x: " + viewTo.getX() + ", y: " + viewTo.getY() + ", z: " + viewTo.getZ(), 40, 60);
-		g.drawString("r: " + r + " vert: " + verticalLook, 40, 80);
+		
 		g.drawLine((int)getWidth()/2 - 5, (int)getHeight()/2, (int)getWidth()/2 + 5, (int)getHeight()/2);
-		g.drawLine((int)getWidth()/2, (int)getHeight()/2 - 5, (int)getWidth()/2, (int)getHeight()/2 + 5);
-		g.drawString("V: " + V.getX() + ", " + V.getY() + ", " + V.getZ(), 40, 100);
-		g.drawString("U: " + U.getX() + ", " + U.getY() + ", " + U.getZ(), 40, 120);
-		g.drawString("N: " + N.getX() + ", " + N.getY() + ", " + N.getZ(), 40, 140);
-	
-	
+        g.drawLine((int)getWidth()/2, (int)getHeight()/2 - 5, (int)getWidth()/2, (int)getHeight()/2 + 5);
+        
+        g.drawString("viewFrom: "+viewFrom, 40, 40);
+        g.drawString("camera: "+camCoords,  40, 60);
+        g.drawString("viewTo: "+viewTo,     40, 80);
+        g.drawString("V: "+V,               40, 100);
+        g.drawString("U: "+U,               40, 120);
+        g.drawString("N: "+N,               40, 140);
+        
 		//Taken this out for now because people kept ripping in to the stuff I'd spent ages on
 		
 		/*g.setColor(Color.RED);
