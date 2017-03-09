@@ -45,6 +45,8 @@ public class ManualInstructionsView extends JPanel {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setRowHeight(height / INSTRUCTIONS_PER_PAGE);
 		table.setModel(new MyJTableModel(getDataForPage(pageNumber), columnNames));
+		table.setFocusable(false);
+		table.setRowSelectionAllowed(false);
 	}
 
 	private void update() {
