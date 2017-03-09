@@ -23,6 +23,10 @@ public class ManualInstructionsView extends JPanel {
 	private JTable rightPage;
 
 	public ManualInstructionsView(ArrayList<String> data, int size, int height) {
+		for(String inst : data){
+			System.out.println(inst);
+		}
+		
 		pageNumber = 1;
 		this.data = new Object[size][columnNames.length];
 		setData(data);
@@ -86,7 +90,7 @@ public class ManualInstructionsView extends JPanel {
 
 	private void addToData(int realPos, String keySeq) {
 		String[] split = keySeq.split(":");
-		int pos = Integer.valueOf(split[0]);
+		int pos = Integer.valueOf(split[0]) - 1;
 		data[pos][0] = pos + 1;
 		data[pos][1] = getInstructionStringByPos(realPos);
 		data[pos][2] = split[1];

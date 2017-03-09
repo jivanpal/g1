@@ -40,7 +40,7 @@ public class KeySequence implements Serializable {
 	private ArrayList<Integer> generateRandomNumber(int num){
 		System.out.println("number of inst. " + num);
 		ArrayList<Integer> a = new ArrayList<>();
-		for(int i= 0; i< num;i++){
+		for(int i= 1; i<= num;i++){
 			a.add(i);
 		}
 		Collections.shuffle(a);
