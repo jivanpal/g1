@@ -69,12 +69,7 @@ public class JoinPanel extends JPanel {
 		} else {
 			repaintlobbies();
 		}
-		
-		//System.out.println("lobby 1 host" + lobbies[0].host);
-		//System.out.println(Server.lobbies);
 		System.out.println("Finished updating");
-		//System.out.println(Server.lobbies);
-		//ArrayList<Lobby> lobbies2 = Server.lobbies;
 		table = new JTable(model);
 		JScrollPane pane = new JScrollPane(table);
 		add(pane, BorderLayout.CENTER);
@@ -84,6 +79,9 @@ public class JoinPanel extends JPanel {
 		setBackground(Color.black);
 	}
 	
+	/**
+	 * Waits for updates to the list until there's a lobby or 3 seconds have passed
+	 */
 	public void keepupdating() {
 		long starttime = System.currentTimeMillis();
 		while(client.getLobbyList().getLobbies().length == 0 && (System.currentTimeMillis()-starttime)<3000){
@@ -91,6 +89,9 @@ public class JoinPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Waits for updates to the list until 3 seconds have passed
+	 */
 	public void keepupdatingtime() {
 		long starttime = System.currentTimeMillis();
 		while(false || (System.currentTimeMillis()-starttime)<3000){
@@ -98,6 +99,9 @@ public class JoinPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Repaints the scrollpane with the updated lobby list
+	 */
 	public void repaintlobbies() {
 		lobbies = client.getLobbyList().getLobbies();
 		for (int i = model.getRowCount()-1; i > -1; i--) {
@@ -143,7 +147,6 @@ public class JoinPanel extends JPanel {
 			{
 				Player player = new Player(client.name, InetAddress.getLocalHost(), false);
 				client.send(new Action(lInfo.lobbyID,player,9));
-				//ClientLobbyPanel clpanel = new ClientLobbyPanel(menu, client, lInfo.lobbyID, player);
 				LobbyPanel hlpanel = new LobbyPanel(menu, client, lInfo.lobbyID, player, false);
 				menu.changeFrame(hlpanel);
 			}

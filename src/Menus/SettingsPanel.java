@@ -36,8 +36,12 @@ public class SettingsPanel extends JPanel {
 		c.weighty = 0.5;
 		c.gridx = 0;
 		c.gridy = 0;
-		JButton backtomenu = new JButton("Back");
-		backtomenu = createButton(backtomenu, "Back");
+		MyButton backtomenu = new MyButton("Back");
+		backtomenu.addActionListener(e -> {
+			ButtonPanel bpanel = new ButtonPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			menu.changeFrame(bpanel);
+		});
 		add(backtomenu, c);
 		JPanel bpanel = createButtons();
 		c.anchor = GridBagConstraints.CENTER;
@@ -62,57 +66,21 @@ public class SettingsPanel extends JPanel {
 	 */
 	public JPanel createButtons() {
 		JPanel panel = new JPanel();
-		JButton gotosound = new JButton("Sound");
-		gotosound = createButton(gotosound, "Sound");
-		JButton gotocontrols = new JButton("Controls");
-		gotocontrols = createButton(gotocontrols, "Controls");
+		MyButton gotosound = new MyButton("Sound");
+		gotosound.addActionListener(e -> {
+			SoundPanel spanel = new SoundPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			menu.changeFrame(spanel);
+		});
+		MyButton gotocontrols = new MyButton("Controls");
+		gotocontrols.addActionListener(e -> {
+			ControlsPanel cpanel = new ControlsPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			menu.changeFrame(cpanel);
+		});
 		panel.setLayout(new BorderLayout());
 		panel.add(gotosound, BorderLayout.NORTH);
 		panel.add(gotocontrols, BorderLayout.CENTER);
 		return panel;
-	}
-
-	public JButton createButton(JButton button, String action) {
-		button.setForeground(Color.WHITE);
-		button.setFont(GameOptions.BUTTON_FONT);
-		button.setBorderPainted(false);
-		button.setContentAreaFilled(false);
-		button.setOpaque(false);
-		button.setFocusable(false);
-		if (!action.equals("Back")) {
-			button.setPreferredSize(new Dimension(300, 50));
-		}
-		button.addActionListener(e -> {
-			switch (action) {
-			case "Sound":
-				SoundPanel spanel = new SoundPanel(menu, client);
-				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				menu.changeFrame(spanel);
-				break;
-			case "Controls":
-				ControlsPanel cpanel = new ControlsPanel(menu, client);
-				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				menu.changeFrame(cpanel);
-				break;
-			case "Back":
-				ButtonPanel bpanel = new ButtonPanel(menu, client);
-				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				menu.changeFrame(bpanel);
-				break;
-			}
-		});
-		button.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				button.setForeground(Color.GREEN);
-			}
-
-			@Override
-			public void mouseExited(java.awt.event.MouseEvent evt) {
-				button.setForeground(UIManager.getColor("control"));
-			}
-		});
-
-		return button;
 	}
 }

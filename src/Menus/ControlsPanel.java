@@ -45,8 +45,12 @@ public class ControlsPanel extends JPanel {
 		c.weighty = 0.5;
 		c.gridx = 0;
 		c.gridy = 0;
-		JButton backtomenu = new JButton("Back");
-		backtomenu = createButton(backtomenu, "Back", null);
+		MyButton backtomenu = new MyButton("Back");
+		backtomenu.addActionListener(e -> {
+			SettingsPanel spanel = new SettingsPanel(menu, client);
+			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			menu.changeFrame(spanel);
+		});
 		add(backtomenu, c);
 
 		JPanel bpanel = createButtons();
@@ -54,12 +58,26 @@ public class ControlsPanel extends JPanel {
 		bpanel.setOpaque(false);
 		add(bpanel, c);
 		c.anchor = GridBagConstraints.SOUTH;
-		JButton apply = new JButton("Apply");
-		
-		apply = createButton(apply, "Apply", bpanel);
+		MyButton apply = new MyButton("Apply");
+		apply.addActionListener(e -> {
+			changebuttons(bpanel, false);
+			changebuttons(bpanel, true);
+			GameOptions.saveKeyBindingsInFile();
+			JOptionPane.showMessageDialog(this, "Changes have been applied!", "Changes Applied",
+					JOptionPane.INFORMATION_MESSAGE);
+		});
 		add(apply, c);
-		JButton resettodefault = new JButton("Reset");
-		resettodefault = createButton(resettodefault, "Reset", bpanel);
+		MyButton resettodefault = new MyButton("Reset");
+		resettodefault.addActionListener(e -> {
+			int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to reset key bindings?",
+					"Reset Key Bindings", JOptionPane.YES_NO_OPTION);
+			if (confirm == JOptionPane.YES_OPTION) {
+				GameOptions.resetKeysToDefaults();
+				GameOptions.saveKeyBindingsInFile();
+				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+				changebuttons(bpanel, true);
+			}
+		});
 
 		c.anchor = GridBagConstraints.NORTHEAST;
 		add(resettodefault, c);
@@ -72,57 +90,6 @@ public class ControlsPanel extends JPanel {
 		
 		setBackground(Color.BLACK);
 
-	}
-
-	public JButton createButton(JButton button, String action, JPanel bpanel) {
-		button.setForeground(Color.WHITE);
-		button.setFont(GameOptions.BUTTON_FONT);
-		button.setBorderPainted(false);
-		button.setContentAreaFilled(false);
-		button.setOpaque(false);
-		button.setFocusable(false);
-		if (action.equals("Back") || action.equals("Reset")) {
-			
-		} else {
-			button.setPreferredSize(new Dimension(300, 50));
-		}
-		button.addActionListener(e -> {
-			switch (action) {
-			case "Back":
-				SettingsPanel spanel = new SettingsPanel(menu, client);
-				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				menu.changeFrame(spanel);
-				break;
-			case "Reset":
-				int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to reset key bindings?",
-						"Reset Key Bindings", JOptionPane.YES_NO_OPTION);
-				if (confirm == JOptionPane.YES_OPTION) {
-					GameOptions.resetKeysToDefaults();
-					GameOptions.saveKeyBindingsInFile();
-					AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-					changebuttons(bpanel, true);
-				}
-				break;
-			case "Apply":
-				changebuttons(bpanel, false);
-				changebuttons(bpanel, true);
-				GameOptions.saveKeyBindingsInFile();
-				JOptionPane.showMessageDialog(this, "Changes have been applied!", "Changes Applied",
-						JOptionPane.INFORMATION_MESSAGE);
-				break;
-			}
-		});
-		button.addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseEntered(java.awt.event.MouseEvent evt) {
-		        button.setForeground(Color.GREEN);
-		    }
-			@Override
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		        button.setForeground(UIManager.getColor("control"));
-		    }
-		});
-		return button;
 	}
 	
 	/**
