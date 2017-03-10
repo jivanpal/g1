@@ -84,6 +84,8 @@ public class ResourcesView extends JPanel {
      */
 
     private void makeUI(String shieldReplenishNumber, String fuelReplenishNumber) {
+        this.setOpaque(false);
+
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
@@ -130,6 +132,8 @@ public class ResourcesView extends JPanel {
          */
         ResourceComponent(String name, String replenishNumber) {
             super();
+
+            this.setOpaque(false);
 
             this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 

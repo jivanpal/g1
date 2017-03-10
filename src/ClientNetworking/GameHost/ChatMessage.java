@@ -1,6 +1,8 @@
 package ClientNetworking.GameHost;
 
-public class ChatMessage {
+import java.io.Serializable;
+
+public class ChatMessage implements Serializable{
 
 	public String nickname,message;
 

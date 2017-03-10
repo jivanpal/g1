@@ -33,6 +33,7 @@ public class WeaponView extends JPanel{
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
+        setOpaque(false);
         // this.add(weaponNameLabel);
     }
 
@@ -42,12 +43,16 @@ public class WeaponView extends JPanel{
      * @param showAmmoLevel Whether to create and show the ammo bar or not.
      */
     public WeaponView(String weaponName, boolean showAmmoLevel) {
+        setOpaque(false);
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.weightx = 0.75;
+        c.weightx = 0.5;
         c.weighty = 0.5;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor = GridBagConstraints.WEST;
+        c.gridx = 0;
+        c.gridwidth = 1;
+        c.gridheight = 0;
+        c.gridy = 0;
 
         // weaponNameLabel = new JLabel(weaponName);
 
@@ -62,6 +67,7 @@ public class WeaponView extends JPanel{
             weaponAmmoLevel.setUI(new BasicProgressBarUI());
             weaponAmmoLevel.setIndeterminate(false);
             weaponAmmoLevel.setMaximum(10);
+            weaponAmmoLevel.setMinimum(0);
             weaponAmmoLevel.setFont(GameOptions.REGULAR_TEXT_FONT);
             weaponAmmoLevel.setForeground(PROGRESS_BAR_COLOR);
             this.add(weaponAmmoLevel, c);
@@ -72,8 +78,8 @@ public class WeaponView extends JPanel{
             replenishAmmo.setEnabled(false);
             replenishAmmo.setFocusable(false);
 
-            c.anchor = GridBagConstraints.EAST;
-            c.weightx = 0.25;
+            c.gridx = 1;
+            // c.anchor = GridBagConstraints.EAST;
             this.add(replenishAmmo, c);
         }
     }

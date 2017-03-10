@@ -42,9 +42,9 @@ public class MapServer extends Thread {
 			ClientTable clientTable = new ClientTable();
 			MapContainer gameMap = new MapContainer();
 			Player[] p = lobby.getPlayers();
+			//add the ship if the team is not there anyway to avoid errors
 			for(int i=0;i<lobby.getPlayers().length;i+=2)
-				if(p[i]!=null || p[i+1]!=null)
-					gameMap.addShip(i/2, p[i]==null? "":p[i].nickname, p[i+1] == null? "" : p[i+1].nickname);
+				gameMap.addShip(i/2, p[i]==null? "":p[i].nickname, p[i+1] == null? "" : p[i+1].nickname);
 			gameMap.generateTerrain();
 			System.out.println("I HAVE STARTED THE SERVER");
 			while (true) {

@@ -23,6 +23,7 @@ public class MapContainer {
 			ship.setPosition(new Vector(position % 4 == 0 ? 0 : gameMap.getDimensions().getX() / 2,
 					position < 4 ? 0 : gameMap.getDimensions().getY() / 2, 0));
 			gameMap.add(ship);
+			System.out.println("added ship"+position/2);
 		}
 		return gameMap.size()-1;
 	}

@@ -23,7 +23,7 @@ import Physics.Body;
  * Created by James on 01/02/17.
  * This View contains the entire UI for the Engineer once they are in game.
  */
-public class EngineerView extends JPanel implements KeyListener, KeySequenceResponder, Observer {
+public class EngineerView extends JPanel implements KeySequenceResponder, Observer {
     private boolean UIinitialised = false;
 
     private ShipState state = ShipState.NONE;
@@ -48,7 +48,8 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
     private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;
-    private JFrame parentFrame;
+    public JFrame parentFrame;
+    private GameChat chatWindow;
 
     /**
      * Creates a new EngineerView
@@ -67,7 +68,6 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
         keyManager = new KeySequenceManager(this);
 
-        addKeyListener(this);
         setFocusable(true);
 
         this.parentFrame = parent;
@@ -108,6 +108,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
+                System.out.println("Key pressed");
                 if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     // User wishes to escape out of this sequence.
                     System.out.println("Stopping this sequence");
@@ -157,6 +158,52 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
             }
         });
 
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse clicked outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse clicked inside chat");
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse pressed outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse pressed inside chat");
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse released outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse released inside chat");
+                }
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+
+            }
+        });
+
         initialiseUI();
 
         // starting the in-game sounds
@@ -188,8 +235,8 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         initialiseResources(s);
         initialiseScreen();
         initialiseRadar();
+        initialiseChatWindow(gameClient, playerNickname);
         addAllComponents();
-
 
         this.revalidate();
         this.repaint();
@@ -198,10 +245,19 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         UILayeredPane.revalidate();
         UILayeredPane.repaint();
 
-        this.addKeyListener(this);
-
         this.UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Engineer");
+
+        parentFrame.requestFocusInWindow();
+        parentFrame.setFocusable(true);
+        // parentFrame.setUndecorated(true);
+        // parentFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        update(null, null);
+        screen.setMap(gameClient.getMap());
+        screen.revalidate();
+        screen.repaint();
+
     }
 
     /**
@@ -212,6 +268,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
 
         JPanel weaponPanel = new JPanel();
         weaponPanel.setLayout(new GridBagLayout());
+        weaponPanel.setOpaque(false);
         GridBagConstraints weaponConstraints = new GridBagConstraints();
         weaponConstraints.weightx = 0;
         weaponConstraints.weighty = 0.5;
@@ -237,6 +294,8 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         uiPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
         uiPanelConstraints.insets = new Insets(10, 20, 30, 20);
        // uiPanelConstraints.anchor = GridBagConstraints.WEST;
+
+        resourcesView.setOpaque(false);
         UIPanel.add(resourcesView, uiPanelConstraints);
 
         uiPanelConstraints.gridx = 1;
@@ -245,10 +304,10 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         UIPanel.add(weaponPanel, uiPanelConstraints);
 
         // TODO: Make this work.
-        /*UIPanel.setOpaque(true);
+        UIPanel.setOpaque(true);
         UIPanel.setForeground(ViewConstants.UI_BACKGROUND_COLOR);
         UIPanel.setBackground(ViewConstants.UI_BACKGROUND_COLOR);
-        UIPanel.paintComponents(getGraphics());*/
+        UIPanel.paintComponents(getGraphics());
 
         UIBaseLayer.setLayout(new BorderLayout());
         UIBaseLayer.add(screen, BorderLayout.CENTER);
@@ -263,6 +322,18 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         radarView.setPreferredSize(new Dimension(parentFrame.getHeight() / 4, parentFrame.getHeight() / 4));
 
         UILayeredPane.add(radarView, JLayeredPane.PALETTE_LAYER);
+
+        chatWindow.setBounds(0,
+                parentFrame.getHeight() - ((int) UIPanel.getPreferredSize().getHeight() + (parentFrame.getHeight() / 6)),
+                parentFrame.getWidth() / 6,
+                parentFrame.getHeight() / 6);
+        chatWindow.setPreferredSize(new Dimension(parentFrame.getWidth() / 6, parentFrame.getHeight() / 6));
+        UILayeredPane.add(chatWindow, JLayeredPane.PALETTE_LAYER);
+    }
+
+    private void initialiseChatWindow(GameClient gameClient, String nickname) {
+        this.chatWindow = new GameChat(this, gameClient, nickname);
+        this.chatWindow.setFocusable(false);
     }
 
     /**
@@ -391,7 +462,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
             screen.setMap(m);
             radarView.updateMap(m);
 
-            for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
+            for (int i = 0; i < m.size(); i++) {
                 if (m.get(i) instanceof Ship) {
                     Ship s = (Ship) m.get(i);
 
@@ -399,6 +470,7 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
                         laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
                         plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
                         torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
+
                         resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
                         resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
                         resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
@@ -408,43 +480,32 @@ public class EngineerView extends JPanel implements KeyListener, KeySequenceResp
         }
     }
 
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-
-    }
-
     /**
      * Called by the KeyManager when a key sequence has been completed in it's entirety. Depending on the current state
      * of the ship, we tell the server what the user has done.
      */
     public void keySequencePassed() {
-        System.out.println("Passed a sequence");
         switch (state) {
             case NONE:
                 break;
             case SHIELD_REPLENISH:
+                System.out.println("Sending shieldReplenish");
                 gameClient.send("shieldReplenish");
                 break;
             case FUEL_REPLENISH:
+                System.out.println("Sending fuelReplenish");
                 gameClient.send("fuelReplenish");
                 break;
             case LASER_REPLENISH:
+                System.out.println("Sending laserReplenish");
                 gameClient.send("laserReplenish");
                 break;
             case TORPEDO_REPLENISH:
+                System.out.println("Sending torpedoReplenish");
                 gameClient.send("torpedoReplenish");
                 break;
             case PLASMA_REPLENISH:
+                System.out.println("Sending plasmaReplenish");
                 gameClient.send("plasmaReplenish");
                 break;
         }
