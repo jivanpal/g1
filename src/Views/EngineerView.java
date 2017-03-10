@@ -440,7 +440,8 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     private Ship findPlayerShip() {
         Map m = gameClient.getMap();
 
-        for (Body b : m) {
+        for (Map.Entry<Integer, Body> e : m.entrySet()) {
+        	Body b = e.getValue();
             if (b instanceof Ship) {
                 Ship s = (Ship) b;
 
