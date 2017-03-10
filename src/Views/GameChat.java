@@ -14,6 +14,7 @@ import javax.swing.event.DocumentListener;
 
 import ClientNetworking.GameClient.GameClient;
 import ClientNetworking.GameHost.ChatMessage;
+import javafx.scene.layout.Border;
 
 /**
  * 
@@ -30,6 +31,7 @@ public class GameChat extends JPanel implements Observer{
 	private String nickname;
 	private String text;
 	private GameClient client;
+	private JScrollPane scroller;
 
 
 	public GameChat(JPanel parent, GameClient client,String nickname) {
@@ -47,6 +49,7 @@ public class GameChat extends JPanel implements Observer{
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (actionEvent.getActionCommand().equals("enter")) {
+
 					ChatMessage message = new ChatMessage(nickname, input.getText());
 					input.setText("");
 					client.send(message);
@@ -57,12 +60,16 @@ public class GameChat extends JPanel implements Observer{
 		});
 
 
-		JScrollPane scroller = new JScrollPane(chat, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroller = new JScrollPane(chat, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroller.setOpaque(false);
 		scroller.getViewport().setOpaque(false);
+		scroller.setBorder(BorderFactory.createEmptyBorder());
+		scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 
 		input.setEditable(true);
 		input.setEnabled(true);
+
+		this.setOpaque(false);
 
 		setLayout(new BorderLayout());
 		this.add(scroller, BorderLayout.CENTER);
@@ -93,10 +100,12 @@ public class GameChat extends JPanel implements Observer{
 				System.err.print("Oh no message is null");
 			} else {
 				// TODO: Replace once transparency works.
-				// messages += "<br><font color=\"rgb(255,255,255)\">" + client.getMessage()+"</font>";
+				messages += "<br><font color=\"rgb(255,255,255)\">" + client.getMessage()+"</font>";
 
-				messages += "<br>" + client.getMessage();
+				// messages += "<br>" + client.getMessage();
 				chat.setText("<html>" + messages + "</html>");
+				scroller.getVerticalScrollBar().setValue(scroller.getVerticalScrollBar().getMaximum());
+
 				this.revalidate();
 				this.repaint();
 			}
