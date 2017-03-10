@@ -6,7 +6,7 @@ import javax.sound.sampled.*;
 import GameLogic.GameOptions;
 
 /**
- * Class which play the audio in the game at the moment only .wav files are
+ * Class which play the audio in the game.Only .wav files are
  * supported!
  * 
  * @author Ivan Panchev
