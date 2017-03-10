@@ -293,13 +293,13 @@ public class Screen extends JPanel{
 		
 		if(shipIndex != null){
 			Ship ship = (Ship) map.get(shipIndex);
-			U = ship.getUpVector();
+			U = ship.getDownVector();
 			V = ship.getRightVector();
 			if(pilot){
-				N = ship.getForwardVector();
+				N = ship.getFrontVector();
 			}
 			else{
-				N = ship.getBackwardVector();
+				N = ship.getRearVector();
 			}
 			viewFrom = ship.getPosition();
 			viewTo = viewFrom.plus(N);
