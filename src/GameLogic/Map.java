@@ -3,7 +3,6 @@ package GameLogic;
 import java.util.*;
 import java.util.concurrent.ConcurrentSkipListMap;
 import Geometry.Vector; // Leave this line here to distinguish with java.util.Vector
-import Geometry.*;
 import Physics.*;
 
 /**
@@ -51,10 +50,6 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
         return containsKey(new Integer(bodyID));
     }
     
-    public boolean contains(Body body) {
-        return contains(body.getID());
-    }
-    
     /**
      * Add a new body to the map.
      * @param newBody the body to add to the map. If a body with the same ID already exists
@@ -62,10 +57,11 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
      * @return `true` if the body was added, else `false`.
      */
     public boolean add(Body newBody) {
-        if (contains(newBody)) {
+        if (contains(newBody.getID())) {
             return false;
         } else {
             put(newBody.getID(), newBody);
+            return true;
         }
     }
     
@@ -82,6 +78,15 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
         return botIDs;
     }
     
+    /**
+     * Get the body on this map that has the given ID.
+     * @param bodyID the ID o the body to get.
+     * @return the body with that ID.
+     */
+    public Body get(int bodyID) {
+        return this.get(new Integer(bodyID));
+    }
+    
 // Other methods
     
     /**
@@ -96,7 +101,7 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
      * @param   position    The position vector to be normalised.
      * @return  the normalised position vector; the position vector put within the bounds of the map.
      */
-    public Vector normalise(Vector position) {
+    public Vector normalisePosition(Vector position) {
         return position.modulo(dimensions);
     }
     
@@ -110,8 +115,8 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
      *      shortestPath(<i>a</i>, <i>b</i>) = -shortestPath(<i>b</i>, <i>a</i>).
      */
     public Vector shortestPath(Body a, Body b) {
-        if (this.contains(a)) {
-            if (this.contains(b)) {
+        if (this.contains(a.getID())) {
+            if (this.contains(b.getID())) {
                 Vector lineWithinBounds = b.getPosition().minus(a.getPosition());
                 return new Vector(
                     lineWithinBounds.getX() > dimensions.getX() ?
@@ -201,29 +206,31 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
      */
     public void update() {
         // Get rid of destroyed bodies.
-        for(Map.Entry<Integer,Body> : this.entrySet()) {
-            Body b = 
-            if( get(i).isDestroyed() ) {
-                remove(i);
+        for(Map.Entry<Integer,Body> e : this.entrySet()) {
+            if( e.getValue().isDestroyed() ) {
+                remove(e.getKey());
             }
         }
         
         // Normalise each body's position vector and update its state.
-        for (Body b : this) {
-            b.setPosition(this.normalise(b.getPosition()));
+        for (Map.Entry<Integer,Body> e : this.entrySet()) {
+            Body b = e.getValue();
+            b.setPosition(this.normalisePosition(b.getPosition()));
             b.update();
         }
         
         // Make bots do their thing.
-        for (Bot b : bots) {
-            b.update();
+        for (Integer botID : botIDs) {
+            this.get(botID).update();
         }
         
         // Make touching bodies rebound.
-        for (Body a : this) {
-            for (Body b : this) {
-                if (a.isTouching(b)) {
-                    a.rebound(b);
+        for (Map.Entry<Integer,Body> a: this.entrySet()) {
+            for (Map.Entry<Integer,Body> b : this.entrySet()) {
+                Body bodyA = a.getValue();
+                Body bodyB = b.getValue();
+                if (bodyA.isTouching(bodyB)) {
+                    bodyA.rebound(bodyB);
                 }
             }
         }
