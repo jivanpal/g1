@@ -28,7 +28,7 @@ public class ShipPresenter implements Interfaces.ShipPresenter {
 
     @Override
     public int getHealth() {
-        return mModel.getShipHealth();
+        return mModel.getHealth();
     }
 
     @Override

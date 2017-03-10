@@ -9,6 +9,11 @@ import Physics.*;
  * @author jivan
  */
 public class Ship extends Body{
+    // Constants to denote weapon types
+    public static final byte LASER_BLASTER_INDEX    = 0;
+    public static final byte PLASMA_BLASTER_INDEX = 1;
+    public static final byte TORPEDO_WEAPON_INDEX = 2;
+    
     // Maximum values for pitch velocity, roll velocity, and forward velocity.
     // The ship is designed under the assumption that it cannot reverse,
     //      therefore the reverse-velocity maximum is assumed to be zero.
@@ -22,139 +27,138 @@ public class Ship extends Body{
     private static final int    ROLL_SMOOTHNESS     = 10;
     private static final int    THRUST_SMOOTHNESS   = 4;
     
-    public static final byte LASER_BLASTER_INDEX = 0;
-    public static final byte PLASMA_BLASTER_INDEX = 1;
-    public static final byte TORPEDO_WEAPON_INDEX = 2;
-    
     private String engineerName;
     private String pilotName;
-    private Weapon torpedoWeapon;
-    private Weapon laserBlaster;
-    private Weapon plasmaBlaster;
+    private Weapon torpedo;
+    private Weapon laser;
+    private Weapon plasma;
     private Engines engines;
     private Shields shields;
-    private ShipHealth shipHealth;
+    private Health health;
     
     /**
-     * Creates a new ship with a specific pilotName
-     * @param pilotName The pilot name of the specific ship
+     * Create a ship belonging to a specified pilot and engineer. 
+     * @param pilotName the nickname of this instance's pilot.
+     * @param engineerName the nickname of this instance's engineer.
      */
     public Ship(String pilotName, String engineerName){
         // Set mass and radius
         super(100, 2);
         
-        //Initialising weapons
-        torpedoWeapon = new TorpedoWeapon();
-        laserBlaster = new LaserBlaster();
-        plasmaBlaster = new PlasmaBlaster();
+        // Initialising ship weapons
+        torpedo = new TorpedoWeapon();
+        laser   = new LaserBlaster();
+        plasma  = new PlasmaBlaster();
         
-        //Initialising other parts
+        // Initialise ship resources
         engines = new Engines();
         shields = new Shields();
-        shipHealth = new ShipHealth();
+        health  = new Health();
         
-        //assigning the pilot name to the ship as a way of identifying the ship 
+        // Record the names of the pilot and engineer 
         this.pilotName = pilotName;
         this.engineerName = engineerName;
-	}	
-	
-	public void updateWeaponsCooldown(){
-		this.laserBlaster.update();
-		this.torpedoWeapon.update();
-		this.plasmaBlaster.update();
-	}
-	
-	public String getPilotName(){
-		return this.pilotName;
-	}
-
-	public String getEngineerName() {
-		return engineerName;
-	}
-	
-	//getters and setters
-	public int getShipHealth(){
-		return this.shipHealth.getHealth();
-	}
-	
-	public int getShieldLevels(){
-		return this.shields.getShieldsLevel();
-	}
-	
-	public int getFuelLevel(){
-		return this.engines.getFuel();
-	}
-	
-	public int getPlasmaBlasterAmmo(){
-		return this.plasmaBlaster.getAmmoLevel();
-	}
-	
-	public int getTorpedoWeaponAmmo(){
-		return this.torpedoWeapon.getAmmoLevel();
-	}
-	
-	public int getLaserBlasterAmmo(){
-		return this.laserBlaster.getAmmoLevel();
-	}
-	
-	public void increaseFuel(){
-		this.engines.increaseFuel();
-	}
-	
-	public void decreaseFuel(){
-		this.engines.decreaseFuel();
-	}
-	
-	public void customChangeFuel(int change){
-		this.engines.customChangeFuel(change);
-	}
-	
-	public void increseShieldsLevel(){
-		this.shields.increaseShieldsLevel();
-	}
-	
-	public void decreaseShieldsLevel(){
-		this.shields.decreaseShieldsLevel();
-	}
-	
-	public void customChangeShieldsLevel(int change){
-		this.shields.cusomChangeShieldsLevel(change);
-	}
-	
-	public Bullet fire(int weaponIndex) throws Exception {
-		switch(weaponIndex){
-		case LASER_BLASTER_INDEX:
-			return laserBlaster.fire(this);
-		case PLASMA_BLASTER_INDEX:
-			return plasmaBlaster.fire(this);
-		case TORPEDO_WEAPON_INDEX:
-			return torpedoWeapon.fire(this);
-		default:
-		    throw new IllegalArgumentException("You didn't specify a weapon index!");
-		}
-	}
-	
-	public void increaseWeaponAmmoByIndex(int index){
-		if(index == LASER_BLASTER_INDEX){
-			laserBlaster.increaseAmmo();
-		} else if(index == TORPEDO_WEAPON_INDEX){
-			torpedoWeapon.increaseAmmo();
-		} else if(index == PLASMA_BLASTER_INDEX){
-			plasmaBlaster.increaseAmmo();
-		}
-	}
-	
-	public int getWeaponMaxAmmoByIndex(int index){
-		if(index == LASER_BLASTER_INDEX){
-			return laserBlaster.getMaxAmmo();
-		} else if(index == TORPEDO_WEAPON_INDEX){
-			return torpedoWeapon.getMaxAmmo();
-		} else if(index == PLASMA_BLASTER_INDEX){
-			return plasmaBlaster.getMaxAmmo();
-		}
-        
-        // Should never reach this
-        return -1;
+    }	
+    
+    public String getPilotName(){
+        return pilotName;
+    }
+    
+    public String getEngineerName() {
+        return engineerName;
+    }
+    
+    // Getters
+    
+    public int getHealth(){
+        return health.getHealth();
+    }
+    
+    public int getShieldLevels(){
+        return shields.getShieldsLevel();
+    }
+    
+    public int getFuelLevel(){
+        return engines.getFuel();
+    }
+    
+    public int getPlasmaBlasterAmmo(){
+        return plasma.getAmmoLevel();
+    }
+    
+    public int getTorpedoWeaponAmmo(){
+        return torpedo.getAmmoLevel();
+    }
+    
+    public int getLaserBlasterAmmo(){
+        return laser.getAmmoLevel();
+    }
+    
+    // Setters
+    
+    public void increaseFuel(){
+        engines.increaseFuel();
+    }
+    
+    public void decreaseFuel(){
+        engines.decreaseFuel();
+    }
+    
+    public void customChangeFuel(int change){
+        engines.customChangeFuel(change);
+    }
+    
+    public void increseShieldsLevel(){
+        shields.increaseShieldsLevel();
+    }
+    
+    public void decreaseShieldsLevel(){
+        shields.decreaseShieldsLevel();
+    }
+    
+    public void customChangeShieldsLevel(int change){
+        shields.cusomChangeShieldsLevel(change);
+    }
+    
+    // Firing weapons
+    
+    public Bullet fire(int weaponIndex) throws Exception {
+        switch(weaponIndex) {
+        case LASER_BLASTER_INDEX:
+            return laser.fire(this);
+        case PLASMA_BLASTER_INDEX:
+            return plasma.fire(this);
+        case TORPEDO_WEAPON_INDEX:
+            return torpedo.fire(this);
+        default:
+            throw new IllegalArgumentException("You didn't specify a weapon index!");
+        }
+    }
+    
+    public void increaseWeaponAmmoByIndex(int weaponIndex) {
+        switch(weaponIndex) {
+        case LASER_BLASTER_INDEX:
+            laser.increaseAmmo();
+        case PLASMA_BLASTER_INDEX:
+            torpedo.increaseAmmo();
+        case TORPEDO_WEAPON_INDEX:
+            plasma.increaseAmmo();
+        default:
+            throw new IllegalArgumentException("You didn't specify a weapon index!");
+        }
+    }
+    
+    public int getWeaponMaxAmmoByIndex(int weaponIndex){
+        switch(weaponIndex) {
+        case LASER_BLASTER_INDEX:
+            return laser.getMaxAmmo();
+        case PLASMA_BLASTER_INDEX:
+            return plasma.getMaxAmmo();
+        case TORPEDO_WEAPON_INDEX:
+            return torpedo.getMaxAmmo();
+        default:
+            throw new IllegalArgumentException("You didn't specify a weapon index!");
+        }
     }
     
 // Movement methods

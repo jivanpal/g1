@@ -381,9 +381,9 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         resourcesView = new ResourcesView(this, shieldSequenceNumber, fuelSequenceNumber);
         resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
         resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
-        resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
+        resourcesView.updateResourceLevels(ResourcesView.HULL, s.getHealth());
         resourcesView.setMaximumResourceLevel(ResourcesView.ENGINE, Engines.DEFAULT_FUEL_MAX_LEVEL);
-        resourcesView.setMaximumResourceLevel(ResourcesView.HULL, ShipHealth.DEFAULT_MAX_SHIP_HEALTH_LEVEL);
+        resourcesView.setMaximumResourceLevel(ResourcesView.HULL, Health.DEFAULT_MAX_SHIP_HEALTH_LEVEL);
         resourcesView.setMaximumResourceLevel(ResourcesView.SHIELDS, Shields.DEFAULT_MAX_SHIELDS_LEVEL);
     }
 
@@ -477,7 +477,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
 
                         resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
                         resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
-                        resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
+                        resourcesView.updateResourceLevels(ResourcesView.HULL, s.getHealth());
                     }
                 }
             }

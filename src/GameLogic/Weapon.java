@@ -1,6 +1,8 @@
 package GameLogic;
 
 import java.io.Serializable;
+import Geometry.*;
+import Physics.*;
 
 /**
  * A class of objects that describe weapons to be added to a ship.
@@ -10,56 +12,67 @@ import java.io.Serializable;
 public abstract class Weapon implements Serializable {
 /// FIELDS
   
+    private Ship        parent;
     private Bullet      bullet;
     private Resource    ammo;
     private int         shieldDamage;
     private int         shipDamage;
     private boolean     autoReload;
-    private boolean     autoTarget;
     private double      cooldown;
     private double      remainingCooldown = 0;
     
 /// CONSTRUCTOR
     /**
      * Create a weapon with the given parameters.
-     * @param   parent          The ship that the weapon is attached to.
-     * @param   referenceBullet A reference body for this weapon's bullets.
-     * @param   maxAmmo         The maximum number of bullets that the weapon can hold.
-     * @param   initAmmo        The initial number of bullets the the weapon holds. If this
-     *              number exceeds `maxAmmo`, then `initAmmo` will be set to `maxAmmo`.
-     * @param   shieldDamage    The amount of damage that this weapon deals to a ship's shields.
-     * @param   shipDamage      The amount of damage that this weapon deals to the ship directly when its shields are down.
-     * @param   autoReload      Whether this weapon reloads automatically.
-     * @param   autoTarget      Whether this weapon automatically locks onto targets.
-     * @param   cooldown        The cooldown period for the weapon after each use, in seconds.
+     * @param parent the ship that the weapon is attached to.
+     * @param bullet a reference body for this weapon's bullets.
+     * @param maxAmmo the maximum number of bullets that the weapon can hold.
+     * @param initAmmo the initial number of bullets the the weapon holds.
+     *      If this value exceeds `maxAmmo` or is negative, then `initAmmo`
+     *      will be set to `maxAmmo`.
+     * @param shieldDamage the amount of damage that this weapon deals to a ship's shields.
+     * @param shipDamage the amount of damage that this weapon deals to the ship
+     *      directly when its shields are down.
+     * @param autoReload `true` if this weapon should reload automatically.
+     * @param cooldown the cooldown period for the weapon after each use, in milliseconds.
      */
     public Weapon(
-        Bullet      bullet,
-        int         maxAmmo,
-        int         initAmmo,
-        int         shieldDamage,
-        int         shipDamage,
-        boolean     autoReload,
-        boolean     autoTarget,
-        double      cooldown
+        Ship    parent,
+        Bullet  bullet,
+        int     maxAmmo,
+        int     initAmmo,
+        int     shieldDamage,
+        int     shipDamage,
+        boolean autoReload,
+        double  cooldown
     ) {
+        this.parent         = parent;
+        this.bullet         = bullet;
         this.ammo           = new Resource(maxAmmo, initAmmo);
         this.shieldDamage   = shieldDamage;
         this.shipDamage     = shipDamage;
         this.autoReload     = autoReload;
-        this.autoTarget     = autoTarget;
         this.cooldown       = cooldown;
     }
     
 /// INSTANCE METHODS
     
 // Getters
-    public void increaseAmmo(){
-    	this.ammo.up();
+    
+    public int getShipID() {
+        return parent.getID();
     }
     
-    public Bullet getReferenceBullet() {
-        return bullet;
+    public void increaseAmmo() {
+    	ammo.increase();
+    }
+    
+    public Resource getAmmoResource() {
+        return ammo;
+    }
+    
+    public int getAmmoMaximum() {
+        return this.ammo.getMax();
     }
     
     public int getAmmoLevel() {
@@ -78,11 +91,7 @@ public abstract class Weapon implements Serializable {
         return autoReload;
     }
     
-    public boolean autoTargets() {
-        return autoTarget;
-    }
-    
-    public double getCooldownPeriod() {
+     public double getCooldownPeriod() {
         return cooldown;
     }
     
@@ -94,18 +103,6 @@ public abstract class Weapon implements Serializable {
         return remainingCooldown == 0.0;
     }
     
-    private Bullet getBulletInstance(Ship parent) throws Exception {
-        Bullet instance = null;
-        try {
-            instance = (Bullet)bullet.clone();
-        } catch (CloneNotSupportedException ex) {
-            ex.printStackTrace();
-            throw new Exception("Couldn't get bullet instance");
-        }
-        instance.setOriginBody(parent);
-        return instance;
-    }
-    
 // Evolution
     public void update() {
         remainingCooldown -= Global.REFRESH_PERIOD;
@@ -115,18 +112,26 @@ public abstract class Weapon implements Serializable {
     }
     
 // Actions
-    public Bullet fire(Ship parent) throws Exception {
-    	//not sure if the best way to do it
-    	Bullet bullet = null;
-    	if(canFire()){
-    		ammo.down();
-    		bullet = getBulletInstance(parent);
+    public Bullet fire() throws Exception {
+    	if(this.canFire()) {
+    		Bullet bullet = newPositionedBullet();
+    	    ammo.decrease();
     		remainingCooldown = cooldown;
     	}
     	return bullet;
     }
     
-    public int getMaxAmmo(){
-    	return this.ammo.getMax();
+    private Bullet newPositionedBullet() {
+        Bullet instance = null;
+        try {
+            instance = (Bullet)bullet.clone();
+        } catch (CloneNotSupportedException e) {
+            System.err.println("Couldn't get new Bullet:");
+            e.printStackTrace();
+        }
+        instance.setOriginBody(parent);
+        return instance;
     }
+    
+    
 }

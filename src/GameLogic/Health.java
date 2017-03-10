@@ -6,14 +6,14 @@ import java.io.Serializable;
  * Class which represents the engines of the ship
  * @author Ivan Panchev
  */
-public class ShipHealth implements Serializable {
+public class Health implements Serializable {
 	
 	public static final int DEFAULT_SHIP_HEALTH_LEVEL = 50;
 	public static final int DEFAULT_MAX_SHIP_HEALTH_LEVEL = 100;
 	
 	private Resource shipHealth; 
 	
-	public ShipHealth(){
+	public Health(){
 		shipHealth = new Resource(DEFAULT_MAX_SHIP_HEALTH_LEVEL,DEFAULT_SHIP_HEALTH_LEVEL);
 	}
 	
@@ -22,14 +22,14 @@ public class ShipHealth implements Serializable {
 	}
 	
 	public void increaseFuel(){
-		this.shipHealth.up();
+		this.shipHealth.increase();
 	}
 	
 	public void decreaseFuel(){
-		this.shipHealth.down();
+		this.shipHealth.decrease();
 	}
 	
 	public void customChangeFuel(int change){
-		this.shipHealth.change(change);
+		this.shipHealth.alter(change);
 	}
 }

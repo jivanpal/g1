@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 /**
  * A simple container for a bounded integer.
- * Used to represent weapon levels and capacity.
+ * Used to represent resources that can take integral
+ * values between 0 and some upper bound, such as ammo
+ * levels or health.
+ * 
  * @author jivan
- *
  */
 public class Resource implements Serializable {
 /// FIELDS
@@ -17,14 +19,19 @@ public class Resource implements Serializable {
     
     /**
      * Create a resource with given maximum and initial levels.
+     * @param max the maximum level for this instance.
+     * @param level the initial level of this resource. Negative values or
+     *      values above the specified maximum will result in the initial
+     *      level being set to the maximum. 
      */
     public Resource (int max, int level) {
         setMax(max);
-        set(level);
+        set(level < 0 ? 0 : level);
     }
     
     /**
-     * Create a resource with given maximum level, with initial level set to 0.
+     * Create a resource with a given maximum level and initial level set to 0.
+     * @param max the maximum level for this instance.
      */
     public Resource (int max) {
         this(max, 0);
@@ -60,10 +67,8 @@ public class Resource implements Serializable {
     
     /**
      * Set the level of this instance.
-     * @param   level   The level to set this instance to.
-     *              If it is below 0, the level will be set to 0.
-     *              If it is above the current maximum level,
-     *              it will be set to the maximum level.
+     * @param   level   The level to set this instance to. Values below 0 will set
+     *      the level to 0, and values above the maximum will set it to the maximum.
      */
     public void set(int level) {
         this.level =
@@ -74,26 +79,25 @@ public class Resource implements Serializable {
     
     /**
      * Change the level of this instance by the given amount.
-     * @param   delta   The amount to change this instance's level by.
-     *              If positive, it is increased.
-     *              If negative, it is decreased.
+     * @param delta the amount to change this instance's level by.
+     *      Positive values increase the level, and negative values decrease it.
      */
-    public void change(int delta) {
+    public void alter(int delta) {
         set(level + delta);
     }
     
     /**
      * Increase this instance's level by 1.
      */
-    public void up() {
-        this.change(1);
+    public void increase() {
+        this.alter(1);
     }
     
     /**
      * Decrease this instance's level by 1.
      */
-    public void down() {
-        this.change(-1);
+    public void decrease() {
+        this.alter(-1);
     }
     
     /**

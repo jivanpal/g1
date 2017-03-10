@@ -28,14 +28,14 @@ public class Engines implements Serializable {
 	}
 	
 	public void increaseFuel(){
-		this.fuel.up();
+		this.fuel.increase();
 	}
 	
 	public void decreaseFuel(){
-		this.fuel.down();
+		this.fuel.decrease();
 	}
 	
 	public void customChangeFuel(int change){
-		this.fuel.change(change);
+		this.fuel.alter(change);
 	}
 }

@@ -67,7 +67,7 @@ public class Body implements Cloneable, Serializable {
         Vector      velocity,
         Vector      angularVelocity
     ) {
-        ID = ++nextID;
+        ID = nextID++;
         setMass(mass);
         setRadius(radius);
         setPosition(position);
@@ -85,7 +85,7 @@ public class Body implements Cloneable, Serializable {
      *              orientation, which is on the x-y plane, pointing along the y-axis.
      */
     public Body(double mass, double radius, Vector position, Rotation orientation) {
-        ID = ++nextID;
+        ID = nextID++;
         setMass(mass);
         setRadius(radius);
         setPosition(position);
@@ -99,7 +99,7 @@ public class Body implements Cloneable, Serializable {
      * @param   position    The body's displacement from the origin, in meters.
      */
     public Body(double mass, double radius, Vector position) {
-        ID = ++nextID;
+        ID = nextID++;
         setMass(m);
         setRadius(radius);
         setPosition(position);
@@ -111,7 +111,7 @@ public class Body implements Cloneable, Serializable {
      * @param   radius  The body' radius, in meters.
      */
     public Body(double mass, double radius) {
-        ID = ++nextID;
+        ID = nextID++;
         setMass(mass);
         setRadius(radius);
     }
@@ -121,7 +121,7 @@ public class Body implements Cloneable, Serializable {
      * @param   mass    The body's mass, in kilograms.
      */
     public Body(double mass) {
-        ID = ++nextID;
+        ID = nextID++;
         setMass(mass);
     }
     
@@ -129,7 +129,7 @@ public class Body implements Cloneable, Serializable {
      * Create a stationary body of mass 1 kg and radius 10 m at the origin.
      */
     public Body() {
-        ID = ++nextID;
+        ID = nextID++;
     }
 
 /// INSTANCE METHODS

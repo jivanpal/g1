@@ -1,6 +1,8 @@
 package GameLogic;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.util.concurrent.ConcurrentSkipListMap;
+import Geometry.Vector; // Leave this line here to distinguish with java.util.Vector
 import Geometry.*;
 import Physics.*;
 
@@ -10,12 +12,21 @@ import Physics.*;
  * 3D rather than simply 2D.
  * @author jivan
  */
-public class Map extends ArrayList<Body> {
+public class Map extends ConcurrentSkipListMap<Integer,Body> {
 /// FIELDS
     private Vector dimensions;
-    private ArrayList<Bot> bots = new ArrayList<Bot>();
+    private ArrayList<Integer> botIDs = new ArrayList<Integer>();
     
 /// CONSTRUCTORS
+    
+    /**
+     * Construct a map with the given dimensions.
+     * @param   dimensions  A vector whose components describe the map's
+     *              dimensions in each axis direction.
+     */
+    public Map(Vector dimensions) {
+        this.dimensions = dimensions;
+    }
     
     /**
      * Construct a map with the given dimensions
@@ -27,16 +38,36 @@ public class Map extends ArrayList<Body> {
         this(new Vector(x,y,z));
     }
     
+/// INSTANCE METHODS
+    
+// Alterers
+    
     /**
-     * Construct a map with the given dimensions.
-     * @param   dimensions  A vector whose components describe the map's
-     *              dimensions in each axis direction.
+     * See if this map contains the body with a given ID.
+     * @param bodyID the ID of the body to check the presence of.
+     * @return whether that body is present.
      */
-    public Map(Vector dimensions) {
-        this.dimensions = dimensions;
+    public boolean contains(int bodyID) {
+        return containsKey(new Integer(bodyID));
     }
     
-/// INSTANCE METHODS
+    public boolean contains(Body body) {
+        return contains(body.getID());
+    }
+    
+    /**
+     * Add a new body to the map.
+     * @param newBody the body to add to the map. If a body with the same ID already exists
+     *      on the map, this one won't be added.
+     * @return `true` if the body was added, else `false`.
+     */
+    public boolean add(Body newBody) {
+        if (contains(newBody)) {
+            return false;
+        } else {
+            put(newBody.getID(), newBody);
+        }
+    }
     
 // Getters
     
@@ -47,8 +78,8 @@ public class Map extends ArrayList<Body> {
     	return dimensions;
     }
     
-    public ArrayList<Bot> getBotList() {
-        return bots;
+    public ArrayList<Integer> getBotIDs() {
+        return botIDs;
     }
     
 // Other methods
@@ -170,7 +201,8 @@ public class Map extends ArrayList<Body> {
      */
     public void update() {
         // Get rid of destroyed bodies.
-        for(int i = size() - 1; i >= 0; i--) {
+        for(Map.Entry<Integer,Body> : this.entrySet()) {
+            Body b = 
             if( get(i).isDestroyed() ) {
                 remove(i);
             }

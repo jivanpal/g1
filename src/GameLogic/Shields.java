@@ -23,15 +23,15 @@ public class Shields implements Serializable {
 	}
 	
 	public void increaseShieldsLevel(){
-		this.shieldsLevel.up();
+		this.shieldsLevel.increase();
 	}
 
 	public void decreaseShieldsLevel(){
-		this.shieldsLevel.down();
+		this.shieldsLevel.decrease();
 	}
 	
 	public void cusomChangeShieldsLevel(int change){
-		this.shieldsLevel.change(change);
+		this.shieldsLevel.alter(change);
 	}
 	
 }
