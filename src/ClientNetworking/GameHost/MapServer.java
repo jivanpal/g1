@@ -38,7 +38,6 @@ public class MapServer extends Thread {
 
 	public void run() {
 		try {
-		
 			ClientTable clientTable = new ClientTable();
 			MapContainer gameMap = new MapContainer();
 			Player[] p = lobby.getPlayers();
@@ -46,8 +45,7 @@ public class MapServer extends Thread {
 				if(p[i]!=null || p[i+1]!=null) {
 					gameMap.addShip(i/2, p[i]==null? "":p[i].nickname, p[i+1] == null? "" : p[i+1].nickname);
 				}
-		    }
-			System.err.println("Problem here!!");
+			}
 			gameMap.generateTerrain();
 			System.out.println("I HAVE STARTED THE SERVER");
 			while (true) {
@@ -61,42 +59,30 @@ public class MapServer extends Thread {
 				ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
 				String clientName = "";
 
-				try 
-				{
+				try {
 					clientName = (String) fromClient.readObject();
-				}
-				catch (ClassNotFoundException e) 
-				{
+				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				}
-
+				
 				int position = lobby.getPlayerPosByName(clientName);
 				toClient.writeObject(keySequences.get(position/2));
 				boolean gameShouldStart = false;
 				Player[] players = lobby.getPlayers();
 				int pos;
-				for (pos = 0; pos < players.length; pos++) 
-				{
-					if (players[pos] != null && players[pos].nickname.equals(clientName)) 
-					{
+				for (pos = 0; pos < players.length; pos++) {
+					if (players[pos] != null && players[pos].nickname.equals(clientName)) {
 						gameShouldStart = true;
 						break;
 					}
 				}
-				if (!gameShouldStart) 
-				{
+				if (!gameShouldStart) {
 					System.out.println("I CLOSED THE SOCKET FOR UNAUTHORISED PLAYER: "+ clientName);
 					socket.close();
-				} 
-				else 
-				{
+				} else {
 					clientTable.add(String.valueOf(String.valueOf(position)));
-
-					
-
 					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,clientName, lobby.getPlayerPosByName(clientName));
 					clientInput.start();
-
 					GameHostSender clientOutput = new GameHostSender(toClient, clientTable, String.valueOf(position));
 					toClient.reset();
 					clientOutput.start();
@@ -104,9 +90,7 @@ public class MapServer extends Thread {
 				GameClock clock = new GameClock(clientTable, gameMap);
 				clock.start();
 			}
-		} 
-		catch (IOException e) 
-		{
+		} catch (IOException e) {
 			System.err.println("IO error " + e.getMessage());
 		}
 	}

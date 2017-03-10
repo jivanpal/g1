@@ -158,36 +158,26 @@ public class Ship extends Body{
 	private static final Vector    THRUST_REV  = Vector.J.negate().scale(THRUST_SPEED);
 	
 	public void pitchUp() {
-	    System.err.println("PitchUp!");
 	    rotate(PITCH_UP);
-	    System.err.println(this.getBasis());
 	}
 	
 	public void pitchDown() {
-	    System.err.println("PitchDown!");
 	    rotate(PITCH_DOWN);
-	    System.err.println(this.getBasis());
 	}
 	
 	public void rollRight() {
-        System.err.println("RollRight!");
         rotate(ROLL_RIGHT);
-        System.err.println(this.getBasis());
     }
 	
 	public void rollLeft() {
-	    System.err.println("RollLeft!");
 	    rotate(ROLL_LEFT);
-	    System.err.println(this.getBasis());
 	}
 	
 	public void thrustForward() {
-	    System.err.println("ThrustForward!");
 	    alterVelocityLocally(THRUST_FWD);
 	}
 	
 	public void thrustReverse() {
-	    System.err.println("ThrustReverse!");
 	    alterVelocityLocally(THRUST_REV);
 	}
 }
