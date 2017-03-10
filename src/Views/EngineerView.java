@@ -250,8 +250,8 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
 
         parentFrame.requestFocusInWindow();
         parentFrame.setFocusable(true);
-        parentFrame.setUndecorated(true);
-        parentFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // parentFrame.setUndecorated(true);
+        // parentFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         update(null, null);
         screen.setMap(gameClient.getMap());
