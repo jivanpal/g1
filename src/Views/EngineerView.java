@@ -409,6 +409,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
 
             @Override
             public void mouseReleased(MouseEvent mouseEvent) {
+                radarView.setVisible(false);
                 if(!radarView.isLargeView()) {
                     radarView.setLargeView(true);
                     radarView.setBounds(50, 50, getWidth() - 100, getHeight() - 100);
@@ -418,6 +419,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                     radarView.setBounds(parentFrame.getWidth() - parentFrame.getHeight() / 4, 0, parentFrame.getHeight() / 4, parentFrame.getHeight() / 4);
                     radarView.setPreferredSize(new Dimension(parentFrame.getHeight() / 4, parentFrame.getHeight() / 4));
                 }
+                radarView.setVisible(true);
 
                 radarView.revalidate();
                 radarView.repaint();

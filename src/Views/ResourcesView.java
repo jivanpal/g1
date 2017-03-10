@@ -96,8 +96,6 @@ public class ResourcesView extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 10;
 
-
-
         shieldsComponent = new ResourceComponent("Shields", shieldReplenishNumber);
 
         shieldsComponent.setResourceBarColor(SHIELD_COLOR);
