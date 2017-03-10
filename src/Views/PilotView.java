@@ -22,6 +22,7 @@ import AI.EngineerAI;
 import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 import GameLogic.GameOptions;
+import GameLogic.Global;
 import GameLogic.Map;
 import GameLogic.Ship;
 import Graphics.Screen;
@@ -77,6 +78,7 @@ public class PilotView extends JPanel implements Observer {
         setFocusable(true);
 
         this.parentFrame = parentFrame;
+        this.UILayeredPane = parentFrame.getLayeredPane();
         UIBaseLayer = new JPanel();
 
         parentFrame.addComponentListener(new ComponentListener() {
@@ -186,9 +188,6 @@ public class PilotView extends JPanel implements Observer {
             }
         });
 
-        this.UILayeredPane = parentFrame.getLayeredPane();
-        parentFrame.setFocusable(true);
-        parentFrame.requestFocus();
         initialiseUI();
 
         // starting the in-game sounds
@@ -245,7 +244,6 @@ public class PilotView extends JPanel implements Observer {
         };
         this.addMouseMotionListener(screenMouseListener);
 
-
         addAllComponents();
 
         this.repaint();
@@ -255,8 +253,16 @@ public class PilotView extends JPanel implements Observer {
         UILayeredPane.repaint();
         UILayeredPane.revalidate();
 
-        UIinitialised = true;
+        this.UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Pilot");
+
+        parentFrame.requestFocus();
+        parentFrame.setFocusable(true);
+        //parentFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //parentFrame.setUndecorated(true);
+
+        update(null, null);
+        screen.setMap(gameClient.getMap());
     }
 
     /**
@@ -265,27 +271,12 @@ public class PilotView extends JPanel implements Observer {
     private void addAllComponents() {
         try {
             this.setLayout(new BorderLayout());
-            Container weaponPanel = new Container();
-            weaponPanel.add(plasmaBlasterView);
-            weaponPanel.add(laserBlasterView);
-            weaponPanel.add(torpedosView);
-            weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
 
-            System.out.println("Width: " + parentFrame.getWidth());
-            System.out.println("Height: " + parentFrame.getHeight() / 5);
             UIpanel = new JPanel();
+            UIpanel.setOpaque(false);
             UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
             UIpanel.setPreferredSize(new Dimension(parentFrame.getWidth(), parentFrame.getHeight() / 5));
             UIpanel.add(manual);
-
-            BufferedImage steeringWheelImage = ImageIO.read(new File(System.getProperty("user.dir") + "/res/img/steeringwheel.png"));
-            AffineTransform t = new AffineTransform();
-            t.rotate(steeringWheelAngle);
-            AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
-            steeringWheelImage = op.filter(steeringWheelImage, null);
-            Image resizedWheel = steeringWheelImage.getScaledInstance(parentFrame.getHeight()/5, parentFrame.getHeight()/5, Image.SCALE_SMOOTH);
-            JLabel steeringWheelView = new JLabel(new ImageIcon(resizedWheel));
-            UIpanel.add(steeringWheelView);
 
             UIpanel.add(speedometerView);
 
@@ -307,6 +298,31 @@ public class PilotView extends JPanel implements Observer {
             chatWindow.setPreferredSize(new Dimension(parentFrame.getWidth() / 6, parentFrame.getHeight() / 6));
             UILayeredPane.add(chatWindow, JLayeredPane.PALETTE_LAYER);
 
+            BufferedImage steeringWheelImage = ImageIO.read(new File(System.getProperty("user.dir") + "/res/img/steeringwheel.png"));
+            AffineTransform t = new AffineTransform();
+            t.rotate(steeringWheelAngle);
+            AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
+            steeringWheelImage = op.filter(steeringWheelImage, null);
+            Image resizedWheel = steeringWheelImage.getScaledInstance(parentFrame.getHeight()/5, parentFrame.getHeight()/5, Image.SCALE_SMOOTH);
+            ImageIcon imgIcon = new ImageIcon(resizedWheel);
+            JLabel steeringWheelView = new JLabel(imgIcon);
+
+            steeringWheelView.setPreferredSize(new Dimension(imgIcon.getIconWidth(), imgIcon.getIconHeight()));
+            /*// steeringWheelView.setBounds(100,
+                    100,
+                    steeringWheelView.getWidth(),
+                    steeringWheelView.getHeight());*/
+            /*steeringWheelView.setBounds((parentFrame.getWidth() / 2) - (steeringWheelView.getWidth() / 2),
+                    (parentFrame.getHeight() - steeringWheelView.getHeight()),
+                    steeringWheelView.getWidth(),
+                    steeringWheelView.getHeight());*/
+
+            System.out.println("Width: " + steeringWheelView.getWidth());
+            System.out.println("Height: " + steeringWheelView.getHeight());
+
+            UILayeredPane.add(steeringWheelView, JLayeredPane.PALETTE_LAYER);
+
+
         } catch (IOException e) {
             // should never get here.
             e.printStackTrace();
@@ -324,6 +340,8 @@ public class PilotView extends JPanel implements Observer {
     private void initialiseScreen() {
         this.screen = new Screen(playerNickname, true);
         screen.setPreferredSize(new Dimension(this.getWidth(), 4 * (this.getHeight() / 5)));
+        Global.SCREEN_WIDTH = parentFrame.getWidth();
+        Global.SCREEN_HEIGHT = parentFrame.getHeight() - (parentFrame.getHeight() / 5);
     }
 
     /**
@@ -390,7 +408,7 @@ public class PilotView extends JPanel implements Observer {
         return null;
     }
 
-    
+
     @Override
     public void update(Observable observable, Object o) {
         if (!UIinitialised) {

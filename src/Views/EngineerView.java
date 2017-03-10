@@ -244,9 +244,20 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         UIBaseLayer.repaint();
         UILayeredPane.revalidate();
         UILayeredPane.repaint();
-        
+
         this.UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Engineer");
+
+        parentFrame.requestFocusInWindow();
+        parentFrame.setFocusable(true);
+        parentFrame.setUndecorated(true);
+        parentFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        update(null, null);
+        screen.setMap(gameClient.getMap());
+        screen.revalidate();
+        screen.repaint();
+
     }
 
     /**
@@ -451,7 +462,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
             screen.setMap(m);
             radarView.updateMap(m);
 
-            for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++) {
+            for (int i = 0; i < m.size(); i++) {
                 if (m.get(i) instanceof Ship) {
                     Ship s = (Ship) m.get(i);
 
@@ -459,6 +470,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                         laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
                         plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
                         torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
+
                         resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
                         resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
                         resourcesView.updateResourceLevels(ResourcesView.HULL, s.getShipHealth());
@@ -473,23 +485,27 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
      * of the ship, we tell the server what the user has done.
      */
     public void keySequencePassed() {
-        System.out.println("Passed a sequence");
         switch (state) {
             case NONE:
                 break;
             case SHIELD_REPLENISH:
+                System.out.println("Sending shieldReplenish");
                 gameClient.send("shieldReplenish");
                 break;
             case FUEL_REPLENISH:
+                System.out.println("Sending fuelReplenish");
                 gameClient.send("fuelReplenish");
                 break;
             case LASER_REPLENISH:
+                System.out.println("Sending laserReplenish");
                 gameClient.send("laserReplenish");
                 break;
             case TORPEDO_REPLENISH:
+                System.out.println("Sending torpedoReplenish");
                 gameClient.send("torpedoReplenish");
                 break;
             case PLASMA_REPLENISH:
+                System.out.println("Sending plasmaReplenish");
                 gameClient.send("plasmaReplenish");
                 break;
         }
