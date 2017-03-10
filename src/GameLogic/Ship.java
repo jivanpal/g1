@@ -9,9 +9,9 @@ import Physics.*;
  *
  */
 public class Ship extends Body{
-	private static final int PITCH_SPEED  = 30;    // radians per second
-    private static final int ROLL_SPEED   = 50;    // radians per second
-    private static final int THRUST_SPEED = 10;    // meters  per second
+	private static final double PITCH_SPEED  = 0.05;    // radians per second
+    private static final double ROLL_SPEED   = 0.1;    // radians per second
+    private static final double THRUST_SPEED = 5;    // meters  per second
 	
 	public static final byte LASER_BLASTER_INDEX = 0;
 	public static final byte PLASMA_BLASTER_INDEX = 1;
@@ -150,31 +150,35 @@ public class Ship extends Body{
 	
 // Movement methods
 	
-	private static final Rotation  PITCH_UP    = new Rotation(Vector.I.scale(PITCH_SPEED));
-	private static final Rotation  PITCH_DOWN  = new Rotation(Vector.I.negate().scale(PITCH_SPEED));
-	private static final Rotation  ROLL_RIGHT  = new Rotation(Vector.J.scale(ROLL_SPEED));
-	private static final Rotation  ROLL_LEFT   = new Rotation(Vector.J.negate().scale(ROLL_SPEED));
+	private static final Rotation  PITCH_UP    = new Rotation(Vector.I.scale(PITCH_SPEED * Global.REFRESH_PERIOD));
+	private static final Rotation  PITCH_DOWN  = new Rotation(Vector.I.negate().scale(PITCH_SPEED * Global.REFRESH_PERIOD));
+	private static final Rotation  ROLL_RIGHT  = new Rotation(Vector.J.scale(ROLL_SPEED * Global.REFRESH_PERIOD));
+	private static final Rotation  ROLL_LEFT   = new Rotation(Vector.J.negate().scale(ROLL_SPEED * Global.REFRESH_PERIOD));
 	private static final Vector    THRUST_FWD  = Vector.J.scale(THRUST_SPEED);
 	private static final Vector    THRUST_REV  = Vector.J.negate().scale(THRUST_SPEED);
 	
 	public void pitchUp() {
 	    System.err.println("PitchUp!");
 	    rotate(PITCH_UP);
+	    System.err.println(this.getBasis());
 	}
 	
 	public void pitchDown() {
 	    System.err.println("PitchDown!");
 	    rotate(PITCH_DOWN);
+	    System.err.println(this.getBasis());
 	}
 	
 	public void rollRight() {
         System.err.println("RollRight!");
         rotate(ROLL_RIGHT);
+        System.err.println(this.getBasis());
     }
 	
 	public void rollLeft() {
 	    System.err.println("RollLeft!");
 	    rotate(ROLL_LEFT);
+	    System.err.println(this.getBasis());
 	}
 	
 	public void thrustForward() {
