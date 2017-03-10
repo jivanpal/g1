@@ -102,7 +102,7 @@ public abstract class Weapon implements Serializable {
             ex.printStackTrace();
             throw new Exception("Couldn't get bullet instance");
         }
-        instance.setReferenceBody(parent);
+        instance.setOriginBody(parent);
         return instance;
     }
     

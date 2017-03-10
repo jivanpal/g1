@@ -296,10 +296,10 @@ public class Screen extends JPanel{
 			U = ship.getUpVector();
 			V = ship.getRightVector();
 			if(pilot){
-				N = ship.getForwardVector();
+				N = ship.getFrontVector();
 			}
 			else{
-				N = ship.getBackwardVector();
+				N = ship.getRearVector();
 			}
 			viewFrom = ship.getPosition();
 			viewTo = viewFrom.plus(N);
