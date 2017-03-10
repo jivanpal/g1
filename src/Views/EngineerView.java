@@ -298,6 +298,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         resourcesView.setOpaque(false);
         UIPanel.add(resourcesView, uiPanelConstraints);
 
+        uiPanelConstraints.weightx = 1;
         uiPanelConstraints.gridx = 1;
         
         //uiPanelConstraints.anchor = GridBagConstraints.EAST;
@@ -321,7 +322,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         radarView.setBounds(parentFrame.getWidth() - parentFrame.getHeight() / 4, 0, parentFrame.getHeight() / 4, parentFrame.getHeight() / 4);
         radarView.setPreferredSize(new Dimension(parentFrame.getHeight() / 4, parentFrame.getHeight() / 4));
 
-        UILayeredPane.add(radarView, JLayeredPane.PALETTE_LAYER);
+        UILayeredPane.add(radarView, JLayeredPane.MODAL_LAYER);
 
         chatWindow.setBounds(0,
                 parentFrame.getHeight() - ((int) UIPanel.getPreferredSize().getHeight() + (parentFrame.getHeight() / 6)),
