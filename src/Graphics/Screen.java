@@ -270,7 +270,9 @@ public class Screen extends JPanel{
 			drawOrder[i] = i;
 		}
 		
-		quicksort(k,0,k.length-1);
+		if(k.length > 0){
+			quicksort(k,0,k.length-1);
+		}
 //		for(int i : drawOrder){
 //			System.out.println(poly3Ds.get(i).avgDistance);
 //		}
