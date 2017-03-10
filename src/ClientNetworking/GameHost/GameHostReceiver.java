@@ -10,14 +10,16 @@ public class GameHostReceiver extends Thread
 	private ClientTable clientTable;
 	private int position;
 	public MapContainer gameMap;
-	public int mapEntryNumber;
-	public GameHostReceiver(ObjectInputStream reader,MapContainer map, ClientTable cT, int playerPos, String nickname,int mapEntry)
+	public String teamMate;
+	private String playerName;
+	public GameHostReceiver(ObjectInputStream reader,MapContainer map, ClientTable cT, int playerPos, String nickname,String teammate)
 	{		
 		gameMap = map;
 		position = playerPos;
 		clientTable = cT;
 		clientIn = reader;
-		mapEntryNumber=mapEntry;
+		teamMate=teammate;
+		playerName = nickname;
 	}
 
 	public void run()
@@ -31,15 +33,14 @@ public class GameHostReceiver extends Thread
 				if(obj instanceof String)
 				{
 					String str = (String)obj;
-					gameMap.updateMap(str, mapEntryNumber);
+					gameMap.updateMap(str, position/2);
 				}
 				else
 				{
 					ChatMessage m = (ChatMessage) obj;
-					int teammatePos = position + position%2==0? 1 : -1; 
-					clientTable.getQueue(""+position).offer(m);
-					if(clientTable.getQueue(""+teammatePos)!=null)
-						clientTable.getQueue(""+teammatePos).offer(m);
+					clientTable.getQueue(playerName).offer(m);
+					if(teamMate!="")
+						clientTable.getQueue(teamMate).offer(m);
 				}
 			}
 

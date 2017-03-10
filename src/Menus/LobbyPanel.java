@@ -112,7 +112,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			startgame.addActionListener(e -> {
 				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 				try {
-					MapServer game = new MapServer(client.getLobby());
+					GameHost game = new GameHost(client.getLobby());
 					game.start();
 					client.send(new Action(client.getLobby().getID(), this.player, Action.START));
 
