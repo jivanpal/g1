@@ -1,6 +1,7 @@
 package Views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -41,6 +42,7 @@ public class ManualView extends JPanel{
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
 		button.setFocusable(false);
+		button.setForeground(Color.BLACK);
 	}
 
 	private void goToNextPage() {

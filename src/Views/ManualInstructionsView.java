@@ -1,10 +1,13 @@
 package Views;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +19,7 @@ public class ManualInstructionsView extends JPanel {
 	public static final int MIN_PAGE = 1;
 	public static final int MAX_PAGE = 11;
 
-	public static final String[] columnNames = { "Number", "Instruction", "KeySeq" };
+	public static final String[] columnNames = { "Number", "Instruction", "Key Seq" };
 	private Object[][] data;
 
 	private int pageNumber;
@@ -27,16 +30,27 @@ public class ManualInstructionsView extends JPanel {
 		pageNumber = 1;
 		this.data = new Object[size][columnNames.length];
 		setData(data);
-
+		
 		leftPage = new MyJTable();
 		styleTable(leftPage, height,pageNumber);
 		
 		rightPage = new MyJTable();
 		styleTable(rightPage, height, pageNumber +1);
 
-		setLayout(new GridLayout(1, 2));
-		add(leftPage);
-		add(rightPage);
+		setLayout(new BorderLayout());
+		
+		JPanel headers = new JPanel();
+		headers.setLayout(new GridLayout(1, 2));
+		headers.add(leftPage.getTableHeader());
+		headers.add(rightPage.getTableHeader());
+		
+		JPanel manual = new JPanel();
+		manual.setLayout(new GridLayout(1, 2));
+		manual.add(leftPage);
+		manual.add(rightPage);
+		
+		add(headers, BorderLayout.NORTH);
+		add(manual, BorderLayout.CENTER);
 	}
 
 	private void styleTable(JTable table, int height, int pageNumber) {
@@ -47,6 +61,17 @@ public class ManualInstructionsView extends JPanel {
 		table.setModel(new MyJTableModel(getDataForPage(pageNumber), columnNames));
 		table.setFocusable(false);
 		table.setRowSelectionAllowed(false);
+		table.setOpaque(true);
+		table.setFillsViewportHeight(true);
+		
+		table.setBackground(Color.WHITE);
+		table.setForeground(Color.BLACK);
+		table.setFont(GameOptions.REGULAR_TEXT_FONT);
+		
+		table.getTableHeader().setBackground(Color.WHITE);
+		table.getTableHeader().setForeground(Color.BLACK);
+		table.getTableHeader().setFont(GameOptions.REGULAR_TEXT_FONT);
+		table.setSelectionBackground(Color.decode("#999999"));
 	}
 
 	private void update() {
