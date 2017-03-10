@@ -4,13 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Rectangle;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +22,7 @@ import AI.EngineerAI;
 import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 import GameLogic.GameOptions;
+import GameLogic.Global;
 import GameLogic.Map;
 import GameLogic.Ship;
 import Graphics.Screen;
@@ -42,18 +41,21 @@ public class PilotView extends JPanel implements Observer {
     private JButton manual;
     private ManualView instructions;
 
-    public GameClient gameClient;
+    private GameClient gameClient;
     private String playerNickname;
 
     private boolean UIinitialised = false;
 
     private EngineerAI engAI;
 
-    public JLayeredPane UILayeredPane;
-    public JPanel UIBaseLayer;
+    private JLayeredPane UILayeredPane;
+    private JPanel UIBaseLayer;
     public JFrame parentFrame;
+    private JPanel UIpanel;
 
     private MouseMotionListener screenMouseListener;
+    private double steeringWheelAngle = 0;
+    private GameChat chatWindow;
 
     /**
      * Creates a new PilotView. This encapsulates the entire View of the Pilot player.
@@ -73,10 +75,10 @@ public class PilotView extends JPanel implements Observer {
         this.gameClient = gameClient;
         gameClient.addObserver(this);
 
-        //addKeyListener(this);
         setFocusable(true);
 
         this.parentFrame = parentFrame;
+        this.UILayeredPane = parentFrame.getLayeredPane();
         UIBaseLayer = new JPanel();
 
         parentFrame.addComponentListener(new ComponentListener() {
@@ -125,20 +127,67 @@ public class PilotView extends JPanel implements Observer {
                     gameClient.send("pitchUp");
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
                     gameClient.send("rollLeft");
+                    steeringWheelAngle = -Math.PI/4;
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
                     gameClient.send("rollRight");
+                    steeringWheelAngle = Math.PI/4;
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
+            	if(keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON) || keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)){
+            		steeringWheelAngle = 0;
+            	}
+            }
+        });
+
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse clicked outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse clicked inside chat");
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse pressed outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse pressed inside chat");
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {
+                // If we click anywhere other than the chat window, send focus back to the game.
+                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                    System.out.println("Mouse released outside of chat");
+                    parentFrame.requestFocusInWindow();
+                } else {
+                    System.out.println("Mouse released inside chat");
+                }
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
 
             }
         });
 
-        this.UILayeredPane = parentFrame.getLayeredPane();
-        parentFrame.setFocusable(true);
-        parentFrame.requestFocus();
         initialiseUI();
 
         // starting the in-game sounds
@@ -165,10 +214,11 @@ public class PilotView extends JPanel implements Observer {
             s = findPlayerShip();
         }
 
-        initialiseWeapons(s);
+        // initialiseWeapons(s);
         initialiseManualButton();
         initialiseSpeedometer();
         initialiseScreen();
+        initialiseChatWindow(gameClient, playerNickname);
 
         // Add mouse listener which swaps the cursor between being the default and a crosshair.
         this.removeMouseMotionListener(screenMouseListener);
@@ -185,8 +235,7 @@ public class PilotView extends JPanel implements Observer {
 
                 final Dimension screenDimension = screen.getSize();
                 final Rectangle screenBounds = new Rectangle(0, 0, (int) screenDimension.getWidth(), (int) screenDimension.getHeight());
-                System.out.println(screenBounds);
-                if (screenBounds.contains(x, y)) {
+                 if (screenBounds.contains(x, y)) {
                     getParent().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
                 } else {
                     getParent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -195,18 +244,25 @@ public class PilotView extends JPanel implements Observer {
         };
         this.addMouseMotionListener(screenMouseListener);
 
-
         addAllComponents();
 
-        UILayeredPane.revalidate();
-        UILayeredPane.repaint();
-        UIBaseLayer.revalidate();
-        UIBaseLayer.repaint();
-        this.revalidate();
         this.repaint();
+        this.revalidate();
+        UIBaseLayer.repaint();
+        UIBaseLayer.revalidate();
+        UILayeredPane.repaint();
+        UILayeredPane.revalidate();
 
-        UIinitialised = true;
+        this.UIinitialised = true;
         System.out.println("Done initialising the UI. I am the Pilot");
+
+        parentFrame.requestFocus();
+        parentFrame.setFocusable(true);
+        //parentFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //parentFrame.setUndecorated(true);
+
+        update(null, null);
+        screen.setMap(gameClient.getMap());
     }
 
     /**
@@ -215,20 +271,12 @@ public class PilotView extends JPanel implements Observer {
     private void addAllComponents() {
         try {
             this.setLayout(new BorderLayout());
-            Container weaponPanel = new Container();
-            weaponPanel.add(plasmaBlasterView);
-            weaponPanel.add(laserBlasterView);
-            weaponPanel.add(torpedosView);
-            weaponPanel.setLayout(new BoxLayout(weaponPanel, BoxLayout.Y_AXIS));
 
-            Container UIpanel = new Container();
+            UIpanel = new JPanel();
+            UIpanel.setOpaque(false);
             UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
-            UIpanel.setPreferredSize(new Dimension(getWidth(), getHeight() / 5));
+            UIpanel.setPreferredSize(new Dimension(parentFrame.getWidth(), parentFrame.getHeight() / 5));
             UIpanel.add(manual);
-
-            BufferedImage steeringWheelImage = ImageIO.read(new File(System.getProperty("user.dir") + "/res/img/steeringwheel.png"));
-            JLabel steeringWheelView = new JLabel(new ImageIcon(steeringWheelImage));
-            UIpanel.add(steeringWheelView);
 
             UIpanel.add(speedometerView);
 
@@ -241,10 +289,49 @@ public class PilotView extends JPanel implements Observer {
 
             UILayeredPane.setLayout(layoutManager);
             UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+
+            chatWindow.setBounds(0,
+                    parentFrame.getHeight() - ((int) UIpanel.getPreferredSize().getHeight() + (parentFrame.getHeight() / 6)),
+                    parentFrame.getWidth() / 6,
+                    parentFrame.getHeight() / 6);
+
+            chatWindow.setPreferredSize(new Dimension(parentFrame.getWidth() / 6, parentFrame.getHeight() / 6));
+            UILayeredPane.add(chatWindow, JLayeredPane.PALETTE_LAYER);
+
+            BufferedImage steeringWheelImage = ImageIO.read(new File(System.getProperty("user.dir") + "/res/img/steeringwheel.png"));
+            AffineTransform t = new AffineTransform();
+            t.rotate(steeringWheelAngle);
+            AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
+            steeringWheelImage = op.filter(steeringWheelImage, null);
+            Image resizedWheel = steeringWheelImage.getScaledInstance(parentFrame.getHeight()/5, parentFrame.getHeight()/5, Image.SCALE_SMOOTH);
+            ImageIcon imgIcon = new ImageIcon(resizedWheel);
+            JLabel steeringWheelView = new JLabel(imgIcon);
+
+            steeringWheelView.setPreferredSize(new Dimension(imgIcon.getIconWidth(), imgIcon.getIconHeight()));
+            /*// steeringWheelView.setBounds(100,
+                    100,
+                    steeringWheelView.getWidth(),
+                    steeringWheelView.getHeight());*/
+            /*steeringWheelView.setBounds((parentFrame.getWidth() / 2) - (steeringWheelView.getWidth() / 2),
+                    (parentFrame.getHeight() - steeringWheelView.getHeight()),
+                    steeringWheelView.getWidth(),
+                    steeringWheelView.getHeight());*/
+
+            System.out.println("Width: " + steeringWheelView.getWidth());
+            System.out.println("Height: " + steeringWheelView.getHeight());
+
+            UILayeredPane.add(steeringWheelView, JLayeredPane.PALETTE_LAYER);
+
+
         } catch (IOException e) {
             // should never get here.
             e.printStackTrace();
         }
+    }
+
+    private void initialiseChatWindow(GameClient gameClient, String nickname) {
+        this.chatWindow = new GameChat(this, gameClient, nickname);
+        this.chatWindow.setFocusable(false);
     }
 
     /**
@@ -253,6 +340,8 @@ public class PilotView extends JPanel implements Observer {
     private void initialiseScreen() {
         this.screen = new Screen(playerNickname, true);
         screen.setPreferredSize(new Dimension(this.getWidth(), 4 * (this.getHeight() / 5)));
+        Global.SCREEN_WIDTH = parentFrame.getWidth();
+        Global.SCREEN_HEIGHT = parentFrame.getHeight() - (parentFrame.getHeight() / 5);
     }
 
     /**
@@ -280,6 +369,7 @@ public class PilotView extends JPanel implements Observer {
 
     private void initialiseManualView(int height) {
     	this.instructions = new ManualView(gameClient.keySequence.getAllKeys(), gameClient.keySequence.getKeysSize(), height);
+        this.instructions.setVisible(false);
     }
 
 
@@ -288,7 +378,7 @@ public class PilotView extends JPanel implements Observer {
      *
      * @param s This players Ship object
      */
-    private void initialiseWeapons(Ship s) {
+/*    private void initialiseWeapons(Ship s) {
         if (s != null) {
             plasmaBlasterView = new WeaponView("Plasma Blaster", false);
             laserBlasterView = new WeaponView("Laser Blaster", false);
@@ -296,7 +386,7 @@ public class PilotView extends JPanel implements Observer {
         } else {
             System.out.println("Ship is null? Oh dear oh dear");
         }
-    }
+    }*/
 
     /**
      * Finds the players Ship within all of the objects in the Map.
@@ -318,7 +408,7 @@ public class PilotView extends JPanel implements Observer {
         return null;
     }
 
-    
+
     @Override
     public void update(Observable observable, Object o) {
         if (!UIinitialised) {

@@ -293,7 +293,7 @@ public class Screen extends JPanel{
 		
 		if(shipIndex != null){
 			Ship ship = (Ship) map.get(shipIndex);
-			U = ship.getUpVector();
+			U = ship.getDownVector();
 			V = ship.getRightVector();
 			if(pilot){
 				N = ship.getFrontVector();
@@ -324,6 +324,7 @@ public class Screen extends JPanel{
 			}
 		}
 	}
+
 	public void quicksort(double[] numbers, int low, int high)
 	{
 		 int i = low, j = high;

@@ -37,6 +37,7 @@ public class GameClientReceiver extends Thread
 					else
 					{
 						ChatMessage m =(ChatMessage)inObject;
+						//System.out.println("Received chat message '" + m.message + "' from " + m.nickname);
 						String message = m.nickname + ": " + m.message; 
 						chatContainer.setMessage(message);
 					}
