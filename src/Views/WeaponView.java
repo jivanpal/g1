@@ -42,7 +42,7 @@ public class WeaponView extends JPanel{
      * @param weaponName The name of the weapon.
      * @param showAmmoLevel Whether to create and show the ammo bar or not.
      */
-    public WeaponView(String weaponName, boolean showAmmoLevel) {
+    public WeaponView(String weaponName, boolean showAmmoLevel, String replenishNumber) {
         setOpaque(false);
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -73,7 +73,7 @@ public class WeaponView extends JPanel{
             this.add(weaponAmmoLevel, c);
 
 
-            this.replenishAmmo = new JButton("Replenish");
+            this.replenishAmmo = new JButton("Replenish: " + replenishNumber);
             replenishAmmo.setFont(GameOptions.REGULAR_TEXT_FONT);
             replenishAmmo.setEnabled(false);
             replenishAmmo.setFocusable(false);
@@ -119,5 +119,9 @@ public class WeaponView extends JPanel{
     public void setReplenishAmmo(EngineerView parent, ShipState state) {
         replenishAmmo.addActionListener(actionEvent -> parent.setState(state));
         replenishAmmo.setEnabled(true);
+    }
+
+    public void setReplenishAmmoNumber(String number) {
+        replenishAmmo.setText("Replenish: " + number);
     }
 }

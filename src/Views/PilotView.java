@@ -214,7 +214,7 @@ public class PilotView extends JPanel implements Observer {
             s = findPlayerShip();
         }
 
-        initialiseWeapons(s);
+        // initialiseWeapons(s);
         initialiseManualButton();
         initialiseSpeedometer();
         initialiseScreen();
@@ -378,7 +378,7 @@ public class PilotView extends JPanel implements Observer {
      *
      * @param s This players Ship object
      */
-    private void initialiseWeapons(Ship s) {
+/*    private void initialiseWeapons(Ship s) {
         if (s != null) {
             plasmaBlasterView = new WeaponView("Plasma Blaster", false);
             laserBlasterView = new WeaponView("Laser Blaster", false);
@@ -386,7 +386,7 @@ public class PilotView extends JPanel implements Observer {
         } else {
             System.out.println("Ship is null? Oh dear oh dear");
         }
-    }
+    }*/
 
     /**
      * Finds the players Ship within all of the objects in the Map.

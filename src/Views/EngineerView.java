@@ -341,13 +341,17 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
      * @param s This players Ship object
      */
     private void initialiseWeapons(Ship s) {
-        plasmaBlasterView = new WeaponView("Plasma Blaster", true);
+        String plasmaReplenishNumber = parseNumber(keySequences.get(plasmaSequenceNum));
+        String laserReplenishNumber = parseNumber(keySequences.get(laserSequenceNum));
+        String torpedoReplenishNumber = parseNumber(keySequences.get(torpedoSequenceNum));
+
+        plasmaBlasterView = new WeaponView("Plasma Blaster", true, plasmaReplenishNumber);
 
         // default plasma blaster to be highlighted, remove at a later date!
         // plasmaBlasterView.setHighlightWeapon(true);
 
-        laserBlasterView = new WeaponView("Laser Blaster", true);
-        torpedosView = new WeaponView("Torpedos", true);
+        laserBlasterView = new WeaponView("Laser Blaster", true, laserReplenishNumber);
+        torpedosView = new WeaponView("Torpedos", true, torpedoReplenishNumber);
 
         laserBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
         plasmaBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
