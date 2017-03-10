@@ -1,5 +1,6 @@
 package Views;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -47,6 +48,18 @@ public class ManualInstructionsView extends JPanel {
 		table.setModel(new MyJTableModel(getDataForPage(pageNumber), columnNames));
 		table.setFocusable(false);
 		table.setRowSelectionAllowed(false);
+		
+		table.setOpaque(true);
+		table.setFillsViewportHeight(true);
+		
+		table.setBackground(Color.WHITE);
+		table.setForeground(Color.BLACK);
+		table.setFont(GameOptions.REGULAR_TEXT_FONT);
+		
+		table.getTableHeader().setBackground(Color.WHITE);
+		table.getTableHeader().setForeground(Color.BLACK);
+		table.getTableHeader().setFont(GameOptions.REGULAR_TEXT_FONT);
+		table.setSelectionBackground(Color.decode("#999999"));
 	}
 
 	private void update() {
