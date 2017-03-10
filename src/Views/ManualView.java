@@ -33,7 +33,6 @@ public class ManualView extends JPanel{
 		instuctions = new ManualInstructionsView(data, size, heigth);
 
 		add(instuctions,BorderLayout.CENTER);
-		
 	}
 	
 	private void styleButton(JButton button){
