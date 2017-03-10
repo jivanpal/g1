@@ -88,9 +88,6 @@ public class AudioPlayer {
 				musicVolumeControl = (FloatControl) musicClip.getControl(FloatControl.Type.VOLUME);
 				isUsingMaster = false;
 			}
-
-			System.out.println(musicVolumeControl.getMinimum());
-			System.out.println(musicVolumeControl.getMaximum());
 			musicVolumeControl.setValue(GameOptions.getCurrentMusicValue());
 			musicClip.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (Exception ex) {

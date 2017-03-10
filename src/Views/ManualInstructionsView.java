@@ -82,19 +82,17 @@ public class ManualInstructionsView extends JPanel {
 	}
 
 	public void pageDown() {
-		this.pageNumber -= 2;
-		if (pageNumber < MIN_PAGE) {
-			this.pageNumber = MIN_PAGE;
+		if (pageNumber > MIN_PAGE) {
+			this.pageNumber -= 2;
+			update();
 		}
-		update();
 	}
 
 	public void pageUp() {
-		this.pageNumber += 2;
-		if (pageNumber > MAX_PAGE) {
-			this.pageNumber = MAX_PAGE;
+		if (pageNumber < MAX_PAGE) {
+			this.pageNumber += 2;
+			update();
 		}
-		update();
 	}
 
 	private Object[][] getDataForPage(int page) {
