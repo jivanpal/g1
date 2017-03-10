@@ -114,7 +114,8 @@ public class Screen extends JPanel{
 		setLight();
 		
 		g.setColor(Color.WHITE);
-		for(Body b : starMap){
+		for(Map.Entry<Integer, Body> e : starMap.entrySet()){
+			Body b = e.getValue();
 			Star s = (Star) b;
 			Vector v = s.getPosition();
 			Point p = Calculations.calcPos(viewFrom, viewTo, v);
@@ -210,12 +211,16 @@ public class Screen extends JPanel{
 	private void createObjects() {
 		poly3Ds.clear();
 //		System.out.println(map.size());
-		for(Body b : map){
+		for(Map.Entry<Integer, Body> e : starMap.entrySet()){
+			Body b = e.getValue();
 			Class<? extends Body> bClass = b.getClass();
-			if(bClass == Ship.class && map.indexOf(b) != shipIndex && map.indexOf(b) >= 0){
-				for(Vector v : map.getAllPositions(b.getPosition())){
-					// System.out.println("Drawing Ship: " + map.indexOf(b) + ", " + shipIndex);
-					Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
+			if(bClass == Ship.class && e.getKey() != shipIndex && e.getKey() >= 0){
+				Ship s = (Ship) b;
+				if(!s.getPilotName().equals("") || !s.getEngineerName().equals(null)){
+					System.out.println("Drawing Ship: " + e.getKey() + ", " + s.getPilotName());
+					for(Vector v : map.getAllPositions(b.getPosition())){
+						Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
+					}
 				}
 			}
 			else if(bClass == Asteroid.class){
@@ -314,11 +319,12 @@ public class Screen extends JPanel{
 	public void setMap(Map map){
 		this.map = map;
 //		System.out.println(map.get(0).getPosition());
-		for(Body b : map){
+		for(Map.Entry<Integer, Body> e : starMap.entrySet()){
+			Body b = e.getValue();
 			if(b.getClass() == Ship.class){
 				Ship s = (Ship)b;
 				if(s.getPilotName().equals(nickname) || s.getEngineerName().equals(nickname)){
-					shipIndex = map.indexOf(b);
+					shipIndex = e.getKey();
 					break;
 				}
 			}
