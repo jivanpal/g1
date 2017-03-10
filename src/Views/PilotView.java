@@ -273,9 +273,12 @@ public class PilotView extends JPanel implements Observer {
             this.setLayout(new BorderLayout());
 
             UIpanel = new JPanel();
-            UIpanel.setOpaque(false);
+            UIpanel.setOpaque(true);
             UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
             UIpanel.setPreferredSize(new Dimension(parentFrame.getWidth(), parentFrame.getHeight() / 5));
+            UIpanel.setForeground(ViewConstants.UI_BACKGROUND_COLOR);
+            UIpanel.setBackground(ViewConstants.UI_BACKGROUND_COLOR);
+            UIpanel.paintComponents(getGraphics());
             UIpanel.add(manual);
 
             UIpanel.add(speedometerView);
@@ -349,6 +352,7 @@ public class PilotView extends JPanel implements Observer {
      */
     private void initialiseSpeedometer() {
         speedometerView = new SpeedometerView();
+        speedometerView.setOpaque(false);
     }
 
     private void initialiseManualButton() {
@@ -361,10 +365,10 @@ public class PilotView extends JPanel implements Observer {
     	if(this.instructions == null){
     		initialiseManualView(getHeight() - 100);
     		this.instructions.setBounds(50,50, getWidth() - 100, getHeight() - 100);
-    		UILayeredPane.add(instructions, JLayeredPane.PALETTE_LAYER);
-    	} else {
-    		this.instructions.setVisible(!instructions.isVisible());
-    	}
+    		UILayeredPane.add(instructions, JLayeredPane.MODAL_LAYER);
+        }
+
+        this.instructions.setVisible(!instructions.isVisible());
     }
 
     private void initialiseManualView(int height) {
