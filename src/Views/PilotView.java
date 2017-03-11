@@ -32,11 +32,12 @@ import Physics.Body;
  * Created by James on 01/02/17.
  */
 public class PilotView extends JPanel implements Observer {
+
+    private static final String WON_GAME = "VICTORY";
+    private static final String LOSE_GAME = "FAILURE";
+
     private Screen screen;
     private SpeedometerView speedometerView;
-    private WeaponView plasmaBlasterView;
-    private WeaponView laserBlasterView;
-    private WeaponView torpedosView;
 
     private JButton manual;
     private ManualView instructions;
@@ -429,5 +430,13 @@ public class PilotView extends JPanel implements Observer {
             Map m = gameClient.getMap();
             screen.setMap(m);
         }
+    }
+
+    private void displayFullScreenMessage(String message) {
+        JLabel l = new JLabel(message);
+        l.setFont(GameOptions.FULLSCREEN_BOLD_TEXT_FONT);
+        // TODO: Find the real size of this
+        l.setBounds(100, 100, 600, 600);
+        UILayeredPane.add(l, JLayeredPane.DRAG_LAYER);
     }
 }
