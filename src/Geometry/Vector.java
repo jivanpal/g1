@@ -208,26 +208,6 @@ public class Vector implements Serializable {
     }
 
     /**
-     * Get the vector with components modulo the corresponding component of the
-     * argument vector.
-     * 
-     * In other words, if `this` is interpreted as a displacement from the
-     * origin in a looping space with dimensions described by `v`, return the
-     * smallest postive vector that gives the same displacement as `this`. This
-     * is useful for implementing the looping map behaviour.
-     * 
-     * @param   v   The vector describing the dimensions of the space.
-     * @return  Returns the smallest congruent vector in that space.
-     */
-    public Vector modulo(Vector v) {
-        return new Vector(
-            x % v.getX() + (x % v.getX() < 0 ? v.getX() : 0),
-            y % v.getY() + (y % v.getY() < 0 ? v.getY() : 0),
-            z % v.getZ() + (z % v.getZ() < 0 ? v.getZ() : 0)
-        );
-    }
-    
-    /**
      * Get the angle that this vector makes with another vector.
      * @param   v   The other vector.
      * @return  the non-reflex angle spanned in the plane of the two vectors when they

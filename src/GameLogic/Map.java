@@ -1,9 +1,9 @@
 package GameLogic;
 
-import java.util.*;
+import java.util.Collection;
 import java.util.concurrent.ConcurrentSkipListMap;
-import Geometry.Vector; // Leave this line here to distinguish with java.util.Vector
-import Physics.*;
+import Geometry.*;
+import Physics.Body;
 
 /**
  * A class to describe an instance of the game map, which is
@@ -11,17 +11,18 @@ import Physics.*;
  * 3D rather than simply 2D.
  * @author jivan
  */
-public class Map extends ConcurrentSkipListMap<Integer,Body> {
+public class Map {
 /// FIELDS
     private Vector dimensions;
-    private ArrayList<Integer> botIDs = new ArrayList<Integer>();
+    private ConcurrentSkipListMap<Integer,Body> bodies = new ConcurrentSkipListMap<Integer,Body>();
+    private BotManager botManager = new BotManager(this);
     
 /// CONSTRUCTORS
     
     /**
      * Construct a map with the given dimensions.
-     * @param   dimensions  A vector whose components describe the map's
-     *              dimensions in each axis direction.
+     * @param dimensions a vector whose components describe the map's
+     *      dimensions with respect to each axis.
      */
     public Map(Vector dimensions) {
         this.dimensions = dimensions;
@@ -29,9 +30,9 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
     
     /**
      * Construct a map with the given dimensions
-     * @param   x   The map's width / size in the x-dimension.
-     * @param   y   The map's length / size in the y-dimension.
-     * @param   z   The map's height / size in the z-dimension.
+     * @param x the map's width / size in the x-dimension.
+     * @param y the map's length / size in the y-dimension.
+     * @param z the map's height / size in the z-dimension.
      */
     public Map(int x, int y, int z) {
         this(new Vector(x,y,z));
@@ -42,27 +43,29 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
 // Alterers
     
     /**
-     * See if this map contains the body with a given ID.
-     * @param bodyID the ID of the body to check the presence of.
-     * @return whether that body is present.
-     */
-    public boolean contains(int bodyID) {
-        return containsKey(new Integer(bodyID));
-    }
-    
-    /**
      * Add a new body to the map.
      * @param newBody the body to add to the map. If a body with the same ID already exists
      *      on the map, this one won't be added.
      * @return `true` if the body was added, else `false`.
      */
     public boolean add(Body newBody) {
-        if (contains(newBody.getID())) {
+        if (newBody == null || this.contains(newBody.getID())) {
             return false;
         } else {
-            put(newBody.getID(), newBody);
+            bodies.put(newBody.getID(), newBody);
             return true;
         }
+    }
+    
+    /**
+     * Remove a body from the map.
+     * @param bodyID the ID of the body to remove from the map.
+     * @return `true` if a body with that ID was on the map, and has subsequently been
+     *      removed due to invoking this command, else `false` because no body with the
+     *      specified ID exists on the map. 
+     */
+    public boolean remove(int bodyID) {
+        return bodies.remove(bodyID) != null;
     }
     
 // Getters
@@ -74,17 +77,61 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
     	return dimensions;
     }
     
-    public ArrayList<Integer> getBotIDs() {
-        return botIDs;
+    /**
+     * Get a mapping between all bots on the map and the IDs of their bodies.
+     */
+    public BotManager getBotManager() {
+        return botManager;
     }
     
     /**
      * Get the body on this map that has the given ID.
-     * @param bodyID the ID o the body to get.
-     * @return the body with that ID.
+     * @param bodyID the ID of the body to get.
+     * @return the body with that ID, or `null` if no body with that ID exists on this map.
      */
     public Body get(int bodyID) {
-        return this.get(new Integer(bodyID));
+        return bodies.get(bodyID);
+    }
+    
+    /**
+     * Get a collection of all the bodies on the map.
+     * Useful to iterate over all bodies on the map.
+     */
+    public Collection<Body> bodies() {
+        return bodies.values();
+    }
+    
+    /**
+     * Get a collection of all the IDs of bodies on the map.
+     * Useful to iterate over all bodies on the map.
+     */
+    public Collection<Integer> bodyIDs() {
+        return bodies.keySet();
+    }
+    
+    /**
+     * Get the number of bodies on the map.
+     */
+    public int size() {
+        return bodies.size();
+    }
+    
+    /**
+     * Determine whether this map contains the body with a given ID.
+     * @param bodyID the ID of the body to check the presence of.
+     * @return whether a body with that ID is present.
+     */
+    public boolean contains(int bodyID) {
+        return bodies.containsKey(bodyID);
+    }
+    
+    /**
+     * Determine whether this map contains a given body, based on that body's ID
+     * @param body the body whose ID to check the presence of.
+     * @return whether a body with that ID is present.
+     */
+    public boolean contains(Body body) {
+        return this.contains(body.getID());
     }
     
 // Other methods
@@ -94,29 +141,34 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
      * smallest vector with positive components that represents the same
      * position on the map.
      * 
-     * For example, if the map has dimensions (2,5,7), then applying this method
+     * For example, if the map has dimensions (2, 5, 7), then applying this method
      * to the position vector (5, 6, 13) returns the vector (1, 1, 6), and applying
      * it to (-4, 2, -24) returns (0, 2, 3).
      * 
-     * @param   position    The position vector to be normalised.
-     * @return  the normalised position vector; the position vector put within the bounds of the map.
+     * @param position the position vector to be normalised.
+     * @return the normalised position vector; the position vector, put within the bounds of the map.
      */
     public Vector normalisePosition(Vector position) {
-        return position.modulo(dimensions);
+        return new Vector(
+            position.getX() % dimensions.getX() + (position.getX() % dimensions.getX() < 0 ? dimensions.getX() : 0),
+            position.getY() % dimensions.getY() + (position.getY() % dimensions.getY() < 0 ? dimensions.getY() : 0),
+            position.getZ() % dimensions.getZ() + (position.getZ() % dimensions.getZ() < 0 ? dimensions.getZ() : 0)
+        );
     }
     
     /**
-     * Get the direction vector representing the shortest path from one body
-     * on this map to another on this map.
-     * @param   a   The origin body.
-     * @param   b   The destination body.
-     * @return  the shortest vector from <i>a</i> to <i>b</i>. Note that this
-     *      function is anti-commutative; for all <i>a</i> and <i>b</i>, we have
-     *      shortestPath(<i>a</i>, <i>b</i>) = -shortestPath(<i>b</i>, <i>a</i>).
+     * Get the direction vector representing the shortest path between
+     * two bodies on this map.
+     * @param  a the origin body.
+     * @param  b the destination body.
+     * @return  the shortest trajectory from <i>a</i> to <i>b</i>, described by a vector.
+     *      Note that this function is anti-commutative; for all <i>a</i> and <i>b</i>, we have
+     *      shortestPath(<i>a</i>, <i>b</i>) .equals( shortestPath(<i>b</i>, <i>a</i>).negate() ).
      */
-    public Vector shortestPath(Body a, Body b) {
-        if (this.contains(a.getID())) {
-            if (this.contains(b.getID())) {
+    public Vector shortestPath(int aID, int bID) {
+        Body a, b;
+        if ((a = get(aID)) != null) {
+            if ((b = get(bID)) != null) {
                 Vector lineWithinBounds = b.getPosition().minus(a.getPosition());
                 return new Vector(
                     lineWithinBounds.getX() > dimensions.getX() ?
@@ -130,49 +182,52 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
                         lineWithinBounds.getZ()
                 );
             } else {
-                throw new IllegalArgumentException(
-                    "The second body specified does not reside on this map."
-                + "\nThe body in question is '"+b+"'."
-                );
+                throw new IllegalArgumentException("shortestPath: body with ID "+bID+" doesn't exist on map.");
             }
         } else {
-            throw new IllegalArgumentException(
-                "The first body specified does not reside on this map."
-            + "\nThe body in question is '"+a+"'."
-            );
+            throw new IllegalArgumentException("shortestPath: body with ID "+aID+" doesn't exist on map.");
         }
     }
     
     /**
-     * Given a position vector, get an array containing the 27 vectors
-     * corresponding to that position vector that reside in the primary
-     * map space, as well as all its direct neighbours.
-     * @param   position    The position vector.
-     * @return  an array with the position vectors for each of the 27 instances.
+     * Determine whether two bodies on this map overlap / are touching.
+     * @param aID the ID of one body involved
+     * @param bID the ID of the other body involved
+     * @return `true` if and only if the specified bodies are overlapping
+     */
+    public boolean overlaps(int aID, int bID) {
+        return this.shortestPath(aID, bID).length() < get(aID).getRadius() + get(bID).getRadius();
+    }
+    
+    /**
+     * Given a position vector that lies within the bounds of this
+     * map, get an array containing the 27 vectors corresponding to
+     * that position vector that reside in the primary map space, as
+     * well as all its direct neighbours.
+     * @param position the position vector of the body that is within the bounds of this map.
+     * @return an array with the position vectors for each of the 27 instances.
      */
     public Vector[] getAllPositions(Vector position) {
         // Get the central position vector.
-        position = position.modulo(dimensions);
-        
         double x = dimensions.getX();
         double y = dimensions.getY();
         double z = dimensions.getZ();
         
         Vector[] positions = new Vector[] {
-            position.plus(new Vector(-x, -y, -z)),
-            position.plus(new Vector( 0, -y, -z)),
-            position.plus(new Vector( x, -y, -z)),
+            position.plus(new Vector(-x, -y, -z)),  // -z   // -y   // -x
+            position.plus(new Vector( 0, -y, -z)),                  //  0
+            position.plus(new Vector( x, -y, -z)),                  //  x
             
-            position.plus(new Vector(-x,  0, -z)),
+            position.plus(new Vector(-x,  0, -z)),          //  0
             position.plus(new Vector( 0,  0, -z)),
             position.plus(new Vector( x,  0, -z)),
             
-            position.plus(new Vector(-x,  y, -z)),
+            position.plus(new Vector(-x,  y, -z)),          //  y
             position.plus(new Vector( 0,  y, -z)),
             position.plus(new Vector( x,  y, -z)),
             
             
-            position.plus(new Vector(-x, -y,  0)),
+            position.plus(new Vector(-x, -y,  0)),  //  0
             position.plus(new Vector( 0, -y,  0)),
             position.plus(new Vector( x, -y,  0)),
             
@@ -184,7 +239,8 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
             position.plus(new Vector( 0,  y,  0)),
             position.plus(new Vector( x,  y,  0)),
             
-            position.plus(new Vector(-x, -y,  z)),
+            
+            position.plus(new Vector(-x, -y,  z)),  //  z 
             position.plus(new Vector( 0, -y,  z)),
             position.plus(new Vector( x, -y,  z)),
             
@@ -205,32 +261,48 @@ public class Map extends ConcurrentSkipListMap<Integer,Body> {
      * Update the state of the map.
      */
     public void update() {
-        // Get rid of destroyed bodies.
-        for(Map.Entry<Integer,Body> e : this.entrySet()) {
-            if( e.getValue().isDestroyed() ) {
-                remove(e.getKey());
+        // Get rid of destroyed bodies,
+        // normalise each body's position vector,
+        // and update their states.
+        for(Body b : bodies()) {
+            if (b.isDestroyed()) {
+                this.remove(b.getID());
+            } else {
+                b.setPosition(this.normalisePosition(b.getPosition()));
+                b.update();
             }
         }
         
-        // Normalise each body's position vector and update its state.
-        for (Map.Entry<Integer,Body> e : this.entrySet()) {
-            Body b = e.getValue();
-            b.setPosition(this.normalisePosition(b.getPosition()));
+        // Make bots do their thing.
+        for(BotManager.AbstractBot b : botManager.bots()) {
             b.update();
         }
         
-        // Make bots do their thing.
-        for (Integer botID : botIDs) {
-            this.get(botID).update();
-        }
-        
         // Make touching bodies rebound.
-        for (Map.Entry<Integer,Body> a: this.entrySet()) {
-            for (Map.Entry<Integer,Body> b : this.entrySet()) {
-                Body bodyA = a.getValue();
-                Body bodyB = b.getValue();
-                if (bodyA.isTouching(bodyB)) {
-                    bodyA.rebound(bodyB);
+        for (int aID : bodyIDs()) {
+            // Store values pertaining to A that are used more than once,
+            // in an effort to optimise this procedure.
+            Body a = get(aID);
+            double aRadius = a.getRadius();
+            double aMass = a.getMass();
+            
+            for (int bID : bodyIDs()) {
+                Body b = get(bID);
+                Vector lineOfAction = shortestPath(aID, bID);
+                
+                // If A and B are touching, then they rebound.
+                if (aID < bID && lineOfAction.length() < aRadius+ b.getRadius()) {
+                    // Components of velocities that lie on the line of action
+                    Vector aVel = a.getVelocity().proj(lineOfAction);
+                    Vector bVel = b.getVelocity().proj(lineOfAction);
+                    
+                    // Store mass of B as it is used several times
+                    double bMass = b.getMass();
+                    double recipMassSum = 1/(aMass + bMass);
+                    
+                    // Elastic collision between A and B
+                    a.setVelocity(aVel.scale(aMass - bMass).plus(bVel.scale(2*bMass)).scale(recipMassSum));
+                    b.setVelocity(bVel.scale(bMass - aMass).plus(aVel.scale(2*aMass)).scale(recipMassSum));
                 }
             }
         }

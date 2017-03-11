@@ -114,7 +114,7 @@ public class Screen extends JPanel{
 		setLight();
 		
 		g.setColor(Color.WHITE);
-		for(Body b : starMap){
+		for(Body b : starMap.bodies()){
 			Star s = (Star) b;
 			Vector v = s.getPosition();
 			Point p = Calculations.calcPos(viewFrom, viewTo, v);
@@ -207,32 +207,33 @@ public class Screen extends JPanel{
 		}
 	}
 
-	private void createObjects() {
-		poly3Ds.clear();
-//		System.out.println(map.size());
-		for(Body b : map){
-			Class<? extends Body> bClass = b.getClass();
-			if(bClass == Ship.class && map.indexOf(b) != shipIndex && map.indexOf(b) >= 0){
-				for(Vector v : map.getAllPositions(b.getPosition())){
-					// System.out.println("Drawing Ship: " + map.indexOf(b) + ", " + shipIndex);
-					Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
-				}
-			}
-			else if(bClass == Asteroid.class){
-//				System.out.println("Got an asteroid " + map.indexOf(b));
-				for(Vector v : map.getAllPositions(b.getPosition())){
-					AsteroidModel asteroid = new AsteroidModel(v, 2, b.getOrientation());
-				}
-				asteroidDrawn  = true;
-			}
-			else if(bClass == Bullet.class){
-				for(Vector v : map.getAllPositions(b.getPosition())){
-					Laser laser = new Laser(v, 2, b.getOrientation());
-				}
-			}
-		}
-//		System.out.println("Completed createObjects()");
-		
+    private void createObjects() {
+        poly3Ds.clear();
+//        System.out.println(map.size());
+        for(Body b : map.bodies()) {
+            if (b.getID() != shipIndex) {
+                Class<? extends Body> bClass = b.getClass();
+                if (bClass == Ship.class) {
+                    for(Vector v : map.getAllPositions(b.getPosition())){
+                        // System.out.println("Drawing Ship: " + b.getID() + ", " + shipIndex);
+                        Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
+                    }
+                }
+                else if(bClass == Asteroid.class){
+//                    System.out.println("Got an asteroid " + map.indexOf(b));
+                    for(Vector v : map.getAllPositions(b.getPosition())){
+                        AsteroidModel asteroid = new AsteroidModel(v, 2, b.getOrientation());
+                    }
+                    asteroidDrawn  = true;
+                }
+                else if(bClass == Bullet.class){
+                    for(Vector v : map.getAllPositions(b.getPosition())){
+                        Laser laser = new Laser(v, 2, b.getOrientation());
+                    }
+                }
+            }
+        }
+//        System.out.println("Completed createObjects()");
 	}
 
 	/**
@@ -291,20 +292,21 @@ public class Screen extends JPanel{
 	 */
 	private void camera(){
 		
-		if(shipIndex != null){
+		if(shipIndex != null) {
 			Ship ship = (Ship) map.get(shipIndex);
 			U = ship.getDownVector();
-			V = ship.getRightVector();
-			if(pilot){
+			if(pilot) {
 				N = ship.getFrontVector();
+				V = ship.getRightVector();
 			}
-			else{
+			else {
 				N = ship.getRearVector();
+				V  =ship.getLeftVector();
 			}
 			viewFrom = ship.getPosition();
 			viewTo = viewFrom.plus(N);
 			
-			//Generate CM matrix for transforming points from global coordinate system to camera coordinate system
+			// Generate CM matrix for transforming points from global coordinate system to camera coordinate system
 			CM = Matrix.getCM(viewFrom, V, U, N, 10);
 		}
 		
@@ -314,11 +316,11 @@ public class Screen extends JPanel{
 	public void setMap(Map map){
 		this.map = map;
 //		System.out.println(map.get(0).getPosition());
-		for(Body b : map){
-			if(b.getClass() == Ship.class){
+		for(Body b : map.bodies()) {
+			if(b.getClass() == Ship.class) {
 				Ship s = (Ship)b;
 				if(s.getPilotName().equals(nickname) || s.getEngineerName().equals(nickname)){
-					shipIndex = map.indexOf(b);
+					shipIndex = b.getID();
 					break;
 				}
 			}

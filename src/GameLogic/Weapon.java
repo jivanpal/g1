@@ -9,7 +9,7 @@ import Physics.*;
  * @author Ivan Panchev
  * @author jivan
  */
-public abstract class Weapon implements Serializable {
+public class Weapon implements Serializable {
 /// FIELDS
   
     private Ship        parent;
@@ -17,7 +17,6 @@ public abstract class Weapon implements Serializable {
     private Resource    ammo;
     private int         shieldDamage;
     private int         shipDamage;
-    private boolean     autoReload;
     private double      cooldown;
     private double      remainingCooldown = 0;
     
@@ -33,8 +32,7 @@ public abstract class Weapon implements Serializable {
      * @param shieldDamage the amount of damage that this weapon deals to a ship's shields.
      * @param shipDamage the amount of damage that this weapon deals to the ship
      *      directly when its shields are down.
-     * @param autoReload `true` if this weapon should reload automatically.
-     * @param cooldown the cooldown period for the weapon after each use, in milliseconds.
+     * @param cooldown the cooldown period for the weapon after each use, in seconds.
      */
     public Weapon(
         Ship    parent,
@@ -43,7 +41,6 @@ public abstract class Weapon implements Serializable {
         int     initAmmo,
         int     shieldDamage,
         int     shipDamage,
-        boolean autoReload,
         double  cooldown
     ) {
         this.parent         = parent;
@@ -51,7 +48,6 @@ public abstract class Weapon implements Serializable {
         this.ammo           = new Resource(maxAmmo, initAmmo);
         this.shieldDamage   = shieldDamage;
         this.shipDamage     = shipDamage;
-        this.autoReload     = autoReload;
         this.cooldown       = cooldown;
     }
     
@@ -87,10 +83,6 @@ public abstract class Weapon implements Serializable {
         return shipDamage;
     }
     
-    public boolean autoReloads() {
-        return autoReload;
-    }
-    
      public double getCooldownPeriod() {
         return cooldown;
     }
@@ -112,26 +104,48 @@ public abstract class Weapon implements Serializable {
     }
     
 // Actions
-    public Bullet fire() throws Exception {
+    
+    /**
+     * Fire this weapon, getting the Body instance that the firing of this
+     * weapon at that instant would generate. 
+     * @return an instance of this weapon's bullet type, positioned appropriately
+     *      in relation to its parent Ship. If the weapon cannot be fired, `null`
+     *      is returned instead.
+     */
+    public Bullet fire() {
     	if(this.canFire()) {
     		Bullet bullet = newPositionedBullet();
     	    ammo.decrease();
     		remainingCooldown = cooldown;
+    		return bullet;
+    	} else {
+    	    return null;
     	}
-    	return bullet;
     }
     
+    /**
+     * Clone the reference bullet and put it in position.
+     */
     private Bullet newPositionedBullet() {
         Bullet instance = null;
         try {
             instance = (Bullet)bullet.clone();
         } catch (CloneNotSupportedException e) {
-            System.err.println("Couldn't get new Bullet:");
+            System.err.println("Couldn't clone reference bullet instance when firing weapon:");
             e.printStackTrace();
         }
-        instance.setOriginBody(parent);
+        
+        if (instance == null) {
+            System.err.println("Cloning and casting of the reference bullet gave `null` for some reason.");
+        } else {
+            instance.setOriginBody(parent);
+        }
+        
         return instance;
     }
     
-    
+/// PREDEFINED WEAPON TYPES
+    public enum Type {
+        LASER, PLASMA, TORPEDO;
+    }
 }

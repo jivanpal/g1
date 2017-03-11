@@ -58,7 +58,7 @@ public class GameHost extends Thread
 				else
 					gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
 			}
-			for (Body b : gameMap.gameMap)
+			for (Body b : gameMap.gameMap.bodies())
 			{
 				if(!(b instanceof Ship))
 				{
