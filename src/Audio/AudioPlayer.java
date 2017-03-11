@@ -19,6 +19,13 @@ public class AudioPlayer {
 	public static String MENU_SCREEN_TUNE = pathToProjectAudio + "intro_screen.wav";
 	public static String IN_GAME_TUNE = pathToProjectAudio + "game_audio.wav";
 	public static String MOUSE_CLICK_EFFECT = pathToProjectAudio + "mouse_click.wav";
+	public static String LASER_FIRE_EFFECT = pathToProjectAudio + "laser_fire.wav";
+	public static String PLASMA_FIRE_EFFECT = pathToProjectAudio + "plasma_fire.wav";
+	public static String TORPEDO_FIRE_EFFECT = pathToProjectAudio + "torpedo_fire.wav";
+	public static String VICTORY_EFFECT = pathToProjectAudio + "victory.wav";
+	public static String FAILURE_EFFECT = pathToProjectAudio + "failure.wav";
+	public static String SHIELD_DECREASE_EFFECT = pathToProjectAudio + "shield_decrease.wav";
+	public static String SHIP_HEALTH_DECREASE_EFFECT = pathToProjectAudio + "ship_health_decrease.wav";
 
 	private static Clip musicClip;
 	private static Clip soundEffectClip;

@@ -111,13 +111,19 @@ public class PilotView extends JPanel implements Observer {
             @Override
             public void keyPressed(KeyEvent keyEvent) {
                 if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
+                    // laser
                     gameClient.send("fireWeapon1");
+                    AudioPlayer.playSoundEffect(AudioPlayer.LASER_FIRE_EFFECT);
                 } else if (keyEvent.getKeyCode() == GameOptions
                         .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON)) {
+                    // plasma
                     gameClient.send("fireWeapon2");
+                    AudioPlayer.playSoundEffect(AudioPlayer.PLASMA_FIRE_EFFECT);
                 } else if (keyEvent.getKeyCode() == GameOptions
                         .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON)) {
+                    // torpedo
                     gameClient.send("fireWeapon3");
+                    AudioPlayer.playSoundEffect(AudioPlayer.TORPEDO_FIRE_EFFECT);
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON)) {
                     gameClient.send("accelerate");
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON)) {

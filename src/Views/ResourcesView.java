@@ -42,8 +42,31 @@ public class ResourcesView extends JPanel {
     }
 
     /**
+     * Returns the current level of the specified resource
+     *
+     * @param type The type of resource to get the current level of
+     * @return The current level of the resource specified
+     */
+    public int getResourceLevel(int type) {
+        switch (type) {
+            case SHIELDS:
+                return shieldsComponent.resourceProgressBar.getValue();
+
+            case HULL:
+                return hullComponent.resourceProgressBar.getValue();
+
+            case ENGINE:
+                return engineComponent.resourceProgressBar.getValue();
+
+            default:
+                return 0;
+        }
+    }
+
+    /**
      * Updates the resource level shown to the player for a given resource type.
-     * @param type Integer corresponding to the type of resource - see the constants defined in ResourceModel.java
+     *
+     * @param type  Integer corresponding to the type of resource - see the constants defined in ResourceModel.java
      * @param level The new resource level
      */
     public void updateResourceLevels(int type, float level) {
@@ -126,6 +149,7 @@ public class ResourcesView extends JPanel {
 
         /**
          * Creates a ResourceComponent which displays info about a particular resource to the player.
+         *
          * @param name The name of the resource.
          */
         ResourceComponent(String name, String replenishNumber) {
@@ -154,6 +178,7 @@ public class ResourcesView extends JPanel {
 
         /**
          * Sets the resource bar to the appropriate amount
+         *
          * @param currentLevel The level to set the resource bar to
          */
         void updateResourceLevel(float currentLevel) {

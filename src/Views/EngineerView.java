@@ -480,8 +480,17 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                         torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
 
                         resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
+
+                        if(s.getShieldLevels() < resourcesView.getResourceLevel(ResourcesView.SHIELDS)){
+                            AudioPlayer.playSoundEffect(AudioPlayer.SHIELD_DECREASE_EFFECT);
+                        }
                         resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
+
+                        if(s.getHealth() < resourcesView.getResourceLevel(ResourcesView.HULL)) {
+                            AudioPlayer.playSoundEffect(AudioPlayer.SHIP_HEALTH_DECREASE_EFFECT);
+                        }
                         resourcesView.updateResourceLevels(ResourcesView.HULL, s.getHealth());
+
                     }
                 }
             }
