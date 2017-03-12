@@ -34,9 +34,11 @@ public class GameHost extends Thread
 		{
 			System.err.println("Couldn't listen on port " + PORT);
 		}
+		//Key sequence variables
 		int minLength = 2;
 		int maxLength = 7;
 		int sequenceNumber = 10;
+		//generate keysequences for all ships
 		for (int i = 0; i < 4; i++)
 		{
 			keySequences.add(new KeySequence(minLength, maxLength, sequenceNumber));
@@ -47,13 +49,16 @@ public class GameHost extends Thread
 	{
 		try
 		{
+			//Create the clientTable
 			ClientTable clientTable = new ClientTable();
+			//create an empty map
 			MapContainer gameMap = new MapContainer();
+			
 			Player[] p = lobby.getPlayers();
-			// add the ship if the team is not there anyway to avoid errors
+			// add the ships, add dummy bodies for non existant ones and then delete them
 			for (int i = 0; i < lobby.getPlayers().length; i += 2)
 			{
-				if (p[i].nickname.equals("") && p[i + 1].nickname.equals(""))
+				if (p[i]==null && p[i + 1]==null)
 					gameMap.gameMap.add(new Body());
 				else
 					gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
