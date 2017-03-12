@@ -13,6 +13,7 @@ import java.util.Observer;
 import java.util.UUID;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -276,12 +277,14 @@ public class LobbyPanel extends JPanel implements Observer {
 				}
 				System.out.println("Swapping to PilotView");
 				menu.changeFrame(pv);
+				menu.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
 			} else // else player is engineer
 			{
 				System.out.println("Player is an Engineer");
 				EngineerView eview = new EngineerView(client.name, gameClient, menu.getFrame());
 				System.out.println("Swapping to EngineerView");
 				menu.changeFrame(eview);
+				menu.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
 			}
 		} else {
 			while (lpanel == null) {
