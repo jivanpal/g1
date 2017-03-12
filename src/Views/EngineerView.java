@@ -354,13 +354,13 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         laserBlasterView = new WeaponView("Laser Blaster", true, laserReplenishNumber);
         torpedosView = new WeaponView("Torpedos", true, torpedoReplenishNumber);
 
-        laserBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
-        plasmaBlasterView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.LASER_BLASTER_INDEX));
-        torpedosView.setMaxiumumAmmo(s.getWeaponMaxAmmoByIndex(Ship.TORPEDO_WEAPON_INDEX));
+        laserBlasterView.setMaxiumumAmmo(s.getWeapon(Weapon.Type.LASER).getAmmoMaximum());
+        plasmaBlasterView.setMaxiumumAmmo(s.getWeapon(Weapon.Type.PLASMA).getAmmoMaximum());
+        torpedosView.setMaxiumumAmmo(s.getWeapon(Weapon.Type.TORPEDO).getAmmoMaximum());
 
-        laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
-        plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
-        torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
+        laserBlasterView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.LASER).getAmmoLevel());
+        plasmaBlasterView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.PLASMA).getAmmoLevel());
+        torpedosView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel());
 
         laserBlasterView.setReplenishAmmo(this, ShipState.LASER_REPLENISH);
         plasmaBlasterView.setReplenishAmmo(this, ShipState.PLASMA_REPLENISH);
@@ -368,7 +368,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     }
 
     /**
-     * Given a Ship, this will initialse the resource progress bars to their initial values and set their maximum values
+     * Given a Ship, this will initialise the resource progress bars to their initial values and set their maximum values
      *
      * @param s This players Ship object
      */
@@ -380,12 +380,14 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         String fuelSequenceNumber = parseNumber(keySequences.get(fuelSequenceNum));
 
         resourcesView = new ResourcesView(this, shieldSequenceNumber, fuelSequenceNumber);
-        resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
-        resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
-        resourcesView.updateResourceLevels(ResourcesView.HULL, s.getHealth());
-        resourcesView.setMaximumResourceLevel(ResourcesView.ENGINE, Engines.DEFAULT_FUEL_MAX_LEVEL);
-        resourcesView.setMaximumResourceLevel(ResourcesView.HULL, Health.DEFAULT_MAX_SHIP_HEALTH_LEVEL);
-        resourcesView.setMaximumResourceLevel(ResourcesView.SHIELDS, Shields.DEFAULT_MAX_SHIELDS_LEVEL);
+        
+        resourcesView.updateResourceLevels(ResourcesView.ENGINE,     s.getResource(Resource.Type.ENGINES).get());
+        resourcesView.updateResourceLevels(ResourcesView.SHIELDS,    s.getResource(Resource.Type.SHIELDS).get());
+        resourcesView.updateResourceLevels(ResourcesView.HULL,       s.getResource(Resource.Type.HEALTH).get());
+        
+        resourcesView.setMaximumResourceLevel(ResourcesView.ENGINE,  s.getResource(Resource.Type.ENGINES).getMax());
+        resourcesView.setMaximumResourceLevel(ResourcesView.SHIELDS, s.getResource(Resource.Type.SHIELDS).getMax());
+        resourcesView.setMaximumResourceLevel(ResourcesView.HULL,    s.getResource(Resource.Type.HEALTH).getMax());
     }
 
     /**
@@ -440,11 +442,9 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     private Ship findPlayerShip() {
         Map m = gameClient.getMap();
 
-        for (Map.Entry<Integer, Body> e : m.entrySet()) {
-        	Body b = e.getValue();
+        for (Body b : m.bodies()) {
             if (b instanceof Ship) {
                 Ship s = (Ship) b;
-
                 if (s.getEngineerName().equals(playerNickname)) {
                     return s;
                 }
@@ -475,22 +475,21 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                     Ship s = (Ship) m.get(i);
 
                     if (s.getEngineerName().equals(playerNickname)) {
-                        laserBlasterView.updateWeaponAmmoLevel(s.getLaserBlasterAmmo());
-                        plasmaBlasterView.updateWeaponAmmoLevel(s.getPlasmaBlasterAmmo());
-                        torpedosView.updateWeaponAmmoLevel(s.getTorpedoWeaponAmmo());
+                        laserBlasterView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.LASER).getAmmoLevel());
+                        plasmaBlasterView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.PLASMA).getAmmoLevel());
+                        torpedosView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel());
 
-                        resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getFuelLevel());
+                        resourcesView.updateResourceLevels(ResourcesView.ENGINE,  s.getResource(Resource.Type.ENGINES).get());
 
-                        if(s.getShieldLevels() < resourcesView.getResourceLevel(ResourcesView.SHIELDS)){
+                        if(s.getResource(Resource.Type.SHIELDS).get() < resourcesView.getResourceLevel(ResourcesView.SHIELDS)){
                             AudioPlayer.playSoundEffect(AudioPlayer.SHIELD_DECREASE_EFFECT);
                         }
-                        resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getShieldLevels());
+                        resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getResource(Resource.Type.SHIELDS).get());
 
-                        if(s.getHealth() < resourcesView.getResourceLevel(ResourcesView.HULL)) {
+                        if(s.getResource(Resource.Type.HEALTH).get() < resourcesView.getResourceLevel(ResourcesView.HULL)) {
                             AudioPlayer.playSoundEffect(AudioPlayer.SHIP_HEALTH_DECREASE_EFFECT);
                         }
-                        resourcesView.updateResourceLevels(ResourcesView.HULL, s.getHealth());
-
+                        resourcesView.updateResourceLevels(ResourcesView.HULL,    s.getResource(Resource.Type.HEALTH).get());
                     }
                 }
             }

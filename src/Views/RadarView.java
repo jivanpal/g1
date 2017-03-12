@@ -103,7 +103,7 @@ public class RadarView extends JPanel{
 
         Graphics2D g = (Graphics2D) graphics;
 
-        for(Body b : map) {
+        for(Body b : map.bodies()) {
 
             // Select the correct color to paint
             if(b instanceof Asteroid) {

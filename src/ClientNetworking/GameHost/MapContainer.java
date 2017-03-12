@@ -4,7 +4,9 @@ import java.util.Random;
 
 import GameLogic.Asteroid;
 import GameLogic.Map;
+import GameLogic.Resource;
 import GameLogic.Ship;
+import GameLogic.Weapon;
 import Geometry.*;
 import Physics.Body;
 
@@ -39,10 +41,27 @@ public class MapContainer {
                 ),
                 new Rotation(r.nextDouble()*Math.PI*2, r.nextDouble()*Math.PI, r.nextDouble()*Math.PI*2)
             );
-            
-            boolean overlaps = false;
-            for (Body b : gameMap) {
-                if (a.isTouching(b)) {
+
+            gameMap.add(a);
+
+            boolean overlaps = true;
+            while(overlaps) {
+				overlaps = false;
+
+				for(int bID : gameMap.bodyIDs()) {
+					if(gameMap.overlaps(a.getID(), bID) && bID != a.getID()) {
+						overlaps = true;
+						generateNewAsteroidPosition(a);
+						break;
+					}
+				}
+
+				System.out.println("Help, I'm stuck in this loop!");
+			}
+
+/*            boolean overlaps = false;
+            for (int bID : gameMap.bodyIDs()) {
+                if (gameMap.overlaps(a.getID(), bID)) {
                     overlaps = true;
                     break;
                 }
@@ -52,26 +71,33 @@ public class MapContainer {
                 i--;
             } else {
                 gameMap.add(a);
-            }
+            }*/
         }
+	}
+
+	private void generateNewAsteroidPosition(Asteroid a) {
+		Random r = new Random();
+		a.setPosition(new Vector(
+				r.nextDouble() * gameMap.getDimensions().getX(),
+				r.nextDouble() * gameMap.getDimensions().getY(),
+				r.nextDouble() * gameMap.getDimensions().getZ()
+		));
+		a.setOrientation(new Rotation(r.nextDouble()*Math.PI*2, r.nextDouble()*Math.PI, r.nextDouble()*Math.PI*2));
 	}
 
 	public synchronized void updateMap(String str, int position) {
 		Ship playerShip = (Ship) (gameMap.get(position));
 
-		//updating the weapon cooldowns
-		playerShip.updateWeaponsCooldown();
 		try {
 			switch (str) {
 			case "fireWeapon1":
-
-				gameMap.add(playerShip.fire(Ship.LASER_BLASTER_INDEX));
+				gameMap.add(playerShip.fire(Weapon.Type.LASER));
 				break;
 			case "fireWeapon2":
-				gameMap.add(playerShip.fire(Ship.PLASMA_BLASTER_INDEX));
+				gameMap.add(playerShip.fire(Weapon.Type.PLASMA));
 				break;
 			case "fireWeapon3":
-				gameMap.add(playerShip.fire(Ship.TORPEDO_WEAPON_INDEX));
+				gameMap.add(playerShip.fire(Weapon.Type.TORPEDO));
 				break;
 			case "accelerate":
 				playerShip.thrustForward();
@@ -92,19 +118,19 @@ public class MapContainer {
 				playerShip.rollRight();
 				break;
 			case "shieldReplenish":
-				playerShip.increseShieldsLevel();
+				playerShip.getResource(Resource.Type.SHIELDS).increase();
 			    break;
 			case "fuelReplenish":
-				playerShip.increaseFuel();
+				playerShip.getResource(Resource.Type.ENGINES).increase();
 				break;	
 			case "laserReplenish":
-				playerShip.increaseWeaponAmmoByIndex(Ship.LASER_BLASTER_INDEX);
+				playerShip.getWeapon(Weapon.Type.LASER).increaseAmmo();
 				break;
 			case "torpedoReplenish":
-				playerShip.increaseWeaponAmmoByIndex(Ship.TORPEDO_WEAPON_INDEX);
+				playerShip.getWeapon(Weapon.Type.TORPEDO).increaseAmmo();;
 				break;
 			case "plasmaReplenish":
-				playerShip.increaseWeaponAmmoByIndex(Ship.PLASMA_BLASTER_INDEX);
+				playerShip.getWeapon(Weapon.Type.PLASMA).increaseAmmo();;
 				break;
 			default:
 				throw new IllegalArgumentException("You done sent the wrong string yo");
@@ -117,8 +143,8 @@ public class MapContainer {
 	public synchronized void updateMap() {
 		gameMap.update();
 	}
-	public void delete(int ID)
-	{
+	
+	public void delete(int ID) {
 		gameMap.get(ID).destroy();
 	}
 }

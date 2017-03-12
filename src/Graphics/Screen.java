@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import GameLogic.Asteroid;
 import GameLogic.Bullet;
 import GameLogic.Global;
-import GameLogic.LaserBlaster;
 import GameLogic.Map;
 import GameLogic.Ship;
 import Physics.Body;
@@ -114,8 +113,8 @@ public class Screen extends JPanel{
 		setLight();
 		
 		g.setColor(Color.WHITE);
-		for(Map.Entry<Integer, Body> e : starMap.entrySet()){
-			Body b = e.getValue();
+
+		for(Body b : starMap.bodies()){
 			Star s = (Star) b;
 			Vector v = s.getPosition();
 			Point p = Calculations.calcPos(viewFrom, viewTo, v);
@@ -208,37 +207,33 @@ public class Screen extends JPanel{
 		}
 	}
 
-	private void createObjects() {
-		poly3Ds.clear();
-//		System.out.println(map.size());
-		for(Map.Entry<Integer, Body> e : starMap.entrySet()){
-			Body b = e.getValue();
-			Class<? extends Body> bClass = b.getClass();
-			if(bClass == Ship.class && e.getKey() != shipIndex && e.getKey() >= 0){
-				Ship s = (Ship) b;
-				if(!s.getPilotName().equals("") || !s.getEngineerName().equals(null)){
-					System.out.println("Drawing Ship: " + e.getKey() + ", " + s.getPilotName());
-					for(Vector v : map.getAllPositions(b.getPosition())){
-						//Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
-						ShipModel m = new ShipModel(v, 2, b.getOrientation(), e.getKey());
-					}
-				}
-			}
-			else if(bClass == Asteroid.class){
-//				System.out.println("Got an asteroid " + map.indexOf(b));
-				for(Vector v : map.getAllPositions(b.getPosition())){
-					AsteroidModel asteroid = new AsteroidModel(v, 2, b.getOrientation());
-				}
-				asteroidDrawn  = true;
-			}
-			else if(bClass == Bullet.class){
-				for(Vector v : map.getAllPositions(b.getPosition())){
-					Laser laser = new Laser(v, 2, b.getOrientation());
-				}
-			}
-		}
-//		System.out.println("Completed createObjects()");
-		
+    private void createObjects() {
+        poly3Ds.clear();
+//        System.out.println(map.size());
+        for(Body b : map.bodies()) {
+            if (b.getID() != shipIndex) {
+                Class<? extends Body> bClass = b.getClass();
+                if (bClass == Ship.class) {
+                    for(Vector v : map.getAllPositions(b.getPosition())){
+                        // System.out.println("Drawing Ship: " + b.getID() + ", " + shipIndex);
+                        Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
+                    }
+                }
+                else if(bClass == Asteroid.class){
+//                    System.out.println("Got an asteroid " + map.indexOf(b));
+                    for(Vector v : map.getAllPositions(b.getPosition())){
+                        AsteroidModel asteroid = new AsteroidModel(v, 2, b.getOrientation());
+                    }
+                    asteroidDrawn  = true;
+                }
+                else if(bClass == Bullet.class){
+                    for(Vector v : map.getAllPositions(b.getPosition())){
+                        Laser laser = new Laser(v, 2, b.getOrientation());
+                    }
+                }
+            }
+        }
+//        System.out.println("Completed createObjects()");
 	}
 
 	/**
@@ -297,20 +292,21 @@ public class Screen extends JPanel{
 	 */
 	private void camera(){
 		
-		if(shipIndex != null){
+		if(shipIndex != null) {
 			Ship ship = (Ship) map.get(shipIndex);
 			U = ship.getDownVector();
-			V = ship.getRightVector();
-			if(pilot){
+			if(pilot) {
 				N = ship.getFrontVector();
+				V = ship.getRightVector();
 			}
-			else{
+			else {
 				N = ship.getRearVector();
+				V  =ship.getLeftVector();
 			}
 			viewFrom = ship.getPosition();
 			viewTo = viewFrom.plus(N);
 			
-			//Generate CM matrix for transforming points from global coordinate system to camera coordinate system
+			// Generate CM matrix for transforming points from global coordinate system to camera coordinate system
 			CM = Matrix.getCM(viewFrom, V, U, N, 10);
 		}
 		
@@ -320,12 +316,11 @@ public class Screen extends JPanel{
 	public void setMap(Map map){
 		this.map = map;
 //		System.out.println(map.get(0).getPosition());
-		for(Map.Entry<Integer, Body> e : starMap.entrySet()){
-			Body b = e.getValue();
-			if(b.getClass() == Ship.class){
+		for(Body b : map.bodies()) {
+			if(b.getClass() == Ship.class) {
 				Ship s = (Ship)b;
 				if(s.getPilotName().equals(nickname) || s.getEngineerName().equals(nickname)){
-					shipIndex = e.getKey();
+					shipIndex = b.getID();
 					break;
 				}
 			}

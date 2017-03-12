@@ -1,7 +1,6 @@
 package Physics;
 
 import java.io.Serializable;
-
 import GameLogic.Global;
 import Geometry.*;
 
@@ -394,7 +393,7 @@ public class Body implements Cloneable, Serializable {
         System.err.println("Body #"+ID+": ∆w = "+delta+".");
     }
     
-// Alterers with respect to X'Y'Z
+// Alterers with respect to X'Y'Z'
     
     /**
      * Alter this instance's position by a given vector in the basis X'Y'Z', in meters.
@@ -466,12 +465,12 @@ public class Body implements Cloneable, Serializable {
         // Change position and orientation
         b = origin.getBasis().then(b);
         
-        // Change description of velocities back from
+        //   Change description of velocities back from
         // local reference frame to global reference frame,
         // as this is what the implementation requires.
-        // Also add the velocities of the origin-body to this
-        // instance, so that this instance moves relative to
-        // the origin-body as intended.
+        //   Also add the velocities of the origin-body to
+        // this instance, so that this instance moves relative
+        // to the origin-body as intended.
         v = b.globaliseDirection(v).plus(origin.getVelocity());
         w = b.globaliseDirection(w).plus(origin.getAngularVelocity());
     }
@@ -540,43 +539,5 @@ public class Body implements Cloneable, Serializable {
 
         // (∆ orient) is proportional to w and t
         alterOrientation(new Rotation(w.scale(Global.REFRESH_PERIOD)));
-    }
-    
-    /**
-     * Determine whether this body is touching or colliding with another.
-     * @param   b   The body the check whether this one is touching.
-     * @return  whether the two bodies are touching, as either `true` or `false`.
-     */
-    public boolean isTouching(Body b) {
-        return this.getPosition().minus(b.getPosition()).length() < this.getRadius() + b.getRadius();
-    }
-    
-// Disabled collisions
-    
-//    /**
-//     * Exert a force on this body that is equivalent to the force it would experience
-//     * when colliding with a given body. This takes into account the body's position.
-//     * In practice, `rebound(<i>b</i>)` is invoked <b>if and only if</b>
-//     * `<i>this</i>.isTouching(<i>b</i>)`.
-//     * @param   b   The body to simulate rebounding this body off of. The body <i>b</i>
-//     *              is unaffected by invocation of this method. In order for this body
-//     *              (call it body <i>a</i>) and <i>b</i> to both experience a rebounding
-//     *              effect off of each other, both `<i>a</i>.rebound(<i>b</i>)` and
-//     *              `<i>b</i>.rebound(<i>a</i>)` must be called <b>exactly once<b> each.
-//     */
-//    public void rebound(Body b) {
-//        if(b == this) {
-//            return;
-//        }
-//        
-//        Vector lineOfAction = getPosition().minus(b.getPosition());
-//        this.exertForce(
-//            reboundForce(lineOfAction),
-//            lineOfAction.normalise().scale(getRadius())
-//        );
-//    }
-    
-    public void rebound(Body b) {
-        // Do nothing at the moment; no collisions right now
     }
 }

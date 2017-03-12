@@ -406,10 +406,9 @@ public class PilotView extends JPanel implements Observer {
     private Ship findPlayerShip() {
         Map m = gameClient.getMap();
 
-        for (Body b : m) {
+        for (Body b : m.bodies()) {
             if (b instanceof Ship) {
                 Ship s = (Ship) b;
-
                 if (s.getPilotName().equals(playerNickname)) {
                     return s;
                 }

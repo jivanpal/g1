@@ -8,6 +8,7 @@ import java.io.Serializable;
  * values between 0 and some upper bound, such as ammo
  * levels or health.
  * 
+ * @author Ivan Panchev
  * @author jivan
  */
 public class Resource implements Serializable {
@@ -106,5 +107,10 @@ public class Resource implements Serializable {
      */
     public void setMax(int max) {
         this.max = max;
+    }
+    
+/// PREDEFINED RESOURCE TYPES
+    public enum Type {
+        ENGINES, SHIELDS, HEALTH;
     }
 }
