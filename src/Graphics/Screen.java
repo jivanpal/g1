@@ -219,7 +219,8 @@ public class Screen extends JPanel{
 				if(!s.getPilotName().equals("") || !s.getEngineerName().equals(null)){
 					System.out.println("Drawing Ship: " + e.getKey() + ", " + s.getPilotName());
 					for(Vector v : map.getAllPositions(b.getPosition())){
-						Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
+						//Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
+						ShipModel m = new ShipModel(v, 2, b.getOrientation(), e.getKey());
 					}
 				}
 			}
