@@ -5,7 +5,9 @@ import Views.PilotView;
 import com.sun.javafx.geom.Vec3d;
 import com.sun.xml.internal.bind.v2.TODO;
 
+import GameLogic.Resource;
 import GameLogic.Ship;
+import GameLogic.Weapon;
 
 import java.util.ArrayList;
 
@@ -28,21 +30,21 @@ public class ShipPresenter implements Interfaces.ShipPresenter {
 
     @Override
     public int getHealth() {
-        return mModel.getHealth();
+        return mModel.getResource(Resource.Type.HEALTH).get();
     }
 
     @Override
     public int getShields() {
-        return mModel.getShieldLevels();
+        return mModel.getResource(Resource.Type.SHIELDS).get();
     }
 
     @Override
     public int getEngineFuel() {
-        return mModel.getFuelLevel();
+        return mModel.getResource(Resource.Type.ENGINES).get();
     }
 
     @Override
-    public int getAmmo(byte weaponIndex) {
+    public int getAmmo(Weapon.Type type) {
         return 0;
     }
 
@@ -63,18 +65,17 @@ public class ShipPresenter implements Interfaces.ShipPresenter {
         return null;
     }
 
-    @Override
-    public void fireWeapon(byte weaponIndex) {
+    public void fire(Weapon.Type type) {
         // TODO
     }
 
     @Override
     public void updateFuel(int delta) {
-        mModel.customChangeFuel(delta);
+        mModel.getResource(Resource.Type.ENGINES).alter(delta);
     }
 
     @Override
     public void updateShields(int delta) {
-        mModel.customChangeShieldsLevel(delta);
+        mModel.getResource(Resource.Type.SHIELDS).alter(delta);
     }
 }

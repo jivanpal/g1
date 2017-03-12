@@ -53,20 +53,11 @@ public class GameHost extends Thread
 			// add the ship if the team is not there anyway to avoid errors
 			for (int i = 0; i < lobby.getPlayers().length; i += 2)
 			{
-				if (p[i].nickname.equals("") && p[i + 1].nickname.equals(""))
-					gameMap.gameMap.add(new Body());
-				else
-					gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
-			}
-			for (Body b : gameMap.gameMap)
-			{
-				if(!(b instanceof Ship))
-				{
-					gameMap.delete(b.getID());
-				}
+				gameMap.addShip(i, p[i]==null? "":p[i].nickname, p[i+1] == null? "": p[i+1].nickname);
 			}
 			gameMap.generateTerrain();
 			System.out.println("I HAVE STARTED THE SERVER");
+
 			while (true)
 			{
 				// Listen to the socket, accepting connections from new clients:

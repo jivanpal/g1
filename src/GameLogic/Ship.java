@@ -2,6 +2,8 @@ package GameLogic;
 
 import Geometry.*;
 import Physics.*;
+import GameLogic.weapon.*;
+import GameLogic.resource.*;
 
 /**
  * Class which represents the ship object in the game
@@ -9,32 +11,22 @@ import Physics.*;
  * @author jivan
  */
 public class Ship extends Body{
-    // Constants to denote weapon types
-    public static final byte LASER_BLASTER_INDEX    = 0;
-    public static final byte PLASMA_BLASTER_INDEX = 1;
-    public static final byte TORPEDO_WEAPON_INDEX = 2;
-    
-    // Maximum values for pitch velocity, roll velocity, and forward velocity.
-    // The ship is designed under the assumption that it cannot reverse,
-    //      therefore the reverse-velocity maximum is assumed to be zero.
+    //   Maximum values for pitch velocity, roll velocity, and forward velocity.
+    //   The ship is designed under the assumption that it cannot reverse,
+    // therefore the reverse-velocity maximum is assumed to be zero.
     private static final double PITCH_VEL_MAX = 0.1;  // radians per second
     private static final double ROLL_VEL_MAX  = 0.3;  // radians per second
     private static final double FWD_VEL_MAX   = 20;   // meters per second
     
-    // Smoothness of transition from rest to maximum for each axis
-    // Higher values result in smoother transitions
+    // Smoothness of transition from rest to maximum for each axis.
+    // Higher values result in smoother transitions.
     private static final int    PITCH_SMOOTHNESS    = 10;
     private static final int    ROLL_SMOOTHNESS     = 10;
     private static final int    THRUST_SMOOTHNESS   = 4;
     
-    private String engineerName;
-    private String pilotName;
-    private Weapon torpedo;
-    private Weapon laser;
-    private Weapon plasma;
-    private Engines engines;
-    private Shields shields;
-    private Health health;
+    private String engineerName, pilotName;
+    private Weapon laser, plasma, torpedo;
+    private Resource engines, shields, health;
     
     /**
      * Create a ship belonging to a specified pilot and engineer. 
@@ -46,13 +38,13 @@ public class Ship extends Body{
         super(100, 2);
         
         // Initialising ship weapons
-        torpedo = new TorpedoWeapon();
-        laser   = new LaserBlaster();
-        plasma  = new PlasmaBlaster();
+        laser   = new Laser(this);
+        plasma  = new Plasma(this);
+        torpedo = new Torpedo(this);
         
         // Initialise ship resources
-        engines = new Engines();
-        shields = new Shields();
+        engines = new GameLogic.resource.Engines();
+        shields = new GameLogic.resource.Shields();
         health  = new Health();
         
         // Record the names of the pilot and engineer 
@@ -60,7 +52,7 @@ public class Ship extends Body{
         this.engineerName = engineerName;
     }	
     
-    public String getPilotName(){
+    public String getPilotName() {
         return pilotName;
     }
     
@@ -68,100 +60,50 @@ public class Ship extends Body{
         return engineerName;
     }
     
-    // Getters
+/// GETTERS
     
-    public int getHealth(){
-        return health.getHealth();
-    }
-    
-    public int getShieldLevels(){
-        return shields.getShieldsLevel();
-    }
-    
-    public int getFuelLevel(){
-        return engines.getFuel();
-    }
-    
-    public int getPlasmaBlasterAmmo(){
-        return plasma.getAmmoLevel();
-    }
-    
-    public int getTorpedoWeaponAmmo(){
-        return torpedo.getAmmoLevel();
-    }
-    
-    public int getLaserBlasterAmmo(){
-        return laser.getAmmoLevel();
-    }
-    
-    // Setters
-    
-    public void increaseFuel(){
-        engines.increaseFuel();
-    }
-    
-    public void decreaseFuel(){
-        engines.decreaseFuel();
-    }
-    
-    public void customChangeFuel(int change){
-        engines.customChangeFuel(change);
-    }
-    
-    public void increseShieldsLevel(){
-        shields.increaseShieldsLevel();
-    }
-    
-    public void decreaseShieldsLevel(){
-        shields.decreaseShieldsLevel();
-    }
-    
-    public void customChangeShieldsLevel(int change){
-        shields.cusomChangeShieldsLevel(change);
-    }
-    
-    // Firing weapons
-    
-    public Bullet fire(int weaponIndex) throws Exception {
-        switch(weaponIndex) {
-        case LASER_BLASTER_INDEX:
-            return laser.fire(this);
-        case PLASMA_BLASTER_INDEX:
-            return plasma.fire(this);
-        case TORPEDO_WEAPON_INDEX:
-            return torpedo.fire(this);
+    public Weapon getWeapon(Weapon.Type type) {
+        switch (type) {
+        case LASER:
+            return laser;
+        case PLASMA:
+            return plasma;
+        case TORPEDO:
+            return torpedo;
         default:
-            throw new IllegalArgumentException("You didn't specify a weapon index!");
+            throw new RuntimeException("Apparently, you asked for a weapon that doesn't exist, which is impossible. WOOPS!");
         }
     }
     
-    public void increaseWeaponAmmoByIndex(int weaponIndex) {
-        switch(weaponIndex) {
-        case LASER_BLASTER_INDEX:
-            laser.increaseAmmo();
-        case PLASMA_BLASTER_INDEX:
-            torpedo.increaseAmmo();
-        case TORPEDO_WEAPON_INDEX:
-            plasma.increaseAmmo();
+    public Resource getResource(Resource.Type type) {
+        switch (type) {
+        case ENGINES:
+            return engines;
+        case SHIELDS:
+            return shields;
+        case HEALTH:
+            return health;
         default:
-            throw new IllegalArgumentException("You didn't specify a weapon index!");
+            throw new RuntimeException("Apparently, you asked for a resource that doesn't exist, which is impossible. WOOPS!");
         }
     }
     
-    public int getWeaponMaxAmmoByIndex(int weaponIndex){
-        switch(weaponIndex) {
-        case LASER_BLASTER_INDEX:
-            return laser.getMaxAmmo();
-        case PLASMA_BLASTER_INDEX:
-            return plasma.getMaxAmmo();
-        case TORPEDO_WEAPON_INDEX:
-            return torpedo.getMaxAmmo();
+/// FIRING
+    
+    public Bullet fire(Weapon.Type type) {
+        switch(type) {
+        case LASER:
+            return laser.fire();
+        case PLASMA:
+            return plasma.fire();
+        case TORPEDO:
+            return torpedo.fire();
         default:
-            throw new IllegalArgumentException("You didn't specify a weapon index!");
+            throw new RuntimeException("Apparently, you asked to fire a weapon that doesn't exist, which is impossible. WOOPS!");
         }
     }
     
-// Movement methods
+/// SHIP MOVEMENT
     
     private static final double PITCH_ACC   = PITCH_VEL_MAX / PITCH_SMOOTHNESS;
     private static final double ROLL_ACC    = ROLL_VEL_MAX  / ROLL_SMOOTHNESS;
@@ -196,5 +138,15 @@ public class Ship extends Body{
     
     public void thrustReverse() {
         alterVelocityLocally(THRUST_REV);
+    }
+    
+// Modified `update` method to affect all ship fields
+    
+    public void update() {
+        super.update();
+        
+        laser.update();
+        plasma.update();
+        torpedo.update();
     }
 }
