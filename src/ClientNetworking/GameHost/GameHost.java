@@ -53,7 +53,19 @@ public class GameHost extends Thread
 			// add the ship if the team is not there anyway to avoid errors
 			for (int i = 0; i < lobby.getPlayers().length; i += 2)
 			{
-				gameMap.addShip(i, p[i]==null? "":p[i].nickname, p[i+1] == null? "": p[i+1].nickname);
+				if (p[i].nickname.equals("") && p[i + 1].nickname.equals(""))
+					gameMap.gameMap.add(new Body());
+				else
+					gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
+			}
+	
+			for (int i=0;i<4;i++)
+			{
+				Body b = gameMap.gameMap.get(i);
+				if(!(b instanceof Ship))
+				{
+					gameMap.delete(b.getID());
+				}
 			}
 			gameMap.generateTerrain();
 			System.out.println("I HAVE STARTED THE SERVER");
