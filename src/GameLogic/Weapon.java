@@ -139,6 +139,7 @@ public class Weapon implements Serializable {
             System.err.println("Cloning and casting of the reference bullet gave `null` for some reason.");
         } else {
             instance.setOriginBody(parent);
+            instance.setPosition(instance.getPosition().plus(parent.getFrontVector()));
         }
         
         return instance;
