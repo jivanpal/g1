@@ -14,9 +14,9 @@ public class Ship extends Body{
     //   Maximum values for pitch velocity, roll velocity, and forward velocity.
     //   The ship is designed under the assumption that it cannot reverse,
     // therefore the reverse-velocity maximum is assumed to be zero.
-    private static final double PITCH_VEL_MAX = 0.1;  // radians per second
-    private static final double ROLL_VEL_MAX  = 0.3;  // radians per second
-    private static final double FWD_VEL_MAX   = 20;   // meters per second
+    private static final double PITCH_VEL_MAX = 0.2;    // radians per second
+    private static final double ROLL_VEL_MAX  = 1.0;    // radians per second
+    private static final double FWD_VEL_MAX   = 20.0;   // meters per second
     
     // Smoothness of transition from rest to maximum for each axis.
     // Higher values result in smoother transitions.

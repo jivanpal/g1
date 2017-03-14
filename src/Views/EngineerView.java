@@ -1,6 +1,7 @@
 package Views; // from the 6
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -62,6 +63,8 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     private JPanel UIBaseLayer;
     public JFrame parentFrame;
     private GameChat chatWindow;
+    
+    public ArrayList<JButton> replenishButtons;
 
     /**
      * Creates a new EngineerView
@@ -217,7 +220,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         });
 
         initialiseUI();
-
+        
         // starting the in-game sounds
         AudioPlayer.stopMusic();
         AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
@@ -243,6 +246,8 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
             s = findPlayerShip();
         }
 
+        replenishButtons = new ArrayList<JButton>();
+        
         initialiseWeapons(s);
         initialiseResources(s);
         initialiseScreen();
@@ -321,7 +326,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         UIPanel.setForeground(ViewConstants.UI_BACKGROUND_COLOR);
         UIPanel.setBackground(ViewConstants.UI_BACKGROUND_COLOR);
         UIPanel.paintComponents(getGraphics());
-
+        
         UIBaseLayer.setLayout(new BorderLayout());
         UIBaseLayer.add(screen, BorderLayout.CENTER);
         UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
@@ -358,13 +363,13 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         String laserReplenishNumber = parseNumber(keySequences.get(laserSequenceNum));
         String torpedoReplenishNumber = parseNumber(keySequences.get(torpedoSequenceNum));
 
-        plasmaBlasterView = new WeaponView("Plasma Blaster", true, plasmaReplenishNumber);
+        plasmaBlasterView = new WeaponView("Plasma Blaster", true, plasmaReplenishNumber, replenishButtons);
 
         // default plasma blaster to be highlighted, remove at a later date!
         // plasmaBlasterView.setHighlightWeapon(true);
 
-        laserBlasterView = new WeaponView("Laser Blaster", true, laserReplenishNumber);
-        torpedosView = new WeaponView("Torpedos", true, torpedoReplenishNumber);
+        laserBlasterView = new WeaponView("Laser Blaster", true, laserReplenishNumber, replenishButtons);
+        torpedosView = new WeaponView("Torpedos", true, torpedoReplenishNumber, replenishButtons);
 
         laserBlasterView.setMaxiumumAmmo(s.getWeapon(Weapon.Type.LASER).getAmmoMaximum());
         plasmaBlasterView.setMaxiumumAmmo(s.getWeapon(Weapon.Type.PLASMA).getAmmoMaximum());
@@ -391,7 +396,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         String shieldSequenceNumber = parseNumber(keySequences.get(shieldSequenceNum));
         String fuelSequenceNumber = parseNumber(keySequences.get(fuelSequenceNum));
 
-        resourcesView = new ResourcesView(this, shieldSequenceNumber, fuelSequenceNumber);
+        resourcesView = new ResourcesView(this, shieldSequenceNumber, fuelSequenceNumber, replenishButtons);
         
         resourcesView.updateResourceLevels(ResourcesView.ENGINE,     s.getResource(Resource.Type.ENGINES).get());
         resourcesView.updateResourceLevels(ResourcesView.SHIELDS,    s.getResource(Resource.Type.SHIELDS).get());
@@ -616,28 +621,43 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                 System.out.println("Starting a shield sequence");
                 sequence = parseSequence(keySequences.get(shieldSequenceNum));
                 keyManager.initialiseKeySequenceManager(sequence, true);
+                changeButton("Shields");
                 break;
             case FUEL_REPLENISH:
                 System.out.println("Starting a fuel sequence");
                 sequence = parseSequence(keySequences.get(fuelSequenceNum));
                 keyManager.initialiseKeySequenceManager(sequence, true);
+                changeButton("Engines");
                 break;
             case LASER_REPLENISH:
                 System.out.println("Starting a laser sequence");
                 sequence = parseSequence(keySequences.get(laserSequenceNum));
                 keyManager.initialiseKeySequenceManager(sequence, true);
+                changeButton("Laser Blaster");
                 break;
             case TORPEDO_REPLENISH:
                 System.out.println("Starting a torpedo sequence");
                 sequence = parseSequence(keySequences.get(shieldSequenceNum));
                 keyManager.initialiseKeySequenceManager(sequence, false);
+                changeButton("Torpedos");
                 break;
             case PLASMA_REPLENISH:
                 System.out.println("Starting a plasma sequence");
                 sequence = parseSequence(keySequences.get(shieldSequenceNum));
                 keyManager.initialiseKeySequenceManager(sequence, false);
+                changeButton("Plasma Blaster");
                 break;
         }
+    }
+    
+    void changeButton(String state) {
+    	for(JButton b : replenishButtons) {
+    		if (state.equals(b.getName())) {
+    			b.setBackground(Color.decode("#ff3333"));
+    		} else {
+    			b.setBackground(Color.decode("#cccccc"));
+    		}
+    	}
     }
 
     private String parseNumber(String sequenceWithNum) {

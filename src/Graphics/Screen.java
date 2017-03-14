@@ -229,6 +229,7 @@ public class Screen extends JPanel{
                 }
                 else if(bClass == Bullet.class){
                     for(Vector v : map.getAllPositions(b.getPosition())){
+                    	System.out.println("Laser orientation: " + b.getBasis());
                         Laser laser = new Laser(v, 2, b.getOrientation());
                     }
                 }
@@ -298,11 +299,11 @@ public class Screen extends JPanel{
 			U = ship.getDownVector();
 			if(pilot) {
 				N = ship.getFrontVector();
-				V = ship.getRightVector();
+				V = ship.getLeftVector();
 			}
 			else {
 				N = ship.getRearVector();
-				V  =ship.getLeftVector();
+				V  =ship.getRightVector();
 			}
 			viewFrom = ship.getPosition();
 			viewTo = viewFrom.plus(N);

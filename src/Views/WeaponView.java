@@ -5,6 +5,8 @@ import GameLogic.GameOptions;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 /**
  * Created by James on 08/02/17.
@@ -42,7 +44,7 @@ public class WeaponView extends JPanel{
      * @param weaponName The name of the weapon.
      * @param showAmmoLevel Whether to create and show the ammo bar or not.
      */
-    public WeaponView(String weaponName, boolean showAmmoLevel, String replenishNumber) {
+    public WeaponView(String weaponName, boolean showAmmoLevel, String replenishNumber, ArrayList<JButton> buttons) {
         setOpaque(false);
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -77,6 +79,11 @@ public class WeaponView extends JPanel{
             replenishAmmo.setFont(GameOptions.REGULAR_TEXT_FONT);
             replenishAmmo.setEnabled(false);
             replenishAmmo.setFocusable(false);
+            replenishAmmo.setName(weaponName);
+            replenishAmmo.setOpaque(true);
+            replenishAmmo.setBackground(Color.decode("#cccccc"));
+            replenishAmmo.setBorderPainted(false);
+            buttons.add(replenishAmmo);
 
             c.gridx = 1;
             // c.anchor = GridBagConstraints.EAST;
