@@ -39,7 +39,7 @@ public class Screen extends JPanel{
 	
 	private Map map;
 	private String nickname;
-	private Integer shipIndex = null;
+	private Integer shipIndex = 0;
 	private boolean pilot;
 	private boolean asteroidDrawn = false;
 	private int i = 0;
