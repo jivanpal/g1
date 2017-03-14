@@ -67,7 +67,7 @@ public class GameHost extends Thread
 			for (int i=0;i<4;i++)
 			{
 				Body b = gameMap.gameMap.get(i);
-				if(!(b instanceof Ship))
+				if(b != null && !(b instanceof Ship))
 				{
 					gameMap.delete(b.getID());
 				}
