@@ -137,6 +137,7 @@ public class MapContainer {
 			}
 		} catch (Exception e) {
 			System.out.println("error in updateMap()");
+			e.printStackTrace();
 		}
 	}
 	
