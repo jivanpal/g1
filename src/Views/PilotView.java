@@ -1,11 +1,6 @@
 package Views;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -27,6 +22,9 @@ import GameLogic.Map;
 import GameLogic.Ship;
 import Graphics.Screen;
 import Physics.Body;
+
+import static GameLogic.GameOptions.BUTTON_FONT;
+import static Views.ViewConstants.UI_BACKGROUND_COLOR;
 
 /**
  * Created by James on 01/02/17.
@@ -277,22 +275,8 @@ public class PilotView extends JPanel implements Observer {
      */
     private void addAllComponents() {
         try {
-            this.setLayout(new BorderLayout());
-
-            UIpanel = new JPanel();
-            UIpanel.setOpaque(true);
-            UIpanel.setLayout(new BoxLayout(UIpanel, BoxLayout.X_AXIS));
-            UIpanel.setPreferredSize(new Dimension(parentFrame.getWidth(), parentFrame.getHeight() / 5));
-            UIpanel.setForeground(ViewConstants.UI_BACKGROUND_COLOR);
-            UIpanel.setBackground(ViewConstants.UI_BACKGROUND_COLOR);
-            UIpanel.paintComponents(getGraphics());
-            UIpanel.add(manual);
-
-            UIpanel.add(speedometerView);
-
             UIBaseLayer.setLayout(new BorderLayout());
             UIBaseLayer.add(screen, BorderLayout.CENTER);
-            UIBaseLayer.add(UIpanel, BorderLayout.SOUTH);
             UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
 
             JLayeredPaneLayoutManager layoutManager = new JLayeredPaneLayoutManager();
@@ -301,7 +285,7 @@ public class PilotView extends JPanel implements Observer {
             UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
 
             chatWindow.setBounds(0,
-                    parentFrame.getHeight() - ((int) UIpanel.getPreferredSize().getHeight() + (parentFrame.getHeight() / 6)),
+                    parentFrame.getHeight() - (parentFrame.getHeight() / 7) - (parentFrame.getHeight() / 6),
                     parentFrame.getWidth() / 6,
                     parentFrame.getHeight() / 6);
 
@@ -317,20 +301,37 @@ public class PilotView extends JPanel implements Observer {
             ImageIcon imgIcon = new ImageIcon(resizedWheel);
             JLabel steeringWheelView = new JLabel(imgIcon);
 
-            steeringWheelView.setPreferredSize(new Dimension(imgIcon.getIconWidth(), imgIcon.getIconHeight()));
-            /*// steeringWheelView.setBounds(100,
-                    100,
-                    steeringWheelView.getWidth(),
-                    steeringWheelView.getHeight());*/
-            /*steeringWheelView.setBounds((parentFrame.getWidth() / 2) - (steeringWheelView.getWidth() / 2),
-                    (parentFrame.getHeight() - steeringWheelView.getHeight()),
-                    steeringWheelView.getWidth(),
-                    steeringWheelView.getHeight());*/
+            steeringWheelView.setMinimumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
+            steeringWheelView.setMaximumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
+            steeringWheelView.setPreferredSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
+            steeringWheelView.setBounds((parentFrame.getWidth() / 2) - (parentFrame.getWidth() / 6),
+                    2 * (parentFrame.getHeight() / 3),
+                    parentFrame.getWidth() / 3,
+                    parentFrame.getHeight() / 3);
 
             System.out.println("Width: " + steeringWheelView.getWidth());
             System.out.println("Height: " + steeringWheelView.getHeight());
 
             UILayeredPane.add(steeringWheelView, JLayeredPane.PALETTE_LAYER);
+
+            manual.setBounds(0,
+                    parentFrame.getHeight() - (parentFrame.getHeight() / 7),
+                    parentFrame.getWidth() / 7,
+                    parentFrame.getHeight() / 7);
+            manual.setOpaque(true);
+            manual.setBackground(UI_BACKGROUND_COLOR);
+            manual.setForeground(Color.white);
+            manual.setFont(BUTTON_FONT);
+            UILayeredPane.add(manual, JLayeredPane.PALETTE_LAYER);
+
+            speedometerView.setBounds(parentFrame.getWidth() - (parentFrame.getWidth() / 7),
+                    parentFrame.getHeight() - (parentFrame.getHeight() / 7),
+                    parentFrame.getWidth() / 7,
+                    parentFrame.getHeight() / 7);
+            speedometerView.setOpaque(true);
+            speedometerView.setForeground(UI_BACKGROUND_COLOR);
+            speedometerView.setBackground(UI_BACKGROUND_COLOR);
+            UILayeredPane.add(speedometerView, JLayeredPane.PALETTE_LAYER);
 
 
         } catch (IOException e) {
@@ -434,6 +435,9 @@ public class PilotView extends JPanel implements Observer {
         } else {
             Map m = gameClient.getMap();
             screen.setMap(m);
+
+            Ship s = findPlayerShip();
+            speedometerView.updateSpeedLevel(s.getVelocity().length());
         }
     }
 
