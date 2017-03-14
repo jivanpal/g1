@@ -129,44 +129,22 @@ public class PilotView extends JPanel implements Observer {
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
+            	if(GameOptions.checkIfKeyTaken(keyEvent.getKeyCode())){
+            		pressedKeys.add(getKeyCodeToInstruction(keyEvent.getKeyCode()));
+            	}
                 if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
-                    // laser
-                    //gameClient.send("fireWeapon1");
-                	pressedKeys.add("fireWeapon1");
                     AudioPlayer.playSoundEffect(AudioPlayer.LASER_FIRE_EFFECT);
                 } else if (keyEvent.getKeyCode() == GameOptions
                         .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON)) {
-                    // plasma
-                    //gameClient.send("fireWeapon2");
-                	pressedKeys.add("fireWeapon2");
                     AudioPlayer.playSoundEffect(AudioPlayer.PLASMA_FIRE_EFFECT);
                 } else if (keyEvent.getKeyCode() == GameOptions
                         .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON)) {
-                    // torpedo
-                    //gameClient.send("fireWeapon3");
-                	pressedKeys.add("fireWeapon3");
                     AudioPlayer.playSoundEffect(AudioPlayer.TORPEDO_FIRE_EFFECT);
-                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON)) {
-                    //gameClient.send("accelerate");
-                	pressedKeys.add("accelerate");
-                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON)) {
-                    //gameClient.send("decelerate");
-                	pressedKeys.add("decelerate");
-                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_DOWN_BUTTON)) {
-                    //gameClient.send("pitchDown");
-                	pressedKeys.add("pitchDown");
-                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_UP_BUTTON)) {
-                    //gameClient.send("pitchUp");
-                	pressedKeys.add("pitchUp");
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
-                    //gameClient.send("rollLeft");
-                	pressedKeys.add("rollLeft");
                     steeringWheelAngle = -Math.PI/4;
                     steeringWheelView.revalidate();
                     steeringWheelView.repaint();
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
-                    //gameClient.send("rollRight");
-                    pressedKeys.add("rollRight");
                     steeringWheelAngle = Math.PI/4;
                     steeringWheelView.revalidate();
                     steeringWheelView.repaint();
@@ -175,47 +153,7 @@ public class PilotView extends JPanel implements Observer {
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
-            	  if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
-                      // laser
-                      //gameClient.send("fireWeapon1");
-                  	pressedKeys.remove("fireWeapon1");
-                     // AudioPlayer.playSoundEffect(AudioPlayer.LASER_FIRE_EFFECT);
-                  } else if (keyEvent.getKeyCode() == GameOptions
-                          .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON)) {
-                      // plasma
-                      //gameClient.send("fireWeapon2");
-                  	pressedKeys.remove("fireWeapon2");
-                      //AudioPlayer.playSoundEffect(AudioPlayer.PLASMA_FIRE_EFFECT);
-                  } else if (keyEvent.getKeyCode() == GameOptions
-                          .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON)) {
-                      // torpedo
-                      //gameClient.send("fireWeapon3");
-                  	pressedKeys.remove("fireWeapon3");
-                     // AudioPlayer.playSoundEffect(AudioPlayer.TORPEDO_FIRE_EFFECT);
-                  } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON)) {
-                      //gameClient.send("accelerate");
-                  	pressedKeys.remove("accelerate");
-                  } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON)) {
-                      //gameClient.send("decelerate");
-                  	pressedKeys.remove("decelerate");
-                  } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_DOWN_BUTTON)) {
-                      //gameClient.send("pitchDown");
-                  	pressedKeys.remove("pitchDown");
-                  } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_UP_BUTTON)) {
-                      //gameClient.send("pitchUp");
-                  	pressedKeys.remove("pitchUp");
-                  } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
-                      //gameClient.send("rollLeft");
-                  	pressedKeys.remove("rollLeft");
-                      steeringWheelAngle = -Math.PI/4;
-                  } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
-                      //gameClient.send("rollRight");
-                      pressedKeys.remove("rollRight");
-                      steeringWheelAngle = Math.PI/4;
-                  }
-            	
-            	
-            	
+            	pressedKeys.remove(getKeyCodeToInstruction(keyEvent.getKeyCode()));
             	if(keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON) || keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)){
             		steeringWheelAngle = 0;
                     steeringWheelView.revalidate();
@@ -275,6 +213,32 @@ public class PilotView extends JPanel implements Observer {
         // starting the in-game sounds
         AudioPlayer.stopMusic();
         AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
+    }
+    
+    private String getKeyCodeToInstruction(int keyCode){
+    	String inst = "";
+   	
+    	if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
+        	inst = "fireWeapon1";
+        } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON)) {
+        	inst = "fireWeapon2";
+        } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON)) {
+        	inst = "fireWeapon3";
+        } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON)) {
+        	inst = "accelerate";
+        } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON)) {
+        	inst = "decelerate";
+        } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_DOWN_BUTTON)) {
+        	inst = "pitchDown";
+        } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_UP_BUTTON)) {
+        	inst = "pitchUp";
+        } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
+        	inst = "rollLeft";
+        } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
+        	inst = "rollRight";
+        }
+    	
+    	return inst;
     }
 
     /**
@@ -516,7 +480,6 @@ public class PilotView extends JPanel implements Observer {
             Ship s = findPlayerShip();
             speedometerView.updateSpeedLevel(s.getVelocity().length());
         }
-        
         for(String inst : pressedKeys){
         	gameClient.send(inst);
         }
