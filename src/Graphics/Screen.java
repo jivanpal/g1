@@ -203,6 +203,9 @@ public class Screen extends JPanel{
 			}
 			else{
 				destructCount = 1;
+				Color warning = new Color(25, 0, 0, 100);
+				g.setColor(warning);
+				g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
 			}
 		}
 	}
@@ -229,7 +232,7 @@ public class Screen extends JPanel{
                 }
                 else if(bClass == Bullet.class){
                     for(Vector v : map.getAllPositions(b.getPosition())){
-                    	System.out.println("Laser orientation: " + b.getBasis());
+//                    	System.out.println("Laser orientation: " + b.getBasis());
                         Laser laser = new Laser(v, 2, b.getOrientation());
                     }
                 }
@@ -317,7 +320,7 @@ public class Screen extends JPanel{
 	
 	public void setMap(Map map){
 		this.map = map;
-//		System.out.println(map.get(0).getPosition());
+//		System.out.println("Got Map, size: " + map.size() + ", Sample pos: " + map.get().getPosition());
 		for(Body b : map.bodies()) {
 			if(b.getClass() == Ship.class) {
 				Ship s = (Ship)b;
