@@ -41,10 +41,22 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
 
     private ArrayList<String> keySequences;
     private int shieldSequenceNum = 0;
+    private final int SHIELD_MAX_NUM = 5;
     private int fuelSequenceNum = 6;
+    private final int FUEL_MAX_NUM = 12;
     private int laserSequenceNum = 13;
+    private final int LASER_MAX_NUM = 19;
     private int plasmaSequenceNum = 20;
+    private final int PLASMA_MAX_NUM = 26;
     private int torpedoSequenceNum = 27;
+    private final int TORPEDO_MAX_NUM = 33;
+
+    private final int ALLOWED_DEFAULT = 30;
+    private int shieldAllowedNum = ALLOWED_DEFAULT; // Amount of key sequence passes we are allowed at this difficulty of sequence
+    private int fuelAllowedNum = ALLOWED_DEFAULT;
+    private int laserAllowedNum = ALLOWED_DEFAULT;
+    private int plasmaAllowedNum = ALLOWED_DEFAULT;
+    private int torpedoAllowedNum = ALLOWED_DEFAULT;
 
     private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;
@@ -506,22 +518,71 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                 break;
             case SHIELD_REPLENISH:
                 System.out.println("Sending shieldReplenish");
+                shieldAllowedNum--;
+                if(shieldAllowedNum <= 0 && (shieldSequenceNum < SHIELD_MAX_NUM)) {
+                    keyManager.deactivate();
+                    shieldAllowedNum = ALLOWED_DEFAULT;
+                    shieldSequenceNum += 1;
+                    this.state = ShipState.NONE;
+                }
+                resourcesView.updateRefreshNumber(ResourcesView.SHIELDS, parseNumber(keySequences.get(shieldSequenceNum)));
+
                 gameClient.send("shieldReplenish");
                 break;
             case FUEL_REPLENISH:
                 System.out.println("Sending fuelReplenish");
+
+                fuelAllowedNum--;
+                if(fuelAllowedNum <= 0 && (fuelSequenceNum < FUEL_MAX_NUM)) {
+                    keyManager.deactivate();
+                    fuelAllowedNum = ALLOWED_DEFAULT;
+                    fuelSequenceNum += 1;
+                    this.state = ShipState.NONE;
+                }
+                resourcesView.updateRefreshNumber(ResourcesView.ENGINE, parseNumber(keySequences.get(fuelSequenceNum)));
+
                 gameClient.send("fuelReplenish");
                 break;
             case LASER_REPLENISH:
                 System.out.println("Sending laserReplenish");
+
+                laserAllowedNum--;
+                if(laserAllowedNum <= 0 && (laserSequenceNum < LASER_MAX_NUM)) {
+                    keyManager.deactivate();
+                    laserAllowedNum = ALLOWED_DEFAULT;
+                    laserSequenceNum += 1;
+                    this.state = ShipState.NONE;
+                }
+                laserBlasterView.setReplenishAmmoNumber(parseNumber(keySequences.get(laserSequenceNum)));
+
                 gameClient.send("laserReplenish");
                 break;
             case TORPEDO_REPLENISH:
                 System.out.println("Sending torpedoReplenish");
+
+                torpedoAllowedNum--;
+                if(torpedoAllowedNum <= 0 && (torpedoSequenceNum < TORPEDO_MAX_NUM)) {
+                    keyManager.deactivate();
+                    torpedoAllowedNum = ALLOWED_DEFAULT;
+                    torpedoSequenceNum += 1;
+                    this.state = ShipState.NONE;
+                }
+                torpedosView.setReplenishAmmoNumber(parseNumber(keySequences.get(torpedoSequenceNum)));
+
                 gameClient.send("torpedoReplenish");
                 break;
             case PLASMA_REPLENISH:
                 System.out.println("Sending plasmaReplenish");
+
+                plasmaAllowedNum--;
+                if(plasmaAllowedNum <= 0 && (plasmaSequenceNum < PLASMA_MAX_NUM)) {
+                    keyManager.deactivate();
+                    plasmaAllowedNum = ALLOWED_DEFAULT;
+                    plasmaSequenceNum += 1;
+                    this.state = ShipState.NONE;
+                }
+                plasmaBlasterView.setReplenishAmmoNumber(parseNumber(keySequences.get(plasmaSequenceNum)));
+
                 gameClient.send("plasmaReplenish");
                 break;
         }
