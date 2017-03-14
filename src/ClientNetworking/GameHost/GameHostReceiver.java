@@ -33,7 +33,7 @@ public class GameHostReceiver extends Thread
 				if(obj instanceof String)
 				{
 					String str = (String)obj;
-					gameMap.updateMap(str, position/2);
+					gameMap.updateMap(str, playerName);
 				}
 				else
 				{
