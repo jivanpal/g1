@@ -4,6 +4,7 @@ import GameLogic.GameOptions;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicProgressBarUI;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -98,6 +99,22 @@ public class ResourcesView extends JPanel {
 
             case ENGINE:
                 engineComponent.setMaximumResourceLevel(level);
+                break;
+        }
+    }
+
+    public void updateRefreshNumber(int resourceType, String newNumber) {
+        switch (resourceType) {
+            case SHIELDS:
+                shieldsComponent.setReplenishNumber(newNumber);
+                break;
+            case HULL:
+                hullComponent.setReplenishNumber(newNumber);
+                break;
+            case ENGINE:
+                engineComponent.setReplenishNumber(newNumber);
+                break;
+            default:
                 break;
         }
     }

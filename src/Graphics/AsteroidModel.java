@@ -14,7 +14,7 @@ public class AsteroidModel {
     private Rotation orientation;
     private double radius;
     
-    private Color[] colors = new Color[20];
+    private Color[] colors = new Color[4];
     private Vector[] vertices = new Vector[4];
     private int[][] sides = {
         {0, 1, 2},

@@ -4,7 +4,10 @@ import GameLogic.GameOptions;
 import Interfaces.ShipPresenter;
 
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * Created by James on 08/02/17.
@@ -36,6 +39,7 @@ public class SpeedometerView extends JPanel {
      * @param newLevel The new value for the speed label.
      */
     public void updateSpeedLevel(double newLevel) {
-        this.currentSpeedLabel.setText(String.valueOf(newLevel));
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        this.currentSpeedLabel.setText(String.valueOf(formatter.format(newLevel)));
     }
 }

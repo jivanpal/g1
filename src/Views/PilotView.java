@@ -57,6 +57,7 @@ public class PilotView extends JPanel implements Observer {
 
     private JButton manual;
     private ManualView instructions;
+    private JLabel steeringWheelView;
 
     private GameClient gameClient;
     private String playerNickname;
@@ -161,10 +162,14 @@ public class PilotView extends JPanel implements Observer {
                     //gameClient.send("rollLeft");
                 	pressedKeys.add("rollLeft");
                     steeringWheelAngle = -Math.PI/4;
+                    steeringWheelView.revalidate();
+                    steeringWheelView.repaint();
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
                     //gameClient.send("rollRight");
                     pressedKeys.add("rollRight");
                     steeringWheelAngle = Math.PI/4;
+                    steeringWheelView.revalidate();
+                    steeringWheelView.repaint();
                 }
             }
 
@@ -213,6 +218,8 @@ public class PilotView extends JPanel implements Observer {
             	
             	if(keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON) || keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)){
             		steeringWheelAngle = 0;
+                    steeringWheelView.revalidate();
+                    steeringWheelView.repaint();
             	}
             }
         });
@@ -369,7 +376,7 @@ public class PilotView extends JPanel implements Observer {
             steeringWheelImage = op.filter(steeringWheelImage, null);
             Image resizedWheel = steeringWheelImage.getScaledInstance(parentFrame.getHeight()/5, parentFrame.getHeight()/5, Image.SCALE_SMOOTH);
             ImageIcon imgIcon = new ImageIcon(resizedWheel);
-            JLabel steeringWheelView = new JLabel(imgIcon);
+            steeringWheelView = new JLabel(imgIcon);
 
             steeringWheelView.setMinimumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
             steeringWheelView.setMaximumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
