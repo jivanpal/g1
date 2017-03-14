@@ -79,8 +79,8 @@ public class Poly3D {
 		if(poly.light > 1){
 			poly.light = 1;
 		}
-		if(poly.light < 0){
-			poly.light = 0;
+		if(poly.light < 0.2){
+			poly.light = 0.2;
 		}
 	}
 
