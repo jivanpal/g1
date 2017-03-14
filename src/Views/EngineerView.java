@@ -63,6 +63,9 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     private JPanel UIBaseLayer;
     public JFrame parentFrame;
     private GameChat chatWindow;
+
+    private Ship previousShip = null;
+    private Ship currentShip = null;
     
     public ArrayList<JButton> replenishButtons;
 
@@ -235,21 +238,21 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
             UIBaseLayer.removeAll();
         }
 
-        Ship s = findPlayerShip();
-        while (s == null) {
+        currentShip = findPlayerShip();
+        while (currentShip == null) {
             System.out.println("ship is null");
             try {
                 Thread.sleep(250);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            s = findPlayerShip();
+            currentShip = findPlayerShip();
         }
 
         replenishButtons = new ArrayList<JButton>();
         
-        initialiseWeapons(s);
-        initialiseResources(s);
+        initialiseWeapons(currentShip);
+        initialiseResources(currentShip);
         initialiseScreen();
         initialiseRadar();
         initialiseChatWindow(gameClient, playerNickname);
@@ -492,21 +495,35 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                     Ship s = (Ship) m.get(i);
 
                     if (s.getEngineerName().equals(playerNickname)) {
-                        laserBlasterView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.LASER).getAmmoLevel());
-                        plasmaBlasterView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.PLASMA).getAmmoLevel());
-                        torpedosView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel());
+                        previousShip = currentShip;
+                        currentShip = s;
 
-                        resourcesView.updateResourceLevels(ResourcesView.ENGINE,  s.getResource(Resource.Type.ENGINES).get());
+                        if (currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.LASER).getAmmoLevel()) {
+                            AudioPlayer.playSoundEffect(AudioPlayer.LASER_FIRE_EFFECT);
+                        }
+                        laserBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel());
 
-                        if(s.getResource(Resource.Type.SHIELDS).get() < resourcesView.getResourceLevel(ResourcesView.SHIELDS)){
+                        plasmaBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel());
+                        if (currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel()) {
+                            AudioPlayer.playSoundEffect(AudioPlayer.PLASMA_FIRE_EFFECT);
+                        }
+
+                        torpedosView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel());
+                        if (currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel()) {
+                            AudioPlayer.playSoundEffect(AudioPlayer.TORPEDO_FIRE_EFFECT);
+                        }
+
+                        resourcesView.updateResourceLevels(ResourcesView.ENGINE,  currentShip.getResource(Resource.Type.ENGINES).get());
+
+                        if(currentShip.getResource(Resource.Type.SHIELDS).get() < previousShip.getResource(Resource.Type.SHIELDS).get()) {
                             AudioPlayer.playSoundEffect(AudioPlayer.SHIELD_DECREASE_EFFECT);
                         }
-                        resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getResource(Resource.Type.SHIELDS).get());
+                        resourcesView.updateResourceLevels(ResourcesView.SHIELDS, currentShip.getResource(Resource.Type.SHIELDS).get());
 
-                        if(s.getResource(Resource.Type.HEALTH).get() < resourcesView.getResourceLevel(ResourcesView.HULL)) {
+                        if(currentShip.getResource(Resource.Type.HEALTH).get() < previousShip.getResource(Resource.Type.HEALTH).get()) {
                             AudioPlayer.playSoundEffect(AudioPlayer.SHIP_HEALTH_DECREASE_EFFECT);
                         }
-                        resourcesView.updateResourceLevels(ResourcesView.HULL,    s.getResource(Resource.Type.HEALTH).get());
+                        resourcesView.updateResourceLevels(ResourcesView.HULL,    currentShip.getResource(Resource.Type.HEALTH).get());
                     }
                 }
             }
