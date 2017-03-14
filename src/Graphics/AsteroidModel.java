@@ -1,9 +1,8 @@
 package Graphics;
+
 import java.awt.Color;
 import java.util.Random;
-
-import Geometry.Rotation;
-import Geometry.Vector;
+import Geometry.*;
 
 /**
  * Creates an Asteroid Model
@@ -11,22 +10,22 @@ import Geometry.Vector;
  *
  */
 public class AsteroidModel {
-	
-	private double x, y, z, size;
-	private Vector[] vertices = new Vector[4];
-	private int[][] sides = {	{0, 1, 2},
-								{0, 1, 3},
-								{0, 2, 3},
-								{1, 2, 3}};
-	private Color[] colors = new Color[20];
-	private Vector xVec, yVec, zVec;
-	private Rotation orientation;
-	
-	public AsteroidModel(Vector v, double size, Rotation orientation){
-		this.x = v.getX();
-		this.y = v.getY();
-		this.z = v.getZ();
-		this.size = size;
+    private Vector position;
+    private Rotation orientation;
+    private double radius;
+    
+    private Color[] colors = new Color[20];
+    private Vector[] vertices = new Vector[4];
+    private int[][] sides = {
+        {0, 1, 2},
+        {0, 1, 3},
+        {0, 2, 3},
+        {1, 2, 3}
+    };
+    
+    public AsteroidModel(Vector position, double radius, Rotation orientation){
+	    this.position = position;
+	    this.radius = radius;
 		this.orientation = orientation;
 		
 		createPoints();
@@ -39,14 +38,20 @@ public class AsteroidModel {
 		g.create();
 	}
 	
-	private void createPoints(){
-		vertices[0] = new Vector(x - (size/2), y, z + (size/2));
-		vertices[1] = new Vector(x + (size/2), y, z + (size/2));
-		vertices[2] = new Vector(x, y, z - (size/2));
-		vertices[3] = new Vector(x, y + (size/2), z);
-		
-		orientation.apply(vertices);
-		
+    private void createPoints() {
+        vertices[0] = position.plus(Vector.K);
+        vertices[1] = position.plus(new Rotation(0,Math.toRadians(90),Math.toRadians(90)-Math.acos(-1.0/3)).apply(Vector.I));
+        vertices[2] = position.plus(new Rotation(Math.toRadians(120),Math.toRadians(90),Math.toRadians(90)-Math.acos(-1.0/3)).apply(Vector.I));
+        vertices[3] = position.plus(new Rotation(Math.toRadians(240),Math.toRadians(90),Math.toRadians(90)-Math.acos(-1.0/3)).apply(Vector.I));
+        
+        if(radius != 1.0) {
+            for (int i = 0; i < vertices.length; i++) {
+                vertices[i] = vertices[i].scale(radius);
+            }
+        }
+        
+        orientation.apply(vertices);
+        
 //		Random generation that I'm temporarily giving up on
 		
 //		Random r = new Random();

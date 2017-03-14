@@ -14,8 +14,8 @@ public class Ship extends Body{
     //   Maximum values for pitch velocity, roll velocity, and forward velocity.
     //   The ship is designed under the assumption that it cannot reverse,
     // therefore the reverse-velocity maximum is assumed to be zero.
-    private static final double PITCH_VEL_MAX = 0.2;    // radians per second
-    private static final double ROLL_VEL_MAX  = 1.0;    // radians per second
+    private static final double PITCH_VEL_MAX = 1.0;    // radians per second
+    private static final double ROLL_VEL_MAX  = 4.0;    // radians per second
     private static final double FWD_VEL_MAX   = 20.0;   // meters per second
     
     // Smoothness of transition from rest to maximum for each axis.
@@ -118,10 +118,14 @@ public class Ship extends Body{
     
     public void pitchUp() {
         rotate(PITCH_UP);
+        Basis b = getBasis();
+        setVelocity(b.globaliseDirection(PITCH_UP.apply(getBasis().localiseDirection(getVelocity()))));
     }
     
     public void pitchDown() {
         rotate(PITCH_DOWN);
+        Basis b = getBasis();
+        setVelocity(b.globaliseDirection(PITCH_DOWN.apply(getBasis().localiseDirection(getVelocity()))));
     }
     
     public void rollRight() {
