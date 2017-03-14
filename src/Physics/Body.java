@@ -16,7 +16,7 @@ import Geometry.*;
  */
 public class Body implements Cloneable, Serializable {
 /// FIELDS
-    private static int nextID = 0;
+    public static int nextID = 0;
     
     private final int ID;
     private boolean destroyed = false;

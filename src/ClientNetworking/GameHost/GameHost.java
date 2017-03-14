@@ -56,21 +56,14 @@ public class GameHost extends Thread
 			
 			Player[] p = lobby.getPlayers();
 			// add the ships, add dummy bodies for non existant ones and then delete them
-			for (int i = 0; i < lobby.getPlayers().length; i += 2)
+			for (int i = 0; i < Lobby.LOBBY_SIZE; i += 2)
 			{
-				if (p[i]==null && p[i + 1]==null)
-					gameMap.gameMap.add(new Body());
+				if (p[i]==null && p[i + 1]==null){
+					System.out.println(Body.nextID);
+					Body.nextID++;
+				}
 				else
 					gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
-			}
-	
-			for (int i=0;i<4;i++)
-			{
-				Body b = gameMap.gameMap.get(i);
-				if(b != null && !(b instanceof Ship))
-				{
-					gameMap.delete(b.getID());
-				}
 			}
 			gameMap.generateTerrain();
 			System.out.println("I HAVE STARTED THE SERVER");

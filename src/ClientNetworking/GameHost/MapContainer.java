@@ -146,7 +146,8 @@ public class MapContainer {
 	}
 	public void addDummyBody()
 	{
-		gameMap.add(new Body());
+		boolean x = gameMap.add(new Body());
+		System.out.println("Bot added is " +x);
 	}
 	public void delete(int ID) {
 		gameMap.get(ID).destroy();
