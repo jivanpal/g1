@@ -1,13 +1,14 @@
 package GameLogic.weapon;
 
 import GameLogic.*;
+import Physics.Body;
 
 /**
  * A class of objects representing laser blaster weapons attached to some ship.
  * @author Ivan Panchev
  */
 public class Laser extends Weapon {
-    private static final Bullet BULLET          = null;
+    private static final Bullet BULLET          = new Bullet(2, 2, new Body(10, 2));
     private static final int    AMMO_MAX        = 30;
     private static final int    AMMO_INIT       = 20;
     private static final int    DAMAGE_SHIELDS  = 5;
