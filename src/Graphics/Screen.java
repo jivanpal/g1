@@ -216,7 +216,8 @@ public class Screen extends JPanel{
                 if (bClass == Ship.class) {
                     for(Vector v : map.getAllPositions(b.getPosition())){
                         // System.out.println("Drawing Ship: " + b.getID() + ", " + shipIndex);
-                        Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
+                        //Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
+                    	ShipModel m = new ShipModel(v, 2, b.getOrientation(), b.getID());
                     }
                 }
                 else if(bClass == Asteroid.class){

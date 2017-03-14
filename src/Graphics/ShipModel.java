@@ -7,7 +7,7 @@ import Geometry.Vector;
 
 public class ShipModel {
 	private double x, y, z, size;
-	private Vector[] vertices = new Vector[12];
+	private Vector[] vertices = new Vector[45];
 	private int[][] sides = {	{0, 4, 1},
 								{0, 4, 2},
 								{0, 1, 2},
