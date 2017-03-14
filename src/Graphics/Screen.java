@@ -39,7 +39,7 @@ public class Screen extends JPanel{
 	
 	private Map map;
 	private String nickname;
-	private Integer shipIndex = 0;
+	private Integer shipIndex = null;
 	private boolean pilot;
 	private boolean asteroidDrawn = false;
 	private int i = 0;
@@ -211,7 +211,7 @@ public class Screen extends JPanel{
         poly3Ds.clear();
 //        System.out.println(map.size());
         for(Body b : map.bodies()) {
-            if (b.getID() != shipIndex) {
+            if (!(shipIndex == null) && b.getID() != shipIndex) {
                 Class<? extends Body> bClass = b.getClass();
                 if (bClass == Ship.class) {
                     for(Vector v : map.getAllPositions(b.getPosition())){
