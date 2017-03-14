@@ -143,7 +143,10 @@ public class MapContainer {
 	public synchronized void updateMap() {
 		gameMap.update();
 	}
-	
+	public void addDummyBody()
+	{
+		gameMap.add(new Body());
+	}
 	public void delete(int ID) {
 		gameMap.get(ID).destroy();
 	}
