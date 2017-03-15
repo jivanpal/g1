@@ -121,8 +121,7 @@ public class RadarView extends JPanel{
                 }
 
             } else {
-                // What has happened here? This is really bad.
-                System.err.println("Views:RadarView:paintComponent() - Something has gone quite wrong here");
+                // Ignore -- this was a bullet.
             }
 
             // Draw the circle on the map
