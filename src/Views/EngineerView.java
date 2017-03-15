@@ -633,6 +633,8 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
 
         switch (state) {
             case NONE:
+                keyManager.deactivate();
+                changeButton("none");
                 break;
             case SHIELD_REPLENISH:
                 System.out.println("Starting a shield sequence");
@@ -667,7 +669,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         }
     }
     
-    void changeButton(String state) {
+    private void changeButton(String state) {
     	for(JButton b : replenishButtons) {
     		if (state.equals(b.getName())) {
     			b.setBackground(Color.decode("#ff3333"));
@@ -684,6 +686,8 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     private String parseSequence(String sequenceWithNum) {
         return sequenceWithNum.split(":")[1];
     }
+
+    public ShipState getState() { return this.state; }
 }
 
 enum ShipState {

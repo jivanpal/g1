@@ -124,7 +124,13 @@ public class WeaponView extends JPanel{
     }
 
     public void setReplenishAmmo(EngineerView parent, ShipState state) {
-        replenishAmmo.addActionListener(actionEvent -> parent.setState(state));
+        replenishAmmo.addActionListener(actionEvent -> {
+            if(parent.getState() != state) {
+                parent.setState(state);
+            } else {
+                parent.setState(ShipState.NONE);
+            }
+        });
         replenishAmmo.setEnabled(true);
     }
 
