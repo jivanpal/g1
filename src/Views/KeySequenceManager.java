@@ -34,6 +34,9 @@ public class KeySequenceManager {
 
         // Check if the player pressed a key correctly
         if (e.getKeyChar() == keySequence.charAt(position)) {
+
+            parent.correctKeyPress();
+
             if(position + 1 >= keySequence.length()) {
                 // Tell the parent we have succeeded
                 parent.keySequencePassed();

@@ -26,6 +26,8 @@ public class AudioPlayer {
 	public static String FAILURE_EFFECT = pathToProjectAudio + "failure.wav";
 	public static String SHIP_SHIELD_DECREASE_EFFECT = pathToProjectAudio + "shield_decrease.wav";
 	public static String SHIP_HEALTH_DECREASE_EFFECT = pathToProjectAudio + "health_decrease.wav";
+	public static String KEY_PRESS_EFFECT = pathToProjectAudio + "key_press.wav";
+	public static String KEY_SEQUENCE_FAILED = pathToProjectAudio + "key_sequence_failed.wav";
 
 	private static Clip musicClip;
 	private static Clip soundEffectClip;

@@ -532,6 +532,13 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     }
 
     /**
+     * Called by the KeyManager when a key has been correctly entered by the user. Plays a sound effect of a key press.
+     */
+    public void correctKeyPress() {
+        AudioPlayer.playSoundEffect(AudioPlayer.KEY_PRESS_EFFECT);
+    }
+
+    /**
      * Called by the KeyManager when a key sequence has been completed in it's entirety. Depending on the current state
      * of the ship, we tell the server what the user has done.
      */
@@ -547,6 +554,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                     shieldAllowedNum = ALLOWED_DEFAULT;
                     shieldSequenceNum += 1;
                     this.state = ShipState.NONE;
+                    changeButton("none");
                 }
                 resourcesView.updateRefreshNumber(ResourcesView.SHIELDS, parseNumber(keySequences.get(shieldSequenceNum)));
 
@@ -561,6 +569,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                     fuelAllowedNum = ALLOWED_DEFAULT;
                     fuelSequenceNum += 1;
                     this.state = ShipState.NONE;
+                    changeButton("none");
                 }
                 resourcesView.updateRefreshNumber(ResourcesView.ENGINE, parseNumber(keySequences.get(fuelSequenceNum)));
 
@@ -575,6 +584,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                     laserAllowedNum = ALLOWED_DEFAULT;
                     laserSequenceNum += 1;
                     this.state = ShipState.NONE;
+                    changeButton("none");
                 }
                 laserBlasterView.setReplenishAmmoNumber(parseNumber(keySequences.get(laserSequenceNum)));
 
@@ -589,6 +599,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                     torpedoAllowedNum = ALLOWED_DEFAULT;
                     torpedoSequenceNum += 1;
                     this.state = ShipState.NONE;
+                    changeButton("none");
                 }
                 torpedosView.setReplenishAmmoNumber(parseNumber(keySequences.get(torpedoSequenceNum)));
 
@@ -603,6 +614,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                     plasmaAllowedNum = ALLOWED_DEFAULT;
                     plasmaSequenceNum += 1;
                     this.state = ShipState.NONE;
+                    changeButton("none");
                 }
                 plasmaBlasterView.setReplenishAmmoNumber(parseNumber(keySequences.get(plasmaSequenceNum)));
 
@@ -616,6 +628,8 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
      */
     public void keySequenceSoftFailure() {
         System.out.println("Soft failure of sequence");
+
+        AudioPlayer.playSoundEffect(AudioPlayer.KEY_SEQUENCE_FAILED);
 
         try {
             fullScreenLabel.setVisible(false);
