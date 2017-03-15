@@ -1,9 +1,6 @@
 package Views; // from the 6
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
@@ -23,6 +20,9 @@ import Physics.Body;
  * This View contains the entire UI for the Engineer once they are in game.
  */
 public class EngineerView extends JPanel implements KeySequenceResponder, Observer {
+    private static final String FAILED_SEQUENCE = "FAILED SEQUENCE";
+    private static final String NEW_SEQUENCE = "NEW SEQUENCE";
+
     private boolean UIinitialised = false;
 
     private ShipState state = ShipState.NONE;
@@ -66,6 +66,8 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     private Ship currentShip = null;
     
     public ArrayList<JButton> replenishButtons;
+
+    private JLabel fullScreenLabel;
 
     /**
      * Creates a new EngineerView
@@ -613,6 +615,28 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
      */
     public void keySequenceSoftFailure() {
         System.out.println("Soft failure of sequence");
+
+        fullScreenLabel = new JLabel(FAILED_SEQUENCE);
+        fullScreenLabel.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
+        fullScreenLabel.setForeground(Color.red);
+
+        Graphics g = parentFrame.getGraphics();
+        FontMetrics metrics = g.getFontMetrics(GameOptions.FULLSCREEN_BOLD_TEXT_FONT);
+        int textHeight = metrics.getHeight();
+        int textWidth = metrics.stringWidth(FAILED_SEQUENCE);
+
+        fullScreenLabel.setPreferredSize(new Dimension(textWidth + 2, textHeight + 2));
+        fullScreenLabel.setBounds(100, 100, textWidth + 2, textHeight + 2);
+
+        UILayeredPane.add(fullScreenLabel, JLayeredPane.PALETTE_LAYER);
+
+        Timer timer = new Timer(1000, actionEvent -> {
+            fullScreenLabel.setVisible(false);
+            UILayeredPane.remove(fullScreenLabel);
+        });
+        timer.setRepeats(false);
+
+        timer.start();
     }
 
     /**
@@ -622,6 +646,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     public void keySequenceHardFailure() {
         System.out.println("Hard failure of sequence");
         this.state = ShipState.NONE;
+        changeButton("none");
     }
 
     void setState(ShipState newState) {
@@ -685,7 +710,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         return sequenceWithNum.split(":")[1];
     }
 
-    public ShipState getState() { return this.state; }
+    ShipState getState() { return this.state; }
 }
 
 enum ShipState {

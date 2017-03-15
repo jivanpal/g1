@@ -34,6 +34,7 @@ public class MainMenu {
 			GameOptions.REGULAR_TEXT_FONT = new Font("xirod", Font.PLAIN, 12);
 			GameOptions.BUTTON_FONT = new Font("xirod", Font.PLAIN, 24);
 			GameOptions.FULLSCREEN_BOLD_TEXT_FONT = new Font("xirod", Font.BOLD, 72);
+			GameOptions.FULLSCREEN_BOLD_REAL_BIG_TEXT_FONT = new Font("xirod", Font.BOLD, 200);
 
 		} catch (FontFormatException e) {
 			e.printStackTrace();
