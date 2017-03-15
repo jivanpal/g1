@@ -24,8 +24,8 @@ public class AudioPlayer {
 	public static String TORPEDO_FIRE_EFFECT = pathToProjectAudio + "torpedo_fire.wav";
 	public static String VICTORY_EFFECT = pathToProjectAudio + "victory.wav";
 	public static String FAILURE_EFFECT = pathToProjectAudio + "failure.wav";
-	public static String SHIELD_DECREASE_EFFECT = pathToProjectAudio + "shield_decrease.wav";
-	public static String SHIP_HEALTH_DECREASE_EFFECT = pathToProjectAudio + "ship_health_decrease.wav";
+	public static String SHIP_SHIELD_DECREASE_EFFECT = pathToProjectAudio + "shield_decrease.wav";
+	public static String SHIP_HEALTH_DECREASE_EFFECT = pathToProjectAudio + "health_decrease.wav";
 
 	private static Clip musicClip;
 	private static Clip soundEffectClip;

@@ -1,6 +1,5 @@
 package Views; // from the 6
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
 import Graphics.Screen;
 import Physics.Body;
@@ -516,7 +514,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                         resourcesView.updateResourceLevels(ResourcesView.ENGINE,  currentShip.getResource(Resource.Type.ENGINES).get());
 
                         if(currentShip.getResource(Resource.Type.SHIELDS).get() < previousShip.getResource(Resource.Type.SHIELDS).get()) {
-                            AudioPlayer.playSoundEffect(AudioPlayer.SHIELD_DECREASE_EFFECT);
+                            AudioPlayer.playSoundEffect(AudioPlayer.SHIP_SHIELD_DECREASE_EFFECT);
                         }
                         resourcesView.updateResourceLevels(ResourcesView.SHIELDS, currentShip.getResource(Resource.Type.SHIELDS).get());
 
