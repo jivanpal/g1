@@ -69,7 +69,6 @@ public class PilotView extends JPanel implements Observer {
     private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;
     public JFrame parentFrame;
-    private JPanel UIpanel;
 
     private MouseMotionListener screenMouseListener;
     private double steeringWheelAngle = 0;
@@ -148,6 +147,10 @@ public class PilotView extends JPanel implements Observer {
                     steeringWheelAngle = Math.PI/4;
                     steeringWheelView.revalidate();
                     steeringWheelView.repaint();
+                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_CLOSE_MANUAL_BUTTON)
+                        && instructions.isVisible()) {
+            	    AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+            	    showManual();
                 }
             }
 
@@ -406,7 +409,10 @@ public class PilotView extends JPanel implements Observer {
 
     private void initialiseManualButton() {
         this.manual = new JButton("Manual");
-        this.manual.addActionListener(e -> showManual());
+        this.manual.addActionListener(e -> {
+            AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+            showManual();
+        });
         this.manual.setFocusable(false);
     }
 

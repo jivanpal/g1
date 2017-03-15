@@ -36,7 +36,8 @@ public class GameOptions {
 	public static final String DEFAULT_MANUAL_BUTTON = String.valueOf(KeyEvent.VK_X);
 	public static final String DEFAULT_MANUAL_NEXT_BUTTON = String.valueOf(KeyEvent.VK_Z);
 	public static final String DEFAULT_MANUAL_PREV_BUTTON = String.valueOf(KeyEvent.VK_C);
-	
+	public static final String DEFAULT_CLOSE_MANUAL_BUTTON = String.valueOf(KeyEvent.VK_ESCAPE);
+
 	public static final String SOUND_VOLUME_MASTER = "SOUND_VOLUME_MASTER";
 	public static final String MUSIC_VOLUME_MASTER = "MUSIC_VOLUME_MASTER";
 	
@@ -53,7 +54,7 @@ public class GameOptions {
 	public final static String KEY_BINDINGS_FILE = System.getProperty("user.dir") + "/keybindings.txt";
 	public final static String SOUND_VALUES_FILE = System.getProperty("user.dir") + "/soundvalues.txt";
 	public final static String XIROD_FONT_FILE = System.getProperty("user.dir") + "/res/fonts/xirod/xirod.ttf";
-	public static Font FULLSCREEN_BOLD_REAL_BIG_TEXT_FONT;
+    public static Font FULLSCREEN_BOLD_REAL_BIG_TEXT_FONT;
 	public static Font FULLSCREEN_BOLD_TEXT_FONT;
     public static Font REGULAR_TEXT_FONT;
 	public static Font LARGE_BOLD_TEXT_FONT;
@@ -128,6 +129,7 @@ public class GameOptions {
 		keyBindings.setProperty(DEFAULT_MANUAL_BUTTON, DEFAULT_MANUAL_BUTTON);
 		keyBindings.setProperty(DEFAULT_MANUAL_NEXT_BUTTON, DEFAULT_MANUAL_NEXT_BUTTON);
 		keyBindings.setProperty(DEFAULT_MANUAL_PREV_BUTTON, DEFAULT_MANUAL_PREV_BUTTON);
+		keyBindings.setProperty(DEFAULT_CLOSE_MANUAL_BUTTON, DEFAULT_CLOSE_MANUAL_BUTTON);
 	}
 
 	public static void saveKeyBindingsInFile() {

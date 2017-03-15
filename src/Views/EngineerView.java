@@ -42,13 +42,13 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     private int shieldSequenceNum = 0;
     private final int SHIELD_MAX_NUM = 5;
     private int fuelSequenceNum = 6;
-    private final int FUEL_MAX_NUM = 12;
-    private int laserSequenceNum = 13;
-    private final int LASER_MAX_NUM = 19;
-    private int plasmaSequenceNum = 20;
-    private final int PLASMA_MAX_NUM = 26;
-    private int torpedoSequenceNum = 27;
-    private final int TORPEDO_MAX_NUM = 33;
+    private final int FUEL_MAX_NUM = 11;
+    private int laserSequenceNum = 12;
+    private final int LASER_MAX_NUM = 17;
+    private int plasmaSequenceNum = 18;
+    private final int PLASMA_MAX_NUM = 23;
+    private int torpedoSequenceNum = 24;
+    private final int TORPEDO_MAX_NUM = 29;
 
     private final int ALLOWED_DEFAULT = 30;
     private int shieldAllowedNum = ALLOWED_DEFAULT; // Amount of key sequence passes we are allowed at this difficulty of sequence
@@ -93,6 +93,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         UILayeredPane = parent.getLayeredPane();
         UIBaseLayer = new JPanel();
 
+        // Create a listener in the parent - checks for whenever the window is resized so the UI can be redrawn.
         parent.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent componentEvent) {
@@ -114,6 +115,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
             }
         });
 
+        // Create a listener in the parent - handles key presses by the user.
         parent.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
@@ -132,6 +134,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                     // User wishes to escape out of this sequence.
                     System.out.println("Stopping this sequence");
                     state = ShipState.NONE;
+                    changeButton("none");
                     keyManager.deactivate();
                 } else {
                     if (keyManager.isActive()) {
@@ -177,15 +180,13 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
             }
         });
 
+        // Create a listener - handles mouse clicks and passing control between the chat window and the game.
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
                 if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
-                    System.out.println("Mouse clicked outside of chat");
                     parentFrame.requestFocusInWindow();
-                } else {
-                    System.out.println("Mouse clicked inside chat");
                 }
             }
 
@@ -193,10 +194,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
             public void mousePressed(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
                 if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
-                    System.out.println("Mouse pressed outside of chat");
                     parentFrame.requestFocusInWindow();
-                } else {
-                    System.out.println("Mouse pressed inside chat");
                 }
             }
 
@@ -204,12 +202,8 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
             public void mouseReleased(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
                 if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
-                    System.out.println("Mouse released outside of chat");
                     parentFrame.requestFocusInWindow();
-                } else {
-                    System.out.println("Mouse released inside chat");
                 }
-
             }
 
             @Override
@@ -353,6 +347,11 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         UILayeredPane.add(chatWindow, JLayeredPane.PALETTE_LAYER);
     }
 
+    /**
+     * Creates the Chat Window
+     * @param gameClient The game client
+     * @param nickname This players nickname
+     */
     private void initialiseChatWindow(GameClient gameClient, String nickname) {
         this.chatWindow = new GameChat(this, gameClient, nickname);
         this.chatWindow.setFocusable(false);
@@ -421,18 +420,29 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         Global.SCREEN_HEIGHT = this.getHeight() - (this.getHeight() / 5);
     }
 
+    /**
+     * Creates the RadarView
+     */
     private void initialiseRadar() {
         this.radarView = new RadarView(playerNickname, gameClient.getMap());
+
+        // Create a mouse listener to check when the user has clicked on the RadarView
         this.radarView.addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent mouseEvent) { }
+            public void mouseClicked(MouseEvent mouseEvent) {
+                // do nothing
+            }
 
             @Override
-            public void mousePressed(MouseEvent mouseEvent) { }
+            public void mousePressed(MouseEvent mouseEvent) {
+                // do nothing
+            }
 
             @Override
             public void mouseReleased(MouseEvent mouseEvent) {
                 radarView.setVisible(false);
+
+                // If currently small, make large. If currently large, make small.
                 if(!radarView.isLargeView()) {
                     radarView.setLargeView(true);
                     radarView.setBounds(50, 50, getWidth() - 100, getHeight() - 100);
@@ -442,6 +452,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
                     radarView.setBounds(parentFrame.getWidth() - parentFrame.getHeight() / 4, 0, parentFrame.getHeight() / 4, parentFrame.getHeight() / 4);
                     radarView.setPreferredSize(new Dimension(parentFrame.getHeight() / 4, parentFrame.getHeight() / 4));
                 }
+
                 radarView.setVisible(true);
 
                 radarView.revalidate();
@@ -449,10 +460,14 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
             }
 
             @Override
-            public void mouseEntered(MouseEvent mouseEvent) { }
+            public void mouseEntered(MouseEvent mouseEvent) {
+                // do nothing
+            }
 
             @Override
-            public void mouseExited(MouseEvent mouseEvent) { }
+            public void mouseExited(MouseEvent mouseEvent) {
+                // do nothing
+            }
         });
     }
 
@@ -729,14 +744,28 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     	}
     }
 
+    /**
+     * Given a String 'number:sequence', returns just the number component
+     * @param sequenceWithNum A string in the form 'number:sequence'
+     * @return The number part of the String
+     */
     private String parseNumber(String sequenceWithNum) {
         return sequenceWithNum.split(":")[0];
     }
 
+    /**
+     * Given a String 'number:sequence', returns just the sequence component
+     * @param sequenceWithNum A string in the form 'number:sequence'
+     * @return The sequence part of the String
+     */
     private String parseSequence(String sequenceWithNum) {
         return sequenceWithNum.split(":")[1];
     }
 
+    /**
+     * Returns the current state of the Ship.
+     * @return Returns the current state of the Ship.
+     */
     ShipState getState() { return this.state; }
 }
 

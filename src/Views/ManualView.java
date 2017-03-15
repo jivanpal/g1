@@ -1,24 +1,23 @@
 package Views;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import GameLogic.GameOptions;
 
 public class ManualView extends JPanel{
 	private JButton previousPage;
 	private JButton nextPage;
+	private JButton closeView;
 	private ManualInstructionsView instuctions;
 	
 	public ManualView(ArrayList<String> data, int size, int heigth){
 		setLayout(new BorderLayout());
-		
+
 		previousPage = new JButton("<");
 		styleButton(previousPage);
 		
@@ -34,6 +33,15 @@ public class ManualView extends JPanel{
 		instuctions = new ManualInstructionsView(data, size, heigth);
 
 		add(instuctions,BorderLayout.CENTER);
+
+		JPanel topBarPanel = new JPanel();
+		topBarPanel.setLayout(new BoxLayout(topBarPanel, BoxLayout.X_AXIS));
+
+		closeView = new JButton("X");
+		closeView.addActionListener(e -> this.setVisible(false));
+
+		topBarPanel.add(closeView);
+		add(topBarPanel, BorderLayout.NORTH);
 	}
 	
 	private void styleButton(JButton button){
