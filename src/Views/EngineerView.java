@@ -59,7 +59,8 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
 
     private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;
-    public JFrame parentFrame;
+    JFrame parentFrame;
+    private JPanel UIPanel;
     private GameChat chatWindow;
 
     private Ship previousShip = null;
@@ -302,7 +303,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         weaponConstraints.anchor = GridBagConstraints.SOUTH;
         weaponPanel.add(torpedosView, weaponConstraints);
 
-        JPanel UIPanel = new JPanel();
+        UIPanel = new JPanel();
         UIPanel.setLayout(new GridBagLayout());
         GridBagConstraints uiPanelConstraints = new GridBagConstraints();
         uiPanelConstraints.weightx = 0.5;
@@ -616,17 +617,29 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     public void keySequenceSoftFailure() {
         System.out.println("Soft failure of sequence");
 
+        try {
+            fullScreenLabel.setVisible(false);
+            UILayeredPane.remove(fullScreenLabel);
+            fullScreenLabel = null;
+        } catch (NullPointerException e) {
+            // Label hasn't been made yet, ignore.
+        }
+
         fullScreenLabel = new JLabel(FAILED_SEQUENCE);
-        fullScreenLabel.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
+        fullScreenLabel.setFont(GameOptions.FULLSCREEN_BOLD_TEXT_FONT);
         fullScreenLabel.setForeground(Color.red);
 
         Graphics g = parentFrame.getGraphics();
         FontMetrics metrics = g.getFontMetrics(GameOptions.FULLSCREEN_BOLD_TEXT_FONT);
         int textHeight = metrics.getHeight();
         int textWidth = metrics.stringWidth(FAILED_SEQUENCE);
+        System.out.println("Text width: " + String.valueOf(textWidth));
 
         fullScreenLabel.setPreferredSize(new Dimension(textWidth + 2, textHeight + 2));
-        fullScreenLabel.setBounds(100, 100, textWidth + 2, textHeight + 2);
+        fullScreenLabel.setBounds((parentFrame.getWidth() / 2) - ((textWidth + 2) / 2),
+                parentFrame.getHeight() - (int) UIPanel.getPreferredSize().getHeight() - textHeight + 10,
+                textWidth + 2,
+                textHeight + 2);
 
         UILayeredPane.add(fullScreenLabel, JLayeredPane.PALETTE_LAYER);
 
