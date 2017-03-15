@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -32,12 +33,14 @@ import GameLogic.GameOptions;
 public class ControlsPanel extends JPanel {
 	private MainMenu menu;
 	private boolean pressed;
+	private ArrayList<JButton> controlButtons;
 	public Client client;
 
 	public ControlsPanel(MainMenu menu, Client client) {
 		super();
 		this.menu = menu;
 		this.client = client;
+		controlButtons = new ArrayList<JButton>();
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -60,8 +63,8 @@ public class ControlsPanel extends JPanel {
 		c.anchor = GridBagConstraints.SOUTH;
 		MyButton apply = new MyButton("Apply");
 		apply.addActionListener(e -> {
-			changebuttons(bpanel, false);
-			changebuttons(bpanel, true);
+			changebuttons(false);
+			changebuttons(true);
 			GameOptions.saveKeyBindingsInFile();
 			JOptionPane.showMessageDialog(this, "Changes have been applied!", "Changes Applied",
 					JOptionPane.INFORMATION_MESSAGE);
@@ -75,23 +78,24 @@ public class ControlsPanel extends JPanel {
 				GameOptions.resetKeysToDefaults();
 				GameOptions.saveKeyBindingsInFile();
 				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				changebuttons(bpanel, true);
+				changebuttons(true);
 			}
 		});
 
 		c.anchor = GridBagConstraints.NORTHEAST;
 		add(resettodefault, c);
-		
+
 		c.anchor = GridBagConstraints.NORTH;
-		JLabel name = new JLabel("<html><b><font size='20'>Player:     <font color='#66e0ff'>" + client.name + "</font></font></b></html>");
+		JLabel name = new JLabel("<html><b><font size='20'>Player:     <font color='#66e0ff'>" + client.name
+				+ "</font></font></b></html>");
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
-		
+
 		setBackground(Color.BLACK);
 
 	}
-	
+
 	/**
 	 * Creates buttons and labels for each of the controls in the game.
 	 * 
@@ -99,7 +103,7 @@ public class ControlsPanel extends JPanel {
 	 */
 	public JPanel createButtons() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(0, 4));
+		panel.setLayout(new GridLayout(0, 4, 20, 20));
 		panel = createBwL(panel, "Thrust Fwd");
 		panel = createBwL(panel, "Fire 1");
 		panel = createBwL(panel, "Thrust Rev");
@@ -113,7 +117,7 @@ public class ControlsPanel extends JPanel {
 		panel = createBwL(panel, "Roll Right");
 		panel = createBwL(panel, "Manual Next");
 		panel = createBwL(panel, "Overdrive");
-		panel = changebuttons(panel, true);
+		changebuttons(true);
 		return panel;
 
 	}
@@ -139,9 +143,11 @@ public class ControlsPanel extends JPanel {
 	public JPanel createBwL(JPanel panel, String name) {
 		JLabel label = new JLabel(name);
 		label.setOpaque(false);
+		label.setFont(GameOptions.REGULAR_TEXT_FONT);
 		label.setForeground(Color.WHITE);
 		panel.add(label);
 		JButton button = new JButton();
+		button.setName(name);
 		button.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "none");
 		button.getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "none");
 
@@ -196,6 +202,7 @@ public class ControlsPanel extends JPanel {
 			public void keyReleased(KeyEvent e) {
 			}
 		});
+		controlButtons.add(button);
 		panel.add(button);
 		return panel;
 	}
@@ -242,9 +249,13 @@ public class ControlsPanel extends JPanel {
 
 	/**
 	 * Either changes key or repaints based on the boolean
-	 * @param key Key which you want to repaint or change
-	 * @param button Button which you want to repaint
-	 * @param repaint Boolean indicating whether to repaint or change the key
+	 * 
+	 * @param key
+	 *            Key which you want to repaint or change
+	 * @param button
+	 *            Button which you want to repaint
+	 * @param repaint
+	 *            Boolean indicating whether to repaint or change the key
 	 */
 	public void changerepaint(String key, JButton button, boolean repaint) {
 		if (repaint) {
@@ -262,56 +273,51 @@ public class ControlsPanel extends JPanel {
 	 *            The panel which the control buttons are on
 	 * @return The exact JPanel but with the text on the buttons changed.
 	 */
-	public JPanel changebuttons(JPanel panel, boolean repaint) {
-		String buttontopaint = "";
-		for (Component c : panel.getComponents()) {
-			if (c instanceof JLabel) {
-				buttontopaint = ((JLabel) c).getText();
-			} else if (c instanceof JButton) {
-				switch (buttontopaint) {
+	public void changebuttons(boolean repaint) {
+		for (JButton b : controlButtons) {
+				switch (b.getName()) {
 				case "Thrust Fwd":
-					changerepaint(GameOptions.DEFAULT_ACCELERATE_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_ACCELERATE_BUTTON, b, repaint);
 					break;
 				case "Fire 1":
-					changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON, b, repaint);
 					break;
 				case "Thrust Rev":
-					changerepaint(GameOptions.DEFAULT_DECELERATE_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_DECELERATE_BUTTON, b, repaint);
 					break;
 				case "Fire 2":
-					changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON, b, repaint);
 					break;
 				case "Pitch Down":
-					changerepaint(GameOptions.DEFAULT_PITCH_DOWN_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_PITCH_DOWN_BUTTON, b, repaint);
 					break;
 				case "Fire 3":
-					changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON, b, repaint);
 					break;
 				case "Pitch Up":
-					changerepaint(GameOptions.DEFAULT_PITCH_UP_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_PITCH_UP_BUTTON, b, repaint);
 					break;
 				case "Manual":
-					changerepaint(GameOptions.DEFAULT_MANUAL_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_MANUAL_BUTTON, b, repaint);
 					break;
 				case "Roll Left":
-					changerepaint(GameOptions.DEFAULT_ROLL_LEFT_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_ROLL_LEFT_BUTTON, b, repaint);
 					break;
 				case "Manual Prev":
-					changerepaint(GameOptions.DEFAULT_MANUAL_PREV_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_MANUAL_PREV_BUTTON, b, repaint);
 					break;
 				case "Roll Right":
-					changerepaint(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON, b, repaint);
 					break;
 				case "Manual Next":
-					changerepaint(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON, b, repaint);
 					break;
 				case "Overdrive":
-					changerepaint(GameOptions.DEFAULT_OVERDRIVE_BUTTON, (JButton) c, repaint);
+					changerepaint(GameOptions.DEFAULT_OVERDRIVE_BUTTON, b, repaint);
 					break;
 				}
 			}
 		}
-		return panel;
-	}
+
 
 }
