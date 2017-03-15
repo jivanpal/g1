@@ -193,6 +193,7 @@ public class ResourcesView extends JPanel {
             replenishButton.setBorderPainted(false);
             replenishButton.setName(name);
             replenishButton.setBackground(Color.decode("#cccccc"));
+            
             buttons.add(replenishButton);
             
             add(resourceProgressBar);
