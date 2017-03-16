@@ -108,10 +108,10 @@ public class MapContainer {
 					playerShip.pitchUp();
 					break;
 				case "rollLeft":
-					playerShip.rollLeft();
+					playerShip.rotateLeft();
 					break;
 				case "rollRight":
-					playerShip.rollRight();
+					playerShip.rotateRight();
 					break;
 				case "shieldReplenish":
 					playerShip.getResource(Resource.Type.SHIELDS).increase();
