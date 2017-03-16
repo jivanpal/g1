@@ -10,12 +10,16 @@ import Physics.Body;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Observer;
+import java.util.function.Predicate;
 
 /**
  * Created by James on 16/03/17.
  * Abstract class that both PilotView and EngineerView will extend from
  */
 public abstract class AbstractPlayerView extends JPanel implements Observer {
+    protected final String LOSE_GAME = "DEFEAT";
+    protected final String WIN_GAME = "VICTORY";
+
     protected String playerNickname;
     protected GameClient gameClient;
 
@@ -27,6 +31,8 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
     protected JLabel fullScreenLabel;
 
     public AbstractPlayerView(String playerNickname, GameClient gameClient, JFrame parent) {
+        super();
+
         this.playerNickname = playerNickname;
         this.gameClient = gameClient;
         this.parentFrame = parent;
@@ -39,13 +45,45 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
         for (Body b : m.bodies()) {
             if (b instanceof Ship) {
                 Ship s = (Ship) b;
-                if (s.getEngineerName().equals(playerNickname)) {
+                if (s.getEngineerName().equals(playerNickname) || s.getPilotName().equals(playerNickname)) {
                     return s;
                 }
             }
         }
 
         return null;
+    }
+
+    protected boolean hasWonGame(Map m) {
+        boolean onlyShipLeft = true;
+
+        for(Body b : m.bodies()) {
+            if (b instanceof Ship) {
+                Ship s = (Ship) b;
+                if (!s.getPilotName().equals(playerNickname) && !s.getEngineerName().equals(playerNickname)) {
+                    onlyShipLeft = false;
+                    break;
+                }
+            }
+        }
+
+        return onlyShipLeft;
+    }
+
+    protected boolean hasLostGame(Map m) {
+        boolean haveFoundMyShip = false;
+
+        for(Body b : m.bodies()) {
+            if(b instanceof Ship) {
+                Ship s = (Ship) b;
+                if(s.getPilotName().equals(playerNickname) || s.getEngineerName().equals(playerNickname)) {
+                    haveFoundMyShip = true;
+                    break;
+                }
+            }
+        }
+
+        return haveFoundMyShip;
     }
 
     protected void displayFullScreenMessage(String message, int time, Color textColor) {
