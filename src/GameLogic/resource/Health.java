@@ -8,7 +8,7 @@ import GameLogic.*;
  */
 public class Health extends Resource {
     private static final int MAXIMUM = 100;
-    private static final int INITIAL = 50;
+    private static final int INITIAL = 100;
     
     public Health() {
         super(MAXIMUM, INITIAL);
