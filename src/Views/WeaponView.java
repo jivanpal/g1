@@ -73,6 +73,7 @@ public class WeaponView extends JPanel{
             replenishAmmo.setOpaque(true);
             replenishAmmo.setBackground(Color.decode("#cccccc"));
             replenishAmmo.setBorderPainted(false);
+            replenishAmmo.setPreferredSize(new Dimension(180, 26));
             buttons.add(replenishAmmo);
 
             this.add(replenishAmmo);
