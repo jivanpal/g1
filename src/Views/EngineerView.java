@@ -272,7 +272,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
         weaponPanel.setLayout(new GridBagLayout());
         weaponPanel.setOpaque(false);
         GridBagConstraints weaponConstraints = new GridBagConstraints();
-        weaponConstraints.weightx = 0;
+        weaponConstraints.weightx = 0.5;
         weaponConstraints.weighty = 0.5;
         weaponConstraints.gridwidth = 0;
         weaponConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -287,10 +287,10 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
         UIPanel = new JPanel();
         UIPanel.setLayout(new GridBagLayout());
         GridBagConstraints uiPanelConstraints = new GridBagConstraints();
-        uiPanelConstraints.weightx = 0.5;
-        uiPanelConstraints.weighty = 0.5;
-        uiPanelConstraints.gridwidth = 1;
-        uiPanelConstraints.gridheight = 0;
+        uiPanelConstraints.weightx = 1;
+        uiPanelConstraints.weighty = 1;
+        //uiPanelConstraints.gridwidth = 1;
+        //uiPanelConstraints.gridheight = 0;
         uiPanelConstraints.gridx = 0;
         uiPanelConstraints.gridy = 0;
         uiPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -300,7 +300,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
         resourcesView.setOpaque(false);
         UIPanel.add(resourcesView, uiPanelConstraints);
 
-        uiPanelConstraints.weightx = 1;
+        //uiPanelConstraints.weightx = 1;
         uiPanelConstraints.gridx = 1;
         
         //uiPanelConstraints.anchor = GridBagConstraints.EAST;
