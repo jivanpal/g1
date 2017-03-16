@@ -60,18 +60,22 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
                 Map m = ((ClientNetworking.GameClient.MapContainer) observable).getMap();
 
                 if (hasWonGame(m)) {
-                    // Congrats!
-                    gameActive = false;
-
-                    AudioPlayer.playSoundEffect(AudioPlayer.VICTORY_EFFECT);
-                    displayFullScreenMessage(WIN_GAME, 5000, Color.green);
-
-                    Timer t = new Timer(5000, actionEvent -> {
-                        System.out.println("I'm going back to the main menu.");
-                        swapToMainMenu();
-                    });
-                    t.setRepeats(false);
-                    t.start();
+                    /**
+                     * TODO: Victory is temporarilly off for testing. It's annoying to join the game as a single
+                     * player and instantly win!
+                     */
+//                    // Congrats!
+//                    gameActive = false;
+//
+//                    AudioPlayer.playSoundEffect(AudioPlayer.VICTORY_EFFECT);
+//                    displayFullScreenMessage(WIN_GAME, 5000, Color.green);
+//
+//                    Timer t = new Timer(5000, actionEvent -> {
+//                        System.out.println("I'm going back to the main menu.");
+//                        swapToMainMenu();
+//                    });
+//                    t.setRepeats(false);
+//                    t.start();
                 } else if (hasLostGame(m)) {
                     // Commiserations
                     gameActive = false;
