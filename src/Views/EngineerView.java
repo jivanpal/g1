@@ -19,7 +19,7 @@ import Physics.Body;
  * Created by James on 01/02/17.
  * This View contains the entire UI for the Engineer once they are in game.
  */
-public class EngineerView extends JPanel implements KeySequenceResponder, Observer {
+public class EngineerView extends AbstractPlayerView implements KeySequenceResponder, Observer {
     private static final String FAILED_SEQUENCE = "FAILED SEQUENCE";
     private static final String NEW_SEQUENCE = "NEW SEQUENCE";
 
@@ -28,15 +28,11 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     private ShipState state = ShipState.NONE;
     private final KeySequenceManager keyManager;
 
-    private Screen screen;
     private WeaponView plasmaBlasterView;
     private WeaponView laserBlasterView;
     private WeaponView torpedosView;
     private ResourcesView resourcesView;
     private RadarView radarView;
-
-    private GameClient gameClient;
-    private String playerNickname;
 
     private ArrayList<String> keySequences;
     private int shieldSequenceNum = 0;
@@ -57,18 +53,13 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     private int plasmaAllowedNum = ALLOWED_DEFAULT;
     private int torpedoAllowedNum = ALLOWED_DEFAULT;
 
-    private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;
-    JFrame parentFrame;
     private JPanel UIPanel;
-    private GameChat chatWindow;
 
     private Ship previousShip = null;
     private Ship currentShip = null;
     
     public ArrayList<JButton> replenishButtons;
-
-    private JLabel fullScreenLabel;
 
     /**
      * Creates a new EngineerView
@@ -78,19 +69,15 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
      * @param gameClient     The GameClient handling network connections for this player.
      */
     public EngineerView(String playerNickname, GameClient gameClient, JFrame parent) {
-        super();
+        super(playerNickname, gameClient, parent);
 
-        this.playerNickname = playerNickname;
-
-        this.gameClient = gameClient;
         gameClient.addObserver(this);
 
         keyManager = new KeySequenceManager(this);
 
         setFocusable(true);
 
-        this.parentFrame = parent;
-        UILayeredPane = parent.getLayeredPane();
+
         UIBaseLayer = new JPanel();
 
         // Create a listener in the parent - checks for whenever the window is resized so the UI can be redrawn.
@@ -227,13 +214,13 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
     /**
      * Creates all the elements of the UI and positions them on the screen. Sets all default values of the UI elements.
      */
-    private void initialiseUI() {
+    public void initialiseUI() {
         if(UIinitialised) {
             UILayeredPane.removeAll();
             UIBaseLayer.removeAll();
         }
 
-        currentShip = findPlayerShip(gameClient.getMap(), playerNickname);
+        currentShip = findPlayerShip(gameClient.getMap());
         while (currentShip == null) {
             System.out.println("ship is null");
             try {
@@ -241,7 +228,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            currentShip = findPlayerShip(gameClient.getMap(), playerNickname);
+            currentShip = findPlayerShip(gameClient.getMap());
         }
 
         replenishButtons = new ArrayList<JButton>();
@@ -471,25 +458,6 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         });
     }
 
-    /**
-     * Finds the players Ship within all of the objects in the Map
-     * @param m The game map
-     * @param playerNickname The name of the player who's ship to find
-     * @return The players Ship object
-     */
-    private static Ship findPlayerShip(Map m, String playerNickname) {
-        for (Body b : m.bodies()) {
-            if (b instanceof Ship) {
-                Ship s = (Ship) b;
-                if (s.getEngineerName().equals(playerNickname)) {
-                    return s;
-                }
-            }
-        }
-
-        return null;
-    }
-
     @Override
     public void update(Observable observable, Object o) {
         if (!UIinitialised) {
@@ -646,39 +614,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
 
         AudioPlayer.playSoundEffect(AudioPlayer.KEY_SEQUENCE_FAILED);
 
-        try {
-            fullScreenLabel.setVisible(false);
-            UILayeredPane.remove(fullScreenLabel);
-            fullScreenLabel = null;
-        } catch (NullPointerException e) {
-            // Label hasn't been made yet, ignore.
-        }
-
-        fullScreenLabel = new JLabel(FAILED_SEQUENCE);
-        fullScreenLabel.setFont(GameOptions.FULLSCREEN_BOLD_TEXT_FONT);
-        fullScreenLabel.setForeground(Color.red);
-
-        Graphics g = parentFrame.getGraphics();
-        FontMetrics metrics = g.getFontMetrics(GameOptions.FULLSCREEN_BOLD_TEXT_FONT);
-        int textHeight = metrics.getHeight();
-        int textWidth = metrics.stringWidth(FAILED_SEQUENCE);
-        System.out.println("Text width: " + String.valueOf(textWidth));
-
-        fullScreenLabel.setPreferredSize(new Dimension(textWidth + 2, textHeight + 2));
-        fullScreenLabel.setBounds((parentFrame.getWidth() / 2) - ((textWidth + 2) / 2),
-                parentFrame.getHeight() - (int) UIPanel.getPreferredSize().getHeight() - textHeight + 10,
-                textWidth + 2,
-                textHeight + 2);
-
-        UILayeredPane.add(fullScreenLabel, JLayeredPane.PALETTE_LAYER);
-
-        Timer timer = new Timer(1000, actionEvent -> {
-            fullScreenLabel.setVisible(false);
-            UILayeredPane.remove(fullScreenLabel);
-        });
-        timer.setRepeats(false);
-
-        timer.start();
+        displayFullScreenMessage("FAILED SEQUENCE", 750, Color.red);
     }
 
     /**
