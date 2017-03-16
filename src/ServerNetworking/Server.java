@@ -54,14 +54,28 @@ public class Server
 				ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
 
 				String nickname ="";
-				
-				try
+				while(true)
 				{
-					nickname = (String)fromClient.readObject();
-				}
-				catch (ClassNotFoundException e)
-				{
-					e.printStackTrace();
+					try
+					{
+						nickname = (String)fromClient.readObject();
+						toClient.reset();
+						if(clientTable.getQueue(nickname)!=null)
+						{
+							toClient.writeBoolean(false);
+							toClient.flush();
+						}
+						else
+						{
+							toClient.writeBoolean(true);
+							break;
+						}
+						toClient.flush();
+					}
+					catch (ClassNotFoundException e)
+					{
+						e.printStackTrace();
+					}
 				}
 				clientTable.add(nickname);
 				LinkedBlockingQueue<Object> queue = clientTable.getQueue(nickname); 
