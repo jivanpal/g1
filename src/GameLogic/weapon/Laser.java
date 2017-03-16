@@ -9,8 +9,8 @@ import Physics.Body;
  */
 public class Laser extends Weapon {
     private static final Bullet BULLET          = new Bullet(2, 2, new Body(10, 2));
-    private static final int    AMMO_MAX        = 30;
-    private static final int    AMMO_INIT       = 20;
+    private static final int    AMMO_MAX        = 100;
+    private static final int    AMMO_INIT       = 100;
     private static final int    DAMAGE_SHIELDS  = 5;
     private static final int    DAMAGE_SHIP     = 10;
     private static final double COOLDOWN        = 0.01;

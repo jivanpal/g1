@@ -46,18 +46,8 @@ public class WeaponView extends JPanel{
      */
     public WeaponView(String weaponName, boolean showAmmoLevel, String replenishNumber, ArrayList<JButton> buttons) {
         setOpaque(false);
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.weightx = 0.5;
-        c.weighty = 0.5;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridwidth = 1;
-        c.gridheight = 0;
-        c.gridy = 0;
 
-        // weaponNameLabel = new JLabel(weaponName);
-
+        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.showAmmoLevel = showAmmoLevel;
         if(showAmmoLevel) {
             //this.remove(weaponNameLabel);
@@ -72,7 +62,7 @@ public class WeaponView extends JPanel{
             weaponAmmoLevel.setMinimum(0);
             weaponAmmoLevel.setFont(GameOptions.REGULAR_TEXT_FONT);
             weaponAmmoLevel.setForeground(PROGRESS_BAR_COLOR);
-            this.add(weaponAmmoLevel, c);
+            this.add(weaponAmmoLevel);
 
 
             this.replenishAmmo = new JButton("Replenish: " + replenishNumber);
@@ -83,11 +73,10 @@ public class WeaponView extends JPanel{
             replenishAmmo.setOpaque(true);
             replenishAmmo.setBackground(Color.decode("#cccccc"));
             replenishAmmo.setBorderPainted(false);
+            replenishAmmo.setPreferredSize(new Dimension(180, 26));
             buttons.add(replenishAmmo);
 
-            c.gridx = 1;
-            // c.anchor = GridBagConstraints.EAST;
-            this.add(replenishAmmo, c);
+            this.add(replenishAmmo);
         }
     }
 

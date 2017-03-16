@@ -47,34 +47,28 @@ import Physics.Body;
 /**
  * Created by James on 01/02/17.
  */
-public class PilotView extends JPanel implements Observer {
+public class PilotView extends AbstractPlayerView implements Observer {
 
     private static final String WON_GAME = "VICTORY";
     private static final String LOSE_GAME = "FAILURE";
 
-    private Screen screen;
     private SpeedometerView speedometerView;
 
     private JButton manual;
     private ManualView instructions;
     private JLabel steeringWheelView;
 
-    private GameClient gameClient;
-    private String playerNickname;
-
     private boolean UIinitialised = false;
 
     private EngineerAI engAI;
 
-    private JLayeredPane UILayeredPane;
     private JPanel UIBaseLayer;
-    public JFrame parentFrame;
 
     private MouseMotionListener screenMouseListener;
     private double steeringWheelAngle = 0;
-    private GameChat chatWindow;
-    
+
     private final Set<String> pressedKeys = new HashSet<String>();
+    private Ship currentShip;
 
     /**
      * Creates a new PilotView. This encapsulates the entire View of the Pilot player.
@@ -82,22 +76,17 @@ public class PilotView extends JPanel implements Observer {
      * @param gameClient     The GameClient handling network connections for this player.
      */
     public PilotView(String playerNickname, GameClient gameClient, JFrame parentFrame, boolean ai) {
-        super();
+        super(playerNickname, gameClient, parentFrame);
 
         if (ai) {
             engAI = new EngineerAI(gameClient, playerNickname);
             gameClient.addObserver(engAI);
         }
 
-        this.playerNickname = playerNickname;
-
-        this.gameClient = gameClient;
         gameClient.addObserver(this);
 
         setFocusable(true);
 
-        this.parentFrame = parentFrame;
-        this.UILayeredPane = parentFrame.getLayeredPane();
         UIBaseLayer = new JPanel();
 
         parentFrame.addComponentListener(new ComponentListener() {
@@ -128,7 +117,7 @@ public class PilotView extends JPanel implements Observer {
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-            	if(GameOptions.checkIfKeyTaken(keyEvent.getKeyCode())){
+            	if(GameOptions.checkIfKeyToBeSentToServer(keyEvent.getKeyCode())){
             		pressedKeys.add(getKeyCodeToInstruction(keyEvent.getKeyCode()));
             	}
                 if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
@@ -247,20 +236,20 @@ public class PilotView extends JPanel implements Observer {
     /**
      * Creates all the elements of the UI and positions them on the screen. Sets all default values of the UI elements.
      */
-    private void initialiseUI() {
+    protected void initialiseUI() {
         if(UIinitialised) {
             UILayeredPane.removeAll();
             UIBaseLayer.removeAll();
         }
 
-        Ship s = findPlayerShip();
-        while (s == null) {
+        currentShip = findPlayerShip(gameClient.getMap());
+        while (currentShip == null) {
             try {
                 Thread.sleep(250);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            s = findPlayerShip();
+            currentShip = findPlayerShip(gameClient.getMap());
         }
 
         // initialiseWeapons(s);
@@ -431,42 +420,6 @@ public class PilotView extends JPanel implements Observer {
         this.instructions.setVisible(false);
     }
 
-
-    /**
-     * Given a Ship, this will initialise the weapon progress bars to their initial values and set their maximum values
-     *
-     * @param s This players Ship object
-     */
-/*    private void initialiseWeapons(Ship s) {
-        if (s != null) {
-            plasmaBlasterView = new WeaponView("Plasma Blaster", false);
-            laserBlasterView = new WeaponView("Laser Blaster", false);
-            torpedosView = new WeaponView("Torpedos", false);
-        } else {
-            System.out.println("Ship is null? Oh dear oh dear");
-        }
-    }*/
-
-    /**
-     * Finds the players Ship within all of the objects in the Map.
-     * @return The players Ship object. If the ship could not be found, this will return null.
-     */
-    private Ship findPlayerShip() {
-        Map m = gameClient.getMap();
-
-        for (Body b : m.bodies()) {
-            if (b instanceof Ship) {
-                Ship s = (Ship) b;
-                if (s.getPilotName().equals(playerNickname)) {
-                    return s;
-                }
-            }
-        }
-
-        return null;
-    }
-
-
     @Override
     public void update(Observable observable, Object o) {
         if (!UIinitialised) {
@@ -483,19 +436,11 @@ public class PilotView extends JPanel implements Observer {
             Map m = gameClient.getMap();
             screen.setMap(m);
 
-            Ship s = findPlayerShip();
+            Ship s = findPlayerShip(m);
             speedometerView.updateSpeedLevel(s.getVelocity().length());
         }
         for(String inst : pressedKeys){
         	gameClient.send(inst);
         }
-    }
-
-    private void displayFullScreenMessage(String message) {
-        JLabel l = new JLabel(message);
-        l.setFont(GameOptions.FULLSCREEN_BOLD_TEXT_FONT);
-        // TODO: Find the real size of this
-        l.setBounds(100, 100, 600, 600);
-        UILayeredPane.add(l, JLayeredPane.DRAG_LAYER);
     }
 }

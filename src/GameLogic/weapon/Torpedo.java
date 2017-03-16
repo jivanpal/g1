@@ -8,8 +8,8 @@ import GameLogic.*;
  */
 public class Torpedo extends Weapon {
     private static final Bullet BULLET          = null;
-    private static final int    AMMO_MAX        = 30;
-    private static final int    AMMO_INIT       = 20;
+    private static final int    AMMO_MAX        = 10;
+    private static final int    AMMO_INIT       = 10;
     private static final int    DAMAGE_SHIELDS  = 5;
     private static final int    DAMAGE_SHIP     = 10;
     private static final double COOLDOWN        = 0.01;

@@ -50,8 +50,6 @@ public class MapContainer {
 						break;
 					}
 				}
-
-				System.out.println("Help, I'm stuck in this loop!");
 			}
 
 			/*

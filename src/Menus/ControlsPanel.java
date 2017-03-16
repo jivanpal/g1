@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
@@ -148,11 +151,16 @@ public class ControlsPanel extends JPanel {
 		panel.add(label);
 		JButton button = new JButton();
 		button.setName(name);
+		button.setOpaque(true);
+		button.setForeground(Color.WHITE);
+		button.setBackground(Color.decode("#808080"));
+		button.setBorder(new LineBorder(Color.WHITE));
 		button.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "none");
 		button.getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "none");
 
 		button.addActionListener(e -> {
 			pressed = true;
+			
 		});
 		button.addKeyListener(new KeyListener() {
 
@@ -195,12 +203,28 @@ public class ControlsPanel extends JPanel {
 						}
 						pressed = false;
 					}
+					button.setBackground(Color.decode("#808080"));
 				}
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
 			}
+		});
+		button.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				button.setBackground(Color.decode("#66e0ff"));
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				button.setBackground(Color.decode("#808080"));
+				
+			}
+			
 		});
 		controlButtons.add(button);
 		panel.add(button);
@@ -224,6 +248,7 @@ public class ControlsPanel extends JPanel {
 		} else {
 			button.setText(KeyEvent.getKeyText(keybind));
 		}
+		button.setBackground(Color.decode("#808080"));
 	}
 
 	/**
@@ -275,49 +300,48 @@ public class ControlsPanel extends JPanel {
 	 */
 	public void changebuttons(boolean repaint) {
 		for (JButton b : controlButtons) {
-				switch (b.getName()) {
-				case "Thrust Fwd":
-					changerepaint(GameOptions.DEFAULT_ACCELERATE_BUTTON, b, repaint);
-					break;
-				case "Fire 1":
-					changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON, b, repaint);
-					break;
-				case "Thrust Rev":
-					changerepaint(GameOptions.DEFAULT_DECELERATE_BUTTON, b, repaint);
-					break;
-				case "Fire 2":
-					changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON, b, repaint);
-					break;
-				case "Pitch Down":
-					changerepaint(GameOptions.DEFAULT_PITCH_DOWN_BUTTON, b, repaint);
-					break;
-				case "Fire 3":
-					changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON, b, repaint);
-					break;
-				case "Pitch Up":
-					changerepaint(GameOptions.DEFAULT_PITCH_UP_BUTTON, b, repaint);
-					break;
-				case "Manual":
-					changerepaint(GameOptions.DEFAULT_MANUAL_BUTTON, b, repaint);
-					break;
-				case "Roll Left":
-					changerepaint(GameOptions.DEFAULT_ROLL_LEFT_BUTTON, b, repaint);
-					break;
-				case "Manual Prev":
-					changerepaint(GameOptions.DEFAULT_MANUAL_PREV_BUTTON, b, repaint);
-					break;
-				case "Roll Right":
-					changerepaint(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON, b, repaint);
-					break;
-				case "Manual Next":
-					changerepaint(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON, b, repaint);
-					break;
-				case "Overdrive":
-					changerepaint(GameOptions.DEFAULT_OVERDRIVE_BUTTON, b, repaint);
-					break;
-				}
+			switch (b.getName()) {
+			case "Thrust Fwd":
+				changerepaint(GameOptions.DEFAULT_ACCELERATE_BUTTON, b, repaint);
+				break;
+			case "Fire 1":
+				changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON, b, repaint);
+				break;
+			case "Thrust Rev":
+				changerepaint(GameOptions.DEFAULT_DECELERATE_BUTTON, b, repaint);
+				break;
+			case "Fire 2":
+				changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON, b, repaint);
+				break;
+			case "Pitch Down":
+				changerepaint(GameOptions.DEFAULT_PITCH_DOWN_BUTTON, b, repaint);
+				break;
+			case "Fire 3":
+				changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON, b, repaint);
+				break;
+			case "Pitch Up":
+				changerepaint(GameOptions.DEFAULT_PITCH_UP_BUTTON, b, repaint);
+				break;
+			case "Manual":
+				changerepaint(GameOptions.DEFAULT_MANUAL_BUTTON, b, repaint);
+				break;
+			case "Roll Left":
+				changerepaint(GameOptions.DEFAULT_ROLL_LEFT_BUTTON, b, repaint);
+				break;
+			case "Manual Prev":
+				changerepaint(GameOptions.DEFAULT_MANUAL_PREV_BUTTON, b, repaint);
+				break;
+			case "Roll Right":
+				changerepaint(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON, b, repaint);
+				break;
+			case "Manual Next":
+				changerepaint(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON, b, repaint);
+				break;
+			case "Overdrive":
+				changerepaint(GameOptions.DEFAULT_OVERDRIVE_BUTTON, b, repaint);
+				break;
 			}
 		}
-
+	}
 
 }

@@ -7,8 +7,8 @@ import GameLogic.Resource;
  * @author Ivan Panchev
  */
 public class Engines extends Resource {
-    private static final int MAXIMUM = 100;
-    private static final int INITIAL = 50;
+    private static final int MAXIMUM = 20;
+    private static final int INITIAL = 10;
     
     private boolean isWorking; // Whether or not it is working properly 
     
