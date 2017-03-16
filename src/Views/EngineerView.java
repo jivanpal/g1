@@ -287,10 +287,10 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
         UIPanel = new JPanel();
         UIPanel.setLayout(new GridBagLayout());
         GridBagConstraints uiPanelConstraints = new GridBagConstraints();
-        uiPanelConstraints.weightx = 1;
-        uiPanelConstraints.weighty = 1;
-        //uiPanelConstraints.gridwidth = 1;
-        //uiPanelConstraints.gridheight = 0;
+        uiPanelConstraints.weightx = 0.5;
+        uiPanelConstraints.weighty = 0.5;
+        uiPanelConstraints.gridwidth = 1;
+        uiPanelConstraints.gridheight = 0;
         uiPanelConstraints.gridx = 0;
         uiPanelConstraints.gridy = 0;
         uiPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
