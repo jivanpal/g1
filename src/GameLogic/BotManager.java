@@ -196,9 +196,9 @@ public class BotManager implements Serializable {
         // Pilot the ship accordingly.
             
             if (desiredDirection.getX() > 0) {
-                ship.rollRight();
+                ship.rotateRight();
             } else if (desiredDirection.getX() < 0) {
-                ship.rollLeft();
+                ship.rotateLeft();
             }
             
             if (desiredDirection.getZ() > 0) {

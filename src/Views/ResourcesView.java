@@ -193,6 +193,9 @@ public class ResourcesView extends JPanel {
             replenishButton.setBorderPainted(false);
             replenishButton.setName(name);
             replenishButton.setBackground(Color.decode("#cccccc"));
+            replenishButton.setPreferredSize(new Dimension(180, 26));
+            
+            //replenishButton.setPreferredSize(new Dimension());
             
             buttons.add(replenishButton);
             
