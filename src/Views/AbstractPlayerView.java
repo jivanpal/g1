@@ -30,6 +30,8 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
     protected GameChat chatWindow;
     protected JLabel fullScreenLabel;
 
+    protected boolean gameActive = true;
+
     public AbstractPlayerView(String playerNickname, GameClient gameClient, JFrame parent) {
         super();
 

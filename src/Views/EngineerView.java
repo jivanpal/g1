@@ -13,7 +13,10 @@ import java.util.Observer;
 
 import GameLogic.*;
 import Graphics.Screen;
+import Menus.ButtonPanel;
+import Menus.MainMenu;
 import Physics.Body;
+import sun.applet.Main;
 
 /**
  * Created by James on 01/02/17.
@@ -466,17 +469,36 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
             initialiseUI();
             UIinitialised = true;
-        } else {
+        } else if (gameActive) {
             Map m = gameClient.getMap();
 
             if(hasWonGame(m)) {
                 // Congrats!
+                gameActive = false;
+
                 AudioPlayer.playSoundEffect(AudioPlayer.VICTORY_EFFECT);
                 displayFullScreenMessage(WIN_GAME, 5000, Color.green);
+
+                Timer t = new Timer(5000, actionEvent -> {
+                    System.out.println("I'm going back to the main menu.");
+                    MainMenu menu = new MainMenu(playerNickname);
+                    parentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    parentFrame.dispatchEvent(new WindowEvent(parentFrame, WindowEvent.WINDOW_CLOSING));
+                });
+                t.setRepeats(false);
+                t.start();
+
             } else if (hasLostGame(m)) {
                 // Commiserations
-                displayFullScreenMessage(LOSE_GAME, 5000, Color.RED);
+                gameActive = false;
+
                 AudioPlayer.playSoundEffect(AudioPlayer.FAILURE_EFFECT);
+                displayFullScreenMessage(LOSE_GAME, 5000, Color.RED);
+
+                Timer t = new Timer(5000, actionEvent -> {
+
+                });
+
             } else {
                 screen.setMap(m);
                 radarView.updateMap(m);

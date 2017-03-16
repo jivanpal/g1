@@ -19,6 +19,7 @@ import GameLogic.GameOptions;
 public class MainMenu {
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private static JFrame frame;
+	public Client client;
 
 	/**
 	 * Constructor method of the main frame
@@ -43,7 +44,7 @@ public class MainMenu {
 		}
 
 		frame = new JFrame();
-		Client client = new Client(name);
+		client = new Client(name);
 		client.start();
 		client.updateList();
 		ButtonPanel comp = new ButtonPanel(this, client);
@@ -72,6 +73,8 @@ public class MainMenu {
 	public JFrame getFrame() {
 		return frame;
 	}
+
+	public Client getClient() {return client;}
 
 	public static void main(String[] args) {
 		GameOptions.setKeyBindings();

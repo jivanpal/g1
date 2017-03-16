@@ -27,6 +27,7 @@ public class Client extends Thread
 	public LinkedBlockingQueue<Object> clientQueue;
 	private ClientReceiver receiver;
 	private ClientSender sender;
+	Socket server = null;
 
 	/**
 	 * Constructor
@@ -44,7 +45,7 @@ public class Client extends Thread
 		// Open sockets:
 		ObjectOutputStream toServer = null;
 		ObjectInputStream fromServer = null;
-		Socket server = null;
+
 		
 		// get a socket and the 2 streams
 		try
@@ -89,6 +90,15 @@ public class Client extends Thread
 			e.printStackTrace();
 		}
 		
+	}
+
+	public void disconnect()
+	{
+		try {
+			server.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	/**
 	 * Get the Lobby
