@@ -61,7 +61,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
     private Ship previousShip = null;
     private Ship currentShip = null;
-    
+
     public ArrayList<JButton> replenishButtons;
 
     /**
@@ -174,7 +174,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
-                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                if (!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
                     parentFrame.requestFocusInWindow();
                 }
             }
@@ -182,7 +182,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
             @Override
             public void mousePressed(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
-                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                if (!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
                     parentFrame.requestFocusInWindow();
                 }
             }
@@ -190,7 +190,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
             @Override
             public void mouseReleased(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
-                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                if (!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
                     parentFrame.requestFocusInWindow();
                 }
             }
@@ -207,7 +207,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
         });
 
         initialiseUI();
-        
+
         // starting the in-game sounds
         AudioPlayer.stopMusic();
         AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
@@ -217,7 +217,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
      * Creates all the elements of the UI and positions them on the screen. Sets all default values of the UI elements.
      */
     public void initialiseUI() {
-        if(UIinitialised) {
+        if (UIinitialised) {
             UILayeredPane.removeAll();
             UIBaseLayer.removeAll();
         }
@@ -234,7 +234,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
         }
 
         replenishButtons = new ArrayList<JButton>();
-        
+
         initialiseWeapons(currentShip);
         initialiseResources(currentShip);
         initialiseScreen();
@@ -295,14 +295,14 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
         uiPanelConstraints.gridy = 0;
         uiPanelConstraints.fill = GridBagConstraints.HORIZONTAL;
         uiPanelConstraints.insets = new Insets(10, 20, 30, 20);
-       // uiPanelConstraints.anchor = GridBagConstraints.WEST;
+        // uiPanelConstraints.anchor = GridBagConstraints.WEST;
 
         resourcesView.setOpaque(false);
         UIPanel.add(resourcesView, uiPanelConstraints);
 
         //uiPanelConstraints.weightx = 1;
         uiPanelConstraints.gridx = 1;
-        
+
         //uiPanelConstraints.anchor = GridBagConstraints.EAST;
         UIPanel.add(weaponPanel, uiPanelConstraints);
 
@@ -311,7 +311,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
         UIPanel.setForeground(ViewConstants.UI_BACKGROUND_COLOR);
         UIPanel.setBackground(ViewConstants.UI_BACKGROUND_COLOR);
         UIPanel.paintComponents(getGraphics());
-        
+
         UIBaseLayer.setLayout(new BorderLayout());
         UIBaseLayer.add(screen, BorderLayout.CENTER);
         UIBaseLayer.add(UIPanel, BorderLayout.SOUTH);
@@ -336,8 +336,9 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
     /**
      * Creates the Chat Window
+     *
      * @param gameClient The game client
-     * @param nickname This players nickname
+     * @param nickname   This players nickname
      */
     private void initialiseChatWindow(GameClient gameClient, String nickname) {
         this.chatWindow = new GameChat(this, gameClient, nickname);
@@ -346,6 +347,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
     /**
      * Given a Ship, this will initialise the weapon progress bars to their initial values and set their maximum values
+     *
      * @param s This players Ship object
      */
     private void initialiseWeapons(Ship s) {
@@ -387,14 +389,14 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
         String fuelSequenceNumber = parseNumber(keySequences.get(fuelSequenceNum));
 
         resourcesView = new ResourcesView(this, shieldSequenceNumber, fuelSequenceNumber, replenishButtons);
-        
-        resourcesView.updateResourceLevels(ResourcesView.ENGINE,     s.getResource(Resource.Type.ENGINES).get());
-        resourcesView.updateResourceLevels(ResourcesView.SHIELDS,    s.getResource(Resource.Type.SHIELDS).get());
-        resourcesView.updateResourceLevels(ResourcesView.HULL,       s.getResource(Resource.Type.HEALTH).get());
-        
-        resourcesView.setMaximumResourceLevel(ResourcesView.ENGINE,  s.getResource(Resource.Type.ENGINES).getMax());
+
+        resourcesView.updateResourceLevels(ResourcesView.ENGINE, s.getResource(Resource.Type.ENGINES).get());
+        resourcesView.updateResourceLevels(ResourcesView.SHIELDS, s.getResource(Resource.Type.SHIELDS).get());
+        resourcesView.updateResourceLevels(ResourcesView.HULL, s.getResource(Resource.Type.HEALTH).get());
+
+        resourcesView.setMaximumResourceLevel(ResourcesView.ENGINE, s.getResource(Resource.Type.ENGINES).getMax());
         resourcesView.setMaximumResourceLevel(ResourcesView.SHIELDS, s.getResource(Resource.Type.SHIELDS).getMax());
-        resourcesView.setMaximumResourceLevel(ResourcesView.HULL,    s.getResource(Resource.Type.HEALTH).getMax());
+        resourcesView.setMaximumResourceLevel(ResourcesView.HULL, s.getResource(Resource.Type.HEALTH).getMax());
     }
 
     /**
@@ -430,7 +432,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
                 radarView.setVisible(false);
 
                 // If currently small, make large. If currently large, make small.
-                if(!radarView.isLargeView()) {
+                if (!radarView.isLargeView()) {
                     radarView.setLargeView(true);
                     radarView.setBounds(50, 50, getWidth() - 100, getHeight() - 100);
                     radarView.setPreferredSize(new Dimension(getWidth() - 100, getHeight() - 100));
@@ -460,6 +462,8 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
     @Override
     public void update(Observable observable, Object o) {
+        super.update(observable, o);
+
         if (!UIinitialised) {
             try {
                 keySequences = gameClient.keySequence.getAllKeys();
@@ -470,74 +474,43 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
             initialiseUI();
             UIinitialised = true;
         } else if (gameActive) {
-            Map m = gameClient.getMap();
+            Map m = ((ClientNetworking.GameClient.MapContainer) observable).getMap();
+            radarView.updateMap(m);
 
-            if(hasWonGame(m)) {
-                // Congrats!
-                gameActive = false;
+            for (int i = 0; i < m.size(); i++) {
+                if (m.get(i) instanceof Ship) {
+                    Ship s = (Ship) m.get(i);
 
-                AudioPlayer.playSoundEffect(AudioPlayer.VICTORY_EFFECT);
-                displayFullScreenMessage(WIN_GAME, 5000, Color.green);
+                    if (s.getEngineerName().equals(playerNickname)) {
+                        previousShip = currentShip;
+                        currentShip = s;
 
-                Timer t = new Timer(5000, actionEvent -> {
-                    System.out.println("I'm going back to the main menu.");
-                    MainMenu menu = new MainMenu(playerNickname);
-                    parentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    parentFrame.dispatchEvent(new WindowEvent(parentFrame, WindowEvent.WINDOW_CLOSING));
-                });
-                t.setRepeats(false);
-                t.start();
-
-            } else if (hasLostGame(m)) {
-                // Commiserations
-                gameActive = false;
-
-                AudioPlayer.playSoundEffect(AudioPlayer.FAILURE_EFFECT);
-                displayFullScreenMessage(LOSE_GAME, 5000, Color.RED);
-
-                Timer t = new Timer(5000, actionEvent -> {
-
-                });
-
-            } else {
-                screen.setMap(m);
-                radarView.updateMap(m);
-
-                for (int i = 0; i < m.size(); i++) {
-                    if (m.get(i) instanceof Ship) {
-                        Ship s = (Ship) m.get(i);
-
-                        if (s.getEngineerName().equals(playerNickname)) {
-                            previousShip = currentShip;
-                            currentShip = s;
-
-                            if (currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.LASER).getAmmoLevel()) {
-                                AudioPlayer.playSoundEffect(AudioPlayer.LASER_FIRE_EFFECT);
-                            }
-                            laserBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel());
-
-                            plasmaBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel());
-                            if (currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel()) {
-                                AudioPlayer.playSoundEffect(AudioPlayer.PLASMA_FIRE_EFFECT);
-                            }
-
-                            torpedosView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel());
-                            if (currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel()) {
-                                AudioPlayer.playSoundEffect(AudioPlayer.TORPEDO_FIRE_EFFECT);
-                            }
-
-                            resourcesView.updateResourceLevels(ResourcesView.ENGINE, currentShip.getResource(Resource.Type.ENGINES).get());
-
-                            if (currentShip.getResource(Resource.Type.SHIELDS).get() < previousShip.getResource(Resource.Type.SHIELDS).get()) {
-                                AudioPlayer.playSoundEffect(AudioPlayer.SHIP_SHIELD_DECREASE_EFFECT);
-                            }
-                            resourcesView.updateResourceLevels(ResourcesView.SHIELDS, currentShip.getResource(Resource.Type.SHIELDS).get());
-
-                            if (currentShip.getResource(Resource.Type.HEALTH).get() < previousShip.getResource(Resource.Type.HEALTH).get()) {
-                                AudioPlayer.playSoundEffect(AudioPlayer.SHIP_HEALTH_DECREASE_EFFECT);
-                            }
-                            resourcesView.updateResourceLevels(ResourcesView.HULL, currentShip.getResource(Resource.Type.HEALTH).get());
+                        if (currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.LASER).getAmmoLevel()) {
+                            AudioPlayer.playSoundEffect(AudioPlayer.LASER_FIRE_EFFECT);
                         }
+                        laserBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel());
+
+                        plasmaBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel());
+                        if (currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel()) {
+                            AudioPlayer.playSoundEffect(AudioPlayer.PLASMA_FIRE_EFFECT);
+                        }
+
+                        torpedosView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel());
+                        if (currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel()) {
+                            AudioPlayer.playSoundEffect(AudioPlayer.TORPEDO_FIRE_EFFECT);
+                        }
+
+                        resourcesView.updateResourceLevels(ResourcesView.ENGINE, currentShip.getResource(Resource.Type.ENGINES).get());
+
+                        if (currentShip.getResource(Resource.Type.SHIELDS).get() < previousShip.getResource(Resource.Type.SHIELDS).get()) {
+                            AudioPlayer.playSoundEffect(AudioPlayer.SHIP_SHIELD_DECREASE_EFFECT);
+                        }
+                        resourcesView.updateResourceLevels(ResourcesView.SHIELDS, currentShip.getResource(Resource.Type.SHIELDS).get());
+
+                        if (currentShip.getResource(Resource.Type.HEALTH).get() < previousShip.getResource(Resource.Type.HEALTH).get()) {
+                            AudioPlayer.playSoundEffect(AudioPlayer.SHIP_HEALTH_DECREASE_EFFECT);
+                        }
+                        resourcesView.updateResourceLevels(ResourcesView.HULL, currentShip.getResource(Resource.Type.HEALTH).get());
                     }
                 }
             }
@@ -562,7 +535,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
             case SHIELD_REPLENISH:
                 System.out.println("Sending shieldReplenish");
                 shieldAllowedNum--;
-                if(shieldAllowedNum <= 0 && (shieldSequenceNum < SHIELD_MAX_NUM)) {
+                if (shieldAllowedNum <= 0 && (shieldSequenceNum < SHIELD_MAX_NUM)) {
                     keyManager.deactivate();
                     shieldAllowedNum = ALLOWED_DEFAULT;
                     shieldSequenceNum += 1;
@@ -577,7 +550,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
                 System.out.println("Sending fuelReplenish");
 
                 fuelAllowedNum--;
-                if(fuelAllowedNum <= 0 && (fuelSequenceNum < FUEL_MAX_NUM)) {
+                if (fuelAllowedNum <= 0 && (fuelSequenceNum < FUEL_MAX_NUM)) {
                     keyManager.deactivate();
                     fuelAllowedNum = ALLOWED_DEFAULT;
                     fuelSequenceNum += 1;
@@ -592,7 +565,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
                 System.out.println("Sending laserReplenish");
 
                 laserAllowedNum--;
-                if(laserAllowedNum <= 0 && (laserSequenceNum < LASER_MAX_NUM)) {
+                if (laserAllowedNum <= 0 && (laserSequenceNum < LASER_MAX_NUM)) {
                     keyManager.deactivate();
                     laserAllowedNum = ALLOWED_DEFAULT;
                     laserSequenceNum += 1;
@@ -607,7 +580,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
                 System.out.println("Sending torpedoReplenish");
 
                 torpedoAllowedNum--;
-                if(torpedoAllowedNum <= 0 && (torpedoSequenceNum < TORPEDO_MAX_NUM)) {
+                if (torpedoAllowedNum <= 0 && (torpedoSequenceNum < TORPEDO_MAX_NUM)) {
                     keyManager.deactivate();
                     torpedoAllowedNum = ALLOWED_DEFAULT;
                     torpedoSequenceNum += 1;
@@ -622,7 +595,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
                 System.out.println("Sending plasmaReplenish");
 
                 plasmaAllowedNum--;
-                if(plasmaAllowedNum <= 0 && (plasmaSequenceNum < PLASMA_MAX_NUM)) {
+                if (plasmaAllowedNum <= 0 && (plasmaSequenceNum < PLASMA_MAX_NUM)) {
                     keyManager.deactivate();
                     plasmaAllowedNum = ALLOWED_DEFAULT;
                     plasmaSequenceNum += 1;
@@ -659,6 +632,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
     /**
      * Sets the current state of the ship
+     *
      * @param newState The new state of the ship
      */
     void setState(ShipState newState) {
@@ -703,19 +677,20 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
                 break;
         }
     }
-    
+
     private void changeButton(String state) {
-    	for(JButton b : replenishButtons) {
-    		if (state.equals(b.getName())) {
-    			b.setBackground(Color.decode("#ff3333"));
-    		} else {
-    			b.setBackground(Color.decode("#cccccc"));
-    		}
-    	}
+        for (JButton b : replenishButtons) {
+            if (state.equals(b.getName())) {
+                b.setBackground(Color.decode("#ff3333"));
+            } else {
+                b.setBackground(Color.decode("#cccccc"));
+            }
+        }
     }
 
     /**
      * Given a String 'number:sequence', returns just the number component
+     *
      * @param sequenceWithNum A string in the form 'number:sequence'
      * @return The number part of the String
      */
@@ -725,20 +700,26 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
     /**
      * Given a String 'number:sequence', returns just the sequence component
+     *
      * @param sequenceWithNum A string in the form 'number:sequence'
      * @return The sequence part of the String
      */
     public static String parseSequence(String sequenceWithNum) {
-        if(sequenceWithNum.length() >= 3) {
+        if (sequenceWithNum.length() >= 3) {
             return sequenceWithNum.split(":")[1];
-        } else { return ""; }
+        } else {
+            return "";
+        }
     }
 
     /**
      * Returns the current state of the Ship.
+     *
      * @return Returns the current state of the Ship.
      */
-    ShipState getState() { return this.state; }
+    ShipState getState() {
+        return this.state;
+    }
 }
 
 enum ShipState {
