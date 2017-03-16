@@ -10,8 +10,10 @@ import Physics.*;
  * @author jivan
  */
 public class Weapon implements Serializable {
+/// CONSTANTS
+    private static final double RADIAL_SPAWN_DISTANCE = 1.5;
+    
 /// FIELDS
-  
     private Ship        parent;
     private Bullet      bullet;
     private Resource    ammo;
@@ -139,7 +141,7 @@ public class Weapon implements Serializable {
             System.err.println("Cloning and casting of the reference bullet gave `null` for some reason.");
         } else {
             instance.setOriginBody(parent);
-            instance.setPosition(instance.getPosition().plus(parent.getFrontVector()));
+            instance.setPosition(instance.getPosition().plus(parent.getFrontVector().scale(RADIAL_SPAWN_DISTANCE*parent.getRadius())));
         }
         
         return instance;
