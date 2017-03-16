@@ -15,7 +15,7 @@ import GameLogic.GameOptions;
 public class AudioPlayer {
 
 	// the directories to each sound file --
-	private static String pathToProjectAudio = System.getProperty("user.dir") + "/src/Audio/";
+	private static String pathToProjectAudio = System.getProperty("user.dir") + "/res/audio/";
 	public static String MENU_SCREEN_TUNE = pathToProjectAudio + "intro_screen.wav";
 	public static String IN_GAME_TUNE = pathToProjectAudio + "game_audio.wav";
 	public static String MOUSE_CLICK_EFFECT = pathToProjectAudio + "mouse_click.wav";

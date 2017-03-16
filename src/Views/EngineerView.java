@@ -233,7 +233,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
             UIBaseLayer.removeAll();
         }
 
-        currentShip = findPlayerShip();
+        currentShip = findPlayerShip(gameClient.getMap(), playerNickname);
         while (currentShip == null) {
             System.out.println("ship is null");
             try {
@@ -241,7 +241,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            currentShip = findPlayerShip();
+            currentShip = findPlayerShip(gameClient.getMap(), playerNickname);
         }
 
         replenishButtons = new ArrayList<JButton>();
@@ -473,11 +473,11 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
 
     /**
      * Finds the players Ship within all of the objects in the Map
+     * @param m The game map
+     * @param playerNickname The name of the player who's ship to find
      * @return The players Ship object
      */
-    private Ship findPlayerShip() {
-        Map m = gameClient.getMap();
-
+    private static Ship findPlayerShip(Map m, String playerNickname) {
         for (Body b : m.bodies()) {
             if (b instanceof Ship) {
                 Ship s = (Ship) b;
@@ -691,6 +691,10 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
         changeButton("none");
     }
 
+    /**
+     * Sets the current state of the ship
+     * @param newState The new state of the ship
+     */
     void setState(ShipState newState) {
         this.state = newState;
 
@@ -749,7 +753,7 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
      * @param sequenceWithNum A string in the form 'number:sequence'
      * @return The number part of the String
      */
-    private String parseNumber(String sequenceWithNum) {
+    public static String parseNumber(String sequenceWithNum) {
         return sequenceWithNum.split(":")[0];
     }
 
@@ -758,8 +762,10 @@ public class EngineerView extends JPanel implements KeySequenceResponder, Observ
      * @param sequenceWithNum A string in the form 'number:sequence'
      * @return The sequence part of the String
      */
-    private String parseSequence(String sequenceWithNum) {
-        return sequenceWithNum.split(":")[1];
+    public static String parseSequence(String sequenceWithNum) {
+        if(sequenceWithNum.length() >= 3) {
+            return sequenceWithNum.split(":")[1];
+        } else { return ""; }
     }
 
     /**

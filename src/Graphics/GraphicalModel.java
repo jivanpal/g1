@@ -1,6 +1,7 @@
 package Graphics;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.Collections;
 
 import Geometry.Vector;
 
@@ -48,8 +49,7 @@ public class GraphicalModel {
 			polys[i] = new Poly3D(xs, ys, zs, colors[i]);
 
 		}
-		for(int i = 0; i < polys.length; i++){
-			Screen.poly3Ds.add(polys[i]);
-		}
+
+		Collections.addAll(Screen.poly3Ds, polys);
 	}
 }
