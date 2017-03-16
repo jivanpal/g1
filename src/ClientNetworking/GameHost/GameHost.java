@@ -56,14 +56,19 @@ public class GameHost extends Thread
 			
 			Player[] p = lobby.getPlayers();
 			// add the ships, add dummy bodies for non existant ones and then delete them
+			int[] shipIds = new int[4];
 			for (int i = 0; i < Lobby.LOBBY_SIZE; i += 2)
 			{
 				if (p[i]==null && p[i + 1]==null){
-					System.out.println(Body.nextID);
+					System.out.println("Added dummy "+Body.nextID);
 					Body.nextID++;
+					shipIds[i/2]=-1;
 				}
 				else
-					gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
+				{
+					System.out.println("Added ship "+Body.nextID);
+					shipIds[i/2]=gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
+				}
 			}
 			gameMap.generateTerrain();
 			System.out.println("I HAVE STARTED THE SERVER");
@@ -114,8 +119,7 @@ public class GameHost extends Thread
 					if (lobby.getPlayers()[tmId] != null)
 						tmName = lobby.getPlayers()[tmId].nickname;
 
-					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,
-							clientName, tmName);
+					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,clientName, tmName,shipIds[position/2]);
 					clientInput.start();
 
 					GameHostSender clientOutput = new GameHostSender(toClient, clientTable, clientName);

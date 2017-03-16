@@ -71,18 +71,10 @@ public class MapContainer {
 				new Rotation(r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2));
 	}
 
-	public synchronized void updateMap(String str, String name) {
-		Ship playerShip = null;
+	public synchronized void updateMap(String str, String name,int ID) {
+		Ship playerShip = gameMap.get(ID)==null? null : (Ship)gameMap.get(ID);
 		boolean onmap = false;
-		for (Body b : gameMap.bodies()) {
-			if (b instanceof Ship) {
-				playerShip = (Ship) b;
-				if (playerShip.getPilotName().equals(name) || playerShip.getEngineerName().equals(name)) {
-					onmap = true;
-					break;
-				}
-			}
-		}
+		onmap = playerShip != null;
 		if (onmap) {
 			try {
 				switch (str) {
