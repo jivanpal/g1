@@ -201,6 +201,17 @@ public class GameOptions {
 
 	}
 	
+	public static boolean checkIfKeyToBeSentToServer(int keyCode){
+		if(keyCode == getCurrentKeyValueByDefault(DEFAULT_MANUAL_BUTTON) ||
+				keyCode == getCurrentKeyValueByDefault(DEFAULT_MANUAL_NEXT_BUTTON) ||
+				keyCode == getCurrentKeyValueByDefault(DEFAULT_MANUAL_PREV_BUTTON) ||
+				keyCode == getCurrentKeyValueByDefault(DEFAULT_CLOSE_MANUAL_BUTTON)){
+			return false;
+		} else {
+			return checkIfKeyTaken(keyCode);
+		}
+	}
+	
 	public Properties getKeyBindings(){
 		return this.keyBindings;
 	}

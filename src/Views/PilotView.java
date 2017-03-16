@@ -128,7 +128,7 @@ public class PilotView extends JPanel implements Observer {
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-            	if(GameOptions.checkIfKeyTaken(keyEvent.getKeyCode())){
+            	if(GameOptions.checkIfKeyToBeSentToServer(keyEvent.getKeyCode())){
             		pressedKeys.add(getKeyCodeToInstruction(keyEvent.getKeyCode()));
             	}
                 if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
