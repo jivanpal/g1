@@ -45,7 +45,6 @@ public class MainMenu {
 		client = new Client(name);
 		String nickname =client.name; 
 		frame = new JFrame();
-		client.start();
 		client.updateList();
 		ButtonPanel comp = new ButtonPanel(this, client);
 		frame.setContentPane(comp);

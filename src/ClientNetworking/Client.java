@@ -18,7 +18,7 @@ import GeneralNetworking.Player;
  * The Class Client.
  * @author Svetlin
  */
-public class Client extends Thread
+public class Client
 {
 
 	private int port = ClientVariables.PORT;
@@ -68,7 +68,9 @@ public class Client extends Thread
 			toServer.reset();
 			toServer.writeObject(name);
 			toServer.flush();
+			System.out.println("asd");
 			name = (String)fromServer.readObject();
+			System.out.println("asd");
 		}
 		catch (IOException | ClassNotFoundException e)
 		{
