@@ -18,7 +18,7 @@ public class Body implements Cloneable, Serializable {
 /// FIELDS
     public static int nextID = 0;
     
-    private final int ID;
+    private int ID;
     private boolean destroyed = false;
     
     /**
@@ -134,7 +134,9 @@ public class Body implements Cloneable, Serializable {
 /// INSTANCE METHODS
     
     public Object clone() throws CloneNotSupportedException{
-        return super.clone();
+        Body b = (Body)super.clone();
+        b.ID = nextID++;
+        return (Object)b;
     }
     
 // Getters

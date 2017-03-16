@@ -15,7 +15,7 @@ public class Ship extends Body{
     //   The ship is designed under the assumption that it cannot reverse,
     // therefore the reverse-velocity maximum is assumed to be zero.
     private static final double PITCH_VEL_MAX = 1.0;    // radians per second
-    private static final double ROLL_VEL_MAX  = 4.0;    // radians per second
+    private static final double ROTATE_VEL_MAX= 1.0;    // radians per second
     private static final double FWD_VEL_MAX   = 20.0;   // meters per second
     
     // Smoothness of transition from rest to maximum for each axis.
@@ -106,15 +106,15 @@ public class Ship extends Body{
 /// SHIP MOVEMENT
     
     private static final double PITCH_ACC   = PITCH_VEL_MAX / PITCH_SMOOTHNESS;
-    private static final double ROLL_ACC    = ROLL_VEL_MAX  / ROLL_SMOOTHNESS;
+    private static final double ROLL_ACC    = ROTATE_VEL_MAX  / ROLL_SMOOTHNESS;
     private static final double THRUST_ACC  = FWD_VEL_MAX   / THRUST_SMOOTHNESS;
     
-    private static final Rotation   PITCH_UP    = new Rotation(Vector.I.scale(PITCH_ACC * Global.REFRESH_PERIOD));
+    private static final Rotation   PITCH_UP    = new Rotation(Vector.I         .scale(PITCH_ACC * Global.REFRESH_PERIOD));
     private static final Rotation   PITCH_DOWN  = new Rotation(Vector.I.negate().scale(PITCH_ACC * Global.REFRESH_PERIOD));
-    private static final Rotation   ROLL_RIGHT  = new Rotation(Vector.J.scale(ROLL_ACC * Global.REFRESH_PERIOD));
-    private static final Rotation   ROLL_LEFT   = new Rotation(Vector.J.negate().scale(ROLL_ACC * Global.REFRESH_PERIOD));
-    private static final Vector     THRUST_FWD  = Vector.J.scale(THRUST_ACC);
-    private static final Vector     THRUST_REV  = Vector.J.negate().scale(THRUST_ACC);
+    private static final Rotation   ROTATE_RIGHT= new Rotation(Vector.K.negate().scale(ROLL_ACC  * Global.REFRESH_PERIOD));
+    private static final Rotation   ROTATE_LEFT = new Rotation(Vector.K         .scale(ROLL_ACC  * Global.REFRESH_PERIOD));
+    private static final Vector     THRUST_FWD  = Vector.J          .scale(THRUST_ACC);
+    private static final Vector     THRUST_REV  = Vector.J.negate() .scale(THRUST_ACC);
     
     public void pitchUp() {
         rotate(PITCH_UP);
@@ -128,12 +128,16 @@ public class Ship extends Body{
         setVelocity(b.globaliseDirection(PITCH_DOWN.apply(getBasis().localiseDirection(getVelocity()))));
     }
     
-    public void rollRight() {
-        rotate(ROLL_RIGHT);
+    public void rotateRight() {
+        rotate(ROTATE_RIGHT);
+        Basis b = getBasis();
+        setVelocity(b.globaliseDirection(ROTATE_RIGHT.apply(getBasis().localiseDirection(getVelocity()))));
     }
     
-    public void rollLeft() {
-        rotate(ROLL_LEFT);
+    public void rotateLeft() {
+        rotate(ROTATE_LEFT);
+        Basis b = getBasis();
+        setVelocity(b.globaliseDirection(ROTATE_LEFT.apply(getBasis().localiseDirection(getVelocity()))));
     }
     
     public void thrustForward() {
