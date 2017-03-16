@@ -42,9 +42,9 @@ public class MainMenu {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		frame = new JFrame();
 		client = new Client(name);
+		String nickname =client.name; 
+		frame = new JFrame();
 		client.start();
 		client.updateList();
 		ButtonPanel comp = new ButtonPanel(this, client);
@@ -87,7 +87,7 @@ public class MainMenu {
 			if (name == null) {
 				System.exit(0);
 			}
-			while (name.equals("")) {
+			while (name.equals("")|| name.contains("#")) {
 				name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
 			}
 
