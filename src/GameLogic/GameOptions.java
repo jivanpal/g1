@@ -34,8 +34,8 @@ public class GameOptions {
 	public static final String DEFAULT_ROLL_RIGHT_BUTTON = String.valueOf(KeyEvent.VK_D);
 	public static final String DEFAULT_OVERDRIVE_BUTTON = String.valueOf(KeyEvent.VK_SPACE);
 	public static final String DEFAULT_MANUAL_BUTTON = String.valueOf(KeyEvent.VK_X);
-	public static final String DEFAULT_MANUAL_NEXT_BUTTON = String.valueOf(KeyEvent.VK_Z);
-	public static final String DEFAULT_MANUAL_PREV_BUTTON = String.valueOf(KeyEvent.VK_C);
+	public static final String DEFAULT_MANUAL_NEXT_BUTTON = String.valueOf(KeyEvent.VK_C);
+	public static final String DEFAULT_MANUAL_PREV_BUTTON = String.valueOf(KeyEvent.VK_Z);
 	public static final String DEFAULT_CLOSE_MANUAL_BUTTON = String.valueOf(KeyEvent.VK_ESCAPE);
 
 	public static final String SOUND_VOLUME_MASTER = "SOUND_VOLUME_MASTER";

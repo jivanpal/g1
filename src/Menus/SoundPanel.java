@@ -133,8 +133,7 @@ public class SoundPanel extends JPanel {
 		slider.setBackground(Color.BLACK);
 		slider.setOpaque(true);
 		slider.setPreferredSize(new Dimension(200, 50));
-		System.out.println("Height: " + slider.getPreferredSize().height);
-		System.out.println(("Width: " + slider.getPreferredSize().width));
+
 		slider.addChangeListener(e -> {
 			float volume = (float) slider.getValue();
 			if (name.equals("Master Volume")) {

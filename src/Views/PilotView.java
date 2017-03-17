@@ -136,6 +136,13 @@ public class PilotView extends AbstractPlayerView implements Observer {
                     steeringWheelAngle = Math.PI/4;
                     steeringWheelView.revalidate();
                     steeringWheelView.repaint();
+                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_BUTTON)) {
+                	showManual();
+   
+                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON) && instructions.isVisible()) {
+                	instructions.goToNextPage();
+                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_PREV_BUTTON) && instructions.isVisible()) {
+                	instructions.goToPreviousPage();
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_CLOSE_MANUAL_BUTTON)
                         && instructions.isVisible()) {
             	    AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);

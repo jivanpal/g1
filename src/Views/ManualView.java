@@ -1,6 +1,8 @@
 package Views;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -42,6 +44,7 @@ public class ManualView extends JPanel{
 
 		topBarPanel.add(closeView);
 		add(topBarPanel, BorderLayout.NORTH);
+		
 	}
 	
 	private void styleButton(JButton button){
@@ -53,12 +56,12 @@ public class ManualView extends JPanel{
 		button.setForeground(Color.BLACK);
 	}
 
-	private void goToNextPage() {
+	public void goToNextPage() {
 		instuctions.pageUp();
 		update();
 	}
 
-	private void goToPreviousPage() {
+	public void goToPreviousPage() {
 		instuctions.pageDown();
 		update();
 	}
