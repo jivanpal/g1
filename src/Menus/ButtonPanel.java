@@ -32,11 +32,11 @@ public class ButtonPanel extends JPanel {
 	 * @param menu
 	 *            The main frame which the game will use
 	 */
-	public ButtonPanel(MainMenu menu, Client client) {
+	public ButtonPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
 		
-		this.client = client;
+		this.client = menu.client;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.CENTER;
@@ -67,13 +67,13 @@ public class ButtonPanel extends JPanel {
 		JPanel panel = new JPanel();
 		MyButton play = new MyButton("Play");
 		play.addActionListener(e -> {
-			PlayPanel ppanel = new PlayPanel(menu, client);
+			PlayPanel ppanel = new PlayPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
 		});
 		MyButton settings = new MyButton("Settings");
 		settings.addActionListener(e -> {
-			SettingsPanel spanel = new SettingsPanel(menu, client);
+			SettingsPanel spanel = new SettingsPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
 		});

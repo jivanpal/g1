@@ -57,11 +57,11 @@ public class LobbyPanel extends JPanel implements Observer {
 	 * @param client
 	 *            The Client Thread which connects to the Server
 	 */
-	public LobbyPanel(MainMenu menu, Client client, UUID lobbyid, Player player, boolean ishost) {
+	public LobbyPanel(MainMenu menu, UUID lobbyid, Player player, boolean ishost) {
 		super();
 
 		this.menu = menu;
-		this.client = client;
+		this.client = menu.client;
 		if (player != null) {
 			this.player = player;
 		}
@@ -87,7 +87,7 @@ public class LobbyPanel extends JPanel implements Observer {
 				JOptionPane.showMessageDialog(this,
 						"An error has occured while creating the game. Please check your connection!",
 						"Create Game Error", JOptionPane.ERROR_MESSAGE);
-				PlayPanel ppanel = new PlayPanel(menu, client);
+				PlayPanel ppanel = new PlayPanel(menu);
 				menu.changeFrame(ppanel);
 				client.setLobby(null);
 			}
@@ -100,7 +100,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			if (confirm == JOptionPane.YES_OPTION) {
 				client.send(new Action(client.getLobby().getID(), this.player, this.player, Action.KICK));
 				leftserver = true;
-				PlayPanel ppanel = new PlayPanel(menu, client);
+				PlayPanel ppanel = new PlayPanel(menu);
 				menu.changeFrame(ppanel);
 				client.setLobby(null);
 			}
@@ -244,7 +244,7 @@ public class LobbyPanel extends JPanel implements Observer {
 					JOptionPane.INFORMATION_MESSAGE);
 			client.deleteLobbyObserver(this);
 			client.setLobby(null);
-			PlayPanel ppanel = new PlayPanel(menu, client);
+			PlayPanel ppanel = new PlayPanel(menu);
 			menu.changeFrame(ppanel);
 
 		} else if (leftserver) {
@@ -254,7 +254,7 @@ public class LobbyPanel extends JPanel implements Observer {
 		} else if (inlobby && l.getHost().nickname.equals(player.nickname) && !l.started) {
 			player.isHost = true;
 			client.deleteLobbyObserver(this);
-			LobbyPanel lpanel = new LobbyPanel(menu, client, l.getID(), player, true);
+			LobbyPanel lpanel = new LobbyPanel(menu, l.getID(), player, true);
 			menu.changeFrame(lpanel);
 		} else if (l.started) {
 			int pos = 0;

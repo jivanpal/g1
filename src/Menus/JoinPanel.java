@@ -52,10 +52,10 @@ public class JoinPanel extends JPanel {
 	 * @param client
 	 *            The client thread which is connected to the server.
 	 */
-	public JoinPanel(MainMenu menu, Client client) {
+	public JoinPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
-		this.client = client;
+		this.client = menu.client;
 		setLayout(new BorderLayout());
 		model = new DefaultTableModel() {
 			@Override
@@ -149,7 +149,7 @@ public class JoinPanel extends JPanel {
 	}
 	
 	/**
-	 * Create the buttons for joining, refreshing, and going back to the play
+	 * Create the panel which contains buttons for joining, refreshing, and going back to the play
 	 * menu.
 	 * 
 	 * @return A JPanel with Join, Refresh and Back to Play Menu buttons added
@@ -161,7 +161,7 @@ public class JoinPanel extends JPanel {
 
 		MyButton backtoplay = new MyButton("Back");
 		backtoplay.addActionListener(e -> {
-			PlayPanel ppanel = new PlayPanel(menu, client);
+			PlayPanel ppanel = new PlayPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
 		});
@@ -174,13 +174,13 @@ public class JoinPanel extends JPanel {
 			{
 				Player player = new Player(client.name, InetAddress.getLocalHost(), false);
 				client.send(new Action(lInfo.lobbyID,player,9));
-				LobbyPanel hlpanel = new LobbyPanel(menu, client, lInfo.lobbyID, player, false);
+				LobbyPanel hlpanel = new LobbyPanel(menu, lInfo.lobbyID, player, false);
 				menu.changeFrame(hlpanel);
 			}
 			catch (Exception e1)
 			{
 				JOptionPane.showMessageDialog(this, "Joining Lobby failed. Please check your connection!", "Join Lobby Error", JOptionPane.ERROR_MESSAGE);
-				JoinPanel jpanel = new JoinPanel(menu, client);
+				JoinPanel jpanel = new JoinPanel(menu);
 				menu.changeFrame(jpanel);
 				e1.printStackTrace();
 			}

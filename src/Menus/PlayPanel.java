@@ -34,12 +34,12 @@ public class PlayPanel extends JPanel {
 	 * @param menu
 	 *            The Main frame of the game
 	 */
-	public PlayPanel(MainMenu menu, Client client) {
+	public PlayPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		this.client = client;
+		this.client = menu.client;
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
@@ -47,7 +47,7 @@ public class PlayPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtostart = new MyButton("Back");
 		backtostart.addActionListener(e -> {
-			ButtonPanel bpanel = new ButtonPanel(menu, client);
+			ButtonPanel bpanel = new ButtonPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(bpanel);
 		});
@@ -72,13 +72,13 @@ public class PlayPanel extends JPanel {
 		MyButton creategame = new MyButton("Create Game");
 		creategame.addActionListener(e -> {
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			LobbyPanel lpanel = new LobbyPanel(menu, client, null, null, true);
+			LobbyPanel lpanel = new LobbyPanel(menu, null, null, true);
 			menu.changeFrame(lpanel);
 		});
 		MyButton joingame = new MyButton("Join Game");
 		joingame.addActionListener(e -> {
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			JoinPanel jlpanel = new JoinPanel(menu, client);
+			JoinPanel jlpanel = new JoinPanel(menu);
 			menu.changeFrame(jlpanel);
 		});
 		panel.add(creategame, BorderLayout.NORTH);

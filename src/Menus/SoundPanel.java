@@ -1,6 +1,7 @@
 package Menus;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -20,15 +21,15 @@ import GameLogic.GameOptions;
  * @author Jaren Chin-Hao Liu
  */
 
-//TODO Background is yellow but only for debugging
+// TODO Background is yellow but only for debugging
 public class SoundPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
 
-	public SoundPanel(MainMenu menu, Client client) {
+	public SoundPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
-		this.client = client;
+		this.client = menu.client;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -38,7 +39,7 @@ public class SoundPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtomenu = new MyButton("Back");
 		backtomenu.addActionListener(e -> {
-			SettingsPanel spanel = new SettingsPanel(menu, client);
+			SettingsPanel spanel = new SettingsPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
 		});
@@ -46,7 +47,7 @@ public class SoundPanel extends JPanel {
 		MyButton resettodefault = new MyButton("Reset");
 		resettodefault.addActionListener(e -> {
 			GameOptions.resetSoundValuesToDefaults();
-			SoundPanel panel = new SoundPanel(menu, client);
+			SoundPanel panel = new SoundPanel(menu);
 			menu.changeFrame(panel);
 		});
 		c.anchor = GridBagConstraints.NORTHEAST;
@@ -55,16 +56,17 @@ public class SoundPanel extends JPanel {
 		c.anchor = GridBagConstraints.CENTER;
 		spanel.setOpaque(false);
 		add(spanel, c);
-		
+
 		c.anchor = GridBagConstraints.NORTH;
-		JLabel name = new JLabel("<html><b><font size='16'>Player:     <font color='#66e0ff'>" + client.name + "</font></font></b></html>");
+		JLabel name = new JLabel("<html><b><font size='16'>Player:     <font color='#66e0ff'>" + client.name
+				+ "</font></font></b></html>");
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
-		
+
 		setBackground(Color.BLACK);
 	}
-	
+
 	/**
 	 * Create the sliders and labels for the three categories in sounds. These
 	 * sliders are used to change the volume of the game.
@@ -79,7 +81,7 @@ public class SoundPanel extends JPanel {
 		panel = createSwL(panel, "Sound Effects");
 		return panel;
 	}
-	
+
 	/**
 	 * Create a single slider with a label with the specified name on the
 	 * specified panel.
@@ -98,27 +100,28 @@ public class SoundPanel extends JPanel {
 		panel.add(label);
 
 		JSlider slider;
-		if(AudioPlayer.isUsingMaster){
+		if (AudioPlayer.isUsingMaster) {
 			slider = new JSlider(-80, 0);
 		} else {
 			slider = new JSlider(0, Integer.valueOf(GameOptions.DEFAULT_MUSIC_VOLUME));
 		}
 
-		switch(name) {
+		switch (name) {
 		case "Master Volume":
-			if(GameOptions.getCurrentMusicValue()==GameOptions.getCurrentSoundValue()){
-				slider.setValue((int)GameOptions.getCurrentMusicValue());
+			if (GameOptions.getCurrentMusicValue() == GameOptions.getCurrentSoundValue()) {
+				slider.setValue((int) GameOptions.getCurrentMusicValue());
 			} else {
-				slider.setValue(AudioPlayer.isUsingMaster ? -40 : (Integer.valueOf(GameOptions.DEFAULT_MUSIC_VOLUME)/2));
+				slider.setValue(
+						AudioPlayer.isUsingMaster ? -40 : (Integer.valueOf(GameOptions.DEFAULT_MUSIC_VOLUME) / 2));
 			}
 			break;
 
 		case "Sound Effects":
-			slider.setValue((int)GameOptions.getCurrentSoundValue());
+			slider.setValue((int) GameOptions.getCurrentSoundValue());
 			break;
 
 		case "Music Volume":
-			slider.setValue((int)GameOptions.getCurrentMusicValue());
+			slider.setValue((int) GameOptions.getCurrentMusicValue());
 			break;
 
 		default:
@@ -126,13 +129,15 @@ public class SoundPanel extends JPanel {
 		}
 
 		slider.setPaintTicks(true);
-		slider.setForeground(Color.RED);
-		slider.setBackground(Color.WHITE);
+		// slider.setForeground(Color.RED);
+		slider.setBackground(Color.BLACK);
 		slider.setOpaque(true);
-	
+		slider.setPreferredSize(new Dimension(200, 50));
+		System.out.println("Height: " + slider.getPreferredSize().height);
+		System.out.println(("Width: " + slider.getPreferredSize().width));
 		slider.addChangeListener(e -> {
 			float volume = (float) slider.getValue();
-			if(name.equals("Master Volume")){
+			if (name.equals("Master Volume")) {
 				AudioPlayer.setMusicVolume(volume);
 				AudioPlayer.setSoundEffectVolume(volume);
 				GameOptions.changeSound(String.valueOf(volume));
@@ -142,7 +147,7 @@ public class SoundPanel extends JPanel {
 				AudioPlayer.setMusicVolume(volume);
 				GameOptions.changeMusic(String.valueOf(volume));
 				GameOptions.saveSoundValuesInFile();
-			} else if(name.equals("Sound Effects")){
+			} else if (name.equals("Sound Effects")) {
 				AudioPlayer.setSoundEffectVolume(volume);
 				GameOptions.changeSound(String.valueOf(volume));
 				GameOptions.saveSoundValuesInFile();
