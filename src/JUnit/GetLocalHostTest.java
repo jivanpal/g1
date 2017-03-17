@@ -18,7 +18,10 @@ public class GetLocalHostTest
 				Enumeration<InetAddress> x = s.nextElement().getInetAddresses();
 				while(x.hasMoreElements())
 				{
-					System.out.println(x.nextElement());
+					InetAddress ip = x.nextElement();
+					String str = ip.toString();
+					if(!str.contains(":") && !str.contains("/192.168.") && !str.equals("/127.0.0.1"))
+						System.out.println(ip);
 				}
 			}
 		} catch (SocketException e)
