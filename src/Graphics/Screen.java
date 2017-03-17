@@ -156,19 +156,19 @@ public class Screen extends JPanel{
         g.drawString("U: "+U,               40, 120);
         g.drawString("N: "+N,               40, 140);
         
-        for(Body b : map.bodies()) {
-            if (!(shipIndex == null) && b.getID() != shipIndex) {
-            	Class bClass = b.getClass();
-                if(bClass == Asteroid.class){
-                    for(Vector v : map.getAllPositions(b.getPosition())){
-                    	Point newPos = Calculations.calcPos(viewFrom, viewTo, v);
-                    	if(newPos.z > 0){
-                    		g.drawString("" + b.getID(), (int)(newPos.x + Global.SCREEN_WIDTH/2), (int)(newPos.y + Global.SCREEN_HEIGHT/2));
-                    	}
-                    }
-                }
-            }
-        }
+//        for(Body b : map.bodies()) {
+//            if (!(shipIndex == null) && b.getID() != shipIndex) {
+//            	Class bClass = b.getClass();
+//                if(bClass == Asteroid.class){
+//                    for(Vector v : map.getAllPositions(b.getPosition())){
+//                    	Point newPos = Calculations.calcPos(viewFrom, viewTo, v);
+//                    	if(newPos.z > 0){
+//                    		g.drawString("" + b.getID(), (int)(newPos.x + Global.SCREEN_WIDTH/2), (int)(newPos.y + Global.SCREEN_HEIGHT/2));
+//                    	}
+//                    }
+//                }
+//            }
+//        }
         
 		sleepAndRefresh();
 	}
@@ -223,6 +223,7 @@ public class Screen extends JPanel{
                 }
                 else if(bClass == Asteroid.class){
 //                	System.out.println(b.getID() + ": " + b.getPosition());
+                	int asCount = 1;
                     for(Vector v : map.getAllPositions(b.getPosition())){
 //                    	System.out.println(v);
                         AsteroidModel asteroid = new AsteroidModel(v, 2, b.getOrientation());

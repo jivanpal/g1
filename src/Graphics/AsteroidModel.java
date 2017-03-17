@@ -39,17 +39,21 @@ public class AsteroidModel {
 	}
 	
     private void createPoints() {
+//    	System.out.println("Before Maths: " + position);
+    	
         vertices[0] = position.plus(Vector.K);
         vertices[1] = position.plus(new Rotation(0,Math.toRadians(90),Math.toRadians(90)-Math.acos(-1.0/3)).apply(Vector.I));
         vertices[2] = position.plus(new Rotation(Math.toRadians(120),Math.toRadians(90),Math.toRadians(90)-Math.acos(-1.0/3)).apply(Vector.I));
         vertices[3] = position.plus(new Rotation(Math.toRadians(240),Math.toRadians(90),Math.toRadians(90)-Math.acos(-1.0/3)).apply(Vector.I));
         
-        if(radius != 1.0) {
-            for (int i = 0; i < vertices.length; i++) {
-                vertices[i] = vertices[i].scale(radius);
-            }
-        }
+//        if(radius != 1.0) {
+//            for (int i = 0; i < vertices.length; i++) {
+//                vertices[i] = vertices[i].scale(radius);
+//            }
+//        }
     	
+//        System.out.println("After Maths: " + vertices[1]);
+        
 //    	vertices[0] = new Vector(position.getX() - radius, position.getY() - radius, position.getZ());
 //        vertices[1] = new Vector(position.getX() + radius, position.getY() - radius, position.getZ());
 //        vertices[2] = new Vector(position.getX(), position.getY() + radius, position.getZ());
