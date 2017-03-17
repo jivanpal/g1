@@ -1,15 +1,12 @@
 package JUnit;
 
 import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import GameLogic.GameOptions;
 
 public class GameOptionsTest {
@@ -33,6 +30,7 @@ public class GameOptionsTest {
 		defaultKeyBindings.setProperty(GameOptions.DEFAULT_MANUAL_BUTTON, GameOptions.DEFAULT_MANUAL_BUTTON);
 		defaultKeyBindings.setProperty(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON, GameOptions.DEFAULT_MANUAL_NEXT_BUTTON);
 		defaultKeyBindings.setProperty(GameOptions.DEFAULT_MANUAL_PREV_BUTTON, GameOptions.DEFAULT_MANUAL_PREV_BUTTON);
+		defaultKeyBindings.setProperty(GameOptions.DEFAULT_CLOSE_MANUAL_BUTTON, GameOptions.DEFAULT_CLOSE_MANUAL_BUTTON);
 		
 		keyBindingsFromFile = new Properties();
 		try {
@@ -59,8 +57,6 @@ public class GameOptionsTest {
 		assertTrue((new File(GameOptions.KEY_BINDINGS_FILE).exists()));
 		
 		assertTrue((new File(GameOptions.SOUND_VALUES_FILE).exists()));
-		
-		
 	}
 }
 
