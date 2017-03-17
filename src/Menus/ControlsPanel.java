@@ -39,10 +39,10 @@ public class ControlsPanel extends JPanel {
 	private ArrayList<JButton> controlButtons;
 	public Client client;
 
-	public ControlsPanel(MainMenu menu, Client client) {
+	public ControlsPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
-		this.client = client;
+		this.client = menu.client;
 		controlButtons = new ArrayList<JButton>();
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -53,7 +53,7 @@ public class ControlsPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtomenu = new MyButton("Back");
 		backtomenu.addActionListener(e -> {
-			SettingsPanel spanel = new SettingsPanel(menu, client);
+			SettingsPanel spanel = new SettingsPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
 		});
@@ -157,6 +157,7 @@ public class ControlsPanel extends JPanel {
 		button.setBorder(new LineBorder(Color.WHITE));
 		button.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "none");
 		button.getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "none");
+		button.setFont(new Font(button.getFont().getName(), Font.PLAIN, 16));
 
 		button.addActionListener(e -> {
 			pressed = true;

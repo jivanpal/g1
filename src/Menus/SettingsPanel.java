@@ -25,10 +25,10 @@ public class SettingsPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
 
-	public SettingsPanel(MainMenu menu, Client client) {
+	public SettingsPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
-		this.client = client;
+		this.client = menu.client;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -38,7 +38,7 @@ public class SettingsPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtomenu = new MyButton("Back");
 		backtomenu.addActionListener(e -> {
-			ButtonPanel bpanel = new ButtonPanel(menu, client);
+			ButtonPanel bpanel = new ButtonPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(bpanel);
 		});
@@ -68,13 +68,13 @@ public class SettingsPanel extends JPanel {
 		JPanel panel = new JPanel();
 		MyButton gotosound = new MyButton("Sound");
 		gotosound.addActionListener(e -> {
-			SoundPanel spanel = new SoundPanel(menu, client);
+			SoundPanel spanel = new SoundPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
 		});
 		MyButton gotocontrols = new MyButton("Controls");
 		gotocontrols.addActionListener(e -> {
-			ControlsPanel cpanel = new ControlsPanel(menu, client);
+			ControlsPanel cpanel = new ControlsPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(cpanel);
 		});

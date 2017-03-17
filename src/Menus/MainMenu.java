@@ -3,6 +3,9 @@ package Menus;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -46,13 +49,14 @@ public class MainMenu {
 		String nickname =client.name; 
 		frame = new JFrame();
 		client.updateList();
-		ButtonPanel comp = new ButtonPanel(this, client);
+		ButtonPanel comp = new ButtonPanel(this);
 		frame.setContentPane(comp);
 		frame.setUndecorated(true);
 		Dimension d = new Dimension(800, 600);
 	//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setSize(d);
 		frame.setVisible(true);
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
