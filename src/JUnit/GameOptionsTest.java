@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import GameLogic.GameOptions;
 
-public class KeyBindingsTest {
+public class GameOptionsTest {
 	Properties defaultKeyBindings;
 	Properties keyBindingsFromFile;
 	
@@ -46,12 +46,21 @@ public class KeyBindingsTest {
 	@SuppressWarnings("static-access")
 	@Test
 	public void test() {
+		
+		//tests for the keybindings
 		GameOptions actualKeyBindigns = new GameOptions();
 		actualKeyBindigns.setKeyBindings();
 		assertEquals(keyBindingsFromFile, actualKeyBindigns.getKeyBindings());
 		
 		actualKeyBindigns.resetKeysToDefaults();
 		assertEquals(defaultKeyBindings, actualKeyBindigns.getKeyBindings());
+		
+		//testing if the needed files are present 
+		assertTrue((new File(GameOptions.KEY_BINDINGS_FILE).exists()));
+		
+		assertTrue((new File(GameOptions.SOUND_VALUES_FILE).exists()));
+		
+		
 	}
 }
 
