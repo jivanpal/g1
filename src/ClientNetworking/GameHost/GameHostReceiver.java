@@ -1,6 +1,8 @@
 package ClientNetworking.GameHost;
 
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
+
 import ServerNetworking.ClientTable;
 
 
@@ -13,7 +15,8 @@ public class GameHostReceiver extends Thread
 	public String teamMate;
 	private String playerName;
 	private int shipID;
-	public GameHostReceiver(ObjectInputStream reader,MapContainer map, ClientTable cT, int playerPos, String nickname,String teammate,int ship)
+	private KeySequence keySequence;
+	public GameHostReceiver(ObjectInputStream reader,MapContainer map, ClientTable cT, int playerPos, String nickname,String teammate,int ship,KeySequence k)
 	{		
 		gameMap = map;
 		position = playerPos;
@@ -22,6 +25,7 @@ public class GameHostReceiver extends Thread
 		teamMate=teammate;
 		playerName = nickname;
 		shipID = ship;
+		keySequence=k;
 	}
 
 	public void run()
@@ -41,8 +45,35 @@ public class GameHostReceiver extends Thread
 				{
 					ChatMessage m = (ChatMessage) obj;
 					clientTable.getQueue(playerName).offer(m);
-					if(!teamMate.equals(""))
+					if(teamMate.equals("") && position%2==1)
+					{
+						if(m.message.contains("instruction"))
+						{
+							String id = "";
+							String[] split = m.message.split(" ");
+							for(int i=0;i<split.length;i++)
+							{
+								if(split[i].equals("instruction"))
+								{
+									id = split[i+1];
+								}
+							}
+							ArrayList<String> seq=keySequence.getAllKeys();  
+							for(int i=0;i<seq.size();i++)
+							{
+								if(seq.get(i).contains(id))
+								{
+									clientTable.getQueue(playerName).offer(new ChatMessage("Pilot",seq.get(i).split(":")[1]));
+								}
+							}
+						}
+						
+					}
+					else if(!teamMate.equals(""))
+					{
 						clientTable.getQueue(teamMate).offer(m);
+					}
+
 				}
 			}
 

@@ -474,7 +474,8 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
             initialiseUI();
             UIinitialised = true;
         } else if (gameActive) {
-            Map m = ((ClientNetworking.GameClient.MapContainer) observable).getMap();
+        	
+            Map m = gameClient.getMap();
             radarView.updateMap(m);
 
             for (int i = 0; i < m.size(); i++) {

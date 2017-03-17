@@ -120,7 +120,7 @@ public class GameHost extends Thread
 					if (lobby.getPlayers()[tmId] != null)
 						tmName = lobby.getPlayers()[tmId].nickname;
 
-					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,clientName, tmName,shipIds[position/2]);
+					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,clientName, tmName,shipIds[position/2], keySequences.get(position/2));
 					clientInput.start();
 
 					GameHostSender clientOutput = new GameHostSender(toClient, clientTable, clientName);
