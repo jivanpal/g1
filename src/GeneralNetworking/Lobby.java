@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.UUID;
 
+import ClientNetworking.IpGetter;
+
 @SuppressWarnings("serial")
 public class Lobby implements Serializable
 {
@@ -14,7 +16,7 @@ public class Lobby implements Serializable
 
 	/**
 	 * nickname - host nickname hA - host address (get it using
-	 * InetAddress.getLocalHost(), java.net.InetAddress needed)
+	 * IpGetter.getRealIp(), java.net.InetAddress needed)
 	 */
 	// private
 	// a game lobby allows up to 8 players

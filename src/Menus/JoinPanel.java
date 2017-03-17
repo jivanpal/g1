@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
+import ClientNetworking.IpGetter;
 import GameLogic.GameOptions;
 import GeneralNetworking.Action;
 import GeneralNetworking.Lobby;
@@ -172,7 +173,7 @@ public class JoinPanel extends JPanel {
 			LobbyInfo lInfo = lobbies[selected];
 			try
 			{
-				Player player = new Player(client.name, InetAddress.getLocalHost(), false);
+				Player player = new Player(client.name, IpGetter.getRealIp(), false);
 				client.send(new Action(lInfo.lobbyID,player,9));
 				LobbyPanel hlpanel = new LobbyPanel(menu, lInfo.lobbyID, player, false);
 				menu.changeFrame(hlpanel);

@@ -21,6 +21,7 @@ import javax.swing.UIManager;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
+import ClientNetworking.IpGetter;
 import ClientNetworking.GameClient.GameClient;
 import GeneralNetworking.Action;
 import GeneralNetworking.Invite;
@@ -78,7 +79,7 @@ public class LobbyPanel extends JPanel implements Observer {
 		if (lobbyid == null) {
 
 			try {
-				Lobby lobby = new Lobby(client.name, InetAddress.getLocalHost());
+				Lobby lobby = new Lobby(client.name, IpGetter.getRealIp());
 				client.setLobby(lobby);
 				client.addLobbyObserver(this);
 				client.send(lobby);

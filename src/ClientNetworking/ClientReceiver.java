@@ -62,7 +62,7 @@ public class ClientReceiver extends Thread
 						Invite inv = (Invite) inObject;
 						// the 9 is used for the purpose of adding people
 						clientQueue.offer(new Action(inv.lobby.getID(),
-								new Player(nickname, InetAddress.getLocalHost(), false), Action.ADD));
+								new Player(nickname, IpGetter.getRealIp(), false), Action.ADD));
 					}
 					// LobbyList
 					else if (inObject instanceof LobbyList)

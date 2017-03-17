@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import ClientNetworking.IpGetter;
 import GameLogic.Ship;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
@@ -29,7 +30,7 @@ public class GameHost extends Thread
 		// Open a server socket:
 		try
 		{
-			serverSocket = new ServerSocket(PORT, 8, InetAddress.getLocalHost());
+			serverSocket = new ServerSocket(PORT, 8, IpGetter.getRealIp());
 		} catch (IOException e)
 		{
 			System.err.println("Couldn't listen on port " + PORT);
