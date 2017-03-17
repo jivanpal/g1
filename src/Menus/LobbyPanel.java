@@ -266,6 +266,9 @@ public class LobbyPanel extends JPanel implements Observer {
 			System.out.println(pos);
 			GameClient gameClient = new GameClient(client.getLobby(), player);
 			System.out.println("Pos: " + String.valueOf(pos % 2 == 0));
+
+			client.disconnect();
+
 			if (pos % 2 == 0) // i.e. if player is pilot
 			{
 				System.out.println("Player is a pilot");
@@ -275,6 +278,7 @@ public class LobbyPanel extends JPanel implements Observer {
 				} else {
 					pv = new PilotView(client.name, gameClient, menu.getFrame(), false);
 				}
+
 				System.out.println("Swapping to PilotView");
 				menu.changeFrame(pv);
 				menu.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);

@@ -15,7 +15,7 @@ import GeneralNetworking.Lobby;
 
 public class Server
 {
-	
+
 	public static ArrayList<Lobby> lobbies = new ArrayList<Lobby>();
 
 	/**
@@ -23,8 +23,8 @@ public class Server
 	 */
 	public static void main(String[] args)
 	{
-		//TODO import from somewhere??
-		ClientTable clientTable= new ClientTable();
+		// TODO import from somewhere??
+		ClientTable clientTable = new ClientTable();
 
 		// Open a server socket:
 		ServerSocket serverSocket = null;
@@ -45,36 +45,52 @@ public class Server
 
 				// Listen to the socket, accepting connections from new clients:
 				Socket socket = serverSocket.accept();
-				System.out.println("server");
-				
+
 				// This is to print o the server
 				ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
-				toClient.flush();
 				// This is so that we can use readLine():
 				ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
 
-				String nickname ="";
+				String nickname = "";
+				String taggedName = "";
 				
 				try
 				{
-					nickname = (String)fromClient.readObject();
+					nickname = (String) fromClient.readObject();
+					toClient.reset();
+					int i = 1;
+					taggedName = nickname + "#" + i;
+					while (true)
+					{
+						if (clientTable.getQueue(taggedName) != null)
+						{
+							i++;
+							taggedName = nickname + "#" + i;
+						}
+						else
+							break;
+					}
+
+					toClient.writeObject(taggedName);
+					toClient.flush();
 				}
 				catch (ClassNotFoundException e)
 				{
 					e.printStackTrace();
 				}
-				clientTable.add(nickname);
-				LinkedBlockingQueue<Object> queue = clientTable.getQueue(nickname); 
+
+				clientTable.add(taggedName);
+				LinkedBlockingQueue<Object> queue = clientTable.getQueue(nickname);
 				System.out.println(nickname);
-				
+
 				// We create and start new threads to read from the
 				// client(this one executes the commands):
-	
-				ServerReceiver clientInput = new ServerReceiver(fromClient,clientTable,lobbies,nickname);
+
+				ServerReceiver clientInput = new ServerReceiver(fromClient, clientTable, lobbies, taggedName);
 				clientInput.start();
-				
+
 				// We create and start a new thread to write to the client:
-				ServerSender clientOutput = new ServerSender(toClient,clientTable,nickname);
+				ServerSender clientOutput = new ServerSender(toClient, clientTable, taggedName);
 				clientOutput.start();
 			}
 		}

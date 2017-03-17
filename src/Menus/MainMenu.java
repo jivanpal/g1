@@ -19,6 +19,7 @@ import GameLogic.GameOptions;
 public class MainMenu {
 	public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private static JFrame frame;
+	public Client client;
 
 	/**
 	 * Constructor method of the main frame
@@ -41,10 +42,9 @@ public class MainMenu {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		client = new Client(name);
+		String nickname =client.name; 
 		frame = new JFrame();
-		Client client = new Client(name);
-		client.start();
 		client.updateList();
 		ButtonPanel comp = new ButtonPanel(this, client);
 		frame.setContentPane(comp);
@@ -73,6 +73,8 @@ public class MainMenu {
 		return frame;
 	}
 
+	public Client getClient() {return client;}
+
 	public static void main(String[] args) {
 		GameOptions.setKeyBindings();
 		GameOptions.setSoundValues();
@@ -84,7 +86,7 @@ public class MainMenu {
 			if (name == null) {
 				System.exit(0);
 			}
-			while (name.equals("")) {
+			while (name.equals("")|| name.contains("#")) {
 				name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
 			}
 
