@@ -49,8 +49,17 @@ public class AsteroidModel {
                 vertices[i] = vertices[i].scale(radius);
             }
         }
+    	
+//    	vertices[0] = new Vector(position.getX() - radius, position.getY() - radius, position.getZ());
+//        vertices[1] = new Vector(position.getX() + radius, position.getY() - radius, position.getZ());
+//        vertices[2] = new Vector(position.getX(), position.getY() + radius, position.getZ());
+//        vertices[3] = new Vector(position.getX(), position.getY(), position.getZ() + radius);
         
-        orientation.apply(vertices);
+//        System.out.println("Before Rotation: " + vertices[1]);
+        
+//        orientation.apply(vertices);
+        
+//        System.out.println("After Rotation: " + vertices[1]);
         
 //		Random generation that I'm temporarily giving up on
 		

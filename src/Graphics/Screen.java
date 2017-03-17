@@ -156,22 +156,20 @@ public class Screen extends JPanel{
         g.drawString("U: "+U,               40, 120);
         g.drawString("N: "+N,               40, 140);
         
-		//Taken this out for now because people kept ripping in to the stuff I'd spent ages on
-		
-		/*g.setColor(Color.RED);
-		Point origin = new Point(getWidth() - 40, 40, 1);
-		Vector uLine = (new Vector(0, 0, 0)).plus(U.scale(20));
-		Vector uLine2 = Matrix.multiplyVector(CM, uLine);
-		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (uLine2.getX())), (int)(origin.y + (-uLine2.getY())));
-		g.setColor(Color.BLUE);
-		Vector vLine = (new Vector(0, 0, 0)).plus(V.scale(20));
-		Vector vLine2 = Matrix.multiplyVector(CM, vLine);
-		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (vLine2.getX())), (int)(origin.y + (-vLine2.getY())));
-		g.setColor(Color.GREEN);
-		Vector nLine = (new Vector(0, 0, 0)).plus(N.scale(20));
-		Vector nLine2 = Matrix.multiplyVector(CM, nLine);
-		g.drawLine((int)origin.x, (int)origin.y, (int)(origin.x + (nLine2.getX())), (int)(origin.y + (-nLine2.getY())));*/
-//		System.out.println("Time this frame " + (System.currentTimeMillis()-startTime));
+        for(Body b : map.bodies()) {
+            if (!(shipIndex == null) && b.getID() != shipIndex) {
+            	Class bClass = b.getClass();
+                if(bClass == Asteroid.class){
+                    for(Vector v : map.getAllPositions(b.getPosition())){
+                    	Point newPos = Calculations.calcPos(viewFrom, viewTo, v);
+                    	if(newPos.z > 0){
+                    		g.drawString("" + b.getID(), (int)(newPos.x + Global.SCREEN_WIDTH/2), (int)(newPos.y + Global.SCREEN_HEIGHT/2));
+                    	}
+                    }
+                }
+            }
+        }
+        
 		sleepAndRefresh();
 	}
 	
@@ -224,8 +222,9 @@ public class Screen extends JPanel{
                     }
                 }
                 else if(bClass == Asteroid.class){
-//                    System.out.println("Got an asteroid " + map.indexOf(b));
+//                	System.out.println(b.getID() + ": " + b.getPosition());
                     for(Vector v : map.getAllPositions(b.getPosition())){
+//                    	System.out.println(v);
                         AsteroidModel asteroid = new AsteroidModel(v, 2, b.getOrientation());
                     }
                     asteroidDrawn  = true;

@@ -53,7 +53,7 @@ public class Poly3D {
 			calcPos = Calculations.calcPos(Screen.viewFrom, Screen.viewTo, p);
 			newX[i] = calcPos.x + Global.SCREEN_WIDTH/2;
 			newY[i] = calcPos.y + Global.SCREEN_HEIGHT/2;
-			if(calcPos.z < 0.1 || Calculations.t < 0){
+			if(calcPos.z < 0){
 				draw = false;
 			}
 		}
