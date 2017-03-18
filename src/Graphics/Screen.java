@@ -47,7 +47,7 @@ public class Screen extends JPanel{
 	private boolean selfDestruct = false;
 	private int destructCount = 1;
 	private boolean crosshair;
-	private boolean debug = false;
+	private boolean debug = true;
 	
 	/**
 	 * Creates a new Screen object
@@ -221,10 +221,16 @@ public class Screen extends JPanel{
             if (!(shipIndex == null) && b.getID() != shipIndex) {
                 Class<? extends Body> bClass = b.getClass();
                 if (bClass == Ship.class) {
+                	Vector pos = new Vector(0, 0, 0);
+                	double distance = Integer.MAX_VALUE;
                     for(Vector v : map.getAllPositions(b.getPosition())){
 //                         System.out.println("Drawing Ship: " + b.getID() + ", " + shipIndex);
-                    	ShipModel m = new ShipModel(v, 2, b.getOrientation(), b.getID());
+                    	if(viewFrom.minus(v).length() < distance){
+                    		distance = viewFrom.minus(v).length();
+                    		pos = v;
+                    	}
                     }
+                    ShipModel m = new ShipModel(pos, 2, b.getOrientation(), b.getID());
                 }
                 else if(bClass == Asteroid.class){
 //                	System.out.println(b.getID() + ": " + b.getPosition());
@@ -233,7 +239,6 @@ public class Screen extends JPanel{
 //                    	System.out.println(v);
                         AsteroidModel asteroid = new AsteroidModel(v, 2, b.getOrientation());
                     }
-                    asteroidDrawn  = true;
                 }
                 else if(bClass == Bullet.class){
                     for(Vector v : map.getAllPositions(b.getPosition())){
