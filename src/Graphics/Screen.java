@@ -29,8 +29,6 @@ public class Screen extends JPanel{
 	public static Vector N, U, V;
 	
 	private double lightPosition;
-	private static double verticalLook = 0;
-	private double r;
 	
 	public static int nPoly = 0, nPoly3D = 0;
 	public static ArrayList<Poly3D> poly3Ds = new ArrayList<Poly3D>();
@@ -41,8 +39,6 @@ public class Screen extends JPanel{
 	private String nickname;
 	private Integer shipIndex = null;
 	private boolean pilot;
-	private boolean asteroidDrawn = false;
-	private int i = 0;
 	private Map starMap;
 	private boolean selfDestruct = false;
 	private int destructCount = 1;
@@ -102,10 +98,6 @@ public class Screen extends JPanel{
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
 	public void paintComponent(Graphics g){
-		Dimension size = getPreferredSize();
-//		Global.SCREEN_WIDTH = (int) size.getWidth();
-//		Global.SCREEN_HEIGHT = (int) size.getHeight();
-		long startTime = System.currentTimeMillis();
 		//Draw the background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, (int)getWidth(), (int)getHeight());
@@ -230,20 +222,19 @@ public class Screen extends JPanel{
                     		pos = v;
                     	}
                     }
-                    ShipModel m = new ShipModel(pos, 2, b.getOrientation(), b.getID());
+                    new ShipModel(pos, 2, b.getOrientation(), b.getID());
                 }
                 else if(bClass == Asteroid.class){
 //                	System.out.println(b.getID() + ": " + b.getPosition());
-                	int asCount = 1;
                     for(Vector v : map.getAllPositions(b.getPosition())){
 //                    	System.out.println(v);
-                        AsteroidModel asteroid = new AsteroidModel(v, 2, b.getOrientation());
+                    	new AsteroidModel(v, 2, b.getOrientation());
                     }
                 }
                 else if(bClass == Bullet.class){
                     for(Vector v : map.getAllPositions(b.getPosition())){
 //                    	System.out.println("Laser orientation: " + b.getBasis());
-                        Laser laser = new Laser(v, 0.05, b.getOrientation());
+                        new Laser(v, 0.05, b.getOrientation());
                     }
                 }
             }
