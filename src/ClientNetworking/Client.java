@@ -18,7 +18,7 @@ import GeneralNetworking.Player;
  * The Class Client.
  * @author Svetlin
  */
-public class Client extends Thread
+public class Client
 {
 
 	private int port = ClientVariables.PORT;
@@ -37,15 +37,10 @@ public class Client extends Thread
 	{
 		this.name = nickname;
 		clientQueue = new LinkedBlockingQueue<Object>();
-	}
-
-
-	public void run()
-	{
+	
 		// Open sockets:
 		ObjectOutputStream toServer = null;
 		ObjectInputStream fromServer = null;
-
 		
 		// get a socket and the 2 streams
 		try
@@ -66,16 +61,22 @@ public class Client extends Thread
 			System.err.println("The server doesn't seem to be running " + e.getMessage());
 			System.exit(1);
 		}
-		// tell our name to the server
+		
+		// tell our name to the server and receive a tag, ty Battle net for the idea <3
 		try
 		{
+			toServer.reset();
 			toServer.writeObject(name);
 			toServer.flush();
+			System.out.println("asd");
+			name = (String)fromServer.readObject();
+			System.out.println("asd");
 		}
-		catch (IOException e)
+		catch (IOException | ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		}
+		
 		//Create the receiver and the sender
 		sender = new ClientSender(toServer, clientQueue);
 		receiver = new ClientReceiver(fromServer, name, clientQueue);
@@ -83,13 +84,6 @@ public class Client extends Thread
 		// Start the sender and receiver threads
 		sender.start();
 		receiver.start();
-		try {
-			receiver.join();
-			sender.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
 	}
 
 	public void disconnect()
