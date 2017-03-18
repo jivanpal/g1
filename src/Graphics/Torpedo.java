@@ -60,35 +60,35 @@ public class Torpedo{
 	 * Creates the vertices of the object
 	 */
 	private void createPoints(){
-		vertices[0] = new Vector(0, 0, size*11/10);
-		vertices[1] = new Vector(size/10, Math.sqrt(3)*size/10, size);
-		vertices[2] = new Vector(size/5, 0, size);
-		vertices[3] = new Vector(size/10, -Math.sqrt(3)*size/10, size);
-		vertices[4] = new Vector(-size/10, -Math.sqrt(3)*size/10, size);
-		vertices[5] = new Vector(-size/5, 0, size);
-		vertices[6] = new Vector(-size/10, Math.sqrt(3)*size/10, size);
+		vertices[0] = new Vector(0, size*11/10, 0);
+		vertices[1] = new Vector(size/10, size, Math.sqrt(3)*size/10);
+		vertices[2] = new Vector(size/5, size, 0);
+		vertices[3] = new Vector(size/10, size, -Math.sqrt(3)*size/10);
+		vertices[4] = new Vector(-size/10, size, -Math.sqrt(3)*size/10);
+		vertices[5] = new Vector(-size/5, size, 0);
+		vertices[6] = new Vector(-size/10, size, Math.sqrt(3)*size/10);
 		
-		vertices[7] = new Vector(-size/20, Math.sqrt(3)*size/20, -size);
-		vertices[8] = new Vector(-size/10, 0, -size);
-		vertices[9] = new Vector(-size/20, -Math.sqrt(3)*size/20, -size);
-		vertices[10] = new Vector(size/20, -Math.sqrt(3)*size/20, -size);
-		vertices[11] = new Vector(size/10, 0, -size);
-		vertices[12] = new Vector(size/20, Math.sqrt(3)*size/20, -size);
+		vertices[7] = new Vector(-size/20, -size, Math.sqrt(3)*size/20);
+		vertices[8] = new Vector(-size/10, -size, 0);
+		vertices[9] = new Vector(-size/20, -size, -Math.sqrt(3)*size/20);
+		vertices[10] = new Vector(size/20, -size, -Math.sqrt(3)*size/20);
+		vertices[11] = new Vector(size/10, -size, 0);
+		vertices[12] = new Vector(size/20, -size, Math.sqrt(3)*size/20);
 		
-		vertices[13] = new Vector(0, 3*Math.sqrt(3)*size/40, -size/2);
-		vertices[14] = new Vector(size*6/100, 3*Math.sqrt(3)*size/50, -size*4/5);
-		vertices[15] = new Vector(-size*6/100, 3*Math.sqrt(3)*size/50, -size*4/5);
-		vertices[16] = new Vector(0, Math.sqrt(3)*size/10, -size);
+		vertices[13] = new Vector(0, -size/2, 3*Math.sqrt(3)*size/40);
+		vertices[14] = new Vector(size*6/100, -size*4/5, 3*Math.sqrt(3)*size/50);
+		vertices[15] = new Vector(-size*6/100, -size*4/5, 3*Math.sqrt(3)*size/50);
+		vertices[16] = new Vector(0, -size, Math.sqrt(3)*size/10);
 		
-		vertices[17] = new Vector(size*9/80, -3*Math.sqrt(3)*size/80, -size/2);
-		vertices[18] = new Vector(size*3/100, -3*Math.sqrt(3)*size/50, -size*4/5);
-		vertices[19] = new Vector(size*12/100, 0, -size*4/5);
-		vertices[20] = new Vector(size*3/20, -Math.sqrt(3)*size/20, -size);
+		vertices[17] = new Vector(size*9/80, -size/2, -3*Math.sqrt(3)*size/80);
+		vertices[18] = new Vector(size*3/100, -size*4/5, -3*Math.sqrt(3)*size/50);
+		vertices[19] = new Vector(size*12/100, -size*4/5, 0);
+		vertices[20] = new Vector(size*3/20, -size, -Math.sqrt(3)*size/20);
 		
-		vertices[21] = new Vector(-size*9/80, -3*Math.sqrt(3)*size/80, -size/2);
-		vertices[22] = new Vector(-size*12/100, 0, -size*4/5);
-		vertices[23] = new Vector(-size*3/100, -3*Math.sqrt(3)*size/50, -size*4/5);
-		vertices[24] = new Vector(-size*3/20, -Math.sqrt(3)*size/20, -size);
+		vertices[21] = new Vector(-size*9/80, -size/2, -3*Math.sqrt(3)*size/80);
+		vertices[22] = new Vector(-size*12/100, -size*4/5, 0);
+		vertices[23] = new Vector(-size*3/100, -size*4/5, -3*Math.sqrt(3)*size/50);
+		vertices[24] = new Vector(-size*3/20, -size, -Math.sqrt(3)*size/20);
 		
 		orientation.apply(vertices);
 		

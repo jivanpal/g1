@@ -243,7 +243,7 @@ public class Screen extends JPanel{
                 else if(bClass == Bullet.class){
                     for(Vector v : map.getAllPositions(b.getPosition())){
 //                    	System.out.println("Laser orientation: " + b.getBasis());
-                        Laser laser = new Laser(v, 2, b.getOrientation());
+                        Laser laser = new Laser(v, 0.05, b.getOrientation());
                     }
                 }
             }

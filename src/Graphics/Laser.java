@@ -39,12 +39,12 @@ public class Laser{
 	 * Creates the vertices of the object
 	 */
 	private void createPoints(){
-		vertices[0] = new Vector(0, -size/8, size/2);
-		vertices[1] = new Vector(size/8, size/8, size/2);
-		vertices[2] = new Vector(-size/8, size/8, size/2);
-		vertices[3] = new Vector(0, -size/8, -size/2);
-		vertices[4] = new Vector(size/8, size/8, -size/2);
-		vertices[5] = new Vector(-size/8, size/8, -size/2);
+		vertices[0] = new Vector(0, size/2, -size/8);
+		vertices[1] = new Vector(size/8, size/2, size/8);
+		vertices[2] = new Vector(-size/8, size/2, size/8);
+		vertices[3] = new Vector(0, -size/2, -size/8);
+		vertices[4] = new Vector(size/8, -size/2, size/8);
+		vertices[5] = new Vector(-size/8, -size/2, size/8);
 		
 		orientation.apply(vertices);
 		
