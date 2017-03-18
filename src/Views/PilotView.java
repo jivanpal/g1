@@ -56,7 +56,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
 
     private JButton manual;
     private ManualView instructions;
-    private JLabel steeringWheelView;
+    private JLabel steeringWheelView = new JLabel();
 
     private boolean UIinitialised = false;
 
@@ -129,13 +129,15 @@ public class PilotView extends AbstractPlayerView implements Observer {
                         .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON)) {
                     AudioPlayer.playSoundEffect(AudioPlayer.TORPEDO_FIRE_EFFECT);
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
-                    steeringWheelAngle = -Math.PI/4;
-                    steeringWheelView.revalidate();
-                    steeringWheelView.repaint();
+                	if(steeringWheelAngle != -Math.PI/4){
+	                    steeringWheelAngle = -Math.PI/4;
+	                    updateSteeringWheel();
+                	}
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
-                    steeringWheelAngle = Math.PI/4;
-                    steeringWheelView.revalidate();
-                    steeringWheelView.repaint();
+                	if(steeringWheelAngle != Math.PI/4){
+	                    steeringWheelAngle = Math.PI/4;
+	                    updateSteeringWheel();
+                	}
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_BUTTON)) {
                 	showManual();
    
@@ -155,8 +157,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
             	pressedKeys.remove(getKeyCodeToInstruction(keyEvent.getKeyCode()));
             	if(keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON) || keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)){
             		steeringWheelAngle = 0;
-                    steeringWheelView.revalidate();
-                    steeringWheelView.repaint();
+                    updateSteeringWheel();
             	}
             }
         });
@@ -314,70 +315,78 @@ public class PilotView extends AbstractPlayerView implements Observer {
      * Add all of the UI components to the JPanel.
      */
     private void addAllComponents() {
-        try {
-            UIBaseLayer.setLayout(new BorderLayout());
-            UIBaseLayer.add(screen, BorderLayout.CENTER);
-            UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
+        UIBaseLayer.setLayout(new BorderLayout());
+        UIBaseLayer.add(screen, BorderLayout.CENTER);
+        UIBaseLayer.setBounds(0, 0, parentFrame.getWidth(), parentFrame.getHeight());
 
-            JLayeredPaneLayoutManager layoutManager = new JLayeredPaneLayoutManager();
+        JLayeredPaneLayoutManager layoutManager = new JLayeredPaneLayoutManager();
 
-            UILayeredPane.setLayout(layoutManager);
-            UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
+        UILayeredPane.setLayout(layoutManager);
+        UILayeredPane.add(UIBaseLayer, JLayeredPane.DEFAULT_LAYER);
 
-            chatWindow.setBounds(0,
-                    parentFrame.getHeight() - (parentFrame.getHeight() / 7) - (parentFrame.getHeight() / 6),
-                    parentFrame.getWidth() / 6,
-                    parentFrame.getHeight() / 6);
+        chatWindow.setBounds(0,
+                parentFrame.getHeight() - (parentFrame.getHeight() / 7) - (parentFrame.getHeight() / 6),
+                parentFrame.getWidth() / 6,
+                parentFrame.getHeight() / 6);
 
-            chatWindow.setPreferredSize(new Dimension(parentFrame.getWidth() / 6, parentFrame.getHeight() / 6));
-            UILayeredPane.add(chatWindow, JLayeredPane.PALETTE_LAYER);
+        chatWindow.setPreferredSize(new Dimension(parentFrame.getWidth() / 6, parentFrame.getHeight() / 6));
+        UILayeredPane.add(chatWindow, JLayeredPane.PALETTE_LAYER);
 
-            BufferedImage steeringWheelImage = ImageIO.read(new File(System.getProperty("user.dir") + "/res/img/steeringwheel.png"));
-            AffineTransform t = new AffineTransform();
-            t.rotate(steeringWheelAngle);
-            AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
-            steeringWheelImage = op.filter(steeringWheelImage, null);
-            Image resizedWheel = steeringWheelImage.getScaledInstance(parentFrame.getHeight()/5, parentFrame.getHeight()/5, Image.SCALE_SMOOTH);
-            ImageIcon imgIcon = new ImageIcon(resizedWheel);
-            steeringWheelView = new JLabel(imgIcon);
+        updateSteeringWheel();
 
-            steeringWheelView.setMinimumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
-            steeringWheelView.setMaximumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
-            steeringWheelView.setPreferredSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
-            steeringWheelView.setBounds((parentFrame.getWidth() / 2) - (parentFrame.getWidth() / 6),
-                    2 * (parentFrame.getHeight() / 3),
-                    parentFrame.getWidth() / 3,
-                    parentFrame.getHeight() / 3);
+        manual.setBounds(0,
+                parentFrame.getHeight() - (parentFrame.getHeight() / 7),
+                parentFrame.getWidth() / 7,
+                parentFrame.getHeight() / 7);
+        manual.setOpaque(true);
+        manual.setBackground(UI_BACKGROUND_COLOR);
+        manual.setForeground(Color.white);
+        manual.setFont(BUTTON_FONT);
+        UILayeredPane.add(manual, JLayeredPane.PALETTE_LAYER);
 
-            System.out.println("Width: " + steeringWheelView.getWidth());
-            System.out.println("Height: " + steeringWheelView.getHeight());
+        speedometerView.setBounds(parentFrame.getWidth() - (parentFrame.getWidth() / 7),
+                parentFrame.getHeight() - (parentFrame.getHeight() / 7),
+                parentFrame.getWidth() / 7,
+                parentFrame.getHeight() / 7);
+        speedometerView.setOpaque(true);
+        speedometerView.setForeground(UI_BACKGROUND_COLOR);
+        speedometerView.setBackground(UI_BACKGROUND_COLOR);
+        UILayeredPane.add(speedometerView, JLayeredPane.PALETTE_LAYER);
+    }
+    
+    private void updateSteeringWheel(){
+    	steeringWheelView.setIcon(null);
+    	steeringWheelView.revalidate();
+    	steeringWheelView.repaint();
+    	BufferedImage steeringWheelImage;
+		try {
+			steeringWheelImage = ImageIO.read(new File(System.getProperty("user.dir") + "/res/img/steeringwheel.png"));
+			AffineTransform t = new AffineTransform();
+	        t.rotate(steeringWheelAngle, steeringWheelImage.getWidth()/2, steeringWheelImage.getHeight()/2);
+	        AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
+	        steeringWheelImage = op.filter(steeringWheelImage, null);
+	        Image resizedWheel = steeringWheelImage.getScaledInstance(parentFrame.getHeight()/5, parentFrame.getHeight()/5, Image.SCALE_SMOOTH);
+	        ImageIcon imgIcon = new ImageIcon(resizedWheel);
+	        steeringWheelView = new JLabel(imgIcon);
 
-            UILayeredPane.add(steeringWheelView, JLayeredPane.PALETTE_LAYER);
-
-            manual.setBounds(0,
-                    parentFrame.getHeight() - (parentFrame.getHeight() / 7),
-                    parentFrame.getWidth() / 7,
-                    parentFrame.getHeight() / 7);
-            manual.setOpaque(true);
-            manual.setBackground(UI_BACKGROUND_COLOR);
-            manual.setForeground(Color.white);
-            manual.setFont(BUTTON_FONT);
-            UILayeredPane.add(manual, JLayeredPane.PALETTE_LAYER);
-
-            speedometerView.setBounds(parentFrame.getWidth() - (parentFrame.getWidth() / 7),
-                    parentFrame.getHeight() - (parentFrame.getHeight() / 7),
-                    parentFrame.getWidth() / 7,
-                    parentFrame.getHeight() / 7);
-            speedometerView.setOpaque(true);
-            speedometerView.setForeground(UI_BACKGROUND_COLOR);
-            speedometerView.setBackground(UI_BACKGROUND_COLOR);
-            UILayeredPane.add(speedometerView, JLayeredPane.PALETTE_LAYER);
-
-
-        } catch (IOException e) {
-            // should never get here.
-            e.printStackTrace();
-        }
+	        steeringWheelView.setMinimumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
+	        steeringWheelView.setMaximumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
+	        steeringWheelView.setPreferredSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
+	        steeringWheelView.setBounds((parentFrame.getWidth() / 2) - (parentFrame.getWidth() / 6),
+	                2 * (parentFrame.getHeight() / 3),
+	                parentFrame.getWidth() / 3,
+	                parentFrame.getHeight() / 3);
+	        
+	        steeringWheelView.revalidate();
+	    	steeringWheelView.repaint();
+	        
+	        UILayeredPane.add(steeringWheelView, JLayeredPane.PALETTE_LAYER);
+	        
+//	        UILayeredPane.revalidate();
+//	        UILayeredPane.repaint();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     private void initialiseChatWindow(GameClient gameClient, String nickname) {
