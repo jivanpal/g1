@@ -389,7 +389,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
      * Initialise the Screen for the UI
      */
     private void initialiseScreen() {
-        this.screen = new Screen(playerNickname, true);
+        this.screen = new Screen(playerNickname, true, true);
         screen.setPreferredSize(new Dimension(this.getWidth(), 4 * (this.getHeight() / 5)));
         Global.SCREEN_WIDTH = parentFrame.getWidth();
         Global.SCREEN_HEIGHT = parentFrame.getHeight() - (parentFrame.getHeight() / 5);

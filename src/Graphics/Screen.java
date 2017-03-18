@@ -46,16 +46,19 @@ public class Screen extends JPanel{
 	private Map starMap;
 	private boolean selfDestruct = false;
 	private int destructCount = 1;
+	private boolean crosshair;
+	private boolean debug = false;
 	
 	/**
 	 * Creates a new Screen object
 	 * @param nickname The nickname of the user who is the pilot of the ship
 	 * @param pilot Whether this user is the pilot or the engineer
 	 */
-	public Screen(String nickname, boolean pilot){
+	public Screen(String nickname, boolean pilot, boolean crosshair){
 		
 		this.nickname = nickname;
 		this.pilot = pilot;
+		this.crosshair = crosshair;
 		map = new Map(0, 0, 0);
 		Body asteroid = new Body();
 		asteroid.move(new Vector(0, 2, 0));
@@ -146,29 +149,32 @@ public class Screen extends JPanel{
 		Vector camCoords = Matrix.multiplyVector(cameraSystem, new Vector(0, 0, 0));
 		g.setColor(Color.WHITE);
 		
-		g.drawLine((int)getWidth()/2 - 5, (int)getHeight()/2, (int)getWidth()/2 + 5, (int)getHeight()/2);
-        g.drawLine((int)getWidth()/2, (int)getHeight()/2 - 5, (int)getWidth()/2, (int)getHeight()/2 + 5);
+		if(crosshair){
+			g.drawLine((int)getWidth()/2 - 5, (int)getHeight()/2, (int)getWidth()/2 + 5, (int)getHeight()/2);
+			g.drawLine((int)getWidth()/2, (int)getHeight()/2 - 5, (int)getWidth()/2, (int)getHeight()/2 + 5);
+		}
+		if(debug){
+	        g.drawString("viewFrom: "+viewFrom, 40, 40);
+	        g.drawString("camera: "+camCoords,  40, 60);
+	        g.drawString("viewTo: "+viewTo,     40, 80);
+	        g.drawString("V: "+V,               40, 100);
+	        g.drawString("U: "+U,               40, 120);
+	        g.drawString("N: "+N,               40, 140);
         
-        g.drawString("viewFrom: "+viewFrom, 40, 40);
-        g.drawString("camera: "+camCoords,  40, 60);
-        g.drawString("viewTo: "+viewTo,     40, 80);
-        g.drawString("V: "+V,               40, 100);
-        g.drawString("U: "+U,               40, 120);
-        g.drawString("N: "+N,               40, 140);
-        
-//        for(Body b : map.bodies()) {
-//            if (!(shipIndex == null) && b.getID() != shipIndex) {
-//            	Class bClass = b.getClass();
-//                if(bClass == Asteroid.class){
-//                    for(Vector v : map.getAllPositions(b.getPosition())){
-//                    	Point newPos = Calculations.calcPos(viewFrom, viewTo, v);
-//                    	if(newPos.z > 0){
-//                    		g.drawString("" + b.getID(), (int)(newPos.x + Global.SCREEN_WIDTH/2), (int)(newPos.y + Global.SCREEN_HEIGHT/2));
-//                    	}
-//                    }
-//                }
-//            }
-//        }
+//	        for(Body b : map.bodies()) {
+//	            if (!(shipIndex == null) && b.getID() != shipIndex) {
+//	            	Class bClass = b.getClass();
+//	                if(bClass == Asteroid.class){
+//	                    for(Vector v : map.getAllPositions(b.getPosition())){
+//	                    	Point newPos = Calculations.calcPos(viewFrom, viewTo, v);
+//	                    	if(newPos.z > 0){
+//	                    		g.drawString("" + b.getID(), (int)(newPos.x + Global.SCREEN_WIDTH/2), (int)(newPos.y + Global.SCREEN_HEIGHT/2));
+//	                    	}
+//	                    }
+//	                }
+//	            }
+//	        }
+		}
         
 		sleepAndRefresh();
 	}
@@ -216,7 +222,7 @@ public class Screen extends JPanel{
                 Class<? extends Body> bClass = b.getClass();
                 if (bClass == Ship.class) {
                     for(Vector v : map.getAllPositions(b.getPosition())){
-                        // System.out.println("Drawing Ship: " + b.getID() + ", " + shipIndex);
+                         System.out.println("Drawing Ship: " + b.getID() + ", " + shipIndex);
                         //Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
                     	ShipModel m = new ShipModel(v, 2, b.getOrientation(), b.getID());
                     }
