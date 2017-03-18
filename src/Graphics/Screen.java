@@ -222,8 +222,7 @@ public class Screen extends JPanel{
                 Class<? extends Body> bClass = b.getClass();
                 if (bClass == Ship.class) {
                     for(Vector v : map.getAllPositions(b.getPosition())){
-                         System.out.println("Drawing Ship: " + b.getID() + ", " + shipIndex);
-                        //Icosahedron i = new Icosahedron(v, 2, b.getOrientation());
+//                         System.out.println("Drawing Ship: " + b.getID() + ", " + shipIndex);
                     	ShipModel m = new ShipModel(v, 2, b.getOrientation(), b.getID());
                     }
                 }
