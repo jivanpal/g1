@@ -71,6 +71,7 @@ public class ControlsPanel extends JPanel {
 			GameOptions.saveKeyBindingsInFile();
 			JOptionPane.showMessageDialog(this, "Changes have been applied!", "Changes Applied",
 					JOptionPane.INFORMATION_MESSAGE);
+			requestFocus();
 		});
 		add(apply, c);
 		MyButton resettodefault = new MyButton("Reset");
@@ -82,7 +83,9 @@ public class ControlsPanel extends JPanel {
 				GameOptions.saveKeyBindingsInFile();
 				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 				changebuttons(true);
+				
 			}
+			requestFocus();
 		});
 
 		c.anchor = GridBagConstraints.NORTHEAST;
@@ -173,35 +176,21 @@ public class ControlsPanel extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (pressed) {
+					String btext = button.getText();
+					if (GameOptions.checkIfKeyTaken(e.getKeyCode())) {
+						displaykeyerror();
+						button.setText(btext);
+						pressed = false;
+						return;
+					}
 					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-						String btext = button.getText();
 						button.setText("Enter");
-						if (GameOptions.checkIfKeyTaken(e.getKeyCode())) {
-							displaykeyerror();
-							button.setText(btext);
-							pressed = false;
-							return;
-						}
 						pressed = false;
 					} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-						String btext = button.getText();
 						button.setText("Space");
-						if (GameOptions.checkIfKeyTaken(e.getKeyCode())) {
-							displaykeyerror();
-							button.setText(btext);
-							pressed = false;
-							return;
-						}
 						pressed = false;
 					} else {
-						String btext = button.getText();
 						button.setText("" + Character.toUpperCase(e.getKeyChar()));
-						if (GameOptions.checkIfKeyTaken(e.getKeyCode())) {
-							displaykeyerror();
-							button.setText(btext);
-							pressed = false;
-							return;
-						}
 						pressed = false;
 					}
 					button.setBackground(Color.decode("#808080"));

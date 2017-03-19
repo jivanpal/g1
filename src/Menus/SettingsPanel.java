@@ -41,6 +41,7 @@ public class SettingsPanel extends JPanel {
 			ButtonPanel bpanel = new ButtonPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(bpanel);
+			bpanel.makeUI();
 		});
 		add(backtomenu, c);
 		JPanel bpanel = createButtons();

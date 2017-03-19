@@ -50,13 +50,15 @@ public class MainMenu {
 		frame = new JFrame();
 		client.updateList();
 		ButtonPanel comp = new ButtonPanel(this);
-		frame.setContentPane(comp);
 		frame.setUndecorated(true);
 		Dimension d = new Dimension(800, 600);
 	//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setSize(d);
 		frame.setVisible(true);
-		
+		comp.makeUI();
+		frame.setContentPane(comp);
+		frame.repaint();
+		frame.revalidate();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
