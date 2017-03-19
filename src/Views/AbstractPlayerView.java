@@ -12,6 +12,8 @@ import Physics.Body;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
@@ -34,6 +36,7 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
     protected Screen screen;
     protected GameChat chatWindow;
     protected JLabel fullScreenLabel;
+    protected RadarView radarView;
 
     protected boolean gameActive = true;
 
@@ -174,5 +177,56 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
         parentFrame.dispatchEvent(new WindowEvent(parentFrame, WindowEvent.WINDOW_CLOSING));
         AudioPlayer.stopMusic();
         AudioPlayer.playMusic(AudioPlayer.MENU_SCREEN_TUNE);
+    }
+
+    /**
+     * Creates the RadarView
+     */
+    protected void initialiseRadar() {
+        this.radarView = new RadarView(playerNickname, gameClient.getMap());
+
+        // Create a mouse listener to check when the user has clicked the RadarView
+        this.radarView.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent mouseEvent) {
+                radarView.setVisible(false);
+
+                // If currently small, make large. If currently large, make small.
+                if (!radarView.isLargeView()) {
+                    radarView.setLargeView(true);
+                    radarView.setBounds(50, 50, getWidth() - 100, getHeight() - 100);
+                    radarView.setPreferredSize(new Dimension(getWidth() - 100, getHeight() - 100));
+                } else {
+                    radarView.setLargeView(false);
+                    radarView.setBounds(parentFrame.getWidth() - parentFrame.getHeight() / 4, 0, parentFrame.getHeight() / 4, parentFrame.getHeight() / 4);
+                    radarView.setPreferredSize(new Dimension(parentFrame.getHeight() / 4, parentFrame.getHeight() / 4));
+                }
+
+                radarView.setVisible(true);
+
+                radarView.revalidate();
+                radarView.repaint();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent mouseEvent) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent mouseEvent) {
+
+            }
+        });
     }
 }

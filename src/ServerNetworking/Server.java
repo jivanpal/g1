@@ -60,12 +60,14 @@ public class Server
 					toClient.reset();
 					int i = 1;
 					taggedName = nickname + "#" + i;
+					System.out.println(taggedName);
 					while (true)
 					{
 						if (clientTable.getQueue(taggedName) != null)
 						{
 							i++;
 							taggedName = nickname + "#" + i;
+							System.out.println(taggedName);
 						}
 						else
 							break;

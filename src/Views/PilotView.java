@@ -60,7 +60,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
 
     private boolean UIinitialised = false;
 
-    private EngineerAI engAI;
+    private EngineerAI engAI = null;
 
     private JPanel UIBaseLayer;
 
@@ -266,6 +266,10 @@ public class PilotView extends AbstractPlayerView implements Observer {
         initialiseScreen();
         initialiseChatWindow(gameClient, playerNickname);
 
+        if(engAI != null) {
+            initialiseRadar();
+        }
+
         // Add mouse listener which swaps the cursor between being the default and a crosshair.
         this.removeMouseMotionListener(screenMouseListener);
         screenMouseListener = new MouseMotionListener() {
@@ -352,6 +356,12 @@ public class PilotView extends AbstractPlayerView implements Observer {
         speedometerView.setForeground(UI_BACKGROUND_COLOR);
         speedometerView.setBackground(UI_BACKGROUND_COLOR);
         UILayeredPane.add(speedometerView, JLayeredPane.PALETTE_LAYER);
+
+        if(engAI != null) {
+            radarView.setBounds(parentFrame.getWidth() - parentFrame.getHeight() / 4, 0, parentFrame.getHeight() / 4, parentFrame.getHeight() / 4);
+            radarView.setPreferredSize(new Dimension(parentFrame.getHeight() / 4, parentFrame.getHeight() / 4));
+            UILayeredPane.add(radarView, JLayeredPane.MODAL_LAYER);
+        }
     }
     
     private void updateSteeringWheel(){
@@ -454,7 +464,12 @@ public class PilotView extends AbstractPlayerView implements Observer {
             Map m = gameClient.getMap();
             Ship s = findPlayerShip(m);
             speedometerView.updateSpeedLevel(s.getVelocity().length());
+
+            if(engAI != null) {
+                radarView.updateMap(m);
+            }
         }
+
         for(String inst : pressedKeys){
         	gameClient.send(inst);
         }

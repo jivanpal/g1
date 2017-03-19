@@ -35,7 +35,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
     private WeaponView laserBlasterView;
     private WeaponView torpedosView;
     private ResourcesView resourcesView;
-    private RadarView radarView;
 
     private ArrayList<String> keySequences;
     private int shieldSequenceNum = 0;
@@ -409,57 +408,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
         Global.SCREEN_HEIGHT = this.getHeight() - (this.getHeight() / 5);
     }
 
-    /**
-     * Creates the RadarView
-     */
-    private void initialiseRadar() {
-        this.radarView = new RadarView(playerNickname, gameClient.getMap());
-
-        // Create a mouse listener to check when the user has clicked on the RadarView
-        this.radarView.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-                // do nothing
-            }
-
-            @Override
-            public void mousePressed(MouseEvent mouseEvent) {
-                // do nothing
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent mouseEvent) {
-                radarView.setVisible(false);
-
-                // If currently small, make large. If currently large, make small.
-                if (!radarView.isLargeView()) {
-                    radarView.setLargeView(true);
-                    radarView.setBounds(50, 50, getWidth() - 100, getHeight() - 100);
-                    radarView.setPreferredSize(new Dimension(getWidth() - 100, getHeight() - 100));
-                } else {
-                    radarView.setLargeView(false);
-                    radarView.setBounds(parentFrame.getWidth() - parentFrame.getHeight() / 4, 0, parentFrame.getHeight() / 4, parentFrame.getHeight() / 4);
-                    radarView.setPreferredSize(new Dimension(parentFrame.getHeight() / 4, parentFrame.getHeight() / 4));
-                }
-
-                radarView.setVisible(true);
-
-                radarView.revalidate();
-                radarView.repaint();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-                // do nothing
-            }
-
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-                // do nothing
-            }
-        });
-    }
-
     @Override
     public void update(Observable observable, Object o) {
         super.update(observable, o);
@@ -474,7 +422,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
             initialiseUI();
             UIinitialised = true;
         } else if (gameActive) {
-        	
+
             Map m = gameClient.getMap();
             radarView.updateMap(m);
 
