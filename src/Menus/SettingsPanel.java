@@ -25,6 +25,10 @@ public class SettingsPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
 
+	/**
+	 * Constructor for the Settings menu.
+	 * @param menu The menu to get the client data and the frame.
+	 */
 	public SettingsPanel(MainMenu menu) {
 		super();
 		this.menu = menu;

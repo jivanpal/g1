@@ -34,13 +34,10 @@ import ClientNetworking.GameHost.*;
 import GameLogic.GameOptions;
 
 /**
- * Panel for the host of the game
+ * Panel for the lobby
  * 
  * @author Jaren Chin-Hao Liu
  */
-
-// TODO Invite function
-// TODO Merge host and client lobby panel
 public class LobbyPanel extends JPanel implements Observer {
 	private MainMenu menu;
 	public Client client;
@@ -221,6 +218,10 @@ public class LobbyPanel extends JPanel implements Observer {
 		return panel;
 	}
 
+	/**
+	 * Whenever the lobby changes, this method is called. This will repaint the
+	 * panel and display the latest lobby information.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		Lobby l;

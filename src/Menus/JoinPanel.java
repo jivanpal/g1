@@ -70,7 +70,8 @@ public class JoinPanel extends JPanel {
 		client.updateList();
 		keepupdating();
 		if (client.getLobbyList().getLobbies().length == 0) {
-			JOptionPane.showMessageDialog(this, "No lobbies are found!", "Lobbies Not Found Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "No lobbies are found!", "Lobbies Not Found Error",
+					JOptionPane.ERROR_MESSAGE);
 		} else {
 			repaintlobbies();
 		}
@@ -78,17 +79,17 @@ public class JoinPanel extends JPanel {
 		table = new JTable(model);
 		table.setOpaque(true);
 		table.setFillsViewportHeight(true);
-		
+
 		table.setBackground(Color.BLACK);
 		table.setForeground(Color.WHITE);
 		table.setFont(GameOptions.REGULAR_TEXT_FONT);
-		
+
 		table.getTableHeader().setBackground(Color.BLACK);
 		table.getTableHeader().setForeground(Color.WHITE);
 		table.getTableHeader().setFont(GameOptions.REGULAR_TEXT_FONT);
 		table.setSelectionBackground(Color.decode("#999999"));
 		table.setDefaultRenderer(Object.class, new MyTableRenderer());
-		
+
 		JScrollPane pane = new JScrollPane(table);
 		pane.setBorder(BorderFactory.createLineBorder(Color.decode("#333333")));
 		add(pane, BorderLayout.CENTER);
@@ -97,61 +98,69 @@ public class JoinPanel extends JPanel {
 		add(bpanel, BorderLayout.SOUTH);
 		setBackground(Color.black);
 	}
-	
+
+	/**
+	 * Makes the table not have a focus border when clicked on.
+	 * 
+	 * @author Jaren Liu
+	 *
+	 */
 	public class MyTableRenderer extends DefaultTableCellRenderer {
 		@Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            setBorder(noFocusBorder);
-            return this;
-        }
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			setBorder(noFocusBorder);
+			return this;
+		}
 	}
-	
+
 	/**
-	 * Waits for updates to the list until there's a lobby or 3 seconds have passed
+	 * Waits for updates to the list until there's a lobby or 3 seconds have
+	 * passed
 	 */
 	public void keepupdating() {
 		long starttime = System.currentTimeMillis();
-		while(client.getLobbyList().getLobbies().length == 0 && (System.currentTimeMillis()-starttime)<3000){
-			
+		while (client.getLobbyList().getLobbies().length == 0 && (System.currentTimeMillis() - starttime) < 3000) {
+
 		}
 	}
-	
+
 	/**
 	 * Waits for updates to the list until 3 seconds have passed
 	 */
 	public void keepupdatingtime() {
 		long starttime = System.currentTimeMillis();
-		while(false || (System.currentTimeMillis()-starttime)<3000){
-			
+		while (false || (System.currentTimeMillis() - starttime) < 3000) {
+
 		}
 	}
-	
+
 	/**
 	 * Repaints the scrollpane with the updated lobby list
 	 */
 	public void repaintlobbies() {
 		lobbies = client.getLobbyList().getLobbies();
-		for (int i = model.getRowCount()-1; i > -1; i--) {
+		for (int i = model.getRowCount() - 1; i > -1; i--) {
 			model.removeRow(i);
 		}
-		
+
 		for (LobbyInfo lobby : lobbies) {
-			if(lobby==null) {
+			if (lobby == null) {
 				break;
 			}
 			System.out.println("lobby not null");
 			UUID id = lobby.lobbyID;
 			String host = lobby.host;
 			int number = lobby.playerCount;
-			Object[] row = { id, host, number+"/8" };
+			Object[] row = { id, host, number + "/8" };
 			model.addRow(row);
 		}
 	}
-	
+
 	/**
-	 * Create the panel which contains buttons for joining, refreshing, and going back to the play
-	 * menu.
+	 * Create the panel which contains buttons for joining, refreshing, and
+	 * going back to the play menu.
 	 * 
 	 * @return A JPanel with Join, Refresh and Back to Play Menu buttons added
 	 *         to it
@@ -171,16 +180,14 @@ public class JoinPanel extends JPanel {
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			int selected = table.getSelectedRow();
 			LobbyInfo lInfo = lobbies[selected];
-			try
-			{
+			try {
 				Player player = new Player(client.name, IpGetter.getRealIp(), false);
-				client.send(new Action(lInfo.lobbyID,player,9));
+				client.send(new Action(lInfo.lobbyID, player, 9));
 				LobbyPanel hlpanel = new LobbyPanel(menu, lInfo.lobbyID, player, false);
 				menu.changeFrame(hlpanel);
-			}
-			catch (Exception e1)
-			{
-				JOptionPane.showMessageDialog(this, "Joining Lobby failed. Please check your connection!", "Join Lobby Error", JOptionPane.ERROR_MESSAGE);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(this, "Joining Lobby failed. Please check your connection!",
+						"Join Lobby Error", JOptionPane.ERROR_MESSAGE);
 				JoinPanel jpanel = new JoinPanel(menu);
 				menu.changeFrame(jpanel);
 				e1.printStackTrace();

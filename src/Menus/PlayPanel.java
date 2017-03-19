@@ -67,6 +67,10 @@ public class PlayPanel extends JPanel {
 		setBackground(Color.BLACK);
 	}
 	
+	/**
+	 * Creates the buttons for the play menu
+	 * @return Returns a JPanel with the buttons on it
+	 */
 	public JPanel createButtons() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());

@@ -177,12 +177,22 @@ public class ControlsPanel extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				if (pressed) {
 					String btext = button.getText();
+					for (JButton b: controlButtons) {
+						if (KeyEvent.getKeyText(e.getKeyCode()).equals(b.getText())) {
+							button.setText(KeyEvent.getKeyText(e.getKeyCode()));
+							b.setText(btext);
+							pressed = false;
+							break;
+						}
+					}
+					/**
 					if (GameOptions.checkIfKeyTaken(e.getKeyCode())) {
 						displaykeyerror();
 						button.setText(btext);
 						pressed = false;
 						return;
 					}
+					*/
 					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 						button.setText("Enter");
 						pressed = false;
