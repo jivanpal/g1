@@ -42,11 +42,11 @@ public class EngineerAI implements Observer
 		Map gameMap = gameClient.getMap();
 
 		// get the ship list from the map
-		List<Ship> ships = gameMap.bodies().stream().filter(b -> b instanceof Ship).map(Ship.class::cast)
+		List<Ship> ships = gameMap.bodies().parallelStream().filter(b -> b instanceof Ship).map(Ship.class::cast)
 				.collect(Collectors.toList());
 
 		// get the current team's ship
-		Ship playerShip = ships.stream().filter(s -> s.getPilotName().equals(nickname)).collect(Collectors.toList())
+		Ship playerShip = ships.parallelStream().filter(s -> s.getPilotName().equals(nickname)).collect(Collectors.toList())
 				.get(0);
 
 		// do the "ai" things
@@ -55,7 +55,7 @@ public class EngineerAI implements Observer
 		// check if a ship is nearby
 		if (cooldownTimer == 0)
 		{
-			List<Ship> nearby = ships.stream()
+			List<Ship> nearby = ships.parallelStream()
 					.filter(s2 -> gameMap.shortestPath(playerShip.getID(), s2.getID()).length() < SHIP_PROXIMITY_MESSAGE_DISTANCE && !(playerShip.equals(s2)))
 					.collect(Collectors.toList());
 

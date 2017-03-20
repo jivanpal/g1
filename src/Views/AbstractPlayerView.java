@@ -68,6 +68,8 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
     public void update(Observable observable, Object o) {
         if(gameActive) {
             try {
+                // long time = System.currentTimeMillis();
+
                 Map m = ((ClientNetworking.GameClient.MapContainer) observable).getMap();
 
                 if (hasWonGame(m)) {
@@ -103,6 +105,8 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
                 }
 
                 screen.setMap(m);
+
+                // System.out.println("Time this frame: " + String.valueOf(System.currentTimeMillis() - time));
             } catch (NullPointerException e) {
                 System.err.println("Map seems to be null right now... let's just wait a little bit");
             }

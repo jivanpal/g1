@@ -109,13 +109,22 @@ public class Screen extends JPanel{
 		
 		g.setColor(Color.WHITE);
 
-		for(Body b : starMap.bodies()){
-			Star s = (Star) b;
-			Vector v = s.getPosition();
-			Point p = Calculations.calcPos(viewFrom, viewTo, v);
-			g.fillOval((int)p.x, (int)p.y, 1, 1);
-			g.drawOval((int)p.x, (int)p.y, 1, 1);
-		}
+//		for(Body b : starMap.bodies()){
+//			Star s = (Star) b;
+//			Vector v = s.getPosition();
+//			Point p = Calculations.calcPos(viewFrom, viewTo, v);
+//			g.fillOval((int)p.x, (int)p.y, 1, 1);
+//			g.drawOval((int)p.x, (int)p.y, 1, 1);
+//		}
+//
+		starMap.bodies().parallelStream()
+				.map(Star.class::cast)
+				.forEach( s -> {
+					Vector v = s.getPosition();
+					Point p = Calculations.calcPos(viewFrom, viewTo, v);
+					g.fillOval((int)p.x, (int)p.y, 1, 1);
+					g.drawOval((int)p.x, (int)p.y, 1, 1);
+				});
 		
 		createObjects();
 		
@@ -125,7 +134,9 @@ public class Screen extends JPanel{
 		for(int i = 0; i < nPoly; i++){
 			poly3Ds.get(i).update();
 		}
-		
+
+		poly3Ds.parallelStream().forEach(poly3D -> poly3D.update());
+
 		setDrawOrder();
 		
 		for(int i = 0; i < nPoly; i++){
