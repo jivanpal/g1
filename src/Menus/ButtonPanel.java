@@ -36,10 +36,6 @@ public class ButtonPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
 	private JLayeredPane UILayers;
-	private boolean running;
-	private Screen screen;
-	private Map map;
-	private Ship ship;
 
 	/**
 	 * Constructor for the main menu. Adds the buttons and how it looks in the
@@ -53,7 +49,6 @@ public class ButtonPanel extends JPanel {
 		this.menu = menu;
 		this.client = menu.client;
 		this.UILayers = menu.getFrame().getLayeredPane();
-		this.running = true;
 	}
 
 	public void makeUI() {
@@ -61,9 +56,9 @@ public class ButtonPanel extends JPanel {
 		
 		Rectangle rect = new Rectangle(0, 0, menu.getFrame().getWidth(), menu.getFrame().getHeight());
 
-		screen = new Screen(client.name, true, false);
-		map = new Map(10, 10, 10);
-		ship = new Ship(client.name, client.name);
+		Screen screen = new Screen(client.name, true, false);
+		Map map = new Map(10, 10, 10);
+		Ship ship = new Ship(client.name, client.name);
 		ship.setAngularVelocity(new Vector(0, 0, 0.1));
 		//ship.setVelocity(new Vector(0, 0, 0));
 		map.add(ship);
@@ -75,7 +70,7 @@ public class ButtonPanel extends JPanel {
 					r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2)));
 		}
 		screen.setBounds(rect);
-		UILayers.add(screen, UILayers.DEFAULT_LAYER);
+		UILayers.add(screen, JLayeredPane.DEFAULT_LAYER);
 
 		JPanel menuPanel = new JPanel();
 		menuPanel.setOpaque(false);
@@ -96,9 +91,8 @@ public class ButtonPanel extends JPanel {
 		title.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
 		c.anchor = GridBagConstraints.NORTH;
 		menuPanel.add(title, c);
-		// menuPanel.setBackground(Color.BLACK);
 		menuPanel.setBounds(rect);
-		UILayers.add(menuPanel, UILayers.PALETTE_LAYER);
+		UILayers.add(menuPanel, JLayeredPane.PALETTE_LAYER);
 		
 		Timer timer = new Timer(30, e -> {
 			ship.update();
@@ -120,7 +114,6 @@ public class ButtonPanel extends JPanel {
 		MyButton play = new MyButton("Play");
 		play.addActionListener(e -> {
 			UILayers.removeAll();
-			running = false;
 			PlayPanel ppanel = new PlayPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
@@ -130,7 +123,6 @@ public class ButtonPanel extends JPanel {
 		MyButton settings = new MyButton("Settings");
 		settings.addActionListener(e -> {
 			UILayers.removeAll();
-			running = false;
 			SettingsPanel spanel = new SettingsPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
