@@ -53,7 +53,7 @@ public class MainMenu {
 		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setSize(d);
 		frame.setVisible(true);
-		//comp.makeUI();
+		comp.makeUI();
 		frame.setContentPane(comp);
 		frame.repaint();
 		frame.revalidate();

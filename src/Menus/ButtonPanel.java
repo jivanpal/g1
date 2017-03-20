@@ -46,7 +46,8 @@ public class ButtonPanel extends JPanel {
 		super();
 		this.menu = menu;
 		this.client = menu.client;
-		//this.UILayers = menu.getFrame().getLayeredPane();
+		this.UILayers = menu.getFrame().getLayeredPane();
+		/*
 		//JPanel menuPanel = new JPanel();
 		//menuPanel.setOpaque(false);
 		setLayout(new GridBagLayout());
@@ -67,12 +68,14 @@ public class ButtonPanel extends JPanel {
 		c.anchor = GridBagConstraints.NORTH;
 		add(title, c);
 		setBackground(Color.BLACK);
+		*/
 	}
 
 	public void makeUI() {
 		UILayers.setLayout(new JLayeredPaneLayoutManager());
+		
 		Rectangle rect = new Rectangle(0, 0, menu.getFrame().getWidth(), menu.getFrame().getHeight());
-
+/*
 		Screen screen = new Screen(client.name, true, false);
 		Map map = new Map(100, 100, 100);
 		Ship ship = new Ship(client.name, client.name);
@@ -89,7 +92,12 @@ public class ButtonPanel extends JPanel {
 		screen.setMap(map);
 		screen.setBounds(rect);
 		UILayers.add(screen, UILayers.DEFAULT_LAYER);
-
+*/
+		JPanel backgroundpanel = new JPanel();
+		backgroundpanel.setBackground(Color.BLACK);
+		backgroundpanel.setBounds(rect);
+		UILayers.add(backgroundpanel, UILayers.DEFAULT_LAYER);
+		
 		JPanel menuPanel = new JPanel();
 		menuPanel.setOpaque(false);
 		menuPanel.setLayout(new GridBagLayout());
@@ -117,8 +125,8 @@ public class ButtonPanel extends JPanel {
 		this.repaint();
 		UILayers.revalidate();
 		UILayers.repaint();
-		screen.revalidate();
-		screen.repaint();
+		//screen.revalidate();
+		//screen.repaint();
 	}
 
 	/**
@@ -131,7 +139,7 @@ public class ButtonPanel extends JPanel {
 		JPanel panel = new JPanel();
 		MyButton play = new MyButton("Play");
 		play.addActionListener(e -> {
-			//UILayers.removeAll();
+			UILayers.removeAll();
 			PlayPanel ppanel = new PlayPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
@@ -139,7 +147,7 @@ public class ButtonPanel extends JPanel {
 		});
 		MyButton settings = new MyButton("Settings");
 		settings.addActionListener(e -> {
-			//UILayers.removeAll();
+			UILayers.removeAll();
 			SettingsPanel spanel = new SettingsPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
