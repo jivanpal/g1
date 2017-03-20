@@ -21,7 +21,6 @@ import GameLogic.GameOptions;
  * @author Jaren Chin-Hao Liu
  */
 
-// TODO Background is yellow but only for debugging
 public class SoundPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;

@@ -6,6 +6,11 @@ import javax.swing.JButton;
 
 import GameLogic.GameOptions;
 
+/**
+ * A customised JButton for the menus.
+ * @author Jaren Liu
+ *
+ */
 public class MyButton extends JButton {
 	public MyButton(String text) {
 		this.setText(text);
