@@ -5,8 +5,13 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
@@ -23,11 +28,13 @@ import GameLogic.GameOptions;
 public class SoundPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
+	public ArrayList<JSlider> sliders;
 
 	public SoundPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
 		this.client = menu.client;
+		sliders = new ArrayList<JSlider>();
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -44,9 +51,14 @@ public class SoundPanel extends JPanel {
 		add(backtomenu, c);
 		MyButton resettodefault = new MyButton("Reset");
 		resettodefault.addActionListener(e -> {
-			GameOptions.resetSoundValuesToDefaults();
-			SoundPanel panel = new SoundPanel(menu);
-			menu.changeFrame(panel);
+			int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to reset sound settings?",
+					"Reset Sound Settings", JOptionPane.YES_NO_OPTION);
+			if (confirm == JOptionPane.YES_OPTION) {
+				GameOptions.resetSoundValuesToDefaults();
+				SoundPanel panel = new SoundPanel(menu);
+				menu.changeFrame(panel);
+			}
+			requestFocus();
 		});
 		c.anchor = GridBagConstraints.NORTHEAST;
 		add(resettodefault, c);
@@ -77,6 +89,15 @@ public class SoundPanel extends JPanel {
 		panel = createSwL(panel, "Master Volume");
 		panel = createSwL(panel, "Music Volume");
 		panel = createSwL(panel, "Sound Effects");
+
+		// MyCheckBox muteMusic = new MyCheckBox("Mute Music", sliders);
+		// JLabel blank = new JLabel("");
+		// blank.setOpaque(false);
+		// MyCheckBox muteEffects = new MyCheckBox("Mute Sound Effects",
+		// sliders);
+		// panel.add(muteMusic);
+		// panel.add(blank);
+		// panel.add(muteEffects);
 		return panel;
 	}
 
@@ -150,6 +171,8 @@ public class SoundPanel extends JPanel {
 				GameOptions.saveSoundValuesInFile();
 			}
 		});
+		slider.setName(name);
+		sliders.add(slider);
 		panel.add(slider);
 		return panel;
 	}
