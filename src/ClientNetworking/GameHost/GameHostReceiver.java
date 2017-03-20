@@ -3,6 +3,9 @@ package ClientNetworking.GameHost;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+import GameLogic.Resource;
+import GameLogic.Ship;
+import GameLogic.Weapon;
 import ServerNetworking.ClientTable;
 
 
@@ -45,6 +48,8 @@ public class GameHostReceiver extends Thread
 				{
 					ChatMessage m = (ChatMessage) obj;
 					clientTable.getQueue(playerName).offer(m);
+
+					// Engineer with PilotAI teammate
 					if(teamMate.equals("") && position%2==1)
 					{
 						if(m.message.contains("instruction"))
@@ -67,7 +72,55 @@ public class GameHostReceiver extends Thread
 								}
 							}
 						}
-						
+					}
+					// Pilot with Engineer teammate
+					else if(teamMate.equals("") && position%2==0) {
+
+						ChatMessage message = null;
+						Ship s = (Ship) gameMap.gameMap.get(shipID);
+						Resource r = null;
+
+						switch(m.message.toLowerCase()) {
+							case "shield":
+							case "shields":
+								r = s.getResource(Resource.Type.SHIELDS);
+								message = new ChatMessage("Engineer", resourceLowMediumHigh(r.get(), 0, r.getMax()));
+								break;
+
+							case "hull":
+							case "health":
+								r = s.getResource(Resource.Type.HEALTH);
+								message = new ChatMessage("Engineer", resourceLowMediumHigh(r.get(), 0, r.getMax()));
+								break;
+
+							case "fuel":
+							case "engine":
+							case "engines":
+								r = s.getResource(Resource.Type.ENGINES);
+								message = new ChatMessage("Engineer", resourceLowMediumHigh(r.get(), 0, r.getMax()));
+								break;
+
+							case "laser":
+							case "lasers":
+								r = s.getWeapon(Weapon.Type.LASER).getAmmoResource();
+								message = new ChatMessage("Engineer", resourceLowMediumHigh(r.get(), 0, r.getMax()));
+								break;
+
+							case "plasma":
+								r = s.getWeapon(Weapon.Type.PLASMA).getAmmoResource();
+								message = new ChatMessage("Engineer", resourceLowMediumHigh(r.get(), 0, r.getMax()));
+								break;
+
+							case "torpedo":
+								r = s.getWeapon(Weapon.Type.TORPEDO).getAmmoResource();
+								message = new ChatMessage("Engineer", resourceLowMediumHigh(r.get(), 0, r.getMax()));
+								break;
+
+							default:
+								message = new ChatMessage("Engineer", "I don't understand what you just said!");
+						}
+
+						clientTable.getQueue(playerName).offer(message);
 					}
 					else if(!teamMate.equals(""))
 					{
@@ -85,5 +138,15 @@ public class GameHostReceiver extends Thread
 
 		}
 		
+	}
+
+	private String resourceLowMediumHigh(int val, int min, int max) {
+		if (val < ((max + min) / 3)) {
+			return "low";
+		} else if (val < 2 * ((max + min) / 3)){
+			return "medium";
+		} else {
+			return "high";
+		}
 	}
 }

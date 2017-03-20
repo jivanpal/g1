@@ -50,6 +50,7 @@ public class PlayPanel extends JPanel {
 			ButtonPanel bpanel = new ButtonPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(bpanel);
+			bpanel.makeUI();
 		});
 		add(backtostart, c);
 		c.anchor = GridBagConstraints.CENTER;
@@ -66,6 +67,10 @@ public class PlayPanel extends JPanel {
 		setBackground(Color.BLACK);
 	}
 	
+	/**
+	 * Creates the buttons for the play menu
+	 * @return Returns a JPanel with the buttons on it
+	 */
 	public JPanel createButtons() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());

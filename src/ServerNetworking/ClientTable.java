@@ -1,6 +1,10 @@
 package ServerNetworking;
 //Each nickname has a different incomming-message queue.
 
+import GameLogic.Map;
+import GameLogic.Ship;
+import Physics.Body;
+
 import java.util.Set;
 import java.util.concurrent.*;
 

@@ -50,13 +50,15 @@ public class MainMenu {
 		frame = new JFrame();
 		client.updateList();
 		ButtonPanel comp = new ButtonPanel(this);
-		frame.setContentPane(comp);
 		frame.setUndecorated(true);
 		Dimension d = new Dimension(800, 600);
 	//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setSize(d);
 		frame.setVisible(true);
-		
+		comp.makeUI();
+		frame.setContentPane(comp);
+		frame.repaint();
+		frame.revalidate();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -68,23 +70,27 @@ public class MainMenu {
 	 */
 	public void changeFrame(JPanel panel) {
 		frame.setContentPane(panel);
-		// frame.pack();
 		frame.repaint();
 		frame.revalidate();
 	}
-
+	
+	/**
+	 * Gets the frame of the JFrame
+	 * @return The frame of the program
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
-	public Client getClient() {return client;}
 
 	public static void main(String[] args) {
+		//Initialise the key bindings and sound values.
 		GameOptions.setKeyBindings();
 		GameOptions.setSoundValues();
 
 		String name = "test";
 
+		//Enter the username which will be used to play the games.
 		if(args.length == 0) {
 			name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
 			if (name == null) {
