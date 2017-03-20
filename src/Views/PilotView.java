@@ -116,15 +116,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
             	if(GameOptions.checkIfKeyToBeSentToServer(keyEvent.getKeyCode())){
             		pressedKeys.add(getKeyCodeToInstruction(keyEvent.getKeyCode()));
             	}
-                if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
-                    AudioPlayer.playSoundEffect(AudioPlayer.LASER_FIRE_EFFECT);
-                } else if (keyEvent.getKeyCode() == GameOptions
-                        .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON)) {
-                    AudioPlayer.playSoundEffect(AudioPlayer.PLASMA_FIRE_EFFECT);
-                } else if (keyEvent.getKeyCode() == GameOptions
-                        .getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON)) {
-                    AudioPlayer.playSoundEffect(AudioPlayer.TORPEDO_FIRE_EFFECT);
-                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
+                if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
                 	if(steeringWheelAngle != -Math.PI/4){
 	                    steeringWheelAngle = -Math.PI/4;
 	                    updateSteeringWheel();
@@ -474,8 +466,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
             }
         } else {
             Map m = gameClient.getMap();
-            Ship s = findPlayerShip(m);
-            speedometerView.updateSpeedLevel(s.getVelocity().length());
+            speedometerView.updateSpeedLevel(currentShip.getVelocity().length());
 
             if(engAI != null) {
                 radarView.updateMap(m);

@@ -58,9 +58,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
     private JPanel UIBaseLayer;
     private JPanel UIPanel;
 
-    private Ship previousShip = null;
-    private Ship currentShip = null;
-
     public ArrayList<JButton> replenishButtons;
 
     /**
@@ -440,43 +437,12 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
             Map m = gameClient.getMap();
             radarView.updateMap(m);
 
-            for (int i = 0; i < m.size(); i++) {
-                if (m.get(i) instanceof Ship) {
-                    Ship s = (Ship) m.get(i);
-
-                    if (s.getEngineerName().equals(playerNickname)) {
-                        previousShip = currentShip;
-                        currentShip = s;
-
-                        if (currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.LASER).getAmmoLevel()) {
-                            AudioPlayer.playSoundEffect(AudioPlayer.LASER_FIRE_EFFECT);
-                        }
-                        laserBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel());
-
-                        plasmaBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel());
-                        if (currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel()) {
-                            AudioPlayer.playSoundEffect(AudioPlayer.PLASMA_FIRE_EFFECT);
-                        }
-
-                        torpedosView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel());
-                        if (currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel()) {
-                            AudioPlayer.playSoundEffect(AudioPlayer.TORPEDO_FIRE_EFFECT);
-                        }
-
-                        resourcesView.updateResourceLevels(ResourcesView.ENGINE, currentShip.getResource(Resource.Type.ENGINES).get());
-
-                        if (currentShip.getResource(Resource.Type.SHIELDS).get() < previousShip.getResource(Resource.Type.SHIELDS).get()) {
-                            AudioPlayer.playSoundEffect(AudioPlayer.SHIP_SHIELD_DECREASE_EFFECT);
-                        }
-                        resourcesView.updateResourceLevels(ResourcesView.SHIELDS, currentShip.getResource(Resource.Type.SHIELDS).get());
-
-                        if (currentShip.getResource(Resource.Type.HEALTH).get() < previousShip.getResource(Resource.Type.HEALTH).get()) {
-                            AudioPlayer.playSoundEffect(AudioPlayer.SHIP_HEALTH_DECREASE_EFFECT);
-                        }
-                        resourcesView.updateResourceLevels(ResourcesView.HULL, currentShip.getResource(Resource.Type.HEALTH).get());
-                    }
-                }
-            }
+            laserBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel());
+            plasmaBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel());
+            torpedosView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel());
+            resourcesView.updateResourceLevels(ResourcesView.ENGINE, currentShip.getResource(Resource.Type.ENGINES).get());
+            resourcesView.updateResourceLevels(ResourcesView.SHIELDS, currentShip.getResource(Resource.Type.SHIELDS).get());
+            resourcesView.updateResourceLevels(ResourcesView.HULL, currentShip.getResource(Resource.Type.HEALTH).get());
         }
     }
 

@@ -3,9 +3,7 @@ package Views;
 import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 import ClientNetworking.GameHost.MapContainer;
-import GameLogic.GameOptions;
-import GameLogic.Map;
-import GameLogic.Ship;
+import GameLogic.*;
 import Graphics.Screen;
 import Menus.MainMenu;
 import Physics.Body;
@@ -41,6 +39,9 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
     protected GameChat chatWindow;
     protected JLabel fullScreenLabel;
     protected RadarView radarView;
+
+    protected Ship currentShip = null;  // The ship in this current tick
+    protected Ship previousShip = null; // The Ship in the last tick
 
     protected boolean gameActive = true;
 
@@ -106,6 +107,27 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
 
                 screen.setMap(m);
 
+                Ship s = findPlayerShip(m);
+                previousShip = currentShip;
+                currentShip = s;
+
+
+                if (currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.LASER).getAmmoLevel()) {
+                    AudioPlayer.playSoundEffect(AudioPlayer.LASER_FIRE_EFFECT);
+                }
+                if (currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel()) {
+                    AudioPlayer.playSoundEffect(AudioPlayer.PLASMA_FIRE_EFFECT);
+                }
+                if (currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel()) {
+                    AudioPlayer.playSoundEffect(AudioPlayer.TORPEDO_FIRE_EFFECT);
+                }
+                if (currentShip.getResource(Resource.Type.SHIELDS).get() < previousShip.getResource(Resource.Type.SHIELDS).get()) {
+                    AudioPlayer.playSoundEffect(AudioPlayer.SHIP_SHIELD_DECREASE_EFFECT);
+                }
+                if (currentShip.getResource(Resource.Type.HEALTH).get() < previousShip.getResource(Resource.Type.HEALTH).get()) {
+                    AudioPlayer.playSoundEffect(AudioPlayer.SHIP_HEALTH_DECREASE_EFFECT);
+                }
+
                 // System.out.println("Time this frame: " + String.valueOf(System.currentTimeMillis() - time));
             } catch (NullPointerException e) {
                 System.err.println("Map seems to be null right now... let's just wait a little bit");
@@ -119,16 +141,16 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
      * @return The ship
      */
     protected Ship findPlayerShip(Map m) {
-        for (Body b : m.bodies()) {
-            if (b instanceof Ship) {
-                Ship s = (Ship) b;
-                if (s.getEngineerName().equals(playerNickname) || s.getPilotName().equals(playerNickname)) {
-                    return s;
-                }
-            }
+        try {
+            return m.bodies().parallelStream()
+                    .filter(b -> b instanceof Ship)
+                    .map(Ship.class::cast)
+                    .filter(s -> s.getEngineerName().equals(playerNickname) || s.getPilotName().equals(playerNickname))
+                    .collect(Collectors.toList())
+                    .get(0);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
         }
-
-        return null;
     }
 
     /**
