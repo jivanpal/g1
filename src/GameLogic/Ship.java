@@ -23,7 +23,7 @@ public class Ship extends Body{
     private static final int    PITCH_SMOOTHNESS    = 10;
     private static final int    ROLL_SMOOTHNESS     = 10;
     private static final int    THRUST_SMOOTHNESS   = 4;
-    
+
     private String engineerName, pilotName;
     private Weapon laser, plasma, torpedo;
     private Resource engines, shields, health;
@@ -117,35 +117,49 @@ public class Ship extends Body{
     private static final Vector     THRUST_REV  = Vector.J.negate() .scale(THRUST_ACC);
     
     public void pitchUp() {
-        rotate(PITCH_UP);
-        Basis b = getBasis();
-        setVelocity(b.globaliseDirection(PITCH_UP.apply(getBasis().localiseDirection(getVelocity()))));
+        if(engines.get() > 0) {
+            rotate(PITCH_UP);
+            Basis b = getBasis();
+            setVelocity(b.globaliseDirection(PITCH_UP.apply(getBasis().localiseDirection(getVelocity()))));
+        }
     }
     
     public void pitchDown() {
-        rotate(PITCH_DOWN);
-        Basis b = getBasis();
-        setVelocity(b.globaliseDirection(PITCH_DOWN.apply(getBasis().localiseDirection(getVelocity()))));
+        if(engines.get() > 0) {
+            rotate(PITCH_DOWN);
+            Basis b = getBasis();
+            setVelocity(b.globaliseDirection(PITCH_DOWN.apply(getBasis().localiseDirection(getVelocity()))));
+        }
     }
     
     public void rotateRight() {
-        rotate(ROTATE_RIGHT);
-        Basis b = getBasis();
-        setVelocity(b.globaliseDirection(ROTATE_RIGHT.apply(getBasis().localiseDirection(getVelocity()))));
+        if(engines.get() > 0) {
+            rotate(ROTATE_RIGHT);
+            Basis b = getBasis();
+            setVelocity(b.globaliseDirection(ROTATE_RIGHT.apply(getBasis().localiseDirection(getVelocity()))));
+        }
     }
     
     public void rotateLeft() {
-        rotate(ROTATE_LEFT);
-        Basis b = getBasis();
-        setVelocity(b.globaliseDirection(ROTATE_LEFT.apply(getBasis().localiseDirection(getVelocity()))));
+        if(engines.get() > 0) {
+            rotate(ROTATE_LEFT);
+            Basis b = getBasis();
+            setVelocity(b.globaliseDirection(ROTATE_LEFT.apply(getBasis().localiseDirection(getVelocity()))));
+        }
     }
     
     public void thrustForward() {
-        alterVelocityLocally(THRUST_FWD);
+        if(engines.get() > 0) {
+            alterVelocityLocally(THRUST_FWD);
+            engines.decrease(); // TODO: Might want to change this to a better value
+        }
     }
     
     public void thrustReverse() {
-        alterVelocityLocally(THRUST_REV);
+        if(engines.get() > 0) {
+            alterVelocityLocally(THRUST_REV);
+            engines.decrease();
+        }
     }
     
 // Modified `update` method to affect all ship fields

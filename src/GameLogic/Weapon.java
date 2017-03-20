@@ -20,7 +20,7 @@ public class Weapon implements Serializable {
     private int         shieldDamage;
     private int         shipDamage;
     private double      cooldown;
-    private double      remainingCooldown = 0;
+    private double      remainingCooldown;
     
 /// CONSTRUCTOR
     /**

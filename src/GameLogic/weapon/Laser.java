@@ -13,7 +13,7 @@ public class Laser extends Weapon {
     private static final int    AMMO_INIT       = 100;
     private static final int    DAMAGE_SHIELDS  = 5;
     private static final int    DAMAGE_SHIP     = 10;
-    private static final double COOLDOWN        = 0.01;
+    private static final double COOLDOWN        = 0.15d;
     
     public Laser(Ship parent) {
         super(
