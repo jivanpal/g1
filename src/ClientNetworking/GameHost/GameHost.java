@@ -39,7 +39,7 @@ public class GameHost extends Thread
 		int minLength = 2;
 		int maxLength = 7;
 		int sequenceNumber = 10;
-		//generate keysequences for all ships
+		//generate key sequences for all ships
 		for (int i = 0; i < 4; i++)
 		{
 			keySequences.add(new KeySequence(minLength, maxLength, sequenceNumber));

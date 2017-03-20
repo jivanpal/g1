@@ -1,10 +1,13 @@
 package AI;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import ClientNetworking.GameClient.GameClient;
+import ClientNetworking.GameHost.ChatMessage;
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
 import Views.ResourcesView;
@@ -13,6 +16,8 @@ public class EngineerAI implements Observer
 {
 	private GameClient gameClient;
 	private String nickname;
+
+	private final int SHIP_PROXIMITY_MESSAGE_DISTANCE = 30;
 
 	public EngineerAI(GameClient gameClient, String nickname)
 	{
@@ -25,17 +30,24 @@ public class EngineerAI implements Observer
 	{
 		Map m = gameClient.getMap();
 
-		for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++)
-		{
-			if (m.get(i) instanceof Ship)
-			{
-				Ship s = (Ship) m.get(i);
-				
-				if (s.getPilotName().equals(nickname))
-				{
-					aiCalculations(s);
-					break;
-				}
+		List<Ship> ships = m.bodies().stream()
+				.filter(b -> b instanceof Ship)
+				.map(Ship.class::cast)
+				.collect(Collectors.toList());
+
+		ships.forEach(this::aiCalculations);
+
+		for(Ship s1 : ships) {
+			List<Ship> nearby = ships.stream()
+					.filter(s2 -> m.shortestPath(s1.getID(), s2.getID()).length() < SHIP_PROXIMITY_MESSAGE_DISTANCE
+							      && !s1.equals(s2))
+					.collect(Collectors.toList());
+
+			if (nearby.size() > 2) {
+				gameClient.send(new ChatMessage(nickname, "There are enemy ships nearby!"));
+			} else if (nearby.size() > 1){
+				// Figure out where the ships are
+				gameClient.send(new ChatMessage(nickname, "There is an enemy ship nearby"));
 			}
 		}
 	}
