@@ -2,23 +2,18 @@ package Menus;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.Scanner;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
 import GameLogic.GameOptions;
 
 /**
- * PLay Menu after the 'Play' button is clicked from the Main Menu
+ * Play Menu after the 'Play' button is clicked from the Main Menu
  * 
  * @author Jaren Chin-Hao Liu
  *

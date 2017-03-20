@@ -79,7 +79,7 @@ public class ClientReceiver extends Thread
 		}
 		catch (IOException e)
 		{
-			System.out.println("Server seems to have died " + e.getMessage());
+			System.out.println("ClientReceiver: Server seems to have died " + e.getMessage());
 			// System.exit(1); // Give up.
 		}
 	}

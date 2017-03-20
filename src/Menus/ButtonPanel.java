@@ -2,18 +2,15 @@ package Menus;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.util.Random;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
@@ -24,7 +21,7 @@ import GameLogic.Ship;
 import Geometry.Rotation;
 import Geometry.Vector;
 import Graphics.Screen;
-import Graphics.Star;
+
 import Views.JLayeredPaneLayoutManager;
 
 /**
@@ -32,7 +29,7 @@ import Views.JLayeredPaneLayoutManager;
  * 
  * @author Jaren Chin-Hao Liu
  */
-// TODO Maybe an animated background
+
 public class ButtonPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
@@ -55,23 +52,24 @@ public class ButtonPanel extends JPanel {
 	public void makeUI() {
 		UILayers.setLayout(new JLayeredPaneLayoutManager());
 		Rectangle rect = new Rectangle(0, 0, menu.getFrame().getWidth(), menu.getFrame().getHeight());
-		
+
 		Screen screen = new Screen(client.name, true, false);
 		Map map = new Map(100, 100, 100);
 		Ship ship = new Ship(client.name, client.name);
-		ship.setAngularVelocity(new Vector (1.0, 0, 0));
-		
+		ship.setAngularVelocity(new Vector(1.0, 0, 0));
+
 		map.add(ship);
-		
+
 		Random r = new Random();
 		r.ints(0, (int) map.getDimensions().getX());
-		for(int i = 0; i < 50; i++){
-			map.add(new Asteroid(new Vector(r.nextInt(), r.nextInt(), r.nextInt()), new Rotation(r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2)));
+		for (int i = 0; i < 50; i++) {
+			map.add(new Asteroid(new Vector(r.nextInt(), r.nextInt(), r.nextInt()), new Rotation(
+					r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2)));
 		}
 		screen.setMap(map);
 		screen.setBounds(rect);
 		UILayers.add(screen, UILayers.DEFAULT_LAYER);
-		
+
 		JPanel menuPanel = new JPanel();
 		menuPanel.setOpaque(false);
 		menuPanel.setLayout(new GridBagLayout());
@@ -84,16 +82,17 @@ public class ButtonPanel extends JPanel {
 		JPanel bpanel = createButtons();
 		bpanel.setOpaque(false);
 		menuPanel.add(bpanel, c);
-		JLabel title = new JLabel("<html>Space Flying 101<br><br>Welcome <font color='#66e0ff'>" + client.name +"</font></html>");
+		JLabel title = new JLabel(
+				"<html>Space Flying 101<br><br>Welcome <font color='#66e0ff'>" + client.name + "</font></html>");
 		title.setForeground(Color.WHITE);
 		title.setOpaque(false);
 		title.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
 		c.anchor = GridBagConstraints.NORTH;
 		menuPanel.add(title, c);
-		//menuPanel.setBackground(Color.BLACK);
+		// menuPanel.setBackground(Color.BLACK);
 		menuPanel.setBounds(rect);
 		UILayers.add(menuPanel, UILayers.PALETTE_LAYER);
-		
+
 		this.revalidate();
 		this.repaint();
 		UILayers.revalidate();
@@ -101,7 +100,7 @@ public class ButtonPanel extends JPanel {
 		screen.revalidate();
 		screen.repaint();
 	}
-	
+
 	/**
 	 * Creates the buttons which will be used on the main menu, such as Play,
 	 * Settings and Exit.
@@ -116,7 +115,7 @@ public class ButtonPanel extends JPanel {
 			PlayPanel ppanel = new PlayPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
-			
+
 		});
 		MyButton settings = new MyButton("Settings");
 		settings.addActionListener(e -> {
@@ -124,7 +123,7 @@ public class ButtonPanel extends JPanel {
 			SettingsPanel spanel = new SettingsPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
-			
+
 		});
 		MyButton exit = new MyButton("Exit");
 		exit.addActionListener(e -> {
@@ -137,5 +136,5 @@ public class ButtonPanel extends JPanel {
 		panel.add(exit, BorderLayout.SOUTH);
 		return panel;
 	}
-	
+
 }

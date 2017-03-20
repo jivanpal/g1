@@ -1,33 +1,25 @@
 package Menus;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.net.InetAddress;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
 import ClientNetworking.IpGetter;
 import ClientNetworking.GameClient.GameClient;
 import GeneralNetworking.Action;
-import GeneralNetworking.Invite;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
-import ServerNetworking.Server;
 import Views.EngineerView;
 import Views.PilotView;
 import ClientNetworking.GameHost.*;

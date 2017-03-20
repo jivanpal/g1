@@ -68,9 +68,8 @@ public class Client
 			toServer.reset();
 			toServer.writeObject(name);
 			toServer.flush();
-			System.out.println("asd");
+
 			name = (String)fromServer.readObject();
-			System.out.println("asd");
 		}
 		catch (IOException | ClassNotFoundException e)
 		{
@@ -149,7 +148,6 @@ public class Client
 	 */
 	public void addLobbyObserver(Observer obs)
 	{
-		System.out.println("HostLobbyPanel added as observer to ClientReceiver");
 		receiver.addObserver(obs);
 	}
 	

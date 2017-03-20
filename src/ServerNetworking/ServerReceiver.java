@@ -80,6 +80,7 @@ public class ServerReceiver extends Thread
 							{
 								l.start(p);
 								System.out.println("started lobby");
+								
 							}
 							// MOVE PLAYER
 							else

@@ -4,15 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Scanner;
 import java.util.UUID;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,11 +19,8 @@ import ClientNetworking.Client;
 import ClientNetworking.IpGetter;
 import GameLogic.GameOptions;
 import GeneralNetworking.Action;
-import GeneralNetworking.Lobby;
 import GeneralNetworking.LobbyInfo;
-import GeneralNetworking.LobbyList;
 import GeneralNetworking.Player;
-import ServerNetworking.Server;
 
 /**
  * Join Panel. Displays lobbies on the server and can choose which one to join.

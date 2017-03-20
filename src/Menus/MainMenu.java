@@ -3,8 +3,6 @@ package Menus;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -46,13 +44,13 @@ public class MainMenu {
 			e.printStackTrace();
 		}
 		client = new Client(name);
-		String nickname =client.name; 
+		String nickname = client.name;
 		frame = new JFrame();
 		client.updateList();
 		ButtonPanel comp = new ButtonPanel(this);
 		frame.setUndecorated(true);
 		Dimension d = new Dimension(800, 600);
-	//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setSize(d);
 		frame.setVisible(true);
 		comp.makeUI();
@@ -73,31 +71,33 @@ public class MainMenu {
 		frame.repaint();
 		frame.revalidate();
 	}
-	
+
 	/**
 	 * Gets the frame of the JFrame
+	 * 
 	 * @return The frame of the program
 	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
-
 	public static void main(String[] args) {
-		//Initialise the key bindings and sound values.
+		// Initialise the key bindings and sound values.
 		GameOptions.setKeyBindings();
 		GameOptions.setSoundValues();
 
 		String name = "test";
 
-		//Enter the username which will be used to play the games.
-		if(args.length == 0) {
-			name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
+		// Enter the username which will be used to play the games.
+		if (args.length == 0) {
+			name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username",
+					JOptionPane.PLAIN_MESSAGE);
 			if (name == null) {
 				System.exit(0);
 			}
-			while (name.equals("")|| name.contains("#")) {
-				name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username", JOptionPane.PLAIN_MESSAGE);
+			while (name.equals("") || name.contains("#")) {
+				name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username",
+						JOptionPane.PLAIN_MESSAGE);
 			}
 
 		} else {

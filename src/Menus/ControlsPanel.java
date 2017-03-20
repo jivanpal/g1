@@ -1,8 +1,6 @@
 package Menus;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,12 +12,10 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
 import Audio.AudioPlayer;
@@ -83,7 +79,7 @@ public class ControlsPanel extends JPanel {
 				GameOptions.saveKeyBindingsInFile();
 				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 				changebuttons(true);
-				
+
 			}
 			requestFocus();
 		});
@@ -164,7 +160,7 @@ public class ControlsPanel extends JPanel {
 
 		button.addActionListener(e -> {
 			pressed = true;
-			
+
 		});
 		button.addKeyListener(new KeyListener() {
 
@@ -177,7 +173,7 @@ public class ControlsPanel extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				if (pressed) {
 					String btext = button.getText();
-					for (JButton b: controlButtons) {
+					for (JButton b : controlButtons) {
 						if (KeyEvent.getKeyText(e.getKeyCode()).equals(b.getText())) {
 							button.setText(KeyEvent.getKeyText(e.getKeyCode()));
 							b.setText(btext);
@@ -186,13 +182,10 @@ public class ControlsPanel extends JPanel {
 						}
 					}
 					/**
-					if (GameOptions.checkIfKeyTaken(e.getKeyCode())) {
-						displaykeyerror();
-						button.setText(btext);
-						pressed = false;
-						return;
-					}
-					*/
+					 * if (GameOptions.checkIfKeyTaken(e.getKeyCode())) {
+					 * displaykeyerror(); button.setText(btext); pressed =
+					 * false; return; }
+					 */
 					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 						button.setText("Enter");
 						pressed = false;
@@ -216,15 +209,15 @@ public class ControlsPanel extends JPanel {
 			@Override
 			public void focusGained(FocusEvent e) {
 				button.setBackground(Color.decode("#66e0ff"));
-				
+
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
 				button.setBackground(Color.decode("#808080"));
-				
+
 			}
-			
+
 		});
 		controlButtons.add(button);
 		panel.add(button);

@@ -5,11 +5,10 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import javax.swing.JButton;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.UIManager;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
