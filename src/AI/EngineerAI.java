@@ -1,8 +1,10 @@
 package AI;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import ClientNetworking.GameClient.GameClient;
 import ClientNetworking.GameHost.ChatMessage;
@@ -11,10 +13,18 @@ import GameLogic.*;
 import Physics.Body;
 import Views.ResourcesView;
 
+/**
+ * 
+ * @author Svetlin,James,Jaren
+ *
+ */
+
 public class EngineerAI implements Observer
 {
 	private GameClient gameClient;
 	private String nickname;
+
+	private final int SHIP_PROXIMITY_MESSAGE_DISTANCE = 50;
 
 	public EngineerAI(GameClient gameClient, String nickname)
 	{
@@ -25,39 +35,35 @@ public class EngineerAI implements Observer
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		Map m = gameClient.getMap();
-		Ship s = null;
-		int cooldownTimer = 150;
-		for (int i =0; i < m.size(); i++)
+		// get the map
+		Map gameMap = gameClient.getMap();
+
+		// get the ship list from the map
+		List<Ship> ships = gameMap.bodies().stream().filter(b -> b instanceof Ship).map(Ship.class::cast)
+				.collect(Collectors.toList());
+
+		// get the current team's ship
+		Ship playerShip = ships.stream().filter(s -> s.getPilotName().equals(nickname)).collect(Collectors.toList())
+				.get(0);
+
+		// do the "ai" things
+		aiCalculations(playerShip);
+
+		// check if a ship is nearby
+		List<Ship> nearby = ships.stream()
+				.filter(s2 -> gameMap.shortestPath(playerShip.getID(), s2.getID()).length() < SHIP_PROXIMITY_MESSAGE_DISTANCE && !(playerShip.equals(s2)))
+				.collect(Collectors.toList());
+
+		if (nearby.size() > 1)
 		{
-			if (m.get(i) instanceof Ship)
-			{
-				s = (Ship) m.get(i);
-				if (s.getPilotName().equals(nickname))
-				{
-					aiCalculations(s);
-					break;
-				}
-			}
+			gameClient.send(new ChatMessage("Engineer", "There are enemy ships nearby!"));
 		}
-		if(cooldownTimer==0)
+		else if (nearby.size() > 0)
 		{
-			for(int i=0;i<m.size();i++)
-			{
-				Body b = m.get(i);
-					//System.out.println();
-					if(b instanceof Ship && !(((Ship)b).equals(s)) && m.shortestPath(b.getID(),s.getID()).length()<100)
-						{
-							
-							gameClient.send(new ChatMessage("Engineer","Enemy spotted nearby"));
-							cooldownTimer=150;
-							break;
-						}
-			}
+			// Figure out where the ships are
+			gameClient.send(new ChatMessage("Engineer", "There is an enemy ship nearby"));
 		}
-		else
-			cooldownTimer--;
-		
+
 	}
 
 	public void aiCalculations(Ship s)

@@ -1,6 +1,12 @@
 package ClientNetworking.GameHost;
 
+import GameLogic.Map;
+import GameLogic.Ship;
+import Physics.Body;
 import ServerNetworking.ClientTable;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameClock extends Thread {
 
@@ -18,6 +24,7 @@ public class GameClock extends Thread {
 		{
 			mapContainer.updateMap();
 			clientTable.queueToAll(mapContainer.gameMap);
+
 			try {
 				Thread.sleep(GameLogic.Global.REFRESH_RATE);
 			} catch (InterruptedException e) {

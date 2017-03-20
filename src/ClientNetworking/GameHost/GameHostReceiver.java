@@ -140,6 +140,13 @@ public class GameHostReceiver extends Thread
 		
 	}
 
+	/**
+	 * Returns if a resource's value is low, medium or high
+	 * @param val The current value
+	 * @param min The minimum possible value
+	 * @param max The maximum possible value
+	 * @return Whether the resource is currently low, medium or high
+	 */
 	private String resourceLowMediumHigh(int val, int min, int max) {
 		if (val < ((max + min) / 3)) {
 			return "low";
