@@ -90,7 +90,7 @@ public class RadarView extends JPanel{
      */
     private Tuple<Integer, Integer> circleDrawPositionFromCenter(double x, double y) {
         return new Tuple<Integer, Integer>((int) Math.round(Utils.Utils.scaleValueToRange(x, 0, MapContainer.MAP_SIZE, 0, this.getWidth())),
-                (int) Math.round(Utils.Utils.scaleValueToRange(y, 0, MapContainer.MAP_SIZE, 0, this.getHeight())));
+                (int) (this.getHeight() - Math.round(Utils.Utils.scaleValueToRange(y, 0, MapContainer.MAP_SIZE, 0, this.getHeight()))));
     }
 
     @Override
