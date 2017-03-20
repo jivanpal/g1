@@ -21,7 +21,7 @@ import GameLogic.Ship;
 import Geometry.Rotation;
 import Geometry.Vector;
 import Graphics.Screen;
-
+import Physics.Body;
 import Views.JLayeredPaneLayoutManager;
 
 /**
@@ -75,7 +75,7 @@ public class ButtonPanel extends JPanel {
 		UILayers.setLayout(new JLayeredPaneLayoutManager());
 		
 		Rectangle rect = new Rectangle(0, 0, menu.getFrame().getWidth(), menu.getFrame().getHeight());
-/*
+
 		Screen screen = new Screen(client.name, true, false);
 		Map map = new Map(100, 100, 100);
 		Ship ship = new Ship(client.name, client.name);
@@ -92,12 +92,12 @@ public class ButtonPanel extends JPanel {
 		screen.setMap(map);
 		screen.setBounds(rect);
 		UILayers.add(screen, UILayers.DEFAULT_LAYER);
-*/
+/*
 		JPanel backgroundpanel = new JPanel();
 		backgroundpanel.setBackground(Color.BLACK);
 		backgroundpanel.setBounds(rect);
 		UILayers.add(backgroundpanel, UILayers.DEFAULT_LAYER);
-		
+	*/	
 		JPanel menuPanel = new JPanel();
 		menuPanel.setOpaque(false);
 		menuPanel.setLayout(new GridBagLayout());
@@ -125,8 +125,8 @@ public class ButtonPanel extends JPanel {
 		this.repaint();
 		UILayers.revalidate();
 		UILayers.repaint();
-		//screen.revalidate();
-		//screen.repaint();
+		screen.revalidate();
+		screen.repaint();
 	}
 
 	/**
@@ -143,6 +143,7 @@ public class ButtonPanel extends JPanel {
 			PlayPanel ppanel = new PlayPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
+			Body.nextID = 0;
 
 		});
 		MyButton settings = new MyButton("Settings");
@@ -151,6 +152,7 @@ public class ButtonPanel extends JPanel {
 			SettingsPanel spanel = new SettingsPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
+			Body.nextID = 0;
 
 		});
 		MyButton exit = new MyButton("Exit");
