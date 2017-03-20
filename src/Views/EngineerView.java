@@ -261,6 +261,11 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
     }
 
+    @Override
+    protected void flashUIDamaged() {
+
+    }
+
     /**
      * Adds all of the UI components to the JPanel.
      */

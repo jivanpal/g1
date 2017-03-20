@@ -315,6 +315,11 @@ public class PilotView extends AbstractPlayerView implements Observer {
         screen.setMap(gameClient.getMap());
     }
 
+    @Override
+    protected void flashUIDamaged() {
+
+    }
+
     /**
      * Add all of the UI components to the JPanel.
      */

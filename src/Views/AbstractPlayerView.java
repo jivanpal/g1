@@ -18,6 +18,8 @@ import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by James on 16/03/17.
@@ -51,6 +53,9 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
 
     protected abstract void initialiseUI();
 
+    // Flash elements of the UI a certain color for a very short amount of time to indicate that the Ship has been damaged
+    protected abstract void flashUIDamaged();
+
     /**
      * Checks if the player has won or lost. Updates the screen. Leaves the Subclasses free to Override and implement
      * any extra work that is relevant just to them.
@@ -63,10 +68,12 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
                 Map m = ((ClientNetworking.GameClient.MapContainer) observable).getMap();
 
                 if (hasWonGame(m)) {
-                    /**
+/*
+                    *
                      * TODO: Victory is temporarilly off for testing. It's annoying to join the game as a single
                      * player and instantly win!
-                     */
+*/
+
 //                    // Congrats!
 //                    gameActive = false;
 //
@@ -112,36 +119,32 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
         return null;
     }
 
+    /**
+     * Returns whether this Ship has won the game or not
+     * @param m The current Map
+     * @return True if we have won the game, otherwise false
+     */
     protected boolean hasWonGame(Map m) {
-        boolean onlyShipLeft = true;
-
-        for(Body b : m.bodies()) {
-            if (b instanceof Ship) {
-                Ship s = (Ship) b;
-                if (!s.getPilotName().equals(playerNickname) && !s.getEngineerName().equals(playerNickname)) {
-                    onlyShipLeft = false;
-                    break;
-                }
-            }
-        }
-
-        return onlyShipLeft;
+         return m.bodies().parallelStream()
+                .filter(b -> b instanceof Ship)
+                .map(Ship.class::cast)
+                .filter(s -> !s.getEngineerName().equals(playerNickname) && !s.getPilotName().equals(playerNickname))
+                .collect(Collectors.toList())
+                .size() == 0;
     }
 
+    /**
+     * Returns whether this Ship has lost the game or not
+     * @param m The current map
+     * @return True if we have lost the game, otherwise false
+     */
     protected boolean hasLostGame(Map m) {
-        boolean haveFoundMyShip = false;
-
-        for(Body b : m.bodies()) {
-            if(b instanceof Ship) {
-                Ship s = (Ship) b;
-                if(s.getPilotName().equals(playerNickname) || s.getEngineerName().equals(playerNickname)) {
-                    haveFoundMyShip = true;
-                    break;
-                }
-            }
-        }
-
-        return !haveFoundMyShip;
+        return m.bodies().parallelStream()
+                .filter(b -> b instanceof Ship)
+                .map(Ship.class::cast)
+                .filter(s -> s.getPilotName().equals(playerNickname) || s.getEngineerName().equals(playerNickname))
+                .collect(Collectors.toList())
+                .size() == 0;
     }
 
     protected void displayFullScreenMessage(String message, int time, Color textColor) {
