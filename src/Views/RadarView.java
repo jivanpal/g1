@@ -6,6 +6,7 @@ import GameLogic.Map;
 import GameLogic.Ship;
 import Physics.Body;
 import Utils.Tuple;
+import javafx.scene.shape.Circle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,8 +78,9 @@ public class RadarView extends JPanel{
      * @param x The x coordinate
      * @param y The y coordinate
      */
-    private void drawCircle(Graphics2D g, double x, double y) {
-
+    private synchronized void drawCircle(Graphics2D g, Color c, Ellipse2D.Double circle) {
+        g.setPaint(c);
+        g.fill(circle);
     }
 
     /**
@@ -103,41 +105,73 @@ public class RadarView extends JPanel{
 
         Graphics2D g = (Graphics2D) graphics;
 
-        for(Body b : map.bodies()) {
+        map.bodies().parallelStream()
+                .forEach(b -> {
+                    Tuple<Integer, Integer> position = circleDrawPositionFromCenter(b.getPosition().getX(), b.getPosition().getY());
+                    Ellipse2D.Double circle;
 
-            // Select the correct color to paint
-            if(b instanceof Asteroid) {
-                g.setPaint(ASTEROID_COLOR);
+                    if(largeView) {
+                        circle = new Ellipse2D.Double(position.getX(), position.getY(),
+                                CIRCLE_DRAW_DIAMETER_LARGE, CIRCLE_DRAW_DIAMETER_LARGE);
+                    } else {
+                        circle = new Ellipse2D.Double(position.getX(), position.getY(),
+                                CIRCLE_DRAW_DIAMETER_SMALL, CIRCLE_DRAW_DIAMETER_SMALL);
+                    }
 
-            } else if (b instanceof Ship) {
-                Ship s = (Ship) b;
+                    // Select the correct color to paint
+                    if(b instanceof Asteroid) {
+                        drawCircle(g, ASTEROID_COLOR, circle);
 
-                // Check if this ship is ours so we can draw it a different color
-                if(s.getPilotName().equals(playerName) || s.getEngineerName().equals(playerName)) {
-                    g.setPaint(PLAYER_SHIP_COLOR);
-                } else {
-                    g.setPaint(ENEMY_SHIP_COLOR);
-                    g.setPaint(ENEMY_SHIP_COLOR);
-                }
+                    } else if (b instanceof Ship) {
+                        Ship s = (Ship) b;
 
-            } else {
-                // Ignore -- this was a bullet.
-            }
+                        // Check if this ship is ours so we can draw it a different color
+                        if(s.getPilotName().equals(playerName) || s.getEngineerName().equals(playerName)) {
+                            drawCircle(g, PLAYER_SHIP_COLOR, circle);
+                        } else {
+                            drawCircle(g, ENEMY_SHIP_COLOR, circle);
+                        }
 
-            // Draw the circle on the map
-            Tuple<Integer, Integer> position = circleDrawPositionFromCenter(b.getPosition().getX(), b.getPosition().getY());
+                    } else {
+                        // Ignore -- this was a bullet.
+                    }
+                });
 
-            Ellipse2D.Double circle;
-
-            if(largeView) {
-                circle = new Ellipse2D.Double(position.getX(), position.getY(),
-                        CIRCLE_DRAW_DIAMETER_LARGE, CIRCLE_DRAW_DIAMETER_LARGE);
-            } else {
-                circle = new Ellipse2D.Double(position.getX(), position.getY(),
-                        CIRCLE_DRAW_DIAMETER_SMALL, CIRCLE_DRAW_DIAMETER_SMALL);
-            }
-
-            g.fill(circle);
-        }
+//        for(Body b : map.bodies()) {
+//
+//            // Select the correct color to paint
+//            if(b instanceof Asteroid) {
+//                g.setPaint(ASTEROID_COLOR);
+//
+//            } else if (b instanceof Ship) {
+//                Ship s = (Ship) b;
+//
+//                // Check if this ship is ours so we can draw it a different color
+//                if(s.getPilotName().equals(playerName) || s.getEngineerName().equals(playerName)) {
+//                    g.setPaint(PLAYER_SHIP_COLOR);
+//                } else {
+//                    g.setPaint(ENEMY_SHIP_COLOR);
+//                    g.setPaint(ENEMY_SHIP_COLOR);
+//                }
+//
+//            } else {
+//                // Ignore -- this was a bullet.
+//            }
+//
+//            // Draw the circle on the map
+//            Tuple<Integer, Integer> position = circleDrawPositionFromCenter(b.getPosition().getX(), b.getPosition().getY());
+//
+//            Ellipse2D.Double circle;
+//
+//            if(largeView) {
+//                circle = new Ellipse2D.Double(position.getX(), position.getY(),
+//                        CIRCLE_DRAW_DIAMETER_LARGE, CIRCLE_DRAW_DIAMETER_LARGE);
+//            } else {
+//                circle = new Ellipse2D.Double(position.getX(), position.getY(),
+//                        CIRCLE_DRAW_DIAMETER_SMALL, CIRCLE_DRAW_DIAMETER_SMALL);
+//            }
+//
+//            g.fill(circle);
+//        }
     }
 }

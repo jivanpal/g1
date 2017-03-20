@@ -113,6 +113,11 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
         }
     }
 
+    /**
+     * Finds the players ship from within the map
+     * @param m The current map
+     * @return The ship
+     */
     protected Ship findPlayerShip(Map m) {
         for (Body b : m.bodies()) {
             if (b instanceof Ship) {
@@ -154,6 +159,12 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
                 .size() == 0;
     }
 
+    /**
+     * Displays a message in the middle of the screen
+     * @param message The message to display
+     * @param time How long to display the message for
+     * @param textColor The color of the text
+     */
     protected void displayFullScreenMessage(String message, int time, Color textColor) {
         fullScreenLabel = new JLabel(message);
         fullScreenLabel.setFont(GameOptions.FULLSCREEN_BOLD_TEXT_FONT);
