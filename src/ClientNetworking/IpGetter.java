@@ -1,8 +1,10 @@
 package ClientNetworking;
 
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 /**
@@ -24,11 +26,20 @@ public class IpGetter
 				{
 					InetAddress ip = x.nextElement();
 					String str = ip.toString();
-					if(str.contains("/192.168."))
+					if(!str.contains(":") && !str.contains("/192.168.") && !str.equals("/127.0.0.1"))
 						return ip;
 				}
 			}
 		} catch (SocketException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try
+		{
+			return Inet6Address.getLocalHost();
+		}
+		catch (UnknownHostException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

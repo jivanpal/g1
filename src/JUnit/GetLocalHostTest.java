@@ -1,7 +1,9 @@
 package JUnit;
 
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.UnknownHostException;
 import java.util.Enumeration;
 public class GetLocalHostTest
 {
@@ -17,10 +19,20 @@ public class GetLocalHostTest
 				{
 					InetAddress ip = x.nextElement();
 					String str = ip.toString();
-					System.out.println(ip);
+					//System.out.println(ip);
 				}
 			}
+			
 		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try
+		{
+			System.out.println(Inet6Address.);
+		}
+		catch (UnknownHostException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
