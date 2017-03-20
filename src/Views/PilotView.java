@@ -435,7 +435,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
     	if(this.instructions == null){
     		initialiseManualView(getHeight() - 100);
     		this.instructions.setBounds(50,50, getWidth() - 100, getHeight() - 100);
-    		UILayeredPane.add(instructions, JLayeredPane.MODAL_LAYER);
+    		UILayeredPane.add(instructions, JLayeredPane.DRAG_LAYER);
         }
 
         this.instructions.setVisible(!instructions.isVisible());
