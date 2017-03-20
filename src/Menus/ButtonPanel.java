@@ -46,7 +46,27 @@ public class ButtonPanel extends JPanel {
 		super();
 		this.menu = menu;
 		this.client = menu.client;
-		this.UILayers = menu.getFrame().getLayeredPane();
+		//this.UILayers = menu.getFrame().getLayeredPane();
+		//JPanel menuPanel = new JPanel();
+		//menuPanel.setOpaque(false);
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.CENTER;
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.gridx = 0;
+		c.gridy = 0;
+		JPanel bpanel = createButtons();
+		bpanel.setOpaque(false);
+		add(bpanel, c);
+		JLabel title = new JLabel(
+				"<html>Space Flying 101<br><br>Welcome <font color='#66e0ff'>" + client.name + "</font></html>");
+		title.setForeground(Color.WHITE);
+		title.setOpaque(false);
+		title.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
+		c.anchor = GridBagConstraints.NORTH;
+		add(title, c);
+		setBackground(Color.BLACK);
 	}
 
 	public void makeUI() {
@@ -111,7 +131,7 @@ public class ButtonPanel extends JPanel {
 		JPanel panel = new JPanel();
 		MyButton play = new MyButton("Play");
 		play.addActionListener(e -> {
-			UILayers.removeAll();
+			//UILayers.removeAll();
 			PlayPanel ppanel = new PlayPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
@@ -119,7 +139,7 @@ public class ButtonPanel extends JPanel {
 		});
 		MyButton settings = new MyButton("Settings");
 		settings.addActionListener(e -> {
-			UILayers.removeAll();
+			//UILayers.removeAll();
 			SettingsPanel spanel = new SettingsPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
