@@ -58,6 +58,7 @@ public class MainMenu {
 		frame.repaint();
 		frame.revalidate();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 	}
 
 	/**

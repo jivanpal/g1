@@ -7,10 +7,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
@@ -34,6 +36,10 @@ public class ButtonPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
 	private JLayeredPane UILayers;
+	private boolean running;
+	private Screen screen;
+	private Map map;
+	private Ship ship;
 
 	/**
 	 * Constructor for the main menu. Adds the buttons and how it looks in the
@@ -47,28 +53,7 @@ public class ButtonPanel extends JPanel {
 		this.menu = menu;
 		this.client = menu.client;
 		this.UILayers = menu.getFrame().getLayeredPane();
-		/*
-		//JPanel menuPanel = new JPanel();
-		//menuPanel.setOpaque(false);
-		setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.CENTER;
-		c.weightx = 0.5;
-		c.weighty = 0.5;
-		c.gridx = 0;
-		c.gridy = 0;
-		JPanel bpanel = createButtons();
-		bpanel.setOpaque(false);
-		add(bpanel, c);
-		JLabel title = new JLabel(
-				"<html>Space Flying 101<br><br>Welcome <font color='#66e0ff'>" + client.name + "</font></html>");
-		title.setForeground(Color.WHITE);
-		title.setOpaque(false);
-		title.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
-		c.anchor = GridBagConstraints.NORTH;
-		add(title, c);
-		setBackground(Color.BLACK);
-		*/
+		this.running = true;
 	}
 
 	public void makeUI() {
@@ -76,28 +61,22 @@ public class ButtonPanel extends JPanel {
 		
 		Rectangle rect = new Rectangle(0, 0, menu.getFrame().getWidth(), menu.getFrame().getHeight());
 
-		Screen screen = new Screen(client.name, true, false);
-		Map map = new Map(100, 100, 100);
-		Ship ship = new Ship(client.name, client.name);
-		ship.setAngularVelocity(new Vector(1.0, 0, 0));
-
+		screen = new Screen(client.name, true, false);
+		map = new Map(10, 10, 10);
+		ship = new Ship(client.name, client.name);
+		ship.setAngularVelocity(new Vector(0, 0, 0.1));
+		//ship.setVelocity(new Vector(0, 0, 0));
 		map.add(ship);
 
 		Random r = new Random();
 		r.ints(0, (int) map.getDimensions().getX());
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 100; i++) {
 			map.add(new Asteroid(new Vector(r.nextInt(), r.nextInt(), r.nextInt()), new Rotation(
 					r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2)));
 		}
-		screen.setMap(map);
 		screen.setBounds(rect);
 		UILayers.add(screen, UILayers.DEFAULT_LAYER);
-/*
-		JPanel backgroundpanel = new JPanel();
-		backgroundpanel.setBackground(Color.BLACK);
-		backgroundpanel.setBounds(rect);
-		UILayers.add(backgroundpanel, UILayers.DEFAULT_LAYER);
-	*/	
+
 		JPanel menuPanel = new JPanel();
 		menuPanel.setOpaque(false);
 		menuPanel.setLayout(new GridBagLayout());
@@ -120,14 +99,15 @@ public class ButtonPanel extends JPanel {
 		// menuPanel.setBackground(Color.BLACK);
 		menuPanel.setBounds(rect);
 		UILayers.add(menuPanel, UILayers.PALETTE_LAYER);
-
-		this.revalidate();
-		this.repaint();
-		UILayers.revalidate();
-		UILayers.repaint();
-		screen.revalidate();
-		screen.repaint();
+		
+		Timer timer = new Timer(30, e -> {
+			ship.update();
+			screen.setMap(map);
+		});
+		timer.setRepeats(true);
+		timer.start();
 	}
+	
 
 	/**
 	 * Creates the buttons which will be used on the main menu, such as Play,
@@ -140,6 +120,7 @@ public class ButtonPanel extends JPanel {
 		MyButton play = new MyButton("Play");
 		play.addActionListener(e -> {
 			UILayers.removeAll();
+			running = false;
 			PlayPanel ppanel = new PlayPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
@@ -149,6 +130,7 @@ public class ButtonPanel extends JPanel {
 		MyButton settings = new MyButton("Settings");
 		settings.addActionListener(e -> {
 			UILayers.removeAll();
+			running = false;
 			SettingsPanel spanel = new SettingsPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(spanel);
