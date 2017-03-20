@@ -5,8 +5,10 @@ import java.util.Observer;
 import java.util.Random;
 
 import ClientNetworking.GameClient.GameClient;
+import ClientNetworking.GameHost.ChatMessage;
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
+import Physics.Body;
 import Views.ResourcesView;
 
 public class EngineerAI implements Observer
@@ -24,13 +26,13 @@ public class EngineerAI implements Observer
 	public void update(Observable o, Object arg)
 	{
 		Map m = gameClient.getMap();
-
-		for (int i = MapContainer.ASTEROID_NUMBER; i < m.size(); i++)
+		Ship s = null;
+		int cooldownTimer = 150;
+		for (int i =0; i < m.size(); i++)
 		{
 			if (m.get(i) instanceof Ship)
 			{
-				Ship s = (Ship) m.get(i);
-				
+				s = (Ship) m.get(i);
 				if (s.getPilotName().equals(nickname))
 				{
 					aiCalculations(s);
@@ -38,6 +40,24 @@ public class EngineerAI implements Observer
 				}
 			}
 		}
+		if(cooldownTimer==0)
+		{
+			for(int i=0;i<m.size();i++)
+			{
+				Body b = m.get(i);
+					//System.out.println();
+					if(b instanceof Ship && !(((Ship)b).equals(s)) && m.shortestPath(b.getID(),s.getID()).length()<100)
+						{
+							
+							gameClient.send(new ChatMessage("Engineer","Enemy spotted nearby"));
+							cooldownTimer=150;
+							break;
+						}
+			}
+		}
+		else
+			cooldownTimer--;
+		
 	}
 
 	public void aiCalculations(Ship s)
@@ -46,7 +66,7 @@ public class EngineerAI implements Observer
 		switch (r.nextInt(30))
 		{
 		case 0:
-			if  (r.nextInt(100) > 100 * s.getResource(Resource.Type.SHIELDS).getFraction())
+			if (r.nextInt(100) > 100 * s.getResource(Resource.Type.SHIELDS).getFraction())
 			{
 				gameClient.send("shieldReplenish");
 			}
