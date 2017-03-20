@@ -29,6 +29,8 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
     protected final String LOSE_GAME = "DEFEAT";
     protected final String WIN_GAME = "VICTORY";
 
+    protected final int DAMAGE_FLASH_TIME = 100; // ms
+
     protected String playerNickname;
     protected GameClient gameClient;
 
@@ -51,6 +53,7 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
         this.UILayeredPane = parent.getLayeredPane();
     }
 
+    // Initialse all the UI elements
     protected abstract void initialiseUI();
 
     // Flash elements of the UI a certain color for a very short amount of time to indicate that the Ship has been damaged
@@ -174,6 +177,9 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
         timer.start();
     }
 
+    /**
+     * Swap control back to the main menu of the game
+     */
     protected void swapToMainMenu() {
         MainMenu menu = new MainMenu(playerNickname);
         parentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

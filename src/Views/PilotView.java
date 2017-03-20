@@ -2,6 +2,7 @@ package Views;
 
 import static GameLogic.GameOptions.BUTTON_FONT;
 import static Views.ViewConstants.UI_BACKGROUND_COLOR;
+import static Views.ViewConstants.UI_DAMAGE_COLOR;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,12 +28,7 @@ import java.util.Observer;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import AI.EngineerAI;
 import Audio.AudioPlayer;
@@ -315,9 +311,20 @@ public class PilotView extends AbstractPlayerView implements Observer {
         screen.setMap(gameClient.getMap());
     }
 
+    /**
+     * Flashes some UI elements a color for a very brief peroid of time to indicate that the ship has been damaged
+     */
     @Override
     protected void flashUIDamaged() {
+        manual.setBackground(UI_DAMAGE_COLOR);
+        speedometerView.setBackground(UI_DAMAGE_COLOR);
 
+        Timer t = new Timer(DAMAGE_FLASH_TIME, e -> {
+            manual.setBackground(UI_BACKGROUND_COLOR);
+            speedometerView.setBackground(UI_BACKGROUND_COLOR);
+        });
+        t.setRepeats(false);
+        t.start();
     }
 
     /**
