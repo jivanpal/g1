@@ -62,14 +62,16 @@ public class EngineerAI implements Observer
 			if (nearby.size() > 1)
 			{
 				gameClient.send(new ChatMessage("Engineer", "There are enemy ships nearby!"));
+				cooldownTimer=coolDown;
 			}
 			else if (nearby.size() > 0)
 			{
 				// Figure out where the ships are
 				gameClient.send(new ChatMessage("Engineer", "There is an enemy ship nearby"));
+				cooldownTimer=coolDown;
 			}
 			//reset the cooldown
-			cooldownTimer=coolDown;
+			
 		}
 		else
 			cooldownTimer--;

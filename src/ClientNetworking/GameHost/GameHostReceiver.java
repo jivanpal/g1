@@ -2,6 +2,9 @@ package ClientNetworking.GameHost;
 
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import GameLogic.Resource;
 import GameLogic.Ship;
@@ -53,27 +56,35 @@ public class GameHostReceiver extends Thread
 					// Engineer with PilotAI teammate
 					if (teamMate.equals("") && position % 2 == 1)
 					{
-						if (m.message.contains("instruction"))
+						if (m.message.toLowerCase().contains("instruction")
+								|| m.message.toLowerCase().contains("give me")
+								|| m.message.toLowerCase().contains("manual"))
 						{
-							String id = "";
 							String[] split = m.message.split(" ");
+							int number = -1;
 							for (int i = 0; i < split.length; i++)
 							{
-								if (split[i].equals("instruction"))
-								{
-									id = split[i + 1];
-								}
+								int current = getNumber(split[i]);
+								number = (current > number && current <= 60) ? current : number;
 							}
-							ArrayList<String> seq = keySequence.getAllKeys();
-							for (int i = 0; i < seq.size(); i++)
+							if (number > 0)
 							{
-								if (seq.get(i).contains(id))
+								ArrayList<String> seq = keySequence.getAllKeys();
+								for (int i = 0; i < seq.size(); i++)
 								{
-									clientTable.getQueue(playerName)
-											.offer(new ChatMessage("Pilot", seq.get(i).split(":")[1]));
+									if (seq.get(i).contains("" + number))
+									{
+										clientTable.getQueue(playerName).offer(new ChatMessage("Pilot", seq.get(i).split(":")[1]));
+									}
 								}
 							}
+							else
+								clientTable.getQueue(playerName).offer(new ChatMessage("Pilot", "I couldn't find the instruction you wanted."));
+
 						}
+						else
+							clientTable.getQueue(playerName).offer(
+									new ChatMessage("Pilot", "I have no idea what you said, I'm not that smart."));
 					}
 					// Pilot with Engineer teammate
 					else if (teamMate.equals("") && position % 2 == 0)
@@ -168,6 +179,41 @@ public class GameHostReceiver extends Thread
 		else
 		{
 			return "high";
+		}
+	}
+
+	/**
+	 * Check if a string contains a number suffixes such as th,st and nd are
+	 * removed before the check A string is consdered a number if 75% of it is
+	 * digits -1 is returned if it's not considered a number
+	 */
+	private int getNumber(String s)
+	{
+		int count = 0;
+		char[] letters = s.toCharArray();
+		char[] suf = Arrays.copyOfRange(letters, letters.length - 2, letters.length);
+
+		String suffix = suf.toString();
+		if (suffix.equals("st") || suffix.equals("nd") || suffix.equals("rd") || suffix.equals("th"))
+		{
+			letters = Arrays.copyOfRange(letters, 0, letters.length - 2);
+		}
+
+		int finalNumber = 0;
+		for (int i = 0; i < letters.length; i++)
+		{
+			if (Character.isDigit(letters[i]))
+			{
+				finalNumber *= 10;
+				finalNumber += Character.getNumericValue(letters[i]);
+				count++;
+			}
+		}
+		if (count * 4 / 3 < letters.length)
+			return -1;
+		else
+		{
+			return finalNumber;
 		}
 	}
 }

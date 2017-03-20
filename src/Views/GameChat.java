@@ -3,6 +3,7 @@ package Views;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -25,7 +26,7 @@ public class GameChat extends JPanel implements Observer{
 	private final JPanel parent;
 
 	private JLabel chat = new JLabel("");
-	private String messages = "";
+	private ArrayList<String> messages = new ArrayList<String>();
 
 	private JTextField input;
 	private String nickname;
@@ -99,12 +100,17 @@ public class GameChat extends JPanel implements Observer{
 			if(client.getMessage() == null) {
 				System.err.print("Oh no message is null");
 			} else {
-				// TODO: Replace once transparency works.
-				messages += "<br><font color=\"rgb(255,255,255)\">" + client.getMessage()+"</font>";
-
+				messages.add("<br><font color=\"rgb(255,255,255)\">" + client.getMessage()+"</font>");
+				
+				if(messages.size()>5)
+					messages.remove(0);
+				String log = "";
+				for(int i=0;i<messages.size();i++)
+					log+=messages.get(i);
+				
 				// messages += "<br>" + client.getMessage();
-				chat.setText("<html>" + messages + "</html>");
-				scroller.getVerticalScrollBar().setValue(scroller.getVerticalScrollBar().getMaximum());
+				chat.setText("<html>" + log + "</html>");
+				//scroller.getVerticalScrollBar().setValue(scroller.getVerticalScrollBar().getMaximum());
 
 				this.revalidate();
 				this.repaint();
