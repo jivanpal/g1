@@ -25,7 +25,10 @@ public class EngineerAI implements Observer
 	private String nickname;
 
 	private final int SHIP_PROXIMITY_MESSAGE_DISTANCE = 50;
-
+	//cooldown ticks ~30 = 1 sec
+	private final int coolDown =150;
+	private int cooldownTimer = coolDown;
+	
 	public EngineerAI(GameClient gameClient, String nickname)
 	{
 		this.gameClient = gameClient;
@@ -50,19 +53,26 @@ public class EngineerAI implements Observer
 		aiCalculations(playerShip);
 
 		// check if a ship is nearby
-		List<Ship> nearby = ships.stream()
-				.filter(s2 -> gameMap.shortestPath(playerShip.getID(), s2.getID()).length() < SHIP_PROXIMITY_MESSAGE_DISTANCE && !(playerShip.equals(s2)))
-				.collect(Collectors.toList());
+		if (cooldownTimer == 0)
+		{
+			List<Ship> nearby = ships.stream()
+					.filter(s2 -> gameMap.shortestPath(playerShip.getID(), s2.getID()).length() < SHIP_PROXIMITY_MESSAGE_DISTANCE && !(playerShip.equals(s2)))
+					.collect(Collectors.toList());
 
-		if (nearby.size() > 1)
-		{
-			gameClient.send(new ChatMessage("Engineer", "There are enemy ships nearby!"));
+			if (nearby.size() > 1)
+			{
+				gameClient.send(new ChatMessage("Engineer", "There are enemy ships nearby!"));
+			}
+			else if (nearby.size() > 0)
+			{
+				// Figure out where the ships are
+				gameClient.send(new ChatMessage("Engineer", "There is an enemy ship nearby"));
+			}
+			//reset the cooldown
+			cooldownTimer=coolDown;
 		}
-		else if (nearby.size() > 0)
-		{
-			// Figure out where the ships are
-			gameClient.send(new ChatMessage("Engineer", "There is an enemy ship nearby"));
-		}
+		else
+			cooldownTimer--;
 
 	}
 
