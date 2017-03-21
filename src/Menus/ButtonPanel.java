@@ -16,8 +16,10 @@ import javax.swing.Timer;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
+import ClientNetworking.GameClient.GameVariables;
 import GameLogic.Asteroid;
 import GameLogic.GameOptions;
+import GameLogic.Global;
 import GameLogic.Map;
 import GameLogic.Ship;
 import Geometry.Rotation;
@@ -55,19 +57,40 @@ public class ButtonPanel extends JPanel {
 		UILayers.setLayout(new JLayeredPaneLayoutManager());
 		
 		Rectangle rect = new Rectangle(0, 0, menu.getFrame().getWidth(), menu.getFrame().getHeight());
+		Global.SCREEN_WIDTH = menu.getFrame().getWidth();
+		Global.SCREEN_HEIGHT = menu.getFrame().getHeight();
 
 		Screen screen = new Screen(client.name, true, false);
-		Map map = new Map(10, 10, 10);
+		Map map = new Map(1000, 1000, 1000);
 		Ship ship = new Ship(client.name, client.name);
-		ship.setAngularVelocity(new Vector(0, 0, 0.1));
+		ship.setAngularVelocity(new Vector(0, 0, 0.05));
 		//ship.setVelocity(new Vector(0, 0, 0));
 		map.add(ship);
-
+		System.out.println(Global.SCREEN_WIDTH + ", " + Global.SCREEN_WIDTH);
 		Random r = new Random();
-		r.ints(0, (int) map.getDimensions().getX());
-		for (int i = 0; i < 100; i++) {
-			map.add(new Asteroid(new Vector(r.nextInt(), r.nextInt(), r.nextInt()), new Rotation(
-					r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2)));
+		for (int i = 0; i < 50; i++) {
+			Asteroid a = new Asteroid(new Vector(r.nextDouble() * map.getDimensions().getX(),
+					r.nextDouble() * map.getDimensions().getY(), r.nextDouble() * map.getDimensions().getZ()),
+					new Rotation(r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2));
+			map.add(a);
+
+//			boolean overlaps = true;
+//			while (overlaps) {
+//				overlaps = false;
+//
+//				for (int bID : map.bodyIDs()) {
+//					if (map.overlaps(a.getID(), bID) && bID != a.getID()) {
+//						overlaps = true;
+//							a.setPosition(new Vector(r.nextDouble() * map.getDimensions().getX(),
+//									r.nextDouble() * map.getDimensions().getY(), r.nextDouble() * map.getDimensions().getZ()));
+//							a.setOrientation(
+//									new Rotation(r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2));
+//						break;
+//					}
+//				}
+//			}
+			
+//			System.out.println(a.getPosition());
 		}
 		screen.setBounds(rect);
 		UILayers.add(screen, JLayeredPane.DEFAULT_LAYER);

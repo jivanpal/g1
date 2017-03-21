@@ -43,7 +43,7 @@ public class Screen extends JPanel{
 	private boolean selfDestruct = false;
 	private int destructCount = 1;
 	private boolean crosshair;
-	private boolean debug = true;
+	private boolean debug = false;
 	
 	/**
 	 * Creates a new Screen object
@@ -219,7 +219,7 @@ public class Screen extends JPanel{
 
     private void createObjects() {
         poly3Ds.clear();
-        System.out.println(map.size());
+//        System.out.println(map.size());
         for(Body b : map.bodies()) {
             if (!(shipIndex == null) && b.getID() != shipIndex) {
                 Class<? extends Body> bClass = b.getClass();
@@ -238,7 +238,7 @@ public class Screen extends JPanel{
                 else if(bClass == Asteroid.class){
 //                	System.out.println(b.getID() + ": " + b.getPosition());
                     for(Vector v : map.getAllPositions(b.getPosition())){
-//                    	System.out.println(v);
+//                    	System.out.println(b.getID() + ": " + v);
                     	new AsteroidModel(v, 2, b.getOrientation());
                     }
                 }

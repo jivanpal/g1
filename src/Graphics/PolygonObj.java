@@ -69,6 +69,9 @@ public class PolygonObj {
 	 */
 	public void drawPoly(Graphics g){
 		if(draw && screenTest()){
+			if(light < 0.2){
+				System.out.println("I'm too dark!");
+			}
 			g.setColor(new Color((int)(c.getRed() * light), (int)(c.getGreen() * light), (int)(c.getBlue() * light)));
 			g.fillPolygon(p);
 			g.setColor(Color.BLACK);
