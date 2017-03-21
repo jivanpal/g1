@@ -6,7 +6,6 @@ import GameLogic.Map;
 import GameLogic.Ship;
 import Physics.Body;
 import Utils.Tuple;
-import javafx.scene.shape.Circle;
 
 import javax.swing.*;
 import java.awt.*;

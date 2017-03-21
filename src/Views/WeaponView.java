@@ -63,7 +63,8 @@ public class WeaponView extends JPanel{
             weaponAmmoLevel.setFont(GameOptions.REGULAR_TEXT_FONT);
             weaponAmmoLevel.setForeground(PROGRESS_BAR_COLOR);
             this.add(weaponAmmoLevel);
-
+            	
+            this.add(Box.createHorizontalStrut(10));
 
             this.replenishAmmo = new JButton("Replenish: " + replenishNumber);
             replenishAmmo.setFont(GameOptions.REGULAR_TEXT_FONT);

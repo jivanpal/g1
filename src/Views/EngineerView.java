@@ -262,8 +262,8 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
      * Flashes some UI elements a color for a very brief peroid of time to indicate that the ship has been damaged
      */
     @Override
-    protected void flashUIDamaged() {
-        UIPanel.setBackground(ViewConstants.UI_DAMAGE_COLOR);
+    protected void flashUIDamaged(Color c) {
+        UIPanel.setBackground(c);
 
         Timer t = new Timer(DAMAGE_FLASH_TIME, e -> {
             UIPanel.setBackground(ViewConstants.UI_BACKGROUND_COLOR);

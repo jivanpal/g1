@@ -16,8 +16,13 @@ public class Engines extends Resource {
         super(MAXIMUM, INITIAL);
         isWorking = true; 
     }
-    
+
+    @Override
+    public void increase() {
+        this.alter(10);
+    }
+
     public boolean isWorking(){
         return isWorking;
     }
-}
+}
