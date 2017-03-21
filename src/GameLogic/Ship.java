@@ -13,7 +13,7 @@ import GameLogic.resource.*;
 public class Ship extends Body{
     // Decay rates and velocity bounds
     private static final double NONPLANAR_SPIN_DECAY        = 0.95; // radians per radian
-    private static final double NONPLANAR_SPIN_MIN          = 0.01; // radians per sec
+    private static final double NONPLANAR_SPIN_MIN          = 0.02; // radians per sec
     private static final double ORTHOGONAL_VELOCITY_DECAY   = 0.95; // ratio
     private static final double ORTHOGONAL_VELOCITY_MIN     = 0.05; // meters per meter 
     
@@ -183,7 +183,7 @@ public class Ship extends Body{
         Vector w            = getAngularVelocity();
         Vector planarSpin   = w.proj(getUpVector());
         Vector nonplanarSpin= w.minus(planarSpin);
-        setAngularVelocity(planarSpin.plus(nonplanarSpin.scale(NONPLANAR_SPIN_DECAY)));
+        setAngularVelocity(planarSpin.plus(nonplanarSpin.length() < NONPLANAR_SPIN_MIN ? Vector.ZERO : nonplanarSpin.scale(NONPLANAR_SPIN_DECAY)));
         
         Vector v            = getVelocity();
         Vector forwardVel   = v.proj(getFrontVector());
