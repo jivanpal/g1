@@ -14,15 +14,15 @@ public class Laser extends Weapon {
     private static final int    AMMO_INIT       = 100;
     private static final int    DAMAGE_SHIELDS  = 5;
     private static final int    DAMAGE_SHIP     = 10;
-    private static final double COOLDOWN        = 0.15;
+    private static final double COOLDOWN        = 0.5;
     
 // Bullet constants
     private static final int    SHIP_DAMAGE     = 10;
     private static final int    SHIELD_DAMAGE   = 5;
-    private static final double TIME_TO_LIVE    = 2;
+    private static final double TIME_TO_LIVE    = 0.4;
     private static final double MASS            = 0.1;
     private static final double RADIUS          = 1;
-    private static final double SPEED           = 10;
+    private static final double SPEED           = 200;
     
     private static final Bullet BULLET = new Bullet(
         SHIP_DAMAGE,
