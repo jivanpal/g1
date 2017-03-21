@@ -15,7 +15,6 @@ import javax.swing.event.DocumentListener;
 
 import ClientNetworking.GameClient.GameClient;
 import ClientNetworking.GameHost.ChatMessage;
-import javafx.scene.layout.Border;
 
 /**
  * 
