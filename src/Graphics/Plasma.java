@@ -18,7 +18,6 @@ public class Plasma{
 							 {3, 5, 4},
 							 {4, 5, 1}};
 	private Color[] colors = new Color[8];
-	private Vector xVec, yVec, zVec;
 	private Rotation orientation;
 	
 	

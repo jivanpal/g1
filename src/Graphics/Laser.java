@@ -15,7 +15,6 @@ public class Laser{
 							 {0, 2, 5, 3},
 							 {1, 4, 5, 2}};
 	private Color[] colors = new Color[5];
-	private Vector xVec, yVec, zVec;
 	private Rotation orientation;
 	
 	public Laser(Vector v, double size, Rotation orientation) {

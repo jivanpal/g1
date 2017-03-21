@@ -26,7 +26,6 @@ public class Poly3D {
 	 * @param c Colour of the object
 	 */
 	public Poly3D(double[] x, double[] y, double[] z, Color c){
-//		Screen.nPoly3D++;
 		this.c = c;
 		this.x = x;
 		this.y = y;
