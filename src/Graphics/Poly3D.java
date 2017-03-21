@@ -32,6 +32,7 @@ public class Poly3D {
 		this.y = y;
 		this.z = z;
 		createPolygon();
+		avgDistance = getDistance();
 	}
 
 	/**

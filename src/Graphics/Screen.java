@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import javax.swing.JPanel;
 
@@ -141,9 +142,13 @@ public class Screen extends JPanel{
 
 		setDrawOrder();
 		
-		for(int i = 0; i < nPoly; i++){
-//			System.out.println("Drawing Polygon " + i);
-			poly3Ds.get(drawOrder[i]).poly.drawPoly(g);
+//		for(int i = 0; i < nPoly; i++){
+////			System.out.println("Drawing Polygon " + i);
+//			poly3Ds.get(drawOrder[i]).poly.drawPoly(g);
+//		}
+		
+		for(Poly3D p : poly3Ds){
+			p.poly.drawPoly(g);
 		}
 		
 		warningLight(g);
@@ -313,21 +318,17 @@ public class Screen extends JPanel{
 	 * Create the order that the polygons should be drawn in in order to make sure hidden sides are hidden
 	 */
 	private void setDrawOrder(){
-		nPoly = poly3Ds.size();
-		double[] k = new double[nPoly];
-		drawOrder = new int[nPoly];
-
-		for(int i = 0; i < nPoly; i++){
-			k[i] = poly3Ds.get(i).avgDistance;
-			drawOrder[i] = i;
-		}
-		
-		if(k.length > 0){
-			quicksort(k,0,k.length-1);
-		}
-//		for(int i : drawOrder){
-//			System.out.println(poly3Ds.get(i).avgDistance);
-//		}
+		poly3Ds.sort((poly1, poly2) -> {
+			if(poly1.avgDistance > poly2.avgDistance){
+				return -1;
+			}
+			else if(poly1.avgDistance == poly2.avgDistance){
+				return 0;
+			}
+			else{
+				return 1;
+			}
+		});
 	}
 	
 	/**
