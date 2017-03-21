@@ -128,14 +128,6 @@ public class Matrix {
 		return m;
 	}
 	
-//	//TODO: Fix Rotation around an arbitary axis for a given point in space
-//	public static double[][] getRotationMatrix(double angle, Vector v, Point p){
-//		double[][] m = Matrix.multiply(getTranslationMatrix(p.x, p.y, p.z), getRotationMatrixX(angle));
-//		m = Matrix.multiply(m, getRotationMatrixY(angle));
-//		
-//		return m;
-//	}
-	
 	/**
 	 * Creates the camera matrix from its current position, view position and U vector
 	 * @param viewFrom The position of the camera
@@ -371,11 +363,8 @@ public class Matrix {
 	 */
 	public static double[][] getCM(Vector viewFrom, Vector V, Vector U, Vector N, double fov){
 		
-//		double[][] m = multiply(getTM(viewFrom), getR(U, V, N));
-//		m = multiply(m, getSM());
 		double[][] m = multiply(getSM(), getR(V, U, N));
 		m = multiply(m, getTM(viewFrom));
-//		m = multiply(m, getPper(fov));
 		return m;
 	}
 	

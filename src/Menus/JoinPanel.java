@@ -66,7 +66,6 @@ public class JoinPanel extends JPanel {
 		} else {
 			repaintlobbies();
 		}
-		System.out.println("Finished updating");
 		table = new JTable(model);
 		table.setOpaque(true);
 		table.setFillsViewportHeight(true);
@@ -190,6 +189,7 @@ public class JoinPanel extends JPanel {
 			client.updateList();
 			keepupdatingtime();
 			repaintlobbies();
+			
 		});
 		join.setPreferredSize(new Dimension(500, 50));
 		refresh.setPreferredSize(new Dimension(230, 50));

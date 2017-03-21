@@ -56,7 +56,6 @@ public class PolygonObj {
 		boolean onScreen = false;
 		for(int i = 0; i < p.xpoints.length; i++){
 			if(p.xpoints[i] >= 0 && p.xpoints[i] < Global.SCREEN_WIDTH && p.ypoints[i] >= 0 && p.ypoints[i] < Global.SCREEN_HEIGHT){
-//				System.out.println("onscreen: " + p.xpoints[i] + ", " + p.ypoints[i]);
 				onScreen = true;
 			}
 		}
@@ -69,14 +68,10 @@ public class PolygonObj {
 	 */
 	public void drawPoly(Graphics g){
 		if(draw && screenTest()){
-			if(light < 0.2){
-				System.out.println("I'm too dark!");
-			}
 			g.setColor(new Color((int)(c.getRed() * light), (int)(c.getGreen() * light), (int)(c.getBlue() * light)));
 			g.fillPolygon(p);
 			g.setColor(Color.BLACK);
 			g.drawPolygon(p);
-//			screenTest();
 		}
 	}
 }

@@ -160,33 +160,69 @@ public class Map implements Serializable {
     /**
      * Get the direction vector representing the shortest path between
      * two bodies on this map.
-     * @param  a the origin body.
-     * @param  b the destination body.
-     * @return  the shortest trajectory from <i>a</i> to <i>b</i>, described by a vector.
-     *      Note that this function is anti-commutative; for all <i>a</i> and <i>b</i>, we have
-     *      shortestPath(<i>a</i>, <i>b</i>) .equals( shortestPath(<i>b</i>, <i>a</i>).negate() ).
+     * @param aID the ID of the origin body.
+     * @param bID the ID of the destination body.
+     * @return the shortest vector from <i>a</i> to <i>b</i>. Note that
+     *      this method is anti-commutative.
      */
     public Vector shortestPath(int aID, int bID) {
         Body a, b;
-        if ((a = get(aID)) != null) {
-            if ((b = get(bID)) != null) {
-                Vector lineWithinBounds = b.getPosition().minus(a.getPosition());
-                return new Vector(
-                    lineWithinBounds.getX() > dimensions.getX() ?
-                        dimensions.getX() - lineWithinBounds.getX():
-                        lineWithinBounds.getX(),
-                    lineWithinBounds.getY() > dimensions.getY() ?
-                        dimensions.getY() - lineWithinBounds.getY():
-                        lineWithinBounds.getY(),
-                    lineWithinBounds.getZ() > dimensions.getZ() ?
-                        dimensions.getZ() - lineWithinBounds.getZ():
-                        lineWithinBounds.getZ()
-                );
-            } else {
-                throw new IllegalArgumentException("shortestPath: body with ID "+bID+" doesn't exist on map.");
-            }
+        if ( (a = get(aID)) != null    &&    (b = get(bID)) != null ) {
+            Vector lineWithinBounds = b.getPosition().minus(a.getPosition());
+            return new Vector(
+                lineWithinBounds.getX() > dimensions.getX() ?
+                    dimensions.getX() - lineWithinBounds.getX():
+                    lineWithinBounds.getX(),
+                lineWithinBounds.getY() > dimensions.getY() ?
+                    dimensions.getY() - lineWithinBounds.getY():
+                    lineWithinBounds.getY(),
+                lineWithinBounds.getZ() > dimensions.getZ() ?
+                    dimensions.getZ() - lineWithinBounds.getZ():
+                    lineWithinBounds.getZ()
+            );
         } else {
-            throw new IllegalArgumentException("shortestPath: body with ID "+aID+" doesn't exist on map.");
+            throw new IllegalArgumentException("shortestPath: body with ID "+(a==null ? aID : bID)+" doesn't exist on map.");
+        }
+    }
+    
+    /**
+     * Return the shortest possible path between two bodies in the next tick, as if
+     * positions truly changed continuously rather than discretely.
+     * @param aID the ID of the first body.
+     * @param bID the ID of the second body.
+     * @return the shortest distance between the two bodies in the next tick, in seconds.
+     *      Note that this method is commutative.
+     */
+    public Vector shortestPathThisTick(int aID, int bID) {
+        Body a, b;
+        if ( (a = get(aID)) != null    &&    (b = get(bID)) != null ) {
+        // Insane linear algebra stuff, optimised.
+            // Get endpoints of line segments, with a0 implicitly at origin,
+            //  i.e. as if `Vector a0 = Vector.ZERO`.
+            Vector a1 = a.getVelocity().scale(Global.REFRESH_PERIOD);
+            Vector b0 = shortestPath(aID,bID);
+            Vector b1 = b0.plus(b.getVelocity().scale(Global.REFRESH_PERIOD));
+            
+            // Compute frequently used values
+            Vector a0b0 = b0.negate();  // a0 - b0
+            Vector a0a1 = a1.negate();  // a0 - a1
+            Vector b0b1 = b0.minus(b1); // b0 - b1
+            
+            double a0a1DOTb0b1 = a0a1.dot(b0b1);
+            double a0b0DOTb0b1 = a0b0.dot(b0b1);
+            double b0b1DOTb0b1 = b0b1.dot(b0b1);
+            
+            // Compute parameter values for points on A-line
+            //  and B-line that give shortest vector.
+            double lambda   = (a0b0DOTb0b1 * a0a1DOTb0b1 - a0b0.dot(a0a1) * b0b1DOTb0b1) / (a0a1DOTb0b1 * a0a1DOTb0b1 - a0a1.dot(a0a1) - b0b1DOTb0b1);
+            double mu       = (lambda * a0a1DOTb0b1 - a0b0DOTb0b1) / b0b1DOTb0b1;
+            
+            // Get the right vector
+            lambda = lambda < 0 ? 0 : lambda > 1 ? 1 : lambda;
+            mu = mu < 0 ? 0 : mu > 1 ? 1 : mu;
+            return b0.plus(b1.scale(mu)).minus(a1.scale(lambda));
+        } else {
+            throw new IllegalArgumentException("shortestTickDistance: body with ID "+(a==null ? aID : bID)+" doesn't exist on map.");
         }
     }
     
@@ -262,13 +298,14 @@ public class Map implements Serializable {
      * Update the state of the map.
      */
     public void update() {
-        // Get rid of destroyed bodies,
+        // Get rid of destroyed bodies and expired bullets,
         // normalise each body's position vector,
         // and update their states.
         for(Body b : bodies()) {
             if (b.isDestroyed()) {
                 this.remove(b.getID());
-            } else {
+            }
+            else {
                 b.setPosition(this.normalisePosition(b.getPosition()));
                 b.update();
             }
@@ -289,7 +326,7 @@ public class Map implements Serializable {
             
             for (int bID : bodyIDs()) {
                 Body b = get(bID);
-                Vector lineOfAction = shortestPath(aID, bID);
+                Vector lineOfAction = shortestPathThisTick(aID, bID);
                 
                 // If A and B are touching, then they rebound.
                 if (aID < bID && lineOfAction.length() < aRadius+ b.getRadius()) {

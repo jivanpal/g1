@@ -2,7 +2,7 @@ package Menus;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
@@ -38,6 +38,7 @@ public class ButtonPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
 	private JLayeredPane UILayers;
+	public static JPanel menuPanel;
 
 	/**
 	 * Constructor for the main menu. Adds the buttons and how it looks in the
@@ -60,11 +61,12 @@ public class ButtonPanel extends JPanel {
 		Global.SCREEN_WIDTH = menu.getFrame().getWidth();
 		Global.SCREEN_HEIGHT = menu.getFrame().getHeight();
 
-		Screen screen = new Screen(client.name, true, false);
+		Screen screen = new Screen("", true, false);
 		Map map = new Map(1000, 1000, 1000);
-		Ship ship = new Ship(client.name, client.name);
-		ship.setAngularVelocity(new Vector(0, 0, 0.05));
+		Ship ship = new Ship("", "");
+		//ship.setAngularVelocity(new Vector(0, 0, 0.05));
 		//ship.setVelocity(new Vector(0, 0, 0));
+		
 		map.add(ship);
 		System.out.println(Global.SCREEN_WIDTH + ", " + Global.SCREEN_WIDTH);
 		Random r = new Random();
@@ -116,8 +118,9 @@ public class ButtonPanel extends JPanel {
 		menuPanel.add(title, c);
 		menuPanel.setBounds(rect);
 		UILayers.add(menuPanel, JLayeredPane.PALETTE_LAYER);
-		
+		this.menuPanel = menuPanel;
 		Timer timer = new Timer(30, e -> {
+			ship.rotate(new Rotation(Vector.K.scale(-0.001)));
 			ship.update();
 			screen.setMap(map);
 		});
@@ -136,10 +139,18 @@ public class ButtonPanel extends JPanel {
 		JPanel panel = new JPanel();
 		MyButton play = new MyButton("Play");
 		play.addActionListener(e -> {
+			//UILayers.remove(menuPanel);
 			UILayers.removeAll();
 			PlayPanel ppanel = new PlayPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(ppanel);
+			/*
+			Rectangle rect = new Rectangle(0, 0, Global.SCREEN_WIDTH, Global.SCREEN_HEIGHT);
+			ppanel.setBounds(rect);
+			UILayers.add(ppanel, JLayeredPane.PALETTE_LAYER);
+			UILayers.repaint();
+			UILayers.revalidate();
+			*/
 			Body.nextID = 0;
 
 		});

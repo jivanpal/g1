@@ -26,12 +26,12 @@ public class Poly3D {
 	 * @param c Colour of the object
 	 */
 	public Poly3D(double[] x, double[] y, double[] z, Color c){
-//		Screen.nPoly3D++;
 		this.c = c;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		createPolygon();
+		avgDistance = getDistance();
 	}
 
 	/**
@@ -82,6 +82,20 @@ public class Poly3D {
 		if(poly.light < 0.2){
 			poly.light = 0.2;
 		}
+		
+//		double fadeIn = (avgDistance - 1000) / 100;
+//		
+//		if(fadeIn < 0){
+//			fadeIn = 1;
+//		}
+//		else if(fadeIn < 1 && fadeIn >= 0){
+//			fadeIn = 1 - fadeIn;
+//		}
+//		else{
+//			fadeIn = 0;
+//		}
+//		
+//		poly.light *= fadeIn;
 	}
 
 	/**
