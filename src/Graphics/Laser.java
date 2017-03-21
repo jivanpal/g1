@@ -28,7 +28,7 @@ public class Laser{
 		createPoints();
 		
 		for(int i = 0; i < 5; i++){
-			colors[i] = Color.RED;
+			colors[i] = Color.GREEN;
 		}
 		
 		GraphicalModel g = new GraphicalModel(vertices, sides, colors);
