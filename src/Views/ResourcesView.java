@@ -136,7 +136,8 @@ public class ResourcesView extends JPanel {
         c.gridheight = 2;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 10;
-
+        c.insets = new Insets(0, 0, 0, 65);
+        
         shieldsComponent = new ResourceComponent("Shields", shieldReplenishNumber, buttons);
 
         shieldsComponent.setResourceBarColor(SHIELD_COLOR);
@@ -184,6 +185,7 @@ public class ResourcesView extends JPanel {
             resourceProgressBar.setIndeterminate(false);
             resourceProgressBar.setMaximum(10);
             resourceProgressBar.setFont(GameOptions.REGULAR_TEXT_FONT);
+            
 
             this.replenishButton = new JButton("Replenish: " + replenishNumber);
             replenishButton.setFont(GameOptions.REGULAR_TEXT_FONT);
@@ -200,6 +202,7 @@ public class ResourcesView extends JPanel {
             buttons.add(replenishButton);
             
             add(resourceProgressBar);
+            add(Box.createHorizontalStrut(10));
             add(replenishButton);
         }
 

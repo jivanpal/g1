@@ -2,7 +2,7 @@ package Views;
 
 import static GameLogic.GameOptions.BUTTON_FONT;
 import static Views.ViewConstants.UI_BACKGROUND_COLOR;
-import static Views.ViewConstants.UI_DAMAGE_COLOR;
+import static Views.ViewConstants.UI_HEALTH_DAMAGE_COLOR;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
