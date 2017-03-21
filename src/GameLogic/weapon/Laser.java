@@ -1,6 +1,7 @@
 package GameLogic.weapon;
 
 import GameLogic.*;
+import Geometry.Vector;
 import Physics.Body;
 
 /**
@@ -8,12 +9,30 @@ import Physics.Body;
  * @author Ivan Panchev
  */
 public class Laser extends Weapon {
-    private static final Bullet BULLET          = new Bullet(2, 2, new Body(10, 2));
+// Weapon constants
     private static final int    AMMO_MAX        = 100;
     private static final int    AMMO_INIT       = 100;
     private static final int    DAMAGE_SHIELDS  = 5;
     private static final int    DAMAGE_SHIP     = 10;
-    private static final double COOLDOWN        = 0.15d;
+    private static final double COOLDOWN        = 0.15;
+    
+// Bullet constants
+    private static final int    SHIP_DAMAGE     = 10;
+    private static final int    SHIELD_DAMAGE   = 5;
+    private static final double TIME_TO_LIVE    = 2;
+    private static final double MASS            = 0.1;
+    private static final double RADIUS          = 1;
+    private static final double SPEED           = 10;
+    
+    private static final Bullet BULLET = new Bullet(
+        SHIP_DAMAGE,
+        SHIELD_DAMAGE,
+        TIME_TO_LIVE,
+        MASS,
+        RADIUS,
+        Vector.J.scale(SPEED),
+        Vector.ZERO
+    );
     
     public Laser(Ship parent) {
         super(

@@ -11,7 +11,7 @@ import Physics.*;
  */
 public class Weapon implements Serializable {
 /// CONSTANTS
-    private static final double RADIAL_SPAWN_DISTANCE = 1.5;
+    private static final double SPAWN_SEPARATION = 0.01; // meters
     
 /// FIELDS
     private Ship        parent;
@@ -126,7 +126,7 @@ public class Weapon implements Serializable {
     }
     
     /**
-     * Clone the reference bullet and put it in position.
+     * Clone the reference bullet and put it in position relative to the ship.
      */
     private Bullet newPositionedBullet() {
         Bullet instance = null;
@@ -141,7 +141,7 @@ public class Weapon implements Serializable {
             System.err.println("Cloning and casting of the reference bullet gave `null` for some reason.");
         } else {
             instance.setOriginBody(parent);
-            instance.setPosition(instance.getPosition().plus(parent.getFrontVector().scale(RADIAL_SPAWN_DISTANCE*parent.getRadius())));
+            instance.setPosition(instance.getPosition().plus(parent.getFrontVector().scale(parent.getRadius() + instance.getRadius() + SPAWN_SEPARATION)));
         }
         
         return instance;
