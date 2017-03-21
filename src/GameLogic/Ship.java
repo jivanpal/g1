@@ -12,17 +12,17 @@ import GameLogic.resource.*;
  */
 public class Ship extends Body{
     // Decay rates and velocity bounds
-    private static final double ROTATION_DECAY  = 0.95;      // radians per radian
-    private static final double ROTATION_MIN    = 0.01;   // radians per sec
-    private static final double ORTHOGONAL_VELOCITY_DECAY   = 0.9;      // ratio
-    private static final double ORTHOGONAL_VELOCITY_MIN     = 0.05;     // meters per meter 
+    private static final double NONPLANAR_SPIN_DECAY        = 0.95; // radians per radian
+    private static final double NONPLANAR_SPIN_MIN          = 0.01; // radians per sec
+    private static final double ORTHOGONAL_VELOCITY_DECAY   = 0.95; // ratio
+    private static final double ORTHOGONAL_VELOCITY_MIN     = 0.05; // meters per meter 
     
     //   Maximum values for pitch velocity, roll velocity, and forward velocity.
     //   The ship is designed under the assumption that it cannot reverse,
     // therefore the reverse-velocity maximum is assumed to be zero.
-    private static final double PITCH_VEL_MAX = 1.0;    // radians per second
-    private static final double ROTATE_VEL_MAX= 1.0;    // radians per second
-    private static final double FWD_VEL_MAX   = 200.0;   // meters per second
+    private static final double PITCH_VEL_MAX   = 1.0;      // radians per second
+    private static final double ROTATE_VEL_MAX  = 1.0;      // radians per second
+    private static final double FWD_VEL_MAX     = 200.0;    // meters per second
     
     // Smoothness of transition from rest to maximum for each axis.
     // Higher values result in smoother transitions.
@@ -180,8 +180,10 @@ public class Ship extends Body{
         torpedo.update();
         
     // Decay and bound velocities
-        Vector w = getAngularVelocity();
-        setAngularVelocity(w.length() < ROTATION_MIN ? Vector.ZERO : w.scale(ROTATION_DECAY));
+        Vector w            = getAngularVelocity();
+        Vector planarSpin   = w.proj(getUpVector());
+        Vector nonplanarSpin= w.minus(planarSpin);
+        setAngularVelocity(planarSpin.plus(nonplanarSpin.scale(NONPLANAR_SPIN_DECAY)));
         
         Vector v            = getVelocity();
         Vector forwardVel   = v.proj(getFrontVector());
