@@ -12,7 +12,9 @@ import GameLogic.Global;
 import GameLogic.Map;
 import GameLogic.Ship;
 import Physics.Body;
+import jdk.management.resource.ResourceAccuracy;
 import Geometry.Vector;
+import GameLogic.Resource;
 
 /**
  * The viewport of the ship, contains the camera and all objects to be rendered by it
@@ -370,6 +372,12 @@ public class Screen extends JPanel{
 				Ship s = (Ship)b;
 				if(s.getPilotName().equals(nickname) || s.getEngineerName().equals(nickname)){
 					shipIndex = b.getID();
+					if(s.getResource(Resource.Type.HEALTH).get() <= 10){
+						selfDestruct = true;
+					}
+					else{
+						selfDestruct = false;
+					}
 					break;
 				}
 			}
