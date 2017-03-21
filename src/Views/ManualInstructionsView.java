@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import GameLogic.GameOptions;
@@ -54,6 +55,8 @@ public class ManualInstructionsView extends JPanel {
 	}
 
 	private void styleTable(JTable table, int height, int pageNumber) {
+
+		
 		table.setShowGrid(false);
 		table.setFont(GameOptions.REGULAR_TEXT_FONT);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -72,6 +75,9 @@ public class ManualInstructionsView extends JPanel {
 		table.getTableHeader().setForeground(Color.BLACK);
 		table.getTableHeader().setFont(GameOptions.REGULAR_TEXT_FONT);
 		table.setSelectionBackground(Color.decode("#999999"));
+		
+		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) table.getDefaultRenderer(table.getColumnClass(0));
+		renderer.setHorizontalAlignment(JLabel.CENTER);
 	}
 
 	private void update() {
