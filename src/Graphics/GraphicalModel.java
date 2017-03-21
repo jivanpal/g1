@@ -40,7 +40,6 @@ public class GraphicalModel {
 			double[] ys = new double[sides[i].length];
 			double[] zs = new double[sides[i].length];
 			for(int j = 0; j < sides[i].length; j++){
-//				System.out.println("i: " + i + " j: " + j + " vertex: " + sides[i][j]);
 				
 				xs[j] = vertices[sides[i][j]].getX();
 				ys[j] = vertices[sides[i][j]].getY();

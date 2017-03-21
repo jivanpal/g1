@@ -10,7 +10,6 @@ import Geometry.Vector;
 public class Calculations {
 	private static double t = 0;
 	public static Vector w1, w2, viewVec, rotateVec, dirVec, planeVec1, planeVec2;
-	public static Plane p;
 	public static Point calcFocusPos;
 	
 	/**
