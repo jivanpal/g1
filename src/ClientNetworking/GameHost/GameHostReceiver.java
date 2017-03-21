@@ -56,10 +56,12 @@ public class GameHostReceiver extends Thread
 					// Engineer with PilotAI teammate
 					if (teamMate.equals("") && position % 2 == 1)
 					{
-						if (m.message.toLowerCase().contains("instruction")
-								|| m.message.toLowerCase().contains("give me")
-								|| m.message.toLowerCase().contains("manual")
-								|| m.message.toLowerCase().contains("what is"))
+						String mes  = m.message.toLowerCase();
+						if (mes.contains("instruction")
+								|| mes.contains("give me")
+								|| mes.contains("manual")
+								|| mes.contains("what is")
+								|| mes.contains("what's"))
 						{
 							String[] split = m.message.split(" ");
 							int number = -1;
