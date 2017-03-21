@@ -29,6 +29,7 @@ public class SoundPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
 	public ArrayList<JSlider> sliders;
+	public static JPanel spanel;
 
 	public SoundPanel(MainMenu menu) {
 		super();
@@ -44,9 +45,10 @@ public class SoundPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtomenu = new MyButton("Back");
 		backtomenu.addActionListener(e -> {
-			SettingsPanel spanel = new SettingsPanel(menu);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(spanel);
+			//SettingsPanel spanel = new SettingsPanel(menu);
+			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			//menu.changeFrame(spanel);
+			PanelsManager.changePanel(spanel, SettingsPanel.spanel, backtomenu);
 		});
 		add(backtomenu, c);
 		MyButton resettodefault = new MyButton("Reset");
@@ -73,8 +75,9 @@ public class SoundPanel extends JPanel {
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
-
-		setBackground(Color.BLACK);
+		setOpaque(false);
+		SoundPanel.spanel = this;
+		//setBackground(Color.BLACK);
 	}
 
 	/**

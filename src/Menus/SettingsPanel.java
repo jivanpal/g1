@@ -20,6 +20,7 @@ import GameLogic.GameOptions;
 public class SettingsPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
+	public static JPanel spanel;
 
 	/**
 	 * Constructor for the Settings menu.
@@ -38,10 +39,11 @@ public class SettingsPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtomenu = new MyButton("Back");
 		backtomenu.addActionListener(e -> {
-			ButtonPanel bpanel = new ButtonPanel(menu);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(bpanel);
-			bpanel.makeUI();
+			//ButtonPanel bpanel = new ButtonPanel(menu);
+			PanelsManager.changePanel(spanel, ButtonPanel.menuPanel, backtomenu);
+			//menu.changeFrame(bpanel);
+			//bpanel.makeUI();
+			
 		});
 		add(backtomenu, c);
 		JPanel bpanel = createButtons();
@@ -55,8 +57,9 @@ public class SettingsPanel extends JPanel {
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
-
-		setBackground(Color.BLACK);
+		setOpaque(false);
+		SettingsPanel.spanel = this;
+		//setBackground(Color.BLACK);
 	}
 
 	/**
@@ -69,15 +72,17 @@ public class SettingsPanel extends JPanel {
 		JPanel panel = new JPanel();
 		MyButton gotosound = new MyButton("Sound");
 		gotosound.addActionListener(e -> {
-			SoundPanel spanel = new SoundPanel(menu);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(spanel);
+			SoundPanel soundpanel = new SoundPanel(menu);
+			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			//menu.changeFrame(spanel);
+			PanelsManager.changePanel(spanel, soundpanel, gotosound);
 		});
 		MyButton gotocontrols = new MyButton("Controls");
 		gotocontrols.addActionListener(e -> {
 			ControlsPanel cpanel = new ControlsPanel(menu);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(cpanel);
+			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			//menu.changeFrame(cpanel);
+			PanelsManager.changePanel(spanel, cpanel, gotocontrols);
 		});
 		panel.setLayout(new BorderLayout());
 		panel.add(gotosound, BorderLayout.NORTH);

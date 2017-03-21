@@ -53,6 +53,8 @@ public class MainMenu {
 		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setSize(d);
 		frame.setVisible(true);
+		PanelsManager.PANEL_BOUNDS = new Rectangle(0,0, getFrame().getWidth(), getFrame().getHeight());
+		PanelsManager.UILayers = getFrame().getLayeredPane();
 		comp.makeUI();
 		frame.setContentPane(comp);
 		frame.repaint();
@@ -104,7 +106,7 @@ public class MainMenu {
 		} else {
 			name = args[0];
 		}
-
+		
 		MainMenu menu = new MainMenu(name);
 		AudioPlayer.playMusic(AudioPlayer.MENU_SCREEN_TUNE);
 	}

@@ -38,6 +38,7 @@ public class LobbyPanel extends JPanel implements Observer {
 	private boolean leftserver;
 	private boolean ishost;
 	private GridBagConstraints c;
+	public static JPanel lobbypanel;
 
 	/**
 	 * Constructor of the panel.
@@ -90,8 +91,9 @@ public class LobbyPanel extends JPanel implements Observer {
 			if (confirm == JOptionPane.YES_OPTION) {
 				client.send(new Action(client.getLobby().getID(), this.player, this.player, Action.KICK));
 				leftserver = true;
-				PlayPanel ppanel = new PlayPanel(menu);
-				menu.changeFrame(ppanel);
+				//PlayPanel ppanel = new PlayPanel(menu);
+				//menu.changeFrame(ppanel);
+				PanelsManager.changePanel(LobbyPanel.lobbypanel, PlayPanel.ppanel, backtostart);
 				client.setLobby(null);
 			}
 		});
@@ -134,8 +136,9 @@ public class LobbyPanel extends JPanel implements Observer {
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
-
-		setBackground(Color.BLACK);
+		setOpaque(false);
+		LobbyPanel.lobbypanel = this;
+		//setBackground(Color.BLACK);
 
 	}
 
@@ -238,9 +241,10 @@ public class LobbyPanel extends JPanel implements Observer {
 					JOptionPane.INFORMATION_MESSAGE);
 			client.deleteLobbyObserver(this);
 			client.setLobby(null);
-			PlayPanel ppanel = new PlayPanel(menu);
-			menu.changeFrame(ppanel);
-
+			//PlayPanel ppanel = new PlayPanel(menu);
+			//menu.changeFrame(ppanel);
+			PanelsManager.changePanel(LobbyPanel.lobbypanel, PlayPanel.ppanel, null);
+			
 		} else if (leftserver) {
 			client.deleteLobbyObserver(this);
 			client.setLobby(null);
@@ -249,7 +253,8 @@ public class LobbyPanel extends JPanel implements Observer {
 			player.isHost = true;
 			client.deleteLobbyObserver(this);
 			LobbyPanel lpanel = new LobbyPanel(menu, l.getID(), player, true);
-			menu.changeFrame(lpanel);
+			//menu.changeFrame(lpanel);
+			PanelsManager.changePanel(LobbyPanel.lobbypanel, lpanel, null);
 		} else if (l.started) {
 			int pos = 0;
 			while (pos < players.length) {
@@ -272,12 +277,13 @@ public class LobbyPanel extends JPanel implements Observer {
 				} else {
 					pv = new PilotView(client.name, gameClient, menu.getFrame(), false);
 				}
-
+				PanelsManager.removeAll();
 				System.out.println("Swapping to PilotView");
 				menu.changeFrame(pv);
 				menu.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
 			} else // else player is engineer
 			{
+				PanelsManager.removeAll();
 				System.out.println("Player is an Engineer");
 				EngineerView eview = new EngineerView(client.name, gameClient, menu.getFrame());
 				System.out.println("Swapping to EngineerView");

@@ -34,6 +34,7 @@ public class ControlsPanel extends JPanel {
 	private boolean pressed;
 	private ArrayList<JButton> controlButtons;
 	public Client client;
+	public static JPanel cpanel;
 
 	public ControlsPanel(MainMenu menu) {
 		super();
@@ -49,9 +50,10 @@ public class ControlsPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtomenu = new MyButton("Back");
 		backtomenu.addActionListener(e -> {
-			SettingsPanel spanel = new SettingsPanel(menu);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(spanel);
+			//SettingsPanel spanel = new SettingsPanel(menu);
+			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			//menu.changeFrame(spanel);
+			PanelsManager.changePanel(cpanel, SettingsPanel.spanel, backtomenu);
 		});
 		add(backtomenu, c);
 
@@ -93,9 +95,9 @@ public class ControlsPanel extends JPanel {
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
-
-		setBackground(Color.BLACK);
-
+		setOpaque(false);
+		//setBackground(Color.BLACK);
+		ControlsPanel.cpanel = this;
 	}
 
 	/**

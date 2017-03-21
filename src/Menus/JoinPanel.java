@@ -35,6 +35,7 @@ public class JoinPanel extends JPanel {
 	private JTable table;
 	private DefaultTableModel model;
 	private LobbyInfo[] lobbies;
+	public static JPanel jpanel;
 
 	/**
 	 * Constructor for the panel.
@@ -86,7 +87,9 @@ public class JoinPanel extends JPanel {
 		JPanel bpanel = createButtons();
 		bpanel.setOpaque(false);
 		add(bpanel, BorderLayout.SOUTH);
-		setBackground(Color.black);
+		setOpaque(false);
+		JoinPanel.jpanel = this;
+		//setBackground(Color.black);
 	}
 
 	/**
@@ -161,9 +164,10 @@ public class JoinPanel extends JPanel {
 
 		MyButton backtoplay = new MyButton("Back");
 		backtoplay.addActionListener(e -> {
-			PlayPanel ppanel = new PlayPanel(menu);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(ppanel);
+			//PlayPanel ppanel = new PlayPanel(menu);
+			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			//menu.changeFrame(ppanel);
+			PanelsManager.changePanel(JoinPanel.jpanel, PlayPanel.ppanel, backtoplay);
 		});
 		MyButton join = new MyButton("Join");
 		join.addActionListener(e -> {
@@ -174,12 +178,14 @@ public class JoinPanel extends JPanel {
 				Player player = new Player(client.name, IpGetter.getRealIp(), false);
 				client.send(new Action(lInfo.lobbyID, player, 9));
 				LobbyPanel hlpanel = new LobbyPanel(menu, lInfo.lobbyID, player, false);
-				menu.changeFrame(hlpanel);
+				PanelsManager.changePanel(JoinPanel.jpanel, hlpanel, join);
+				//menu.changeFrame(hlpanel);
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(this, "Joining Lobby failed. Please check your connection!",
 						"Join Lobby Error", JOptionPane.ERROR_MESSAGE);
 				JoinPanel jpanel = new JoinPanel(menu);
-				menu.changeFrame(jpanel);
+				PanelsManager.changePanel(JoinPanel.jpanel, jpanel, join);
+				//menu.changeFrame(jpanel);
 				e1.printStackTrace();
 			}
 		});

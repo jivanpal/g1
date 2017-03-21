@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
@@ -37,7 +38,7 @@ import Views.JLayeredPaneLayoutManager;
 public class ButtonPanel extends JPanel {
 	private MainMenu menu;
 	public Client client;
-	private JLayeredPane UILayers;
+	//private JLayeredPane UILayers;
 	public static JPanel menuPanel;
 
 	/**
@@ -51,11 +52,11 @@ public class ButtonPanel extends JPanel {
 		super();
 		this.menu = menu;
 		this.client = menu.client;
-		this.UILayers = menu.getFrame().getLayeredPane();
+		//this.UILayers = menu.getFrame().getLayeredPane();
 	}
 
 	public void makeUI() {
-		UILayers.setLayout(new JLayeredPaneLayoutManager());
+		PanelsManager.UILayers.setLayout(new JLayeredPaneLayoutManager());
 		
 		Rectangle rect = new Rectangle(0, 0, menu.getFrame().getWidth(), menu.getFrame().getHeight());
 		Global.SCREEN_WIDTH = menu.getFrame().getWidth();
@@ -95,7 +96,7 @@ public class ButtonPanel extends JPanel {
 //			System.out.println(a.getPosition());
 		}
 		screen.setBounds(rect);
-		UILayers.add(screen, JLayeredPane.DEFAULT_LAYER);
+		PanelsManager.UILayers.add(screen, JLayeredPane.DEFAULT_LAYER);
 
 		JPanel menuPanel = new JPanel();
 		menuPanel.setOpaque(false);
@@ -117,8 +118,8 @@ public class ButtonPanel extends JPanel {
 		c.anchor = GridBagConstraints.NORTH;
 		menuPanel.add(title, c);
 		menuPanel.setBounds(rect);
-		UILayers.add(menuPanel, JLayeredPane.PALETTE_LAYER);
-		this.menuPanel = menuPanel;
+		PanelsManager.UILayers.add(menuPanel, JLayeredPane.PALETTE_LAYER);
+		ButtonPanel.menuPanel = menuPanel;
 		Timer timer = new Timer(30, e -> {
 			ship.rotate(new Rotation(Vector.K.scale(-0.001)));
 			ship.update();
@@ -140,10 +141,10 @@ public class ButtonPanel extends JPanel {
 		MyButton play = new MyButton("Play");
 		play.addActionListener(e -> {
 			//UILayers.remove(menuPanel);
-			UILayers.removeAll();
+			//PanelsManager.UILayers.removeAll();
 			PlayPanel ppanel = new PlayPanel(menu);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(ppanel);
+			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+			//menu.changeFrame(ppanel);
 			/*
 			Rectangle rect = new Rectangle(0, 0, Global.SCREEN_WIDTH, Global.SCREEN_HEIGHT);
 			ppanel.setBounds(rect);
@@ -151,17 +152,17 @@ public class ButtonPanel extends JPanel {
 			UILayers.repaint();
 			UILayers.revalidate();
 			*/
+			PanelsManager.changePanel(menuPanel, ppanel, play);
 			Body.nextID = 0;
 
 		});
 		MyButton settings = new MyButton("Settings");
 		settings.addActionListener(e -> {
-			UILayers.removeAll();
+			//UILayers.removeAll();
+			
 			SettingsPanel spanel = new SettingsPanel(menu);
-			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			menu.changeFrame(spanel);
+			PanelsManager.changePanel(menuPanel, spanel, settings);
 			Body.nextID = 0;
-
 		});
 		MyButton exit = new MyButton("Exit");
 		exit.addActionListener(e -> {
