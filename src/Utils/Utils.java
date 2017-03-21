@@ -9,4 +9,28 @@ public class Utils {
                                            double newRangeMin, double newRangeMax) {
         return (((newRangeMax - newRangeMin) * (value - oldRangeMin)) / (oldRangeMax - oldRangeMin)) + newRangeMin;
     }
+    
+    /**
+     * Given a String 'number:sequence', returns just the number component
+     *
+     * @param sequenceWithNum A string in the form 'number:sequence'
+     * @return The number part of the String
+     */
+    public static String parseNumber(String sequenceWithNum) {
+        return sequenceWithNum.split(":")[0];
+    }
+
+    /**
+     * Given a String 'number:sequence', returns just the sequence component
+     *
+     * @param sequenceWithNum A string in the form 'number:sequence'
+     * @return The sequence part of the String
+     */
+    public static String parseSequence(String sequenceWithNum) {
+        if (sequenceWithNum.length() >= 3) {
+            return sequenceWithNum.split(":")[1];
+        } else {
+            return "";
+        }
+    }
 }

@@ -5,10 +5,12 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,9 +35,11 @@ public class ManualInstructionsView extends JPanel {
 		setData(data);
 		
 		leftPage = new MyJTable();
+		leftPage.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.black));
 		styleTable(leftPage, height,pageNumber);
 		
 		rightPage = new MyJTable();
+		rightPage.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 0, Color.black));
 		styleTable(rightPage, height, pageNumber +1);
 
 		setLayout(new BorderLayout());
@@ -55,9 +59,8 @@ public class ManualInstructionsView extends JPanel {
 	}
 
 	private void styleTable(JTable table, int height, int pageNumber) {
-
-		
 		table.setShowGrid(false);
+		table.setShowHorizontalLines(true);
 		table.setFont(GameOptions.REGULAR_TEXT_FONT);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setRowHeight(height / INSTRUCTIONS_PER_PAGE);

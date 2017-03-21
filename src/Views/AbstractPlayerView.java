@@ -72,7 +72,7 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
             try {
                 // long time = System.currentTimeMillis();
 
-                Map m = ((ClientNetworking.GameClient.MapContainer) observable).getMap();
+                Map m = gameClient.getMap();
 
                 if (hasWonGame(m)) {
 /*

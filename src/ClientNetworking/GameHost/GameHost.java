@@ -23,8 +23,18 @@ public class GameHost extends Thread
 	private ServerSocket serverSocket = null;
 	private ArrayList<KeySequence> keySequences = new ArrayList<KeySequence>();
 
+	//Create the clientTable
+	ClientTable clientTable;
+	//create an empty map
+	MapContainer gameMap;
+	
+	int[] shipIds;
+	
 	public GameHost(Lobby l)
 	{
+		clientTable  = new ClientTable();
+		gameMap = new MapContainer();
+		
 		lobby = l;
 
 		// Open a server socket:
@@ -44,36 +54,31 @@ public class GameHost extends Thread
 		{
 			keySequences.add(new KeySequence(minLength, maxLength, sequenceNumber));
 		}
+		
+		Player[] p = lobby.getPlayers();
+		// add the ships, add dummy bodies for non existant ones and then delete them
+		shipIds = new int[4];
+		for (int i = 0; i < Lobby.LOBBY_SIZE; i += 2)
+		{
+			if (p[i]==null && p[i + 1]==null){
+				System.out.println("Added dummy "+Body.nextID);
+				Body.nextID++;
+				shipIds[i/2]=-1;
+			}
+			else
+			{
+				System.out.println("Added ship "+Body.nextID);
+				shipIds[i/2]=gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
+			}
+		}
+		gameMap.generateTerrain();
+		System.out.println("I HAVE STARTED THE SERVER");
 	}
 
 	public void run()
 	{
 		try
 		{
-			//Create the clientTable
-			ClientTable clientTable = new ClientTable();
-			//create an empty map
-			MapContainer gameMap = new MapContainer();
-			
-			Player[] p = lobby.getPlayers();
-			// add the ships, add dummy bodies for non existant ones and then delete them
-			int[] shipIds = new int[4];
-			for (int i = 0; i < Lobby.LOBBY_SIZE; i += 2)
-			{
-				if (p[i]==null && p[i + 1]==null){
-					System.out.println("Added dummy "+Body.nextID);
-					Body.nextID++;
-					shipIds[i/2]=-1;
-				}
-				else
-				{
-					System.out.println("Added ship "+Body.nextID);
-					shipIds[i/2]=gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
-				}
-			}
-			gameMap.generateTerrain();
-			System.out.println("I HAVE STARTED THE SERVER");
-
 			while (true)
 			{
 				// Listen to the socket, accepting connections from new clients:
@@ -120,7 +125,7 @@ public class GameHost extends Thread
 					if (lobby.getPlayers()[tmId] != null)
 						tmName = lobby.getPlayers()[tmId].nickname;
 
-					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,clientName, tmName,shipIds[position/2], keySequences.get(position/2));
+					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,clientName, tmName, shipIds[position/2], keySequences.get(position/2));
 					clientInput.start();
 
 					GameHostSender clientOutput = new GameHostSender(toClient, clientTable, clientName);
