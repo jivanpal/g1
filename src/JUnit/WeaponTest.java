@@ -9,7 +9,7 @@ import org.junit.Before;
  */
 public class WeaponTest {
     Weapon weapon;
-    
+
     @Before
     public void setUp() {
 

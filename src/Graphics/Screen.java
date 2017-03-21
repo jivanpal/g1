@@ -211,21 +211,38 @@ public class Screen extends JPanel{
                 Class<? extends Body> bClass = b.getClass();
                 
                 if (bClass == Ship.class) {
-                	Vector path = map.shortestPath(shipIndex, b.getID());
-                    Vector pos = viewFrom.plus(path);
-                    new ShipModel(pos, b.getRadius(), b.getOrientation(), shipCount);
+                	Vector pos = Vector.ZERO;
+                	double distance = Integer.MAX_VALUE;
+                    for(Vector v : map.getAllPositions(b.getPosition())){
+                    	if(viewFrom.minus(v).length() < distance){
+                    		distance = viewFrom.minus(v).length();
+                    		pos = v;
+                    	}
+                    }
+                    new ShipModel(pos, 2, b.getOrientation(), b.getID());
                     shipCount++;
                 }
                 else if(bClass == Asteroid.class){
-                    Vector path = map.shortestPath(shipIndex, b.getID());
-                    boolean inFront = map.get(shipIndex).getBasis().localiseDirection(path).getY() > 0;
-                    Vector pos = viewFrom.plus(path);
-                    System.out.println(b.getID() + ": " + pos);
-                	new AsteroidModel(pos, b.getRadius(), b.getOrientation());
+//                    Vector path = map.shortestForwardPath(shipIndex, b.getID());
+//                    Vector pos = viewFrom.plus(path);
+                    
+                    for(Vector v : map.getAllPositions(b.getPosition())){
+                    	new AsteroidModel(v, b.getRadius(), b.getOrientation());
+                    }
+                    
+//                    System.out.println(b.getID() + ": " + pos);
+//                	new AsteroidModel(pos, b.getRadius(), b.getOrientation());
                 }
                 else if(bClass == Bullet.class){
-                	Vector path = map.shortestPath(shipIndex, b.getID());
-                    Vector pos = viewFrom.plus(path);
+//                	Vector path = map.shortestForwardPath(shipIndex, b.getID());
+                	double distance = Integer.MAX_VALUE;
+                	Vector pos = Vector.ZERO;
+                	for(Vector v : map.getAllPositions(b.getPosition())){
+                		if(viewFrom.minus(v).length() < distance){
+                			distance = viewFrom.minus(v).length();
+                			pos = v;
+                		}
+                	}
                     new Laser(pos, b.getRadius(), b.getOrientation());
                 }
             }
