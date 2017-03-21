@@ -219,7 +219,7 @@ public class Screen extends JPanel{
 
     private void createObjects() {
         poly3Ds.clear();
-//        System.out.println(map.size());
+        System.out.println(map.size());
         for(Body b : map.bodies()) {
             if (!(shipIndex == null) && b.getID() != shipIndex) {
                 Class<? extends Body> bClass = b.getClass();
@@ -250,6 +250,38 @@ public class Screen extends JPanel{
                 }
             }
         }
+        
+//        map.bodies().parallelStream()
+//		.forEach( b -> {
+//			if (!(shipIndex == null) && b.getID() != shipIndex) {
+//                Class<? extends Body> bClass = b.getClass();
+//                if (bClass == Ship.class) {
+//                	Vector pos = new Vector(0, 0, 0);
+//                	double distance = Integer.MAX_VALUE;
+//                    for(Vector v : map.getAllPositions(b.getPosition())){
+////                         System.out.println("Drawing Ship: " + b.getID() + ", " + shipIndex);
+//                    	if(viewFrom.minus(v).length() < distance){
+//                    		distance = viewFrom.minus(v).length();
+//                    		pos = v;
+//                    	}
+//                    }
+//                    new ShipModel(pos, 2, b.getOrientation(), b.getID());
+//                }
+//                else if(bClass == Asteroid.class){
+////                	System.out.println(b.getID() + ": " + b.getPosition());
+//                    for(Vector v : map.getAllPositions(b.getPosition())){
+////                    	System.out.println(v);
+//                    	new AsteroidModel(v, 2, b.getOrientation());
+//                    }
+//                }
+//                else if(bClass == Bullet.class){
+//                    for(Vector v : map.getAllPositions(b.getPosition())){
+////                    	System.out.println("Laser orientation: " + b.getBasis());
+//                        new Laser(v, 0.05, b.getOrientation());
+//                    }
+//                }
+//            }
+//		});
 //        System.out.println("Completed createObjects()");
 	}
 
