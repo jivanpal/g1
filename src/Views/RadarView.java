@@ -21,6 +21,7 @@ public class RadarView extends JPanel{
     private final Color ASTEROID_COLOR = Color.red;
     private final Color PLAYER_SHIP_COLOR = Color.green;
     private final Color ENEMY_SHIP_COLOR = Color.blue;
+    private final Color BULLET_COLOR = Color.white;
     private final Color BACKGROUND_COLOR = Color.black;
 
     private final int CIRCLE_DRAW_DIAMETER_SMALL = 5;
@@ -133,7 +134,7 @@ public class RadarView extends JPanel{
                         }
 
                     } else {
-                        // Ignore -- this was a bullet.
+                        drawCircle(g, BULLET_COLOR, circle);
                     }
                 });
 
