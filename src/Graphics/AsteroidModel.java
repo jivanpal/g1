@@ -41,10 +41,22 @@ public class AsteroidModel {
     private void createPoints() {
 //    	System.out.println("Before Maths: " + position);
     	
-        vertices[0] = position.plus(                                                                                                        Vector.K.scale(radius));
-        vertices[1] = position.plus(new Rotation(0,                     Math.toRadians(90), Math.toRadians(90) - Math.acos(-1.0/3)) .apply( Vector.I.scale(radius)) );
-        vertices[2] = position.plus(new Rotation(Math.toRadians(120),   Math.toRadians(90), Math.toRadians(90) - Math.acos(-1.0/3)) .apply( Vector.I.scale(radius)) );
-        vertices[3] = position.plus(new Rotation(Math.toRadians(240),   Math.toRadians(90), Math.toRadians(90) - Math.acos(-1.0/3)) .apply( Vector.I.scale(radius)) );
+    	vertices[0] = (                                                                                                        Vector.K.scale(radius));
+        vertices[1] = (new Rotation(0,                     Math.toRadians(90), Math.toRadians(90) - Math.acos(-1.0/3)) .apply( Vector.I.scale(radius)) );
+        vertices[2] = (new Rotation(Math.toRadians(120),   Math.toRadians(90), Math.toRadians(90) - Math.acos(-1.0/3)) .apply( Vector.I.scale(radius)) );
+        vertices[3] = (new Rotation(Math.toRadians(240),   Math.toRadians(90), Math.toRadians(90) - Math.acos(-1.0/3)) .apply( Vector.I.scale(radius)) );
+    	
+        if(radius != 1.0) {
+          for (int i = 0; i < vertices.length; i++) {
+              vertices[i] = vertices[i].scale(radius);
+          }
+        }
+        
+        orientation.apply(vertices);
+    	
+        for(int i = 0; i < vertices.length; i++){
+        	vertices[i] = position.plus(vertices[i]);
+        }
         
 //        if(radius != 1.0) {
 //            for (int i = 0; i < vertices.length; i++) {
