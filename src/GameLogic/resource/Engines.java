@@ -7,8 +7,8 @@ import GameLogic.Resource;
  * @author Ivan Panchev
  */
 public class Engines extends Resource {
-    private static final int MAXIMUM = 20;
-    private static final int INITIAL = 10;
+    private static final int MAXIMUM = 100;
+    private static final int INITIAL = 100;
     
     private boolean isWorking; // Whether or not it is working properly 
     
@@ -16,7 +16,12 @@ public class Engines extends Resource {
         super(MAXIMUM, INITIAL);
         isWorking = true; 
     }
-    
+
+    @Override
+    public void increase() {
+        this.alter(10);
+    }
+
     public boolean isWorking(){
         return isWorking;
     }
