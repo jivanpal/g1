@@ -42,7 +42,7 @@ public class Screen extends JPanel{
 	private boolean selfDestruct = false;
 	private int destructCount = 1;
 	private boolean crosshair;
-	private boolean debug = true;
+	private boolean debug = false;
 	
 	/**
 	 * Creates a new Screen object

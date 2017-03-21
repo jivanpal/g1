@@ -107,9 +107,7 @@ public class ManualInstructionsView extends JPanel {
 	private Object[][] getDataForPage(int page) {
 		Object[][] o = new Object[INSTRUCTIONS_PER_PAGE + 1][columnNames.length];
 		int num = (page - 1) * INSTRUCTIONS_PER_PAGE;
-		for (int i = 0; i < INSTRUCTIONS_PER_PAGE; i++) {
-			o[i] = data[i + num];
-		}
+		System.arraycopy(data, 0 + num, o, 0, INSTRUCTIONS_PER_PAGE);
 		return o;
 	}
 
