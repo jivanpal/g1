@@ -22,7 +22,7 @@ public class BotManager implements Serializable {
     }
     
     /**
-     * Get a collection of all the eneabled bots on the map managed by this instance.
+     * Get a collection of all the enabled bots on the map managed by this instance.
      * Used to iterate over all bots when updating the game state.
      * @return a collection of all enabled bots on the map managed by this instance.
      */
