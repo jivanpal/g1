@@ -75,9 +75,11 @@ public class GameHostReceiver extends Thread
 								ArrayList<String> seq = keySequence.getAllKeys();
 								for (int i = 0; i < seq.size(); i++)
 								{
-									if (seq.get(i).contains("" + number))
-									{
-										clientTable.getQueue(playerName).offer(new ChatMessage("Pilot", seq.get(i).split(":")[1]));
+									String sequenceNumber = Utils.Utils.parseNumber(seq.get(i));
+									
+									if(sequenceNumber.equals("" + number)) {
+										clientTable.getQueue(playerName).offer(new ChatMessage("Pilot", Utils.Utils.parseSequence(seq.get(i))));
+										break;
 									}
 								}
 							}
@@ -194,14 +196,17 @@ public class GameHostReceiver extends Thread
 	{
 		int count = 0;
 		char[] letters = s.toCharArray();
-		char[] suf = Arrays.copyOfRange(letters, letters.length - 2, letters.length);
+		
+		if (letters.length >= 2) {
 
-		String suffix = suf.toString();
-		if (suffix.equals("st") || suffix.equals("nd") || suffix.equals("rd") || suffix.equals("th"))
-		{
-			letters = Arrays.copyOfRange(letters, 0, letters.length - 2);
+			char[] suf = Arrays.copyOfRange(letters, letters.length - 2, letters.length);
+
+			String suffix = suf.toString();
+			if (suffix.equals("st") || suffix.equals("nd") || suffix.equals("rd") || suffix.equals("th")) {
+				letters = Arrays.copyOfRange(letters, 0, letters.length - 2);
+			}
 		}
-
+		
 		int finalNumber = 0;
 		for (int i = 0; i < letters.length; i++)
 		{

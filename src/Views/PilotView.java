@@ -353,9 +353,9 @@ public class PilotView extends AbstractPlayerView implements Observer {
         UILayeredPane.add(manual, JLayeredPane.PALETTE_LAYER);
 
         speedometerView.setBounds(parentFrame.getWidth() - (parentFrame.getWidth() / 7),
-                parentFrame.getHeight() - (parentFrame.getHeight() / 7),
+                parentFrame.getHeight() - speedometerView.getPreferredSize().height,
                 parentFrame.getWidth() / 7,
-                parentFrame.getHeight() / 7);
+                speedometerView.getPreferredSize().height);
         speedometerView.setOpaque(true);
         speedometerView.setForeground(UI_BACKGROUND_COLOR);
         speedometerView.setBackground(UI_BACKGROUND_COLOR);
