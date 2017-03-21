@@ -9,6 +9,7 @@ import Menus.MainMenu;
 import Physics.Body;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -58,7 +59,7 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
     protected abstract void initialiseUI();
 
     // Flash elements of the UI a certain color for a very short amount of time to indicate that the Ship has been damaged
-    protected abstract void flashUIDamaged();
+    protected abstract void flashUIDamaged(Color color);
 
     /**
      * Checks if the player has won or lost. Updates the screen. Leaves the Subclasses free to Override and implement
@@ -123,9 +124,11 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
                 }
                 if (currentShip.getResource(Resource.Type.SHIELDS).get() < previousShip.getResource(Resource.Type.SHIELDS).get()) {
                     AudioPlayer.playSoundEffect(AudioPlayer.SHIP_SHIELD_DECREASE_EFFECT);
+                    flashUIDamaged(ViewConstants.UI_SHIELD_DAMAGE_COLOR);
                 }
                 if (currentShip.getResource(Resource.Type.HEALTH).get() < previousShip.getResource(Resource.Type.HEALTH).get()) {
                     AudioPlayer.playSoundEffect(AudioPlayer.SHIP_HEALTH_DECREASE_EFFECT);
+                    flashUIDamaged(ViewConstants.UI_HEALTH_DAMAGE_COLOR);
                 }
 
                 // System.out.println("Time this frame: " + String.valueOf(System.currentTimeMillis() - time));
