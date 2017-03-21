@@ -390,17 +390,20 @@ public class Map implements Serializable {
                 
                 // If A and B are touching, then they rebound.
                 if (aID < bID && lineOfAction.length() < aRadius+ b.getRadius()) {
-                    // Components of velocities that lie on the line of action
-                    Vector aVel = a.getVelocity().proj(lineOfAction);
-                    Vector bVel = b.getVelocity().proj(lineOfAction);
+                    a.destroy();
+                    b.destroy();
                     
-                    // Store mass of B as it is used several times
-                    double bMass = b.getMass();
-                    double recipMassSum = 1/(aMass + bMass);
-                    
-                    // Elastic collision between A and B
-                    a.setVelocity(aVel.scale(aMass - bMass).plus(bVel.scale(2*bMass)).scale(recipMassSum));
-                    b.setVelocity(bVel.scale(bMass - aMass).plus(aVel.scale(2*aMass)).scale(recipMassSum));
+//                    // Components of velocities that lie on the line of action
+//                    Vector aVel = a.getVelocity().proj(lineOfAction);
+//                    Vector bVel = b.getVelocity().proj(lineOfAction);
+//                    
+//                    // Store mass of B as it is used several times
+//                    double bMass = b.getMass();
+//                    double recipMassSum = 1/(aMass + bMass);
+//                    
+//                    // Elastic collision between A and B
+//                    a.setVelocity(aVel.scale(aMass - bMass).plus(bVel.scale(2*bMass)).scale(recipMassSum));
+//                    b.setVelocity(bVel.scale(bMass - aMass).plus(aVel.scale(2*aMass)).scale(recipMassSum));
                 }
             }
         }
