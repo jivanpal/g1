@@ -42,6 +42,7 @@ public class PlayPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtostart = new MyButton("Back");
 		backtostart.addActionListener(e -> {
+			
 			ButtonPanel bpanel = new ButtonPanel(menu);
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			menu.changeFrame(bpanel);
@@ -58,7 +59,7 @@ public class PlayPanel extends JPanel {
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
-		
+		//setOpaque(false);
 		setBackground(Color.BLACK);
 	}
 	
