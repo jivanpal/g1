@@ -94,7 +94,7 @@ public class Weapon implements Serializable {
     }
     
     public boolean canFire () {
-        return remainingCooldown == 0.0;
+        return remainingCooldown == 0.0 && getAmmoLevel() > 0;
     }
     
 // Evolution

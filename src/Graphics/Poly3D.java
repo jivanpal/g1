@@ -74,28 +74,28 @@ public class Poly3D {
 				(lightPlane.v3.getY() * Screen.lightDir.getY()) + (lightPlane.v3.getZ() * Screen.lightDir.getZ()))
 				/(Math.sqrt(Screen.lightDir.getX() * Screen.lightDir.getX() + Screen.lightDir.getY() * Screen.lightDir.getY() + Screen.lightDir.getZ() * Screen.lightDir.getZ())));
 		
-		poly.light = 0.2 + 1 - Math.sqrt(Math.toDegrees(angle)/180);
+		poly.light = 0.4 + 1 - Math.sqrt(Math.toDegrees(angle)/180);
 		
 		if(poly.light > 1){
 			poly.light = 1;
 		}
-		if(poly.light < 0.2){
-			poly.light = 0.2;
+		if(poly.light < 0.4){
+			poly.light = 0.4;
 		}
 		
-//		double fadeIn = (avgDistance - 1000) / 100;
-//		
-//		if(fadeIn < 0){
-//			fadeIn = 1;
-//		}
-//		else if(fadeIn < 1 && fadeIn >= 0){
-//			fadeIn = 1 - fadeIn;
-//		}
-//		else{
-//			fadeIn = 0;
-//		}
-//		
-//		poly.light *= fadeIn;
+		double fadeIn = (avgDistance - 3000) / 100;
+		
+		if(fadeIn < 0){
+			fadeIn = 1;
+		}
+		else if(fadeIn < 1 && fadeIn >= 0){
+			fadeIn = 1 - fadeIn;
+		}
+		else{
+			fadeIn = 0;
+		}
+		
+		poly.light *= fadeIn;
 	}
 
 	/**
