@@ -227,6 +227,51 @@ public class Map implements Serializable {
     }
     
     /**
+     * Get the shortest vector from one body to another whose projection onto
+     * the origin body's front vector is in the direction of the front vector.
+     * @param aID the ID of the origin body.
+     * @param bID the ID of the destination body.
+     * @return
+     */
+    public Vector shortestForwardPath(int aID, int bID) {
+        Body a, b;
+        if ( (a = get(aID)) != null    &&    (b = get(bID)) != null) {
+            Vector aPos = a.getPosition();
+            Vector[] bPos = getAllPositions(b.getPosition());
+            
+//            Vector[] path = new Vector[bPos.length];
+//            for (int i = 0; i < path.length; i++) {
+//                path[i] = bPos[i].minus(aPos);
+//            }
+//            
+//            boolean[] inFront = new boolean[path.length];
+//            for (int i = 0; i < inFront.length; i++) {
+//                inFront[i] = path[i].dot(a.getFrontVector()) > 0;
+//            }
+//            
+//            Vector shortest = dimensions;
+//            for (int i = 0; i < path.length; i++) {
+//                if (inFront[i] && path[i].length() < shortest.length()) {
+//                    shortest = path[i];
+//                }
+//            }
+            
+            Vector frontVector = a.getFrontVector();
+            Vector shortest = dimensions;
+            for (int i = 0; i < bPos.length; i++) {
+                Vector path = bPos[i].minus(aPos);
+                if ( path.dot(frontVector) > 0    &&    path.length() < shortest.length() ) {
+                    shortest = path;
+                }
+            }
+            
+            return shortest;
+        } else {
+            throw new IllegalArgumentException("shortestTickDistance: body with ID "+(a==null ? aID : bID)+" doesn't exist on map.");
+        }
+    }
+    
+    /**
      * Determine whether two bodies on this map overlap / are touching.
      * @param aID the ID of one body involved
      * @param bID the ID of the other body involved
@@ -290,6 +335,21 @@ public class Map implements Serializable {
             position.plus(new Vector( x,  y,  z)),
         };
         return positions;
+        
+        // Succinct version
+//        Vector bPosInBounds = b.getPosition();
+//        
+//        Vector[] bPos = new Vector[27];
+//        double mapX = dimensions.getX();
+//        double mapY = dimensions.getY();
+//        double mapZ = dimensions.getZ();
+//        for(int i = 0; i < bPos.length; i++) {
+//            int x =  (i      % 3) - 1;
+//            int y = ((i / 3) % 3) - 1;
+//            int z = ((i / 9) % 3) - 1;
+//            
+//            bPos[i] = bPosInBounds.plus(new Vector( x*mapX, y*mapY, z*mapZ ));
+//        }
     }
     
 // Evolution
