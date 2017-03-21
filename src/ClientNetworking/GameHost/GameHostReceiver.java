@@ -58,7 +58,8 @@ public class GameHostReceiver extends Thread
 					{
 						if (m.message.toLowerCase().contains("instruction")
 								|| m.message.toLowerCase().contains("give me")
-								|| m.message.toLowerCase().contains("manual"))
+								|| m.message.toLowerCase().contains("manual")
+								|| m.message.toLowerCase().contains("what is"))
 						{
 							String[] split = m.message.split(" ");
 							int number = -1;

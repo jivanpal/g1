@@ -100,7 +100,7 @@ public class EngineerAI implements Observer
 			}
 		}
 		// nerf
-		if (r.nextInt(10) < 1)
+		if (r.nextInt(100) < 1)
 		{
 			System.out.println("I am doing things");
 			switch (i)
