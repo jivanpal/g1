@@ -36,7 +36,6 @@ public class Icosahedron{
 								{11, 7, 5}};
 	private Color[] colors = new Color[20];
 	private double gr = 1.618;
-	private Vector xVec, yVec, zVec;
 	private Rotation orientation;
 	
 	/**

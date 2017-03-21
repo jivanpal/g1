@@ -39,7 +39,6 @@ public class AsteroidModel {
 	}
 	
     private void createPoints() {
-//    	System.out.println("Before Maths: " + position);
     	
     	vertices[0] = (                                                                                                        Vector.K.scale(radius));
         vertices[1] = (new Rotation(0,                     Math.toRadians(90), Math.toRadians(90) - Math.acos(-1.0/3)) .apply( Vector.I.scale(radius)) );
@@ -57,32 +56,5 @@ public class AsteroidModel {
         for(int i = 0; i < vertices.length; i++){
         	vertices[i] = position.plus(vertices[i]);
         }
-        
-//        if(radius != 1.0) {
-//            for (int i = 0; i < vertices.length; i++) {
-//                vertices[i] = vertices[i].scale(radius);
-//            }
-//        }
-    	
-//        System.out.println("After Maths: " + vertices[1]);
-        
-//    	vertices[0] = new Vector(position.getX() - radius, position.getY() - radius, position.getZ());
-//        vertices[1] = new Vector(position.getX() + radius, position.getY() - radius, position.getZ());
-//        vertices[2] = new Vector(position.getX(), position.getY() + radius, position.getZ());
-//        vertices[3] = new Vector(position.getX(), position.getY(), position.getZ() + radius);
-        
-//        System.out.println("Before Rotation: " + vertices[1]);
-        
-//        orientation.apply(vertices);
-        
-//        System.out.println("After Rotation: " + vertices[1]);
-        
-//		Random generation that I'm temporarily giving up on
-		
-//		Random r = new Random();
-//		for(int i = 0; i < 4; i++){
-//			vertices[i] = new Vector((r.nextDouble() - 0.5) * size + x, (r.nextDouble() - 0.5) * size + y, (r.nextDouble() - 0.5) * size + z);
-//			orientation.apply(vertices[i]);
-//		}
 	}
 }

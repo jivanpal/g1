@@ -35,7 +35,6 @@ public class Torpedo{
 							 {22, 24, 23},
 							 {21, 24, 22}};
 	private Color[] colors = new Color[8];
-	private Vector xVec, yVec, zVec;
 	private Rotation orientation;
 	
 	

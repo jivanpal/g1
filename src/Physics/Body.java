@@ -381,7 +381,7 @@ public class Body implements Cloneable, Serializable {
      */
     public void alterVelocity(Vector delta) {
         v = v.plus(delta);
-        System.err.println("Body #"+ID+": ∆v = "+delta+".");
+//        System.err.println("Body #"+ID+": ∆v = "+delta+".");
     }
 
     /**
@@ -392,7 +392,7 @@ public class Body implements Cloneable, Serializable {
      */
     public void alterAngularVelocity(Vector delta) {
         w = w.plus(delta);
-        System.err.println("Body #"+ID+": ∆w = "+delta+".");
+//        System.err.println("Body #"+ID+": ∆w = "+delta+".");
     }
     
 // Alterers with respect to X'Y'Z'
