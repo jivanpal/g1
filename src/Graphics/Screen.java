@@ -197,6 +197,7 @@ public class Screen extends JPanel{
 
     private void createObjects() {
         poly3Ds.clear();
+        int shipCount = 0;
         for(Body b : map.bodies()) {
             if (!(shipIndex == null) && b.getID() != shipIndex) {
                 Class<? extends Body> bClass = b.getClass();
@@ -211,16 +212,17 @@ public class Screen extends JPanel{
                     		pos = v;
                     	}
                     }
-                    new ShipModel(pos, 2, b.getOrientation(), b.getID());
+                    new ShipModel(pos, b.getRadius(), b.getOrientation(), shipCount);
+                    shipCount++;
                 }
                 else if(bClass == Asteroid.class){
                     for(Vector v : map.getAllPositions(b.getPosition())){
-                    	new AsteroidModel(v, 2, b.getOrientation());
+                    	new AsteroidModel(v, b.getRadius(), b.getOrientation());
                     }
                 }
                 else if(bClass == Bullet.class){
                     for(Vector v : map.getAllPositions(b.getPosition())){
-                        new Laser(v, 0.05, b.getOrientation());
+                        new Laser(v, b.getRadius(), b.getOrientation());
                     }
                 }
             }
