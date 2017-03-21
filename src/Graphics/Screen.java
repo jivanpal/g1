@@ -10,6 +10,7 @@ import GameLogic.Bullet;
 import GameLogic.Map;
 import GameLogic.Ship;
 import Physics.Body;
+import jdk.nashorn.internal.objects.Global;
 import Geometry.Vector;
 import GameLogic.Resource;
 
@@ -41,7 +42,7 @@ public class Screen extends JPanel{
 	private boolean selfDestruct = false;
 	private int destructCount = 1;
 	private boolean crosshair;
-	private boolean debug = false;
+	private boolean debug = true;
 	
 	/**
 	 * Creates a new Screen object
@@ -153,6 +154,13 @@ public class Screen extends JPanel{
 	                    	}
 	                    }
 	                }
+	                if(debug) {
+		                for(Vector v : map.getAllPositions(b.getPosition())){
+			                Point newPos = Calculations.calcPos(viewFrom, viewTo, v);
+			                Point newPos2 = Calculations.calcPos(viewFrom, viewTo, v.plus(b.getVelocity().scale(GameLogic.Global.REFRESH_PERIOD)));
+			                g.drawLine((int)(newPos.x + GameLogic.Global.SCREEN_WIDTH/2), (int)(newPos.y + GameLogic.Global.SCREEN_HEIGHT/2), (int)(newPos2.x + GameLogic.Global.SCREEN_WIDTH/2), (int)(newPos2.y + GameLogic.Global.SCREEN_HEIGHT/2));
+		                }
+	                }
 	            }
 	        }
 		}
@@ -203,27 +211,22 @@ public class Screen extends JPanel{
                 Class<? extends Body> bClass = b.getClass();
                 
                 if (bClass == Ship.class) {
-                	Vector pos = new Vector(0, 0, 0);
-                	double distance = Integer.MAX_VALUE;
-                	
-                    for(Vector v : map.getAllPositions(b.getPosition())){
-                    	if(viewFrom.minus(v).length() < distance){
-                    		distance = viewFrom.minus(v).length();
-                    		pos = v;
-                    	}
-                    }
+                	Vector path = map.shortestPath(shipIndex, b.getID());
+                    Vector pos = viewFrom.plus(path);
                     new ShipModel(pos, b.getRadius(), b.getOrientation(), shipCount);
                     shipCount++;
                 }
                 else if(bClass == Asteroid.class){
-                    for(Vector v : map.getAllPositions(b.getPosition())){
-                    	new AsteroidModel(v, b.getRadius(), b.getOrientation());
-                    }
+                    Vector path = map.shortestPath(shipIndex, b.getID());
+                    boolean inFront = map.get(shipIndex).getBasis().localiseDirection(path).getY() > 0;
+                    Vector pos = viewFrom.plus(path);
+                    System.out.println(b.getID() + ": " + pos);
+                	new AsteroidModel(pos, b.getRadius(), b.getOrientation());
                 }
                 else if(bClass == Bullet.class){
-                    for(Vector v : map.getAllPositions(b.getPosition())){
-                        new Laser(v, b.getRadius(), b.getOrientation());
-                    }
+                	Vector path = map.shortestPath(shipIndex, b.getID());
+                    Vector pos = viewFrom.plus(path);
+                    new Laser(pos, b.getRadius(), b.getOrientation());
                 }
             }
         }
