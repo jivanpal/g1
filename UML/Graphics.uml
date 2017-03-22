@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Graphics</OriginalElement>
+  <nodes>
+    <node x="389.4365079365079" y="368.0">Graphics.Plasma</node>
+    <node x="492.4365079365079" y="368.0">Graphics.Icosahedron</node>
+    <node x="135.0" y="102.0">Graphics.Plane</node>
+    <node x="176.09920634920638" y="480.0">Graphics.Screen</node>
+    <node x="155.59920634920638" y="562.0">Graphics.GameEngine</node>
+    <node x="311.43650793650784" y="276.0">Graphics.GraphicalModel</node>
+    <node x="30.436507936507894" y="368.0">Graphics.AsteroidModel</node>
+    <node x="758.436507936508" y="368.0">Graphics.Star</node>
+    <node x="210.6448412698412" y="0.0">Graphics.Point</node>
+    <node x="166.7698412698412" y="194.0">Graphics.Poly3D</node>
+    <node x="0.0" y="102.0">Graphics.PolygonObj</node>
+    <node x="227.0" y="102.0">Graphics.Calculations</node>
+    <node x="298.4365079365079" y="368.0">Graphics.Laser</node>
+    <node x="631.436507936508" y="368.0">Graphics.ShipModel</node>
+    <node x="365.0" y="102.0">Graphics.Matrix</node>
+    <node x="186.4365079365079" y="368.0">Graphics.Torpedo</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Graphics.Plasma" target="Graphics.GraphicalModel">
+      <point x="0.0" y="-16.0" />
+      <point x="430.9365079365079" y="348.0" />
+      <point x="394.2698412698412" y="348.0" />
+      <point x="11.833333333333343" y="16.0" />
+    </edge>
+    <edge source="Graphics.Poly3D" target="Graphics.Plane">
+      <point x="10.25" y="-16.0" />
+      <point x="218.0198412698412" y="154.0" />
+      <point x="171.0" y="154.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.Poly3D">
+      <point x="-35.0" y="-16.0" />
+      <point x="181.09920634920638" y="460.0" />
+      <point x="9.936507936507894" y="460.0" />
+      <point x="9.936507936507894" y="246.0" />
+      <point x="177.0198412698412" y="246.0" />
+      <point x="-30.75" y="16.0" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.Torpedo">
+      <point x="-5.0" y="-16.0" />
+      <point x="211.09920634920638" y="420.0" />
+      <point x="232.4365079365079" y="420.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Graphics.Icosahedron" target="Graphics.GraphicalModel">
+      <point x="0.0" y="-16.0" />
+      <point x="551.936507936508" y="338.0" />
+      <point x="417.9365079365079" y="338.0" />
+      <point x="35.500000000000014" y="16.0" />
+    </edge>
+    <edge source="Graphics.ShipModel" target="Graphics.GraphicalModel">
+      <point x="0.0" y="-16.0" />
+      <point x="684.936507936508" y="328.0" />
+      <point x="441.6031746031746" y="328.0" />
+      <point x="59.166666666666686" y="16.0" />
+    </edge>
+    <edge source="Graphics.Plane" target="Graphics.Point">
+      <point x="18.0" y="-16.0" />
+      <point x="189.0" y="82.0" />
+      <point x="228.3948412698412" y="82.0" />
+      <point x="-17.75" y="16.0" />
+    </edge>
+    <edge source="Graphics.Poly3D" target="Graphics.PolygonObj">
+      <point x="-10.25" y="-16.0" />
+      <point x="197.5198412698412" y="164.0" />
+      <point x="86.25" y="164.0" />
+      <point x="28.75" y="16.0" />
+    </edge>
+    <edge source="Graphics.GameEngine" target="Graphics.Screen">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Graphics.Poly3D" target="Graphics.Point">
+      <point x="30.75" y="-16.0" />
+      <point x="238.5198412698412" y="174.0" />
+      <point x="454.5" y="174.0" />
+      <point x="454.5" y="52.0" />
+      <point x="275.7281746031746" y="52.0" />
+      <point x="29.58333333333337" y="16.0" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.ShipModel">
+      <point x="25.0" y="-16.0" />
+      <point x="241.09920634920638" y="450.0" />
+      <point x="684.936507936508" y="450.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Graphics.AsteroidModel" target="Graphics.GraphicalModel">
+      <point x="0.0" y="-16.0" />
+      <point x="98.4365079365079" y="328.0" />
+      <point x="323.2698412698412" y="328.0" />
+      <point x="-59.16666666666667" y="16.0" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.Star">
+      <point x="35.0" y="-16.0" />
+      <point x="251.09920634920638" y="460.0" />
+      <point x="789.436507936508" y="460.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Graphics.GraphicalModel" target="Graphics.Poly3D">
+      <point x="35.5" y="-16.0" />
+      <point x="417.93650793650784" y="246.0" />
+      <point x="238.5198412698412" y="246.0" />
+      <point x="30.75" y="16.0" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.AsteroidModel">
+      <point x="-15.0" y="-16.0" />
+      <point x="201.09920634920638" y="440.0" />
+      <point x="98.4365079365079" y="440.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Graphics.Matrix" target="Graphics.Point">
+      <point x="0.0" y="-16.0" />
+      <point x="404.5" y="62.0" />
+      <point x="263.8948412698412" y="62.0" />
+      <point x="17.75" y="16.0" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.Laser">
+      <point x="5.0" y="-16.0" />
+      <point x="221.09920634920638" y="430.0" />
+      <point x="333.9365079365079" y="430.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Graphics.Torpedo" target="Graphics.GraphicalModel">
+      <point x="0.0" y="-16.0" />
+      <point x="232.4365079365079" y="338.0" />
+      <point x="346.93650793650784" y="338.0" />
+      <point x="-35.5" y="16.0" />
+    </edge>
+    <edge source="Graphics.Calculations" target="Graphics.Point">
+      <point x="29.5" y="-16.0" />
+      <point x="315.5" y="72.0" />
+      <point x="252.0615079365079" y="72.0" />
+      <point x="5.916666666666686" y="16.0" />
+    </edge>
+    <edge source="Graphics.Laser" target="Graphics.GraphicalModel">
+      <point x="0.0" y="-16.0" />
+      <point x="333.9365079365079" y="348.0" />
+      <point x="370.6031746031745" y="348.0" />
+      <point x="-11.833333333333329" y="16.0" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.Plasma">
+      <point x="15.0" y="-16.0" />
+      <point x="231.09920634920638" y="440.0" />
+      <point x="430.9365079365079" y="440.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9592833876221498" x="410.5" y="297.0" />
+  <SelectedNodes>
+    <node>Graphics.Plasma</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

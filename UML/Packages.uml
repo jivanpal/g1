@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="439.99076535443726" y="651.96875">Views</node>
+    <node x="407.7407653544373" y="519.96875">AI</node>
+    <node x="640.7147608901515" y="143.96875">Physics</node>
+    <node x="607.8925138663419" y="11.96875">Geometry</node>
+    <node x="732.5282281520563" y="377.96875">Graphics</node>
+    <node x="381.3257575757575" y="377.96875">ClientNetworking</node>
+    <node x="111.3257575757575" y="377.96875">ServerNetworking</node>
+    <node x="869.5282281520563" y="519.96875">Utils</node>
+    <node x="244.2683627570347" y="519.96875">Menus</node>
+    <node x="93.22879971590908" y="225.96875">GeneralNetworking</node>
+    <node x="0.0" y="758.96875">javafx</node>
+    <node x="181.0" y="758.96875">Audio</node>
+    <node x="572.7425138663419" y="225.96875">GameLogic</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Graphics" target="Graphics">
+      <point x="-38.5" y="16.0" />
+      <point x="771.0282281520563" y="439.96875" />
+      <point x="702.5282281520563" y="439.96875" />
+      <point x="702.5282281520563" y="393.96875" />
+      <point x="-77.0" y="-0.0" />
+    </edge>
+    <edge source="GeneralNetworking" target="GeneralNetworking">
+      <point x="-83.27272727272725" y="16.0" />
+      <point x="124.45607244318182" y="287.96875" />
+      <point x="63.228799715909076" y="287.96875" />
+      <point x="63.228799715909076" y="241.96875" />
+      <point x="-114.5" y="-0.0" />
+    </edge>
+    <edge source="Physics" target="Geometry">
+      <point x="-36.0" y="-16.0" />
+      <point x="676.7147608901515" y="123.96875" />
+      <point x="696.4425138663419" y="123.96875" />
+      <point x="8.049999999999955" y="16.0" />
+    </edge>
+    <edge source="Menus" target="GeneralNetworking">
+      <point x="-8.75" y="-16.0" />
+      <point x="305.5183627570347" y="469.96875" />
+      <point x="32.99999999999994" y="469.96875" />
+      <point x="32.99999999999994" y="337.96875" />
+      <point x="207.72879971590908" y="337.96875" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="GameLogic" target="Geometry">
+      <point x="-34.0" y="-16.0" />
+      <point x="623.7425138663419" y="205.96875" />
+      <point x="621.9925138663419" y="205.96875" />
+      <point x="621.9925138663419" y="113.96875" />
+      <point x="680.342513866342" y="113.96875" />
+      <point x="-8.049999999999955" y="16.0" />
+    </edge>
+    <edge source="ServerNetworking" target="ServerNetworking">
+      <point x="-55.0" y="16.0" />
+      <point x="166.3257575757575" y="429.96875" />
+      <point x="91.3257575757575" y="429.96875" />
+      <point x="91.3257575757575" y="401.96875" />
+      <point x="-110.0" y="8.0" />
+    </edge>
+    <edge source="ClientNetworking" target="GeneralNetworking">
+      <point x="54.00000000000006" y="-16.0" />
+      <point x="543.3257575757575" y="337.96875" />
+      <point x="311.81970880681814" y="337.96875" />
+      <point x="104.09090909090907" y="16.0" />
+    </edge>
+    <edge source="Graphics" target="Physics">
+      <point x="0.0" y="-16.0" />
+      <point x="809.5282281520563" y="357.96875" />
+      <point x="820.5282281520563" y="357.96875" />
+      <point x="820.5282281520563" y="195.96875" />
+      <point x="770.3147608901515" y="195.96875" />
+      <point x="57.60000000000002" y="16.0" />
+    </edge>
+    <edge source="Geometry" target="Geometry">
+      <point x="-72.45" y="16.0" />
+      <point x="615.942513866342" y="63.96875" />
+      <point x="587.8925138663419" y="63.96875" />
+      <point x="587.8925138663419" y="35.96875" />
+      <point x="-80.5" y="8.0" />
+    </edge>
+    <edge source="Views" target="Graphics">
+      <point x="25.312500000000057" y="-16.0" />
+      <point x="532.8032653544374" y="611.96875" />
+      <point x="848.0282281520563" y="611.96875" />
+      <point x="38.5" y="16.0" />
+    </edge>
+    <edge source="GameLogic" target="GameLogic">
+      <point x="-72.85714285714286" y="16.0" />
+      <point x="584.885371009199" y="277.96875" />
+      <point x="552.7425138663419" y="277.96875" />
+      <point x="552.7425138663419" y="252.63541666666669" />
+      <point x="-85.0" y="10.666666666666686" />
+    </edge>
+    <edge source="ServerNetworking" target="GeneralNetworking">
+      <point x="0.0" y="-16.0" />
+      <point x="221.3257575757575" y="357.96875" />
+      <point x="249.3651633522727" y="357.96875" />
+      <point x="41.636363636363626" y="16.0" />
+    </edge>
+    <edge source="Menus" target="Menus">
+      <point x="-17.5" y="16.0" />
+      <point x="296.7683627570347" y="581.96875" />
+      <point x="214.2683627570347" y="581.96875" />
+      <point x="214.2683627570347" y="527.96875" />
+      <point x="-70.0" y="-8.0" />
+    </edge>
+    <edge source="Menus" target="Graphics">
+      <point x="61.25" y="-16.0" />
+      <point x="375.5183627570347" y="499.96875" />
+      <point x="822.3615614853896" y="499.96875" />
+      <point x="12.833333333333371" y="16.0" />
+    </edge>
+    <edge source="Views" target="GameLogic">
+      <point x="8.437500000000057" y="-16.0" />
+      <point x="515.9282653544374" y="601.96875" />
+      <point x="682.0282281520563" y="601.96875" />
+      <point x="24.285714285714334" y="16.0" />
+    </edge>
+    <edge source="Views" target="Utils">
+      <point x="59.06250000000006" y="-16.0" />
+      <point x="566.5532653544374" y="631.96875" />
+      <point x="932.0282281520563" y="631.96875" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking" target="ClientNetworking">
+      <point x="-81.0" y="16.0" />
+      <point x="408.3257575757575" y="429.96875" />
+      <point x="361.3257575757575" y="429.96875" />
+      <point x="361.3257575757575" y="401.96875" />
+      <point x="-108.0" y="8.0" />
+    </edge>
+    <edge source="Menus" target="GameLogic">
+      <point x="43.75" y="-16.0" />
+      <point x="358.0183627570347" y="489.96875" />
+      <point x="659.9231601731601" y="489.96875" />
+      <point x="659.9231601731601" y="357.96875" />
+      <point x="657.7425138663419" y="357.96875" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Views" target="AI">
+      <point x="-25.312499999999943" y="-16.0" />
+      <point x="482.1782653544373" y="611.96875" />
+      <point x="434.7407653544373" y="611.96875" />
+      <point x="-27.0" y="16.0" />
+    </edge>
+    <edge source="Views" target="Menus">
+      <point x="-59.06249999999994" y="-16.0" />
+      <point x="448.4282653544373" y="631.96875" />
+      <point x="331.7683627570347" y="631.96875" />
+      <point x="17.5" y="16.0" />
+    </edge>
+    <edge source="Views" target="Views">
+      <point x="-33.75" y="16.0" />
+      <point x="473.74076535443726" y="703.96875" />
+      <point x="419.99076535443726" y="703.96875" />
+      <point x="419.99076535443726" y="675.96875" />
+      <point x="-67.5" y="8.0" />
+    </edge>
+    <edge source="Graphics" target="Geometry">
+      <point x="22.0" y="-16.0" />
+      <point x="831.5282281520563" y="113.96875" />
+      <point x="728.6425138663419" y="113.96875" />
+      <point x="40.25" y="16.0" />
+    </edge>
+    <edge source="Menus" target="Views">
+      <point x="52.5" y="16.0" />
+      <point x="366.7683627570347" y="621.96875" />
+      <point x="465.3032653544373" y="621.96875" />
+      <point x="-42.18749999999994" y="-16.0" />
+    </edge>
+    <edge source="GameLogic" target="Physics">
+      <point x="34.0" y="-16.0" />
+      <point x="691.7425138663419" y="205.96875" />
+      <point x="683.9147608901516" y="205.96875" />
+      <point x="-28.799999999999955" y="16.0" />
+    </edge>
+    <edge source="Menus" target="Geometry">
+      <point x="-61.25" y="-16.0" />
+      <point x="253.0183627570347" y="499.96875" />
+      <point x="0.0" y="499.96875" />
+      <point x="0.0" y="93.96875" />
+      <point x="648.1425138663419" y="93.96875" />
+      <point x="-40.25" y="16.0" />
+    </edge>
+    <edge source="Graphics" target="GameLogic">
+      <point x="-66.0" y="-16.0" />
+      <point x="743.5282281520563" y="357.96875" />
+      <point x="706.3139424377705" y="357.96875" />
+      <point x="48.571428571428555" y="16.0" />
+    </edge>
+    <edge source="Menus" target="ClientNetworking">
+      <point x="8.75" y="-16.0" />
+      <point x="323.0183627570347" y="469.96875" />
+      <point x="516.3257575757575" y="469.96875" />
+      <point x="27.000000000000057" y="16.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5240443896424167" x="497.5" y="395.50000000000006" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

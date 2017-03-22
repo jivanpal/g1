@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Menus</OriginalElement>
+  <nodes>
+    <node x="292.875" y="502.0">Menus.MainMenu</node>
+    <node x="210.6711309523809" y="0.0">Menus.HoverMouseListener</node>
+    <node x="130.34885204081633" y="246.0">Menus.SettingsPanel</node>
+    <node x="248.1711309523809" y="82.0">Menus.MyButton</node>
+    <node x="215.34885204081633" y="410.0">Menus.ButtonPanel</node>
+    <node x="136.00000000000003" y="164.0">Menus.ControlsPanel</node>
+    <node x="335.2478741496598" y="164.0">Menus.LobbyPanel</node>
+    <node x="0.0" y="579.0">Menus.PanelsManager</node>
+    <node x="0.0" y="164.0">Menus.SoundPanel</node>
+    <node x="424.9978741496598" y="246.0">Menus.JoinPanel</node>
+    <node x="303.9978741496598" y="328.0">Menus.PlayPanel</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Menus.SettingsPanel" target="Menus.ControlsPanel">
+      <point x="0.0" y="-16.0" />
+      <point x="194.84885204081633" y="221.0" />
+      <point x="201.50000000000003" y="221.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Menus.MyButton">
+      <point x="0.0" y="-16.0" />
+      <point x="275.8488520408163" y="385.0" />
+      <point x="293.4978741496598" y="385.0" />
+      <point x="293.4978741496598" y="144.0" />
+      <point x="299.6711309523809" y="144.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="Menus.PlayPanel">
+      <point x="-14.25" y="16.0" />
+      <point x="377.9978741496598" y="221.0" />
+      <point x="359.4978741496598" y="221.0" />
+      <point x="359.4978741496598" y="303.0" />
+      <point x="366.4978741496598" y="303.0" />
+      <point x="12.5" y="-16.0" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="Menus.MyButton">
+      <point x="0.0" y="-16.0" />
+      <point x="392.2478741496598" y="144.0" />
+      <point x="329.09970238095235" y="144.0" />
+      <point x="29.428571428571445" y="16.0" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Menus.PlayPanel">
+      <point x="40.333333333333314" y="-16.0" />
+      <point x="316.18218537414964" y="385.0" />
+      <point x="328.9978741496598" y="385.0" />
+      <point x="-25.0" y="16.0" />
+    </edge>
+    <edge source="Menus.MainMenu" target="Menus.ButtonPanel">
+      <point x="-26.75" y="-16.0" />
+      <point x="319.625" y="472.0" />
+      <point x="245.59885204081633" y="472.0" />
+      <point x="-30.25" y="16.0" />
+    </edge>
+    <edge source="Menus.SettingsPanel" target="Menus.MainMenu">
+      <point x="-32.25" y="16.0" />
+      <point x="162.59885204081633" y="303.0" />
+      <point x="193.37500000000003" y="303.0" />
+      <point x="193.37500000000003" y="482.0" />
+      <point x="301.7916666666667" y="482.0" />
+      <point x="-44.583333333333314" y="-16.0" />
+    </edge>
+    <edge source="Menus.PlayPanel" target="Menus.MyButton">
+      <point x="-37.5" y="-16.0" />
+      <point x="316.4978741496598" y="303.0" />
+      <point x="318.6228741496598" y="303.0" />
+      <point x="318.6228741496598" y="144.0" />
+      <point x="314.38541666666663" y="144.0" />
+      <point x="14.714285714285722" y="16.0" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Menus.SettingsPanel">
+      <point x="-40.33333333333334" y="-16.0" />
+      <point x="235.51551870748298" y="385.0" />
+      <point x="207.00000000000003" y="385.0" />
+      <point x="207.00000000000003" y="303.0" />
+      <point x="227.09885204081633" y="303.0" />
+      <point x="32.25" y="16.0" />
+    </edge>
+    <edge source="Menus.JoinPanel" target="Menus.LobbyPanel">
+      <point x="-25.5" y="-16.0" />
+      <point x="450.4978741496598" y="221.0" />
+      <point x="434.9978741496598" y="221.0" />
+      <point x="42.75" y="16.0" />
+    </edge>
+    <edge source="Menus.SettingsPanel" target="Menus.MyButton">
+      <point x="43.0" y="-16.0" />
+      <point x="237.84885204081633" y="221.0" />
+      <point x="277.5" y="221.0" />
+      <point x="277.5" y="144.0" />
+      <point x="284.9568452380952" y="144.0" />
+      <point x="-14.714285714285722" y="16.0" />
+    </edge>
+    <edge source="Menus.MyButton" target="Menus.HoverMouseListener">
+      <point x="0.0" y="-16.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Menus.ControlsPanel" target="Menus.MyButton">
+      <point x="0.0" y="-16.0" />
+      <point x="201.50000000000003" y="144.0" />
+      <point x="270.24255952380946" y="144.0" />
+      <point x="-29.428571428571445" y="16.0" />
+    </edge>
+    <edge source="Menus.JoinPanel" target="Menus.MainMenu">
+      <point x="25.5" y="16.0" />
+      <point x="501.4978741496598" y="482.0" />
+      <point x="390.95833333333337" y="482.0" />
+      <point x="44.58333333333332" y="-16.0" />
+    </edge>
+    <edge source="Menus.PlayPanel" target="Menus.MainMenu">
+      <point x="25.0" y="16.0" />
+      <point x="378.9978741496598" y="462.0" />
+      <point x="355.2916666666667" y="462.0" />
+      <point x="8.916666666666686" y="-16.0" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Menus.MainMenu">
+      <point x="30.25" y="16.0" />
+      <point x="306.0988520408163" y="462.0" />
+      <point x="337.4583333333333" y="462.0" />
+      <point x="-8.916666666666686" y="-16.0" />
+    </edge>
+    <edge source="Menus.JoinPanel" target="Menus.MyButton">
+      <point x="25.5" y="-16.0" />
+      <point x="501.4978741496598" y="134.0" />
+      <point x="343.813988095238" y="134.0" />
+      <point x="44.14285714285711" y="16.0" />
+    </edge>
+    <edge source="Menus.SettingsPanel" target="Menus.SoundPanel">
+      <point x="-43.0" y="-16.0" />
+      <point x="151.84885204081633" y="221.0" />
+      <point x="58.0" y="221.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Menus.SoundPanel" target="Menus.MyButton">
+      <point x="0.0" y="-16.0" />
+      <point x="58.0" y="134.0" />
+      <point x="255.5282738095238" y="134.0" />
+      <point x="-44.14285714285714" y="16.0" />
+    </edge>
+    <edge source="Menus.PlayPanel" target="Menus.JoinPanel">
+      <point x="37.5" y="-16.0" />
+      <point x="391.4978741496598" y="303.0" />
+      <point x="450.4978741496598" y="303.0" />
+      <point x="-25.5" y="16.0" />
+    </edge>
+    <edge source="Menus.PlayPanel" target="Menus.LobbyPanel">
+      <point x="-12.5" y="-16.0" />
+      <point x="341.4978741496598" y="303.0" />
+      <point x="347.6711309523809" y="303.0" />
+      <point x="347.6711309523809" y="221.0" />
+      <point x="349.4978741496598" y="221.0" />
+      <point x="-42.75" y="16.0" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="Menus.MainMenu">
+      <point x="14.25" y="16.0" />
+      <point x="406.4978741496598" y="221.0" />
+      <point x="414.4978741496598" y="221.0" />
+      <point x="414.4978741496598" y="472.0" />
+      <point x="373.125" y="472.0" />
+      <point x="26.75" y="-16.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9334389857369255" x="263.5" y="305.5" />
+  <SelectedNodes>
+    <node>Menus.MainMenu</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
