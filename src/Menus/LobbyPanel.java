@@ -38,7 +38,7 @@ public class LobbyPanel extends JPanel implements Observer {
 	private boolean leftServer;
 	private boolean isHost;
 	private GridBagConstraints c;
-	public static JPanel lobbypanel;
+	private static JPanel lobbypanel;
 
 	/**
 	 * Constructor of the panel.
@@ -79,7 +79,7 @@ public class LobbyPanel extends JPanel implements Observer {
 						"An error has occured while creating the game. Please check your connection!",
 						"Create Game Error", JOptionPane.ERROR_MESSAGE);
 				PlayPanel ppanel = new PlayPanel(menu);
-				menu.changeFrame(ppanel);
+				PanelsManager.changePanel(lobbypanel, ppanel, null);
 				client.setLobby(null);
 			}
 		}
@@ -123,7 +123,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			}
 		}
 		client.addLobbyObserver(this);
-		JPanel ppanel = displayplayers();
+		JPanel ppanel = displayPlayers();
 		ppanel.setOpaque(false);
 		this.lpanel = ppanel;
 		add(ppanel, c);
@@ -144,7 +144,7 @@ public class LobbyPanel extends JPanel implements Observer {
 	 * 
 	 * @return A JPanel with the lobby information
 	 */
-	public JPanel displayplayers() {
+	private JPanel displayPlayers() {
 		int number = 0;
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 4));
@@ -189,6 +189,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			kick.addActionListener(e -> {
 				client.send(new Action(client.getLobby().getID(), player, players[position], Action.KICK));
 			});
+			
 			if (isHost) {
 				if (p == null) {
 					kick.setEnabled(false);
@@ -245,10 +246,12 @@ public class LobbyPanel extends JPanel implements Observer {
 			client.setLobby(null);
 			return;
 		} else if (inlobby && l.getHost().nickname.equals(player.nickname) && !l.started) {
+			System.out.println("Is a host");
 			player.isHost = true;
 			client.deleteLobbyObserver(this);
+			JPanel templpanel = LobbyPanel.lobbypanel;
 			LobbyPanel lpanel = new LobbyPanel(menu, l.getID(), player, true);
-			PanelsManager.changePanel(LobbyPanel.lobbypanel, lpanel, null);
+			PanelsManager.changePanel(templpanel, lpanel, null);
 		} else if (l.started) {
 			int pos = 0;
 			while (pos < players.length) {
@@ -289,7 +292,8 @@ public class LobbyPanel extends JPanel implements Observer {
 
 			}
 			this.remove(lpanel);
-			JPanel newpanel = displayplayers();
+			JPanel newpanel = displayPlayers();
+			
 			newpanel.setOpaque(false);
 			c.anchor = GridBagConstraints.CENTER;
 			this.add(newpanel, c);

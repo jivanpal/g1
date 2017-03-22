@@ -51,7 +51,7 @@ public class SoundPanel extends JPanel {
 			if (confirm == JOptionPane.YES_OPTION) {
 				GameOptions.resetSoundValuesToDefaults();
 				SoundPanel panel = new SoundPanel(menu);
-				menu.changeFrame(panel);
+				PanelsManager.changePanel(spanel, panel, resettodefault);
 			}
 			requestFocus();
 		});
