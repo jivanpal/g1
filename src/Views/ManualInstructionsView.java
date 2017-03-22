@@ -127,23 +127,23 @@ public class ManualInstructionsView extends JPanel {
 
 	private String getInstructionStringByPos(int pos) {
 		String replenish = "";
-		if (pos < 7) {
+		if (pos < 6) {
 			replenish = "replenish Shields";
-		} else if (pos < 14) {
+		} else if (pos < 12) {
 			replenish = "replenish Fuel";
-		} else if (pos < 21) {
+		} else if (pos < 18) {
 			replenish = "replenish Laser Blaster";
-		} else if (pos < 28) {
+		} else if (pos < 24) {
 			replenish = "replenish Plasma Blaster";
-		} else if (pos < 35) {
+		} else if (pos < 30) {
 			replenish = "replenish Torpedo Weapon";
-		} else if (pos < 42) {
+		} else if (pos < 36) {
 			replenish = "turn on the heating";
-		} else if (pos < 49) {
+		} else if (pos < 42) {
 			replenish = "empty your bins";
-		} else if (pos < 56) {
+		} else if (pos < 48) {
 			replenish = "clean the windscreen";
-		} else if (pos < 63) {
+		} else if (pos < 54) {
 			replenish = "refill the coffee machine";
 		} else {
 			replenish = "do the laundry";
