@@ -20,7 +20,6 @@ import GameLogic.GameOptions;
  */
 public class PlayPanel extends JPanel {
 	private MainMenu menu;
-	public Client client;
 	public static JPanel ppanel;
 	/**
 	 * Constructor for the Panel. Displays the buttons which can be navigated to
@@ -34,7 +33,6 @@ public class PlayPanel extends JPanel {
 		this.menu = menu;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		this.client = menu.client;
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.weightx = 0.5;
 		c.weighty = 0.5;
@@ -42,11 +40,6 @@ public class PlayPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtostart = new MyButton("Back");
 		backtostart.addActionListener(e -> {
-			
-			//ButtonPanel bpanel = new ButtonPanel(menu);
-			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			//menu.changeFrame(bpanel);
-			//bpanel.makeUI();
 			PanelsManager.changePanel(ppanel, ButtonPanel.menuPanel, backtostart);
 		});
 		add(backtostart, c);
@@ -56,12 +49,11 @@ public class PlayPanel extends JPanel {
 		add(bpanel, c);
 		
 		c.anchor = GridBagConstraints.NORTH;
-		JLabel name = new JLabel("<html><b><font size='16'>Player:     <font color='#66e0ff'>" + client.name + "</font></font></b></html>");
+		JLabel name = new JLabel("<html><b><font size='16'>Player:     <font color='#66e0ff'>" + menu.client.name + "</font></font></b></html>");
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
 		setOpaque(false);
-		//setBackground(Color.BLACK);
 		PlayPanel.ppanel = this;
 	}
 	
@@ -74,16 +66,12 @@ public class PlayPanel extends JPanel {
 		panel.setLayout(new BorderLayout());
 		MyButton creategame = new MyButton("Create Game");
 		creategame.addActionListener(e -> {
-			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			LobbyPanel lpanel = new LobbyPanel(menu, null, null, true);
-			//menu.changeFrame(lpanel);
 			PanelsManager.changePanel(ppanel, lpanel, creategame);
 		});
 		MyButton joingame = new MyButton("Join Game");
 		joingame.addActionListener(e -> {
-			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			JoinPanel jlpanel = new JoinPanel(menu);
-			//menu.changeFrame(jlpanel);
 			PanelsManager.changePanel(ppanel, jlpanel, joingame);
 		});
 		panel.add(creategame, BorderLayout.NORTH);
