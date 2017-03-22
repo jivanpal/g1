@@ -95,7 +95,7 @@ public class Poly3D {
 			poly.light = 0.3;
 		}
 		
-		double fadeIn = (avgDistance - MapContainer.MAP_SIZE * 1.5) / 100;
+		double fadeIn = (avgDistance - MapContainer.MAP_SIZE * 0.9) / 100;
 		
 		if(fadeIn < 0){
 			fadeIn = 1;
