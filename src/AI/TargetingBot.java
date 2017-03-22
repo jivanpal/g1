@@ -1,5 +1,6 @@
 package AI;
 
+import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
 import Geometry.*;
 import Physics.*;
@@ -28,7 +29,7 @@ public class TargetingBot extends AbstractBot {
     /**
      * The distance within which to attempt to fire at the target, in meters.
      */
-    private final double IN_RANGE_DISTANCE = 100;
+    private final double IN_RANGE_DISTANCE = MapContainer.MAP_SIZE * 0.4;
     
 /// CONSTRUCTOR
     
