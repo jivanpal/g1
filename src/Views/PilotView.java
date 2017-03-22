@@ -157,7 +157,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
                 if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
                     System.out.println("Mouse clicked outside of chat");
                     parentFrame.requestFocusInWindow();
-
+                    
                     if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
                         gameClient.send("fireWeapon1");
                     } else if (mouseEvent.getButton() == MouseEvent.BUTTON2) {
@@ -165,7 +165,6 @@ public class PilotView extends AbstractPlayerView implements Observer {
                     } else if (mouseEvent.getButton() == MouseEvent.BUTTON3) {
                         gameClient.send("fireWeapon3");
                     }
-
                 } else {
                     System.out.println("Mouse clicked inside chat");
                 }
@@ -463,23 +462,16 @@ public class PilotView extends AbstractPlayerView implements Observer {
     public void update(Observable observable, Object o) {
         super.update(observable, o);
 
-        if (!UIinitialised) {
-            try {
-                initialiseUI();
-                UIinitialised = true;
-            } catch (Exception e) {
-                // Oh well.
-                System.out.println("Update Error: " + e.getMessage());
-                System.out.println("Localised message: " + e.getLocalizedMessage());
-                e.printStackTrace();
-            }
-        } else {
+        try {
             Map m = gameClient.getMap();
             speedometerView.updateSpeedLevel(currentShip.getVelocity().length());
 
             if(engAI != null) {
                 radarView.updateMap(m);
             }
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	// Seems the UI hasn't been initialised yet
         }
 
         for(String inst : pressedKeys){

@@ -13,7 +13,12 @@ import ClientNetworking.GameHost.KeySequence;
 import GameLogic.Map;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
-
+/**
+ * 
+ * @author Svetlin
+ * The in-game client class
+ * Automatically connects to the server and opens ports 
+ */
 public class GameClient
 {
 	private int port = GameVariables.PORT;
@@ -22,19 +27,24 @@ public class GameClient
 	private LinkedBlockingQueue<Object> queue = new LinkedBlockingQueue<Object>();
 	GameClientReceiver receiver;
 	GameClientSender sender;
-	
+	/**
+	 * 
+	 * @param lobby the game lobby
+	 * @param player the name of the player(for this client)
+	 */
 	public GameClient(Lobby lobby, Player player)
 	{
+		//get the host's address
 		this.hostname = lobby.getHostAddress();
 		System.out.println("Left for loop");
 		System.out.println(hostname + " CLIENT ");
 		
-		// Open sockets:
+		// Create the socket and the streams
 		ObjectOutputStream toServer = null;
 		ObjectInputStream fromServer = null;
 		Socket server = null;
 
-		// get a socket and the 2 streams
+		// get the socket and the streams
 		try
 		{
 			server = new Socket(hostname,port);
@@ -44,6 +54,7 @@ public class GameClient
 			toServer.writeObject(player.nickname);
 			fromServer = new ObjectInputStream(server.getInputStream());
 			System.err.println("Created `fromServer` and 'toServer'");
+			//receive the KeySequences from the server
 			keySequence = (KeySequence)fromServer.readObject();
 		}
 		catch (UnknownHostException e)
@@ -61,6 +72,7 @@ public class GameClient
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		//Create receiver and sender threads and start them
 		sender = new GameClientSender(toServer,queue);
 		receiver = new GameClientReceiver(fromServer);
 		sender.start();
@@ -68,22 +80,42 @@ public class GameClient
 		System.out.println("end of gameclient const");
 	}
 
+	/**
+	 * Queue an object to be sent
+	 * @param o the object
+	 */
 	public synchronized void send(Object o)
 	{
 		queue.offer(o);
 	}
+	/**
+	 * retrieve the map from the receiver
+	 * @return the map
+	 */
 	public Map getMap()
 	{
 		 return receiver.getMap();
-	};
+	}
+	/**
+	 * add an observer to the map
+	 * @param o the observer
+	 */
 	public void addObserver(Observer o)
 	{
 	    receiver.setObserver(o);
 	}
+	/**
+	 * Get the last message received
+	 * @return the message
+	 */
 	public String getMessage()
 	{
 		 return receiver.getMessage();
 	};
+	/**
+	 * Add an observer to the chatContainer
+	 * @param o the Observer
+	 */
 	public void addChatObserver(Observer o)
 	{
 	    receiver.addChatObserver(o);

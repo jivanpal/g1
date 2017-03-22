@@ -9,13 +9,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import AI.TargetingBot;
 import ClientNetworking.IpGetter;
 import GameLogic.Ship;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 import Physics.Body;
 import ServerNetworking.ClientTable;
-
+/**
+ * The game server, ran locally on the host's machine
+ * @author Svetlin
+ */
 public class GameHost extends Thread
 {
 	private final int PORT = 1273;
@@ -29,9 +33,14 @@ public class GameHost extends Thread
 	MapContainer gameMap;
 	
 	int[] shipIds;
-	
+	/**
+	 * Constructor, used to generate all things we need before the thread starts running - including things that would slow down the 
+	 * machine before it starts accepting connections  
+	 * @param l the lobby
+	 */
 	public GameHost(Lobby l)
 	{
+		//initialise the map and 
 		clientTable  = new ClientTable();
 		gameMap = new MapContainer();
 		
@@ -68,13 +77,16 @@ public class GameHost extends Thread
 			else
 			{
 				System.out.println("Added ship "+Body.nextID);
-				//if(p[i]==null)
-				//{
-				//	gameMap.gameMap.getBotManager().bots().add(new );
-				//}
 				shipIds[i/2]=gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
+				if(p[i]==null)
+				{
+					gameMap.gameMap.addBot(new TargetingBot(gameMap.gameMap,shipIds[i/2],0));
+				}
+				
 			}
 		}
+		int botId = gameMap.addShip(2, "", "");
+		gameMap.gameMap.addBot(new TargetingBot(gameMap.gameMap,botId,0));
 		gameMap.generateTerrain();
 		System.out.println("I HAVE STARTED THE SERVER");
 	}

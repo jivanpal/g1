@@ -1,5 +1,6 @@
 package AI;
 
+import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
 import Geometry.*;
 import Physics.*;
@@ -23,12 +24,12 @@ public class TargetingBot extends AbstractBot {
      * The angle within which to attempt to fire at the target, in radians.
      */
     // The argument of Math.toRadians is, of course, given in degrees here.
-    private final double IN_RANGE_ANGLE = Math.toRadians(20);
+    private final double IN_RANGE_ANGLE = Math.toRadians(40);
     
     /**
      * The distance within which to attempt to fire at the target, in meters.
      */
-    private final double IN_RANGE_DISTANCE = 100;
+    private final double IN_RANGE_DISTANCE = MapContainer.MAP_SIZE * 0.4;
     
 /// CONSTRUCTOR
     
@@ -70,40 +71,39 @@ public class TargetingBot extends AbstractBot {
 // Evolution
     
     public void update() {
-        // Get the direction vector towards the target in the global basis.
-        Vector pathToTarget = getMap().shortestPath(ship.getID(), target.getID());
+        if (ship.getVelocity().length() < 1) {
+            ship.setVelocity(ship.getFrontVector().scale(2));
+        }
+        // Get the direction vector towards the target in the local basis.
+        Vector pathToTarget = ship.getBasis().localiseDirection(getMap().shortestForwardPath(ship.getID(), target.getID()));
         
         // If the target is in range, fire.
-        if (
-                ship.getFrontVector().angleWith(pathToTarget) < IN_RANGE_ANGLE
-            &&  pathToTarget.length() < IN_RANGE_DISTANCE
-        ) {
-            ship.fire(Weapon.Type.LASER);
+        if (Vector.J.angleWith(pathToTarget) < IN_RANGE_ANGLE    &&     pathToTarget.length() < IN_RANGE_DISTANCE) {
+            getMap().add(ship.fire(Weapon.Type.LASER));
         }
         
-        // Get some useful vectors for heuristics, described in the bot's local basis.
-        Vector desiredDirection = ship.getBasis().localiseDirection(pathToTarget);
+        // Pilot the ship accordingly.
         
-    // Pilot the ship accordingly.
-        
-        if (desiredDirection.getX() > 0) {
+        if (pathToTarget.getX() > 0) {
             ship.rotateRight();
-        } else if (desiredDirection.getX() < 0) {
+        } else if (pathToTarget.getX() < 0) {
             ship.rotateLeft();
         }
         
-        if (desiredDirection.getZ() > 0) {
+        if (pathToTarget.getZ() > 0) {
             ship.pitchUp();
-        } else if (desiredDirection.getZ() < 0) {
+        } else if (pathToTarget.getZ() < 0) {
             ship.pitchDown();
         }
         
         // Get ETA until target lies in the bot's x-z plane, in seconds.
-        double timeToTarget = desiredDirection.getY() / ship.getVelocity().getY();
+        double timeToTarget = pathToTarget.getY() / ship.getVelocity().getY();
         
-        if (timeToTarget > 5) {
+        if (timeToTarget < 2) {
             ship.thrustReverse();
         } else if (timeToTarget < 4) {
+            // Do nothing
+        } else if (timeToTarget < 10) {
             ship.thrustForward();
         }
     }

@@ -486,7 +486,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 		case SHIELD_REPLENISH:
 			System.out.println("Sending shieldReplenish");
 			shieldAllowedNum--;
-			if (shieldAllowedNum <= 0 && (shieldSequenceNum < SHIELD_MAX_NUM)) {
+			if (shieldAllowedNum <= 0 && (shieldSequenceNum <= SHIELD_MAX_NUM)) {
 				keyManager.deactivate();
 				shieldAllowedNum = ALLOWED_DEFAULT;
 				shieldSequenceNum += 1;
@@ -501,7 +501,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 			System.out.println("Sending fuelReplenish");
 
 			fuelAllowedNum--;
-			if (fuelAllowedNum <= 0 && (fuelSequenceNum < FUEL_MAX_NUM)) {
+			if (fuelAllowedNum <= 0 && (fuelSequenceNum <= FUEL_MAX_NUM)) {
 				keyManager.deactivate();
 				fuelAllowedNum = ALLOWED_DEFAULT;
 				fuelSequenceNum += 1;
@@ -516,7 +516,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 			System.out.println("Sending laserReplenish");
 
 			laserAllowedNum--;
-			if (laserAllowedNum <= 0 && (laserSequenceNum < LASER_MAX_NUM)) {
+			if (laserAllowedNum <= 0 && (laserSequenceNum <= LASER_MAX_NUM)) {
 				keyManager.deactivate();
 				laserAllowedNum = ALLOWED_DEFAULT;
 				laserSequenceNum += 1;
@@ -531,7 +531,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 			System.out.println("Sending torpedoReplenish");
 
 			torpedoAllowedNum--;
-			if (torpedoAllowedNum <= 0 && (torpedoSequenceNum < TORPEDO_MAX_NUM)) {
+			if (torpedoAllowedNum <= 0 && (torpedoSequenceNum <= TORPEDO_MAX_NUM)) {
 				keyManager.deactivate();
 				torpedoAllowedNum = ALLOWED_DEFAULT;
 				torpedoSequenceNum += 1;
@@ -546,7 +546,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 			System.out.println("Sending plasmaReplenish");
 
 			plasmaAllowedNum--;
-			if (plasmaAllowedNum <= 0 && (plasmaSequenceNum < PLASMA_MAX_NUM)) {
+			if (plasmaAllowedNum <= 0 && (plasmaSequenceNum <= PLASMA_MAX_NUM)) {
 				keyManager.deactivate();
 				plasmaAllowedNum = ALLOWED_DEFAULT;
 				plasmaSequenceNum += 1;
