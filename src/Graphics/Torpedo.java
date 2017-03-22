@@ -5,6 +5,11 @@ import java.awt.Color;
 import Geometry.Rotation;
 import Geometry.Vector;
 
+/**
+ * A graphical model of a torpedo bullet
+ * @author Dominic
+ *
+ */
 public class Torpedo{
 	
 	private double x, y, z, size;
@@ -39,6 +44,13 @@ public class Torpedo{
 	private double colourFactor;
 	
 	
+	/**
+	 * Creates a new graphical representation of a torpedo
+	 * @param v The position of the torpedo
+	 * @param size The size of the torpedo
+	 * @param orientation The orientation of the torpedo
+	 * @param timeToLive The time the torpedo has left to live
+	 */
 	public Torpedo(Vector v, double size, Rotation orientation, double timeToLive) {
 		this.x = v.getX();
 		this.y = v.getY();

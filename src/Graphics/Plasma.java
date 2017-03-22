@@ -5,6 +5,11 @@ import java.awt.Color;
 import Geometry.Rotation;
 import Geometry.Vector;
 
+/**
+ * Creates a graphical model of a plasma projectile
+ * @author Dominic
+ *
+ */
 public class Plasma{
 	
 	private double x, y, z, size;
@@ -21,6 +26,12 @@ public class Plasma{
 	private Rotation orientation;
 	
 	
+	/**
+	 * Creates a new plasma projectile
+	 * @param v The position of the projectile
+	 * @param size The size of the projectile
+	 * @param orientation The orientation of the projectile
+	 */
 	public Plasma(Vector v, double size, Rotation orientation) {
 		this.x = v.getX();
 		this.y = v.getY();
@@ -31,7 +42,7 @@ public class Plasma{
 		createPoints();
 		
 		for(int i = 0; i < sides.length; i++){
-			colors[i] = Color.BLUE;
+			colors[i] = Color.CYAN;
 		}
 		
 		GraphicalModel g = new GraphicalModel(vertices, sides, colors);
