@@ -150,13 +150,22 @@ public class PilotView extends AbstractPlayerView implements Observer {
             }
         });
 
-        this.addMouseListener(new MouseListener() {
+        parentFrame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
                 if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
                     System.out.println("Mouse clicked outside of chat");
                     parentFrame.requestFocusInWindow();
+
+                    if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
+                        gameClient.send("fireWeapon1");
+                    } else if (mouseEvent.getButton() == MouseEvent.BUTTON2) {
+                        gameClient.send("fireWeapon2");
+                    } else if (mouseEvent.getButton() == MouseEvent.BUTTON3) {
+                        gameClient.send("fireWeapon3");
+                    }
+
                 } else {
                     System.out.println("Mouse clicked inside chat");
                 }

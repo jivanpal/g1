@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import ClientNetworking.IpGetter;
 import GameLogic.Ship;
-import GameLogic.TargetingBot;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 import Physics.Body;
