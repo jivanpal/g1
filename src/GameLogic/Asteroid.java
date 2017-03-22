@@ -5,7 +5,7 @@ import Geometry.*;
 
 /**
  * Class which represents an asteroid in the game
- * @author Ivan Panchev
+ * @author Jivan
  *
  */
 public class Asteroid extends Body {

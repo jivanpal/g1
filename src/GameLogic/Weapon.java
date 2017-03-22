@@ -19,6 +19,7 @@ public class Weapon implements Serializable {
     private Resource    ammo;
     private double      cooldown;
     private double      remainingCooldown;
+    private int 		reloadAmount;
     
 /// CONSTRUCTOR
     /**
@@ -36,12 +37,14 @@ public class Weapon implements Serializable {
         Bullet  bullet,
         int     maxAmmo,
         int     initAmmo,
+        int 	reloadAmount,
         double  cooldown
     ) {
         this.parent         = parent;
         this.bullet         = bullet;
         this.ammo           = new Resource(maxAmmo, initAmmo);
         this.cooldown       = cooldown;
+        this.reloadAmount   = reloadAmount;
     }
     
 /// INSTANCE METHODS
@@ -53,7 +56,7 @@ public class Weapon implements Serializable {
     }
     
     public void increaseAmmo() {
-    	ammo.increase();
+    	ammo.alter(reloadAmount);
     }
     
     public Resource getAmmoResource() {

@@ -13,6 +13,7 @@ public class Plasma extends Weapon {
     private static final int    MAX_AMMO        = 50;
     private static final int    INIT_AMMO       = 30;
     private static final double COOLDOWN        = 1.5;  // s
+    private static final int 	RELOAD_AMOUNT   = 1;
     
 // Bullet constants
     private static final double MASS            = 0.3;  // kg
@@ -40,6 +41,7 @@ public class Plasma extends Weapon {
             BULLET,
             MAX_AMMO,
             INIT_AMMO,
+            RELOAD_AMOUNT,
             COOLDOWN
         );
     }

@@ -6,8 +6,8 @@ import javax.sound.sampled.*;
 import GameLogic.GameOptions;
 
 /**
- * Class which play the audio in the game.Only .wav files are
- * supported!
+ * Class which play the audio in the game.
+ * Only .wav files are * supported!
  * 
  * @author Ivan Panchev
  *
@@ -35,23 +35,27 @@ public class AudioPlayer {
 	private static FloatControl musicVolumeControl;
 	private static FloatControl soundEffectVolumeControl;
 	
+	//As  FloatControl.Type.MASTER_GAIN is working on Windows and Mac, but not on Linux
+	//and FloatControl.Type.VOLUME is working just on Linux
+	//I have implemented this to switch between the different type of controls
 	public static boolean isUsingMaster;
 
 	/**
 	 * Method which plays a non-looping sound effect
-	 * 
-	 * @param sound
-	 *            The directory to the file to be played
+	 * @param sound The directory to the file to be played
 	 */
 	public static synchronized void playSoundEffect(String sound) {
 		try {
+			//creates audio stream from file
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sound).getAbsoluteFile());
 			AudioFormat format = audioInputStream.getFormat();
 			DataLine.Info info = new DataLine.Info(Clip.class, format);
-
+			
+			//initiates the audio clip from the stream
 			soundEffectClip = (Clip) AudioSystem.getLine(info);
 			soundEffectClip.open(audioInputStream);
 			
+			//plays sound with the current volume power
 			try {
 				soundEffectVolumeControl = (FloatControl) soundEffectClip.getControl(FloatControl.Type.MASTER_GAIN);
 				isUsingMaster = true;
@@ -76,20 +80,23 @@ public class AudioPlayer {
 	}
 
 	/**
-	 * Method which plays a looping music -- good for game menus
+	 * Method which plays a looping music -- good for game menus and in-game music
 	 * 
-	 * @param sound
-	 *            The directory to the file to be played
+	 * @param sound The directory to the file to be played
 	 */
 	public static synchronized void playMusic(String sound) {
 		try {
+			
+			//creates audio stream from file
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(sound).getAbsoluteFile());
 			AudioFormat format = audioInputStream.getFormat();
 			DataLine.Info info = new DataLine.Info(Clip.class, format);
 
+			//initiates the audio clip from the stream
 			musicClip = (Clip) AudioSystem.getLine(info);
 			musicClip.open(audioInputStream);
-
+			
+			//plays sound with the current volume power
 			try {
 				musicVolumeControl = (FloatControl) musicClip.getControl(FloatControl.Type.MASTER_GAIN);
 				isUsingMaster = true;

@@ -1,7 +1,8 @@
 package Views;
 
 /**
- * Created by james on 25/02/17.
+ * Created by James on 25/02/17.
+ * @author James Brown
  */
 public interface KeySequenceResponder {
     void correctKeyPress();
