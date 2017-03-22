@@ -62,7 +62,10 @@ public class ButtonPanel extends JPanel {
 		System.out.println(Global.SCREEN_WIDTH + ", " + Global.SCREEN_WIDTH);
 		Random r = new Random();
 		for (int i = 0; i < 50; i++) {
-			map.add(Asteroid.random(map.getDimensions()));
+			Asteroid a = new Asteroid(new Vector(r.nextDouble() * map.getDimensions().getX(),
+					r.nextDouble() * map.getDimensions().getY(), r.nextDouble() * map.getDimensions().getZ()),
+					new Rotation(r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2));
+			map.add(a);
 
 //			boolean overlaps = true;
 //			while (overlaps) {
