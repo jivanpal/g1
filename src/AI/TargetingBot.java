@@ -23,7 +23,7 @@ public class TargetingBot extends AbstractBot {
      * The angle within which to attempt to fire at the target, in radians.
      */
     // The argument of Math.toRadians is, of course, given in degrees here.
-    private final double IN_RANGE_ANGLE = Math.toRadians(20);
+    private final double IN_RANGE_ANGLE = Math.toRadians(40);
     
     /**
      * The distance within which to attempt to fire at the target, in meters.
