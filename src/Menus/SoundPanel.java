@@ -26,15 +26,11 @@ import GameLogic.GameOptions;
  */
 
 public class SoundPanel extends JPanel {
-	private MainMenu menu;
-	public Client client;
 	public ArrayList<JSlider> sliders;
 	public static JPanel spanel;
 
 	public SoundPanel(MainMenu menu) {
 		super();
-		this.menu = menu;
-		this.client = menu.client;
 		sliders = new ArrayList<JSlider>();
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -45,9 +41,6 @@ public class SoundPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtomenu = new MyButton("Back");
 		backtomenu.addActionListener(e -> {
-			//SettingsPanel spanel = new SettingsPanel(menu);
-			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			//menu.changeFrame(spanel);
 			PanelsManager.changePanel(spanel, SettingsPanel.spanel, backtomenu);
 		});
 		add(backtomenu, c);
@@ -70,14 +63,13 @@ public class SoundPanel extends JPanel {
 		add(spanel, c);
 
 		c.anchor = GridBagConstraints.NORTH;
-		JLabel name = new JLabel("<html><b><font size='16'>Player:     <font color='#66e0ff'>" + client.name
+		JLabel name = new JLabel("<html><b><font size='16'>Player:     <font color='#66e0ff'>" + menu.client.name
 				+ "</font></font></b></html>");
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
 		setOpaque(false);
 		SoundPanel.spanel = this;
-		//setBackground(Color.BLACK);
 	}
 
 	/**
@@ -92,15 +84,6 @@ public class SoundPanel extends JPanel {
 		panel = createSwL(panel, "Master Volume");
 		panel = createSwL(panel, "Music Volume");
 		panel = createSwL(panel, "Sound Effects");
-
-		// MyCheckBox muteMusic = new MyCheckBox("Mute Music", sliders);
-		// JLabel blank = new JLabel("");
-		// blank.setOpaque(false);
-		// MyCheckBox muteEffects = new MyCheckBox("Mute Sound Effects",
-		// sliders);
-		// panel.add(muteMusic);
-		// panel.add(blank);
-		// panel.add(muteEffects);
 		return panel;
 	}
 
@@ -151,7 +134,6 @@ public class SoundPanel extends JPanel {
 		}
 
 		slider.setPaintTicks(true);
-		// slider.setForeground(Color.RED);
 		slider.setBackground(Color.BLACK);
 		slider.setOpaque(true);
 		slider.setPreferredSize(new Dimension(200, 50));
