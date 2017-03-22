@@ -79,7 +79,7 @@ public class TargetingBot extends AbstractBot {
         
         // If the target is in range, fire.
         if (Vector.J.angleWith(pathToTarget) < IN_RANGE_ANGLE    &&     pathToTarget.length() < IN_RANGE_DISTANCE) {
-            ship.fire(Weapon.Type.LASER);
+            getMap().add(ship.fire(Weapon.Type.LASER));
         }
         
         // Pilot the ship accordingly.

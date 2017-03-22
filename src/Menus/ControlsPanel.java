@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -53,6 +54,7 @@ public class ControlsPanel extends JPanel {
 		bpanel.setOpaque(false);
 		add(bpanel, c);
 		c.anchor = GridBagConstraints.SOUTH;
+		c.insets = new Insets(0,0,50,0);
 		MyButton apply = new MyButton("Apply");
 		apply.addActionListener(e -> {
 			changeButtons(false);
@@ -63,6 +65,7 @@ public class ControlsPanel extends JPanel {
 			requestFocus();
 		});
 		add(apply, c);
+		c.insets = new Insets(0,0,0,0);
 		MyButton resettodefault = new MyButton("Reset");
 		resettodefault.addActionListener(e -> {
 			int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to reset key bindings?",

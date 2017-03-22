@@ -157,7 +157,8 @@ public class Screen extends JPanel{
 	                    for(Vector v : map.getAllPositions(b.getPosition())){
 	                    	Point newPos = Calculations.calcPos(viewFrom, viewTo, v);
 	                    	if(newPos.z > 0){
-	                    		g.drawString("" + b.getID(), (int)(newPos.x + GameLogic.Global.SCREEN_WIDTH/2), (int)(newPos.y + GameLogic.Global.SCREEN_HEIGHT/2));
+	                    		Vector distance = viewFrom.minus(v);
+	                    		g.drawString("" + (int) distance.length(), (int)(newPos.x + GameLogic.Global.SCREEN_WIDTH/2), (int)(newPos.y + GameLogic.Global.SCREEN_HEIGHT/2));
 	                    	}
 	                    }
 	                }

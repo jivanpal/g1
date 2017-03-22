@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.Random;
 
 import javax.swing.JLabel;
@@ -92,6 +94,8 @@ public class ButtonPanel extends JPanel {
 		menuPanel.setBounds(rect);
 		PanelsManager.UILayers.add(menuPanel, JLayeredPane.PALETTE_LAYER);
 		ButtonPanel.menuPanel = menuPanel;
+		PanelsManager.currentPanel = menuPanel;
+		PanelsManager.screen = screen;
 		Timer timer = new Timer(30, e -> {
 			ship.rotate(new Rotation(Vector.K.scale(-0.001)));
 			ship.update();

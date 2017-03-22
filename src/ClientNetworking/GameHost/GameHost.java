@@ -65,7 +65,7 @@ public class GameHost extends Thread
 		}
 		
 		Player[] p = lobby.getPlayers();
-		// add the ships, add dummy bodies for non existant ones and then delete them
+		// add the ships, add skip ID's for non existant ones and then delete them
 		shipIds = new int[4];
 		for (int i = 0; i < Lobby.LOBBY_SIZE; i += 2)
 		{
@@ -85,8 +85,9 @@ public class GameHost extends Thread
 				
 			}
 		}
-		int botId = gameMap.addShip(2, "", "");
-		gameMap.gameMap.addBot(new TargetingBot(gameMap.gameMap,botId,0));
+		//testing
+	//	int botId = gameMap.addShip(2, "", "");
+	//	gameMap.gameMap.addBot(new TargetingBot(gameMap.gameMap,botId,0));
 		gameMap.generateTerrain();
 		System.out.println("I HAVE STARTED THE SERVER");
 	}
@@ -101,12 +102,14 @@ public class GameHost extends Thread
 				Socket socket = serverSocket.accept();
 				System.out.println("SOMEONE JOINED");
 
+				//create streams
 				ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
 				toClient.flush();
 
 				ObjectInputStream fromClient = new ObjectInputStream(socket.getInputStream());
 				String clientName = "";
-
+				
+				//read the client's name
 				try
 				{
 					clientName = (String) fromClient.readObject();
@@ -114,9 +117,12 @@ public class GameHost extends Thread
 				{
 					e.printStackTrace();
 				}
-
+				
+				//get the client's position
 				int position = lobby.getPlayerPosByName(clientName);
+				//send the key sequences to the client
 				toClient.writeObject(keySequences.get(position / 2));
+				//check if the player was in the lobby
 				boolean gameShouldStart = false;
 				Player[] players = lobby.getPlayers();
 				int pos;
@@ -134,13 +140,17 @@ public class GameHost extends Thread
 					socket.close();
 				} else
 				{
+					//add the player to the table of clients
 					clientTable.add(clientName);
-
+					
+					//get the player's teammate's position
 					int tmId = position + (position % 2 == 0 ? 1 : -1);
+					//get the teammate's name 
 					String tmName = "";
 					if (lobby.getPlayers()[tmId] != null)
 						tmName = lobby.getPlayers()[tmId].nickname;
 
+					//start the receiver and sender threads for the client
 					GameHostReceiver clientInput = new GameHostReceiver(fromClient, gameMap, clientTable, position,clientName, tmName, shipIds[position/2], keySequences.get(position/2));
 					clientInput.start();
 
@@ -148,6 +158,7 @@ public class GameHost extends Thread
 					toClient.reset();
 					clientOutput.start();
 				}
+				//start the game clock
 				GameClock clock = new GameClock(clientTable, gameMap);
 				clock.start();
 			}
