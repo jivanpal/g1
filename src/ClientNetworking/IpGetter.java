@@ -11,7 +11,7 @@ import java.util.Enumeration;
 /**
  * 
  * @author Svetlin
- *	Retrieve the ip of the machine 
+ *	Retrieve the ip of the machine (untested for ipv6)
  */
 public class IpGetter
 {
