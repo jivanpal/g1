@@ -140,7 +140,7 @@ public class Client
 	 */
 	public void kick(Player presser,Player kicked)
 	{
-		clientQueue.offer(new Action(getLobby().getID(),presser,kicked,10));
+		clientQueue.offer(new Action(getLobby().getID(),presser,kicked,Action.KICK));
 	}
 	/**
 	 * Add an observer to the LobbyContainer in the receiver thread
