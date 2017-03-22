@@ -94,7 +94,7 @@ public class Poly3D {
 			poly.light = 0.3;
 		}
 		
-		double fadeIn = (avgDistance - 3000) / 100;
+		double fadeIn = (avgDistance - 2000) / 100;
 		
 		if(fadeIn < 0){
 			fadeIn = 1;
