@@ -2,22 +2,18 @@ package Menus;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.UIManager;
 
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
-import ClientNetworking.GameClient.GameVariables;
 import GameLogic.Asteroid;
 import GameLogic.GameOptions;
 import GameLogic.Global;
@@ -37,8 +33,6 @@ import Views.JLayeredPaneLayoutManager;
 
 public class ButtonPanel extends JPanel {
 	private MainMenu menu;
-	public Client client;
-	//private JLayeredPane UILayers;
 	public static JPanel menuPanel;
 
 	/**
@@ -51,8 +45,6 @@ public class ButtonPanel extends JPanel {
 	public ButtonPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
-		this.client = menu.client;
-		//this.UILayers = menu.getFrame().getLayeredPane();
 	}
 
 	public void makeUI() {
@@ -65,8 +57,6 @@ public class ButtonPanel extends JPanel {
 		Screen screen = new Screen("", true, false);
 		Map map = new Map(1000, 1000, 1000);
 		Ship ship = new Ship("", "");
-		//ship.setAngularVelocity(new Vector(0, 0, 0.05));
-		//ship.setVelocity(new Vector(0, 0, 0));
 		
 		map.add(ship);
 		System.out.println(Global.SCREEN_WIDTH + ", " + Global.SCREEN_WIDTH);
@@ -111,7 +101,7 @@ public class ButtonPanel extends JPanel {
 		bpanel.setOpaque(false);
 		menuPanel.add(bpanel, c);
 		JLabel title = new JLabel(
-				"<html>Space Flying 101<br><br>Welcome <font color='#66e0ff'>" + client.name + "</font></html>");
+				"<html>Space Flying 101<br><br>Welcome <font color='#66e0ff'>" + menu.client.name + "</font></html>");
 		title.setForeground(Color.WHITE);
 		title.setOpaque(false);
 		title.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
@@ -140,26 +130,13 @@ public class ButtonPanel extends JPanel {
 		JPanel panel = new JPanel();
 		MyButton play = new MyButton("Play");
 		play.addActionListener(e -> {
-			//UILayers.remove(menuPanel);
-			//PanelsManager.UILayers.removeAll();
 			PlayPanel ppanel = new PlayPanel(menu);
-			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			//menu.changeFrame(ppanel);
-			/*
-			Rectangle rect = new Rectangle(0, 0, Global.SCREEN_WIDTH, Global.SCREEN_HEIGHT);
-			ppanel.setBounds(rect);
-			UILayers.add(ppanel, JLayeredPane.PALETTE_LAYER);
-			UILayers.repaint();
-			UILayers.revalidate();
-			*/
 			PanelsManager.changePanel(menuPanel, ppanel, play);
 			Body.nextID = 0;
 
 		});
 		MyButton settings = new MyButton("Settings");
 		settings.addActionListener(e -> {
-			//UILayers.removeAll();
-			
 			SettingsPanel spanel = new SettingsPanel(menu);
 			PanelsManager.changePanel(menuPanel, spanel, settings);
 			Body.nextID = 0;

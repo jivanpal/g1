@@ -11,14 +11,12 @@ import Physics.*;
  */
 public class Weapon implements Serializable {
 /// CONSTANTS
-    private static final double SPAWN_SEPARATION = 0.01; // meters
+    public static final double SPAWN_SEPARATION = 0.01; // meters
     
 /// FIELDS
     private Ship        parent;
     private Bullet      bullet;
     private Resource    ammo;
-    private int         shieldDamage;
-    private int         shipDamage;
     private double      cooldown;
     private double      remainingCooldown;
     
@@ -31,9 +29,6 @@ public class Weapon implements Serializable {
      * @param initAmmo the initial number of bullets the the weapon holds.
      *      If this value exceeds `maxAmmo` or is negative, then `initAmmo`
      *      will be set to `maxAmmo`.
-     * @param shieldDamage the amount of damage that this weapon deals to a ship's shields.
-     * @param shipDamage the amount of damage that this weapon deals to the ship
-     *      directly when its shields are down.
      * @param cooldown the cooldown period for the weapon after each use, in seconds.
      */
     public Weapon(
@@ -41,15 +36,11 @@ public class Weapon implements Serializable {
         Bullet  bullet,
         int     maxAmmo,
         int     initAmmo,
-        int     shieldDamage,
-        int     shipDamage,
         double  cooldown
     ) {
         this.parent         = parent;
         this.bullet         = bullet;
         this.ammo           = new Resource(maxAmmo, initAmmo);
-        this.shieldDamage   = shieldDamage;
-        this.shipDamage     = shipDamage;
         this.cooldown       = cooldown;
     }
     
@@ -77,15 +68,7 @@ public class Weapon implements Serializable {
         return ammo.get();
     }
     
-    public int getShieldDamage() {
-        return shieldDamage;
-    }
-    
-    public int getShipDamage() {
-        return shipDamage;
-    }
-    
-     public double getCooldownPeriod() {
+    public double getCooldownPeriod() {
         return cooldown;
     }
     
