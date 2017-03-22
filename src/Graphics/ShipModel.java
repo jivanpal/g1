@@ -5,6 +5,11 @@ import java.awt.Color;
 import Geometry.Rotation;
 import Geometry.Vector;
 
+/**
+ * A graphical representation of a Ship
+ * @author Dominic
+ *
+ */
 public class ShipModel {
 	private double x, y, z, size;
 	private Vector[] vertices = new Vector[45];
@@ -50,9 +55,11 @@ public class ShipModel {
 	
 	
 	/**
-	 * Creates the new icosahedron, and adds it to the screen
+	 * Creates a new graphical representation of a ship, and adds it to the screen
 	 * @param v x, y and z coordinates of its position
 	 * @param size Size of the object
+	 * @param orientation The orientation of the object
+	 * @param teamNumber The number of the team piloting the ship. This affects the colour of their wing-tips
 	 */
 	public ShipModel(Vector v, double size, Rotation orientation, int teamNumber) {
 		this.x = v.getX();

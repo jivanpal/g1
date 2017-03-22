@@ -54,6 +54,9 @@ public class GraphicalModel {
 		screenTest();
 	}
 	
+	/**
+	 * Tests whether only part of the object is shown on the map
+	 */
 	public void screenTest(){
 		int notDrawCount = 0;
 		for(Poly3D p : polys){

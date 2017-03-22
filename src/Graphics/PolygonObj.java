@@ -51,7 +51,11 @@ public class PolygonObj {
 		}
 	}
 	
-	//Testing method
+	
+	/**
+	 * Tests whether the polygon should be drawn on the screen
+	 * @return Boolean stating whether the polygon is within the bounds of the screen
+	 */
 	private boolean screenTest(){
 		boolean onScreen = false;
 		for(int i = 0; i < p.xpoints.length; i++){

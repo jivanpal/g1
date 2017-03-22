@@ -5,6 +5,11 @@ import java.awt.Color;
 import Geometry.Rotation;
 import Geometry.Vector;
 
+/**
+ * A graphical representation of a laser bullet
+ * @author Dominic
+ *
+ */
 public class Laser{
 	
 	private double x, y, z, size;
@@ -17,6 +22,12 @@ public class Laser{
 	private Color[] colors = new Color[5];
 	private Rotation orientation;
 	
+	/**
+	 * Creates a new laser bullet
+	 * @param v The position of the bullet
+	 * @param size The size of the bullet
+	 * @param orientation The orientation of the bullet
+	 */
 	public Laser(Vector v, double size, Rotation orientation) {
 		this.x = v.getX();
 		this.y = v.getY();
