@@ -12,7 +12,7 @@ import Physics.Body;
 
 public class MapContainer {
 	public static int ASTEROID_NUMBER = 150;
-	public static final int MAP_SIZE = 2000;
+	public static final int MAP_SIZE = 1000;
 	public Map gameMap = new Map(MAP_SIZE, MAP_SIZE, MAP_SIZE);
 
 
@@ -51,13 +51,6 @@ public class MapContainer {
 					}
 				}
 			}
-
-			/*
-			 * boolean overlaps = false; for (int bID : gameMap.bodyIDs()) { if
-			 * (gameMap.overlaps(a.getID(), bID)) { overlaps = true; break; } }
-			 * 
-			 * if (overlaps) { i--; } else { gameMap.add(a); }
-			 */
 		}
 	}
 

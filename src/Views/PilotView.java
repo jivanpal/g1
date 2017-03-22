@@ -116,7 +116,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
             	if(GameOptions.checkIfKeyToBeSentToServer(keyEvent.getKeyCode())){
             		pressedKeys.add(getKeyCodeToInstruction(keyEvent.getKeyCode()));
             	}
-                if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
+                /*if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
                 	if(steeringWheelAngle != -Math.PI/4){
 	                    steeringWheelAngle = -Math.PI/4;
 	                    updateSteeringWheel();
@@ -126,7 +126,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
 	                    steeringWheelAngle = Math.PI/4;
 	                    updateSteeringWheel();
                 	}
-                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_BUTTON)) {
+                } else */if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_BUTTON)) {
                 	showManual();
    
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON) && instructions.isVisible()) {
@@ -143,20 +143,29 @@ public class PilotView extends AbstractPlayerView implements Observer {
             @Override
             public void keyReleased(KeyEvent keyEvent) {
             	pressedKeys.remove(getKeyCodeToInstruction(keyEvent.getKeyCode()));
-            	if(keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON) || keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)){
+            	/*if(keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON) || keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)){
             		steeringWheelAngle = 0;
                     updateSteeringWheel();
-            	}
+            	}*/
             }
         });
 
-        this.addMouseListener(new MouseListener() {
+        parentFrame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
                 if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
                     System.out.println("Mouse clicked outside of chat");
                     parentFrame.requestFocusInWindow();
+
+                    if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
+                        gameClient.send("fireWeapon1");
+                    } else if (mouseEvent.getButton() == MouseEvent.BUTTON2) {
+                        gameClient.send("fireWeapon2");
+                    } else if (mouseEvent.getButton() == MouseEvent.BUTTON3) {
+                        gameClient.send("fireWeapon3");
+                    }
+
                 } else {
                     System.out.println("Mouse clicked inside chat");
                 }

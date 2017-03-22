@@ -240,6 +240,7 @@ public class Screen extends JPanel{
                 }
                 else if(bClass == Bullet.class){
 //                	Vector path = map.shortestForwardPath(shipIndex, b.getID());
+                	Bullet bul = (Bullet) b;
                 	double distance = Integer.MAX_VALUE;
                 	Vector pos = Vector.ZERO;
                 	for(Vector v : map.getAllPositions(b.getPosition())){
@@ -248,7 +249,7 @@ public class Screen extends JPanel{
                 			pos = v;
                 		}
                 	}
-                    switch (((Bullet)b).type()) {
+                    switch (bul.type()) {
                     case LASER:
                         new Laser(pos, b.getRadius(), b.getOrientation());
                         break;
@@ -256,7 +257,7 @@ public class Screen extends JPanel{
                         new Plasma(pos, b.getRadius(), b.getOrientation());
                         break;
                     case TORPEDO:
-                        new Torpedo(pos, b.getRadius(), b.getOrientation());
+                        new Torpedo(pos, b.getRadius(), b.getOrientation(), bul.getTimeToLive());
                         break;
                     }
                 }

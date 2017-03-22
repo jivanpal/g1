@@ -2,6 +2,7 @@ package Graphics;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import ClientNetworking.GameHost.MapContainer;
 import GameLogic.Global;
 import Geometry.Vector;
 
@@ -94,7 +95,7 @@ public class Poly3D {
 			poly.light = 0.3;
 		}
 		
-		double fadeIn = (avgDistance - 2000) / 100;
+		double fadeIn = (avgDistance - MapContainer.MAP_SIZE * 0.9) / 100;
 		
 		if(fadeIn < 0){
 			fadeIn = 1;

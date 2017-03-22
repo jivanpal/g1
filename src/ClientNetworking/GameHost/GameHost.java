@@ -68,6 +68,10 @@ public class GameHost extends Thread
 			else
 			{
 				System.out.println("Added ship "+Body.nextID);
+				//if(p[i]==null)
+				//{
+				//	gameMap.gameMap.getBotManager().bots().add(new );
+				//}
 				shipIds[i/2]=gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
 			}
 		}

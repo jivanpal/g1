@@ -1,12 +1,13 @@
 package ClientNetworking;
 
+import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
-
+	
 /**
  * 
  * @author Svetlin
@@ -26,8 +27,16 @@ public class IpGetter
 				{
 					InetAddress ip = x.nextElement();
 					String str = ip.toString();
-					if(!str.contains(":") && !str.contains("/192.168.") && !str.equals("/127.0.0.1"))
+					if(ip instanceof Inet4Address)
+						if(!str.contains(":") && !str.contains("/192.168.") && !str.equals("/127.0.0.1"))
+						{
+							return ip;
+						}
+					else if(ip instanceof Inet6Address)
+					{
 						return ip;
+					}	
+						
 				}
 			}
 		} catch (SocketException e)
@@ -37,6 +46,7 @@ public class IpGetter
 		}
 		try
 		{
+			//System.out.println(java.net.Inet6Address.getAllByName("localhost")());
 			return Inet6Address.getLocalHost();
 		}
 		catch (UnknownHostException e)
