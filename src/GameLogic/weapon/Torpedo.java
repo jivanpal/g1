@@ -28,6 +28,7 @@ public class Torpedo extends Weapon {
         RADIUS,
         Vector.J.scale(SPEED),
         Vector.ZERO,
+        Weapon.Type.TORPEDO,
         SHIP_DAMAGE,
         SHIELD_DAMAGE,
         TIME_TO_LIVE
