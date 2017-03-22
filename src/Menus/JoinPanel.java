@@ -60,12 +60,12 @@ public class JoinPanel extends JPanel {
 		model.addColumn("Host");
 		model.addColumn("Players");
 		client.updateList();
-		keepupdating();
+		keepUpdating();
 		if (client.getLobbyList().getLobbies().length == 0) {
 			JOptionPane.showMessageDialog(this, "No lobbies are found!", "Lobbies Not Found Error",
 					JOptionPane.ERROR_MESSAGE);
 		} else {
-			repaintlobbies();
+			repaintLobbies();
 		}
 		table = new JTable(model);
 		table.setOpaque(true);
@@ -111,7 +111,7 @@ public class JoinPanel extends JPanel {
 	 * Waits for updates to the list until there's a lobby or 3 seconds have
 	 * passed
 	 */
-	public void keepupdating() {
+	private void keepUpdating() {
 		long starttime = System.currentTimeMillis();
 		while (client.getLobbyList().getLobbies().length == 0 && (System.currentTimeMillis() - starttime) < 3000) {
 
@@ -121,7 +121,7 @@ public class JoinPanel extends JPanel {
 	/**
 	 * Waits for updates to the list until 3 seconds have passed
 	 */
-	public void keepupdatingtime() {
+	private void keepUpdatingTime() {
 		long starttime = System.currentTimeMillis();
 		while (false || (System.currentTimeMillis() - starttime) < 3000) {
 
@@ -131,7 +131,7 @@ public class JoinPanel extends JPanel {
 	/**
 	 * Repaints the scrollpane with the updated lobby list
 	 */
-	public void repaintlobbies() {
+	private void repaintLobbies() {
 		lobbies = client.getLobbyList().getLobbies();
 		for (int i = model.getRowCount() - 1; i > -1; i--) {
 			model.removeRow(i);
@@ -157,7 +157,7 @@ public class JoinPanel extends JPanel {
 	 * @return A JPanel with Join, Refresh and Back to Play Menu buttons added
 	 *         to it
 	 */
-	public JPanel createButtons() {
+	private JPanel createButtons() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 
@@ -187,8 +187,8 @@ public class JoinPanel extends JPanel {
 		refresh.addActionListener(e -> {
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			client.updateList();
-			keepupdatingtime();
-			repaintlobbies();
+			keepUpdatingTime();
+			repaintLobbies();
 			
 		});
 		join.setPreferredSize(new Dimension(500, 50));
