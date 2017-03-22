@@ -16,7 +16,7 @@ public class Poly3D {
 	private Point calcPos;
 	PolygonObj poly;
 	public double avgDistance;
-	private boolean draw = true;
+	public boolean draw = true;
 	
 	
 	/**
@@ -48,15 +48,26 @@ public class Poly3D {
 		newX = new double[x.length];
 		newY = new double[x.length];
 		draw = true;
+		int notDrawCount = 0;
 		for(int i = 0; i < x.length; i++){
 			Vector p = new Vector(x[i], y[i], z[i]);
 			calcPos = Calculations.calcPos(Screen.viewFrom, Screen.viewTo, p);
 			newX[i] = calcPos.x + Global.SCREEN_WIDTH/2;
 			newY[i] = calcPos.y + Global.SCREEN_HEIGHT/2;
+			
 			if(calcPos.z < 0){
 				draw = false;
+				notDrawCount++;
 			}
 		}
+		
+//		if(notDrawCount != 0 && notDrawCount != 3){
+//			System.out.println("I am an incomplete asteroid: " + notDrawCount);
+//			for(int i = 0; i < newX.length; i++){
+//				System.out.println(i + " before: " + x[i] + ", " + y[i]);
+//				System.out.println(i + " after: " + newX[i] + ", " + newY[i]);
+//			}
+//		}
 		
 		lighting();
 		
@@ -74,13 +85,13 @@ public class Poly3D {
 				(lightPlane.v3.getY() * Screen.lightDir.getY()) + (lightPlane.v3.getZ() * Screen.lightDir.getZ()))
 				/(Math.sqrt(Screen.lightDir.getX() * Screen.lightDir.getX() + Screen.lightDir.getY() * Screen.lightDir.getY() + Screen.lightDir.getZ() * Screen.lightDir.getZ())));
 		
-		poly.light = 0.4 + 1 - Math.sqrt(Math.toDegrees(angle)/180);
+		poly.light = 0.3 + 1 - Math.sqrt(Math.toDegrees(angle)/180);
 		
 		if(poly.light > 1){
 			poly.light = 1;
 		}
-		if(poly.light < 0.4){
-			poly.light = 0.4;
+		if(poly.light < 0.3){
+			poly.light = 0.3;
 		}
 		
 		double fadeIn = (avgDistance - 3000) / 100;

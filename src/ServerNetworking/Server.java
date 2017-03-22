@@ -67,7 +67,6 @@ public class Server
 						{
 							i++;
 							taggedName = nickname + "#" + i;
-							System.out.println(taggedName);
 						}
 						else
 							break;
@@ -82,8 +81,7 @@ public class Server
 				}
 
 				clientTable.add(taggedName);
-				LinkedBlockingQueue<Object> queue = clientTable.getQueue(nickname);
-				System.out.println(nickname);
+				System.out.println(taggedName);
 
 				// We create and start new threads to read from the
 				// client(this one executes the commands):

@@ -43,6 +43,7 @@ public class Screen extends JPanel{
 	private int destructCount = 1;
 	private boolean crosshair;
 	private boolean debug = false;
+	private int asteroidCount = 0;
 	
 	/**
 	 * Creates a new Screen object
@@ -122,6 +123,9 @@ public class Screen extends JPanel{
 		for(Poly3D p : poly3Ds){
 			p.poly.drawPoly(g);
 		}
+		
+//		System.out.println("Predicted Polygons: " + asteroidCount * 4 * 27);
+//		System.out.println("Actual Number: " + poly3Ds.size());
 		
 		warningLight(g);
 		
@@ -206,6 +210,7 @@ public class Screen extends JPanel{
     private void createObjects() {
         poly3Ds.clear();
         int shipCount = 0;
+        asteroidCount = 0;
         for(Body b : map.bodies()) {
             if (!(shipIndex == null) && b.getID() != shipIndex) {
                 Class<? extends Body> bClass = b.getClass();
@@ -229,7 +234,7 @@ public class Screen extends JPanel{
                     for(Vector v : map.getAllPositions(b.getPosition())){
                     	new AsteroidModel(v, b.getRadius(), b.getOrientation());
                     }
-                    
+                    asteroidCount ++;
 //                    System.out.println(b.getID() + ": " + pos);
 //                	new AsteroidModel(pos, b.getRadius(), b.getOrientation());
                 }
@@ -243,7 +248,17 @@ public class Screen extends JPanel{
                 			pos = v;
                 		}
                 	}
-                    new Laser(pos, b.getRadius(), b.getOrientation());
+                    switch (((Bullet)b).type()) {
+                    case LASER:
+                        new Laser(pos, b.getRadius(), b.getOrientation());
+                        break;
+                    case PLASMA:
+                        new Plasma(pos, b.getRadius(), b.getOrientation());
+                        break;
+                    case TORPEDO:
+                        new Torpedo(pos, b.getRadius(), b.getOrientation());
+                        break;
+                    }
                 }
             }
         }
