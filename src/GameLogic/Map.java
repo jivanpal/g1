@@ -445,7 +445,7 @@ public class Map implements Serializable {
             
             for (int bID : bodyIDs()) {
                 Body b = get(bID);
-                Vector lineOfAction = shortestPathThisTick(aID, bID);
+                Vector lineOfAction = shortestPath(aID, bID);
                 
                 // If A and B are touching, then they rebound.
                 if (aID < bID && lineOfAction.length() < aRadius+ b.getRadius()) {
