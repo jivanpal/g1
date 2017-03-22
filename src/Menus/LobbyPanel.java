@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
@@ -99,6 +101,7 @@ public class LobbyPanel extends JPanel implements Observer {
 
 		if (ishost) {
 			c.anchor = GridBagConstraints.SOUTH;
+			c.insets = new Insets(0,0,50,0);
 			MyButton startgame = new MyButton("Start Game");
 			startgame.addActionListener(e -> {
 				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
@@ -112,6 +115,7 @@ public class LobbyPanel extends JPanel implements Observer {
 				}
 			});
 			add(startgame, c);
+			c.insets = new Insets(0,0,0,0);
 		}
 
 		c.anchor = GridBagConstraints.CENTER;
@@ -264,29 +268,29 @@ public class LobbyPanel extends JPanel implements Observer {
 			System.out.println("Pos: " + String.valueOf(pos % 2 == 0));
 
 			client.disconnect();
-
+			JFrame gameFrame = newFrame();
+			menu.getFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			menu.getFrame().dispatchEvent(new WindowEvent(menu.getFrame(), WindowEvent.WINDOW_CLOSING));
+			JPanel gameView;
 			if (pos % 2 == 0) // i.e. if player is pilot
 			{
 				System.out.println("Player is a pilot");
-				PilotView pv;
+				
 				if (players[pos + 1] == null) {
-					pv = new PilotView(client.name, gameClient, menu.getFrame(), true);
+					gameView= new PilotView(client.name, gameClient, gameFrame, true);
 				} else {
-					pv = new PilotView(client.name, gameClient, menu.getFrame(), false);
+					gameView = new PilotView(client.name, gameClient, gameFrame, false);
 				}
-				PanelsManager.removeAll();
 				System.out.println("Swapping to PilotView");
-				menu.changeFrame(pv);
-				menu.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
-			} else // else player is engineer
-			{
-				PanelsManager.removeAll();
+			} else { // else player is engineer
+				//PanelsManager.removeAll();
 				System.out.println("Player is an Engineer");
-				EngineerView eview = new EngineerView(client.name, gameClient, menu.getFrame());
+				gameView = new EngineerView(client.name, gameClient, gameFrame);
 				System.out.println("Swapping to EngineerView");
-				menu.changeFrame(eview);
-				menu.getFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
 			}
+			gameFrame.setContentPane(gameView);
+			gameFrame.repaint();
+			gameFrame.revalidate();
 		} else {
 			while (lpanel == null) {
 
@@ -302,5 +306,15 @@ public class LobbyPanel extends JPanel implements Observer {
 			this.lpanel = newpanel;
 		}
 
+	}
+	
+	private JFrame newFrame() {
+		JFrame newFrame = new JFrame();
+		newFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		newFrame.setUndecorated(true);
+		newFrame.setVisible(true);
+		newFrame.repaint();
+		newFrame.revalidate();
+		return newFrame;
 	}
 }
