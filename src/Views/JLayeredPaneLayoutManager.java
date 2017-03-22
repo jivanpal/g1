@@ -5,7 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by james on 21/02/17.
+ * Created by James on 21/02/17.
+ * @author Stack Overflow
  */
 public class JLayeredPaneLayoutManager implements LayoutManager {
     private Map<Component, Rectangle> bounds = new LinkedHashMap<Component, Rectangle>();

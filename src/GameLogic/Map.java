@@ -448,9 +448,43 @@ public class Map implements Serializable {
                 Vector lineOfAction = shortestPath(aID, bID);
                 
                 // If A and B are touching, then they rebound.
-                if (aID < bID && lineOfAction.length() < aRadius+ b.getRadius()) {
-                    a.destroy();
-                    b.destroy();
+                if (aID < bID && lineOfAction.length() < aRadius + b.getRadius()) {
+                    // a.destroy();
+                    // b.destroy();
+                	
+                	if(a instanceof Ship) {
+                		Ship s = (Ship) a;
+                		
+                		if(b instanceof Bullet) {
+                			Bullet bullet = (Bullet) b;
+                			s.takeDamage(bullet.getShipDamage(), bullet.getShieldDamage());
+                			
+                			// Destroy the bullet now that it has collided
+                			b.destroy();
+                		} else if (b instanceof Asteroid) {
+                			s.takeDamage(Asteroid.DAMAGE_TO_SHIP, Asteroid.DAMAGE_TO_SHIP);
+                			
+                			// Destroy the asteroid
+                			b.destroy();
+                		} else if (b instanceof Ship) {
+                			s.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+                			
+                			// Make sure to damage the other ship as well
+                			Ship s2 = (Ship) b;
+                			((Ship) b).takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+                			
+                			if(s2.getResource(Resource.Type.HEALTH).get() <= 0) {
+                				s2.destroy();
+                			}
+                		}
+                		
+                		if(s.getResource(Resource.Type.HEALTH).get() <= 0) {
+                			s.destroy();
+                		}
+                		
+                	}
+                    
+                    
                     
 //                    // Components of velocities that lie on the line of action
 //                    Vector aVel = a.getVelocity().proj(lineOfAction);

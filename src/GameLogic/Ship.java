@@ -14,7 +14,9 @@ public class Ship extends Body{
 /// CONSTANTS
 	
 	private static final double MASS 	= 100;
-    private static final double RADIUS 	= 2;
+    private static final double RADIUS 	= 12;
+    
+    public static final int DAMAGE_TO_OTHER_SHIPS = 40;
 	
 	// Decay rates and velocity bounds
     private static final double NONPLANAR_SPIN_DECAY        = 0.95; // radians per radian
@@ -105,6 +107,19 @@ public class Ship extends Body{
         default:
             throw new RuntimeException("Apparently, you asked for a resource that doesn't exist, which is impossible. WOOPS!");
         }
+    }
+    
+    /**
+     * Makes the ship take appropriate damage to either its shields of health
+     * @param shipDamage The damage the ships health (hull)
+     * @param shieldDamage The damage to the ships shields
+     */
+    public void takeDamage(int shipDamage, int shieldDamage) {
+    	if(getResource(Resource.Type.SHIELDS).get() > 0) {
+    		getResource(Resource.Type.SHIELDS).alter(-shieldDamage);
+    	} else {
+    		getResource(Resource.Type.HEALTH).alter(-shipDamage);
+    	}
     }
     
 /// FIRING

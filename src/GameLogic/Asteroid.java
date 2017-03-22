@@ -11,6 +11,7 @@ import Geometry.*;
 public class Asteroid extends Body {
 	public static final int MASS = 10;
 	public static final int RADIUS = 2;
+	public static final int DAMAGE_TO_SHIP = 10;
 	
 	public Asteroid(Vector position, Rotation orientation) {
 		// Set parameters

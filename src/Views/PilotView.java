@@ -461,7 +461,8 @@ public class PilotView extends AbstractPlayerView implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         super.update(observable, o);
-
+        
+        if(gameActive) {
         try {
             Map m = gameClient.getMap();
             speedometerView.updateSpeedLevel(currentShip.getVelocity().length());
@@ -476,6 +477,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
 
         for(String inst : pressedKeys){
         	gameClient.send(inst);
+        }
         }
     }
 }

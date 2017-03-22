@@ -81,18 +81,18 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
                      * player and instantly win!
 */
 
-//                    // Congrats!
-//                    gameActive = false;
-//
-//                    AudioPlayer.playSoundEffect(AudioPlayer.VICTORY_EFFECT);
-//                    displayFullScreenMessage(WIN_GAME, 5000, Color.green);
-//
-//                    Timer t = new Timer(5000, actionEvent -> {
-//                        System.out.println("I'm going back to the main menu.");
-//                        swapToMainMenu();
-//                    });
-//                    t.setRepeats(false);
-//                    t.start();
+                    // Congrats!
+                    gameActive = false;
+
+                    AudioPlayer.playSoundEffect(AudioPlayer.VICTORY_EFFECT);
+                    displayFullScreenMessage(WIN_GAME, 5000, Color.green);
+
+                    Timer t = new Timer(5000, actionEvent -> {
+                        System.out.println("I'm going back to the main menu.");
+                        swapToMainMenu();
+                    });
+                    t.setRepeats(false);
+                    t.start();
                 } else if (hasLostGame(m)) {
                     // Commiserations
                     gameActive = false;
@@ -229,7 +229,9 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
      * Swap control back to the main menu of the game
      */
     protected void swapToMainMenu() {
-        MainMenu menu = new MainMenu(playerNickname);
+    	String nickname = playerNickname.split("#")[0];
+    	
+        MainMenu menu = new MainMenu(nickname);
         parentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         parentFrame.dispatchEvent(new WindowEvent(parentFrame, WindowEvent.WINDOW_CLOSING));
         AudioPlayer.stopMusic();

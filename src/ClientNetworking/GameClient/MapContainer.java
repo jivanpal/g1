@@ -11,7 +11,7 @@ import java.util.Observable;
  */
 public class MapContainer extends Observable
 {
-    private Map map = new Map(10000,10000,10000);
+    private Map map = new Map(1000, 1000, 500);
 	/**
 	 * An empty constructor
 	 */
