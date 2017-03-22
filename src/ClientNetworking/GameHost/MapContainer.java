@@ -31,7 +31,6 @@ public class MapContainer {
 	}
 
 	public void generateTerrain() {
-		Random r = new Random();
 		for (int i = 0; i < ASTEROID_NUMBER; i++) {
 			int aID = gameMap.add(Asteroid.random(gameMap.getDimensions()));
 
@@ -48,13 +47,6 @@ public class MapContainer {
 					}
 				}
 			}
-
-			/*
-			 * boolean overlaps = false; for (int bID : gameMap.bodyIDs()) { if
-			 * (gameMap.overlaps(a.getID(), bID)) { overlaps = true; break; } }
-			 * 
-			 * if (overlaps) { i--; } else { gameMap.add(a); }
-			 */
 		}
 	}
 

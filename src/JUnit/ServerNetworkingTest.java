@@ -13,6 +13,11 @@ import GeneralNetworking.Action;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 
+/**
+ * this fuctions correctly only when ran on locally hosted server
+ * @author Svetlin
+ *
+ */
 public class ServerNetworkingTest {
 	
 	Client cp1 = new Client("player1");
