@@ -70,40 +70,37 @@ public class TargetingBot extends AbstractBot {
 // Evolution
     
     public void update() {
-        // Get the direction vector towards the target in the global basis.
-        Vector pathToTarget = getMap().shortestPath(ship.getID(), target.getID());
+        // Get the direction vector towards the target in the local basis.
+        Vector pathToTarget = ship.getBasis().localiseDirection(getMap().shortestPath(ship.getID(), target.getID()));
         
         // If the target is in range, fire.
         if (
-                ship.getFrontVector().angleWith(pathToTarget) < IN_RANGE_ANGLE
+                Vector.J.angleWith(pathToTarget) < IN_RANGE_ANGLE
             &&  pathToTarget.length() < IN_RANGE_DISTANCE
         ) {
             ship.fire(Weapon.Type.LASER);
         }
         
-        // Get some useful vectors for heuristics, described in the bot's local basis.
-        Vector desiredDirection = ship.getBasis().localiseDirection(pathToTarget);
+        // Pilot the ship accordingly.
         
-    // Pilot the ship accordingly.
-        
-        if (desiredDirection.getX() > 0) {
+        if (pathToTarget.getX() > 0) {
             ship.rotateRight();
-        } else if (desiredDirection.getX() < 0) {
+        } else if (pathToTarget.getX() < 0) {
             ship.rotateLeft();
         }
         
-        if (desiredDirection.getZ() > 0) {
+        if (pathToTarget.getZ() > 0) {
             ship.pitchUp();
-        } else if (desiredDirection.getZ() < 0) {
+        } else if (pathToTarget.getZ() < 0) {
             ship.pitchDown();
         }
         
         // Get ETA until target lies in the bot's x-z plane, in seconds.
-        double timeToTarget = desiredDirection.getY() / ship.getVelocity().getY();
+        double timeToTarget = pathToTarget.getY() / ship.getVelocity().getY();
         
-        if (timeToTarget > 5) {
+        if (timeToTarget < 4) {
             ship.thrustReverse();
-        } else if (timeToTarget < 4) {
+        } else if (timeToTarget > 5) {
             ship.thrustForward();
         }
     }

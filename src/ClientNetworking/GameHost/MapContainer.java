@@ -26,8 +26,9 @@ public class MapContainer {
 					position < 4 ? 0 : gameMap.getDimensions().getY() / 2, 0));
 			gameMap.add(ship);
 			System.out.println("added ship" + position / 2);
+			return ship.getID();
 		}
-		return gameMap.size() - 1;
+		return -1;
 	}
 
 	public void generateTerrain() {

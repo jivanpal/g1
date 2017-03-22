@@ -25,7 +25,7 @@ public class EngineerAI implements Observer
 	private GameClient gameClient;
 	private String nickname;
 
-	private final int SHIP_PROXIMITY_MESSAGE_DISTANCE = 500;
+	private final int SHIP_PROXIMITY_MESSAGE_DISTANCE = ClientNetworking.GameHost.MapContainer.MAP_SIZE/3;
 	// cooldown ticks ~30 = 1 sec
 	private final int coolDown = 150;
 	private int cooldownTimer = coolDown;
