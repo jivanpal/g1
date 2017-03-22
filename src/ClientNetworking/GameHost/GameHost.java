@@ -167,4 +167,13 @@ public class GameHost extends Thread
 			System.err.println("IO error " + e.getMessage());
 		}
 	}
+	public void killServer()
+	{
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

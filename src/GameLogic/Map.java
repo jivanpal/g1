@@ -462,19 +462,27 @@ public class Map implements Serializable {
                 			// Destroy the bullet now that it has collided
                 			b.destroy();
                 		} else if (b instanceof Asteroid) {
-                			s.takeDamage(Asteroid.DAMAGE_TO_SHIP, Asteroid.DAMAGE_TO_SHIP);
-                			
-                			// Destroy the asteroid
-                			b.destroy();
+                			if(s.isAllowedToTakeDamageOnCollision()) {
+                				s.takeDamage(Asteroid.DAMAGE_TO_SHIP, Asteroid.DAMAGE_TO_SHIP);
+                				s.collided();
+                				
+                				// Destroy the asteroid
+                    			b.destroy();
+                			}	
                 		} else if (b instanceof Ship) {
-                			s.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+                			if(s.isAllowedToTakeDamageOnCollision()) {
+                				s.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+                				s.collided();
+                			}
                 			
                 			// Make sure to damage the other ship as well
                 			Ship s2 = (Ship) b;
-                			((Ship) b).takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
-                			
-                			if(s2.getResource(Resource.Type.HEALTH).get() <= 0) {
-                				s2.destroy();
+                			if(s2.isAllowedToTakeDamageOnCollision()){
+                				((Ship) b).takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+                				s2.collided();
+                				if(s2.getResource(Resource.Type.HEALTH).get() <= 0) {
+                					s2.destroy();
+                				}
                 			}
                 		}
                 		

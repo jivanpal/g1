@@ -41,6 +41,7 @@ public class LobbyPanel extends JPanel implements Observer {
 	private boolean isHost;
 	private GridBagConstraints c;
 	private static JPanel lobbypanel;
+	public static GameHost ghost;
 
 	/**
 	 * Constructor of the panel.
@@ -106,8 +107,8 @@ public class LobbyPanel extends JPanel implements Observer {
 			startgame.addActionListener(e -> {
 				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 				try {
-					GameHost game = new GameHost(client.getLobby());
-					game.start();
+					ghost = new GameHost(client.getLobby());
+					ghost.start();
 					client.send(new Action(client.getLobby().getID(), this.player, Action.START));
 
 				} catch (Exception e1) {
