@@ -13,6 +13,7 @@ public class Laser extends Weapon {
     private static final int    MAX_AMMO        = 100;
     private static final int    INIT_AMMO       = 100;
     private static final double COOLDOWN        = 0.1;  // s
+    private static final int 	RELOAD_AMOUNT   = 2;
     
 // Bullet constants
     private static final double MASS            = 0.1;  // kg
@@ -40,6 +41,7 @@ public class Laser extends Weapon {
             BULLET,
             MAX_AMMO,
             INIT_AMMO,
+            RELOAD_AMOUNT,
             COOLDOWN
         );
     }
