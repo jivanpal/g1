@@ -30,13 +30,16 @@ public class ServerNetworkingTest {
 		System.out.println(cp1.name+ " "+ l.getPlayers()[0].nickname);
 		cp1.send(l);
 		cp2.updateList();
-		try
+		while(cp2.getLobbyList().getLobbies()[0]==null)
 		{
-			Thread.sleep(1000);
-		} catch (InterruptedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try
+			{
+				Thread.sleep(50);
+			} catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		System.out.println(cp2.getLobbyList().getLobbies()[0].host);
 		assertEquals(cp1.name,cp2.getLobbyList().getLobbies()[0].host);
