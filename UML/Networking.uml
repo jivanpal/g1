@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ServerNetworking</OriginalElement>
+  <nodes>
+    <node x="179.64024621212093" y="184.0">ClientNetworking.LobbyContainer</node>
+    <node x="711.5508852108034" y="286.0">ClientNetworking.GameHost.GameHostSender</node>
+    <node x="8.25" y="184.0">GeneralNetworking.Action</node>
+    <node x="392.6402462121209" y="286.0">ServerNetworking.ServerReceiver</node>
+    <node x="516.9054100790512" y="408.0">ServerNetworking.Server</node>
+    <node x="43.64024621212093" y="286.0">ClientNetworking.ClientSender</node>
+    <node x="923.5991806653487" y="286.0">ClientNetworking.GameHost.GameClock</node>
+    <node x="564.5508852108034" y="286.0">ServerNetworking.ServerSender</node>
+    <node x="1179.3136569499338" y="184.0">ClientNetworking.GameHost.MapContainer</node>
+    <node x="187.0" y="485.0">ClientNetworking.ClientVariables</node>
+    <node x="506.78563899868243" y="82.0">GeneralNetworking.Lobby</node>
+    <node x="1580.88115530303" y="82.0">ClientNetworking.GameClient.ChatContainer</node>
+    <node x="638.8168889986823" y="184.0">GeneralNetworking.Invite</node>
+    <node x="0.0" y="485.0">ServerNetworking.ServerVariables</node>
+    <node x="303.36897233201574" y="0.0">GeneralNetworking.Player</node>
+    <node x="98.14024621212093" y="408.0">ClientNetworking.Client</node>
+    <node x="370.0" y="485.0">ClientNetworking.GameClient.GameVariables</node>
+    <node x="343.6402462121209" y="184.0">GeneralNetworking.LobbyList</node>
+    <node x="1676.63115530303" y="184.0">ClientNetworking.GameClient.GameClientSender</node>
+    <node x="1557.38115530303" y="286.0">ClientNetworking.GameClient.GameClient</node>
+    <node x="322.66214179841876" y="82.0">GeneralNetworking.LobbyInfo</node>
+    <node x="552.0" y="485.0">ClientNetworking.IpGetter</node>
+    <node x="1341.63115530303" y="184.0">ClientNetworking.GameHost.KeySequence</node>
+    <node x="1144.0947916666664" y="408.0">ClientNetworking.GameHost.GameHost</node>
+    <node x="1428.88115530303" y="82.0">ClientNetworking.GameClient.MapContainer</node>
+    <node x="1033.3136569499338" y="184.0">ClientNetworking.GameHost.ChatMessage</node>
+    <node x="1485.63115530303" y="184.0">ClientNetworking.GameClient.GameClientReceiver</node>
+    <node x="772.8136569499338" y="184.0">ServerNetworking.ClientTable</node>
+    <node x="185.64024621212093" y="286.0">ClientNetworking.ClientReceiver</node>
+    <node x="1053.5991806653487" y="286.0">ClientNetworking.GameHost.GameHostReceiver</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ClientNetworking.ClientReceiver" target="ClientNetworking.LobbyContainer">
+      <point x="-11.0" y="-16.0" />
+      <point x="240.64024621212093" y="246.0" />
+      <point x="215.64024621212093" y="246.0" />
+      <point x="-36.0" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="GeneralNetworking.Lobby">
+      <point x="-19.272727272727252" y="-16.0" />
+      <point x="1177.822064393939" y="358.0" />
+      <point x="913.0991806653487" y="358.0" />
+      <point x="913.0991806653487" y="154.0" />
+      <point x="576.4523056653491" y="154.0" />
+      <point x="31.66666666666663" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHostSender" target="ServerNetworking.ClientTable">
+      <point x="0.0" y="-16.0" />
+      <point x="788.5508852108034" y="266.0" />
+      <point x="821.3761569499338" y="266.0" />
+      <point x="-6.9375" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameClient.GameClient" target="ClientNetworking.GameHost.KeySequence">
+      <point x="-45.200000000000045" y="-16.0" />
+      <point x="1568.6811553030298" y="266.0" />
+      <point x="1453.23115530303" y="266.0" />
+      <point x="49.59999999999991" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ClientNetworking.GameHost.MapContainer">
+      <point x="9.63636363636374" y="-16.0" />
+      <point x="1206.73115530303" y="348.0" />
+      <point x="1292.280998847167" y="348.0" />
+      <point x="1292.280998847167" y="256.0" />
+      <point x="1261.8136569499338" y="256.0" />
+      <point x="16.5" y="16.0" />
+    </edge>
+    <edge source="ServerNetworking.Server" target="ServerNetworking.ServerReceiver">
+      <point x="-31.200000000000045" y="-16.0" />
+      <point x="524.7054100790511" y="388.0" />
+      <point x="460.6402462121209" y="388.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="ServerNetworking.Server" target="ServerNetworking.ServerSender">
+      <point x="15.600000000000023" y="-16.0" />
+      <point x="571.5054100790512" y="378.0" />
+      <point x="627.5508852108034" y="378.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameClock" target="ServerNetworking.ClientTable">
+      <point x="-27.5" y="-16.0" />
+      <point x="951.0991806653487" y="246.0" />
+      <point x="863.0011569499338" y="246.0" />
+      <point x="34.6875" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.LobbyContainer" target="GeneralNetworking.Lobby">
+      <point x="0.0" y="-16.0" />
+      <point x="251.64024621212093" y="154.0" />
+      <point x="513.1189723320158" y="154.0" />
+      <point x="-31.66666666666663" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameClient.GameClient" target="ClientNetworking.GameClient.GameClientSender">
+      <point x="22.59999999999991" y="-16.0" />
+      <point x="1636.48115530303" y="256.0" />
+      <point x="1716.88115530303" y="256.0" />
+      <point x="-40.25" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ClientNetworking.GameHost.KeySequence">
+      <point x="48.181818181818244" y="-16.0" />
+      <point x="1245.2766098484844" y="388.0" />
+      <point x="1429.3173624835306" y="388.0" />
+      <point x="24.799999999999955" y="16.0" />
+    </edge>
+    <edge source="GeneralNetworking.LobbyList" target="GeneralNetworking.LobbyInfo">
+      <point x="-25.25" y="-16.0" />
+      <point x="368.8902462121209" y="144.0" />
+      <point x="339.9954751317521" y="144.0" />
+      <point x="-34.666666666666686" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ClientNetworking.GameHost.GameHostReceiver">
+      <point x="0.0" y="-16.0" />
+      <point x="1197.0947916666664" y="338.0" />
+      <point x="1135.5991806653487" y="338.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.ClientReceiver" target="GeneralNetworking.LobbyList">
+      <point x="33.0" y="-16.0" />
+      <point x="284.6402462121209" y="256.0" />
+      <point x="360.47357954545424" y="256.0" />
+      <point x="-33.666666666666686" y="16.0" />
+    </edge>
+    <edge source="ServerNetworking.Server" target="GeneralNetworking.Lobby">
+      <point x="0.0" y="-16.0" />
+      <point x="555.9054100790512" y="388.0" />
+      <point x="550.1402462121209" y="388.0" />
+      <point x="6.333333333333371" y="16.0" />
+    </edge>
+    <edge source="GeneralNetworking.Lobby" target="GeneralNetworking.Player">
+      <point x="-19.0" y="-16.0" />
+      <point x="525.7856389986824" y="62.0" />
+      <point x="350.86897233201574" y="62.0" />
+      <point x="9.5" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHostReceiver" target="ClientNetworking.GameHost.MapContainer">
+      <point x="20.5" y="-16.0" />
+      <point x="1156.0991806653487" y="256.0" />
+      <point x="1228.8136569499338" y="256.0" />
+      <point x="-16.5" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameClock" target="ClientNetworking.GameHost.MapContainer">
+      <point x="27.5" y="-16.0" />
+      <point x="1006.0991806653487" y="246.0" />
+      <point x="1195.8136569499338" y="246.0" />
+      <point x="-49.5" y="16.0" />
+    </edge>
+    <edge source="GeneralNetworking.Action" target="GeneralNetworking.Player">
+      <point x="0.0" y="-16.0" />
+      <point x="47.75" y="52.0" />
+      <point x="312.86897233201574" y="52.0" />
+      <point x="-28.5" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameClient.GameClientReceiver" target="ClientNetworking.GameClient.ChatContainer">
+      <point x="21.375" y="-16.0" />
+      <point x="1592.50615530303" y="164.0" />
+      <point x="1614.38115530303" y="164.0" />
+      <point x="-33.5" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ClientNetworking.GameHost.GameHostSender">
+      <point x="-48.181818181818244" y="-16.0" />
+      <point x="1148.912973484848" y="388.0" />
+      <point x="788.5508852108034" y="388.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="ServerNetworking.ServerReceiver" target="GeneralNetworking.LobbyList">
+      <point x="-51.0" y="-16.0" />
+      <point x="409.6402462121209" y="266.0" />
+      <point x="427.80691287878756" y="266.0" />
+      <point x="33.66666666666663" y="16.0" />
+    </edge>
+    <edge source="GeneralNetworking.Invite" target="GeneralNetworking.Lobby">
+      <point x="0.0" y="-16.0" />
+      <point x="675.3168889986823" y="164.0" />
+      <point x="563.7856389986824" y="164.0" />
+      <point x="19.0" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.Client" target="ClientNetworking.ClientSender">
+      <point x="-14.799999999999983" y="-16.0" />
+      <point x="120.34024621212097" y="378.0" />
+      <point x="74.14024621212093" y="378.0" />
+      <point x="-30.5" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameClient.GameClient" target="ClientNetworking.GameClient.GameClientReceiver">
+      <point x="0.0" y="-16.0" />
+      <point x="42.75" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.Client" target="ClientNetworking.ClientReceiver">
+      <point x="14.800000000000011" y="-16.0" />
+      <point x="149.94024621212088" y="378.0" />
+      <point x="218.64024621212093" y="378.0" />
+      <point x="-33.0" y="16.0" />
+    </edge>
+    <edge source="ServerNetworking.Server" target="ServerNetworking.ClientTable">
+      <point x="31.200000000000045" y="-16.0" />
+      <point x="587.1054100790512" y="388.0" />
+      <point x="701.0508852108034" y="388.0" />
+      <point x="701.0508852108034" y="256.0" />
+      <point x="807.5011569499338" y="256.0" />
+      <point x="-20.8125" y="16.0" />
+    </edge>
+    <edge source="ServerNetworking.ServerReceiver" target="GeneralNetworking.LobbyInfo">
+      <point x="-17.0" y="-16.0" />
+      <point x="443.6402462121209" y="266.0" />
+      <point x="455.1402462121209" y="266.0" />
+      <point x="455.1402462121209" y="134.0" />
+      <point x="409.32880846508544" y="134.0" />
+      <point x="34.666666666666686" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ServerNetworking.ClientTable">
+      <point x="-38.545454545454504" y="-16.0" />
+      <point x="1158.549337121212" y="378.0" />
+      <point x="876.0508852108034" y="378.0" />
+      <point x="876.0508852108034" y="266.0" />
+      <point x="835.2511569499338" y="266.0" />
+      <point x="6.9375" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ClientNetworking.GameHost.GameClock">
+      <point x="-9.63636363636374" y="-16.0" />
+      <point x="1187.4584280303025" y="348.0" />
+      <point x="978.5991806653487" y="348.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="ServerNetworking.ServerReceiver" target="GeneralNetworking.Lobby">
+      <point x="17.0" y="-16.0" />
+      <point x="477.6402462121209" y="266.0" />
+      <point x="466.1402462121209" y="266.0" />
+      <point x="466.1402462121209" y="164.0" />
+      <point x="525.7856389986824" y="164.0" />
+      <point x="-19.0" y="16.0" />
+    </edge>
+    <edge source="ServerNetworking.ServerSender" target="ServerNetworking.ClientTable">
+      <point x="0.0" y="-16.0" />
+      <point x="627.5508852108034" y="246.0" />
+      <point x="793.6261569499338" y="246.0" />
+      <point x="-34.6875" y="16.0" />
+    </edge>
+    <edge source="ServerNetworking.ServerReceiver" target="ServerNetworking.ClientTable">
+      <point x="51.0" y="-16.0" />
+      <point x="511.6402462121209" y="236.0" />
+      <point x="779.7511569499338" y="236.0" />
+      <point x="-48.5625" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.Client" target="GeneralNetworking.Action">
+      <point x="-29.600000000000023" y="-16.0" />
+      <point x="105.5402462121209" y="388.0" />
+      <point x="28.0" y="388.0" />
+      <point x="-19.75" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHostReceiver" target="ServerNetworking.ClientTable">
+      <point x="-61.5" y="-16.0" />
+      <point x="1074.0991806653487" y="236.0" />
+      <point x="876.8761569499338" y="236.0" />
+      <point x="48.5625" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.ClientReceiver" target="GeneralNetworking.Player">
+      <point x="-33.0" y="-16.0" />
+      <point x="218.64024621212093" y="256.0" />
+      <point x="123.87047513175207" y="256.0" />
+      <point x="123.87047513175207" y="62.0" />
+      <point x="331.86897233201574" y="62.0" />
+      <point x="-9.5" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHostReceiver" target="ClientNetworking.GameHost.KeySequence">
+      <point x="61.5" y="-16.0" />
+      <point x="1197.0991806653487" y="266.0" />
+      <point x="1354.0311553030301" y="266.0" />
+      <point x="-49.59999999999991" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameClient.GameClientReceiver" target="ClientNetworking.GameClient.MapContainer">
+      <point x="-21.375" y="-16.0" />
+      <point x="1549.75615530303" y="164.0" />
+      <point x="1527.88115530303" y="164.0" />
+      <point x="33.0" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.ClientReceiver" target="GeneralNetworking.Action">
+      <point x="-55.0" y="-16.0" />
+      <point x="196.64024621212093" y="266.0" />
+      <point x="67.5" y="266.0" />
+      <point x="19.75" y="16.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHostReceiver" target="ClientNetworking.GameHost.ChatMessage">
+      <point x="-20.5" y="-16.0" />
+      <point x="1115.0991806653487" y="236.0" />
+      <point x="1096.3136569499338" y="236.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5258342303552206" x="919.0000000000001" y="258.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
