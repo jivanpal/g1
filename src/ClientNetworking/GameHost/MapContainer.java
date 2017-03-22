@@ -9,16 +9,30 @@ import GameLogic.Ship;
 import GameLogic.Weapon;
 import Geometry.*;
 import Physics.Body;
-
+/**
+ * The Server side map container
+ * @author Svetlin
+ *
+ */
 public class MapContainer {
+	//variables
 	public static int ASTEROID_NUMBER = 150;
 	public static final int MAP_SIZE = 1000;
 	public Map gameMap = new Map(MAP_SIZE, MAP_SIZE, MAP_SIZE);
 
-
+	/**
+	 * Empty Constructor
+	 */
 	public MapContainer() {
 	}
 
+	/**
+	 * Add a ship to the map, it's position based on the id of the player
+	 * @param position the position of the pilot in the lobby
+	 * @param pilot the pilot's name
+	 * @param engineer the engineer's name
+	 * @return the id of the ship in the map
+	 */
 	public int addShip(int position, String pilot, String engineer) {
 		if (position % 2 == 0) {
 			Ship ship = (new Ship(pilot, engineer));
@@ -30,7 +44,9 @@ public class MapContainer {
 		}
 		return -1;
 	}
-
+	/**
+	 * Generate the asteroids 
+	 */
 	public void generateTerrain() {
 		Random r = new Random();
 		for (int i = 0; i < ASTEROID_NUMBER; i++) {
@@ -62,7 +78,13 @@ public class MapContainer {
 		a.setOrientation(
 				new Rotation(r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2));
 	}
-
+	
+	/**
+	 * Update the map with an instruction from a client
+	 * @param str the instruction sent by the client
+	 * @param name the name of the client
+	 * @param ID the Id of the ship
+	 */
 	public synchronized void updateMap(String str, String name,int ID) {
 		Ship playerShip = gameMap.get(ID)==null? null : (Ship)gameMap.get(ID);
 		boolean onmap = false;
@@ -123,16 +145,24 @@ public class MapContainer {
 			}
 		}
 	}
-
+	/**
+	 * call the update method for the map (done in GameClock)
+	 */
 	public synchronized void updateMap() {
 		gameMap.update();
 	}
 
+	/**
+	 * unused
+	 */
 	public void addDummyBody() {
 		boolean x = gameMap.add(new Body());
 		System.out.println("Bot added is " + x);
 	}
-
+	/**
+	 * Destroy an object from the map based on id
+	 * @param ID the id of the object
+	 */
 	public void delete(int ID) {
 		gameMap.get(ID).destroy();
 	}

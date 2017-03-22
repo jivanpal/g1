@@ -10,7 +10,11 @@ import GameLogic.Resource;
 import GameLogic.Ship;
 import GameLogic.Weapon;
 import ServerNetworking.ClientTable;
-
+/**
+ * The receiver for the game server
+ * @author Svetlin
+ *
+ */
 public class GameHostReceiver extends Thread
 {
 	private ObjectInputStream clientIn;
@@ -21,7 +25,17 @@ public class GameHostReceiver extends Thread
 	private String playerName;
 	private int shipID;
 	private KeySequence keySequence;
-
+	/**
+	 * Constructor
+	 * @param reader the input stream from the client
+	 * @param map the map container
+	 * @param cT the Client Table
+	 * @param playerPos the position of the player in the lobby
+	 * @param nickname the name of the player
+	 * @param teammate the name of the team mate
+	 * @param ship the ship Id of the player
+	 * @param k the key sequences
+	 */
 	public GameHostReceiver(ObjectInputStream reader, MapContainer map, ClientTable cT, int playerPos, String nickname,
 			String teammate, int ship, KeySequence k)
 	{
@@ -45,6 +59,7 @@ public class GameHostReceiver extends Thread
 				Object obj = clientIn.readObject();
 				if (obj instanceof String)
 				{
+					//if the object is a string, update the map
 					String str = (String) obj;
 					gameMap.updateMap(str, playerName, shipID);
 				}
@@ -54,6 +69,8 @@ public class GameHostReceiver extends Thread
 					clientTable.getQueue(playerName).offer(m);
 
 					// Engineer with PilotAI teammate
+					//@author Svetlin
+					// speech recognition for the pilot, allowing for the engineer to ask for instructions
 					if (teamMate.equals("") && position % 2 == 1)
 					{
 						String mes  = m.message.toLowerCase();
@@ -91,7 +108,9 @@ public class GameHostReceiver extends Thread
 							clientTable.getQueue(playerName).offer(
 									new ChatMessage("Pilot", "I have no idea what you said, I'm not that smart."));
 					}
-					// Pilot with Engineer teammate
+					// Pilot with EngineerAI teammate
+					// @author James
+					//allows for the pilot to ask for the levels of the fuel,shields,hp and ammo
 					else if (teamMate.equals("") && position % 2 == 0)
 					{
 						ChatMessage message = null;

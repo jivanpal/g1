@@ -85,8 +85,9 @@ public class GameHost extends Thread
 				
 			}
 		}
-		int botId = gameMap.addShip(2, "", "");
-		gameMap.gameMap.addBot(new TargetingBot(gameMap.gameMap,botId,0));
+		//testing
+	//	int botId = gameMap.addShip(2, "", "");
+	//	gameMap.gameMap.addBot(new TargetingBot(gameMap.gameMap,botId,0));
 		gameMap.generateTerrain();
 		System.out.println("I HAVE STARTED THE SERVER");
 	}
