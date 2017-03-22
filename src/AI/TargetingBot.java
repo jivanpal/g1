@@ -75,7 +75,7 @@ public class TargetingBot extends AbstractBot {
             ship.setVelocity(ship.getFrontVector().scale(2));
         }
         // Get the direction vector towards the target in the local basis.
-        Vector pathToTarget = ship.getBasis().localiseDirection(getMap().shortestPath(ship.getID(), target.getID()));
+        Vector pathToTarget = ship.getBasis().localiseDirection(getMap().shortestForwardPath(ship.getID(), target.getID()));
         
         // If the target is in range, fire.
         if (Vector.J.angleWith(pathToTarget) < IN_RANGE_ANGLE    &&     pathToTarget.length() < IN_RANGE_DISTANCE) {
