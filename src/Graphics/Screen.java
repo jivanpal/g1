@@ -253,10 +253,10 @@ public class Screen extends JPanel{
                         new Laser(pos, b.getRadius(), b.getOrientation());
                         break;
                     case PLASMA:
-                        // TODO
+                        new Plasma(pos, b.getRadius(), b.getOrientation());
                         break;
                     case TORPEDO:
-                        // TODO
+                        new Torpedo(pos, b.getRadius(), b.getOrientation());
                         break;
                     }
                 }
