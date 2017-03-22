@@ -462,23 +462,16 @@ public class PilotView extends AbstractPlayerView implements Observer {
     public void update(Observable observable, Object o) {
         super.update(observable, o);
 
-        if (!UIinitialised) {
-            try {
-                initialiseUI();
-                UIinitialised = true;
-            } catch (Exception e) {
-                // Oh well.
-                System.out.println("Update Error: " + e.getMessage());
-                System.out.println("Localised message: " + e.getLocalizedMessage());
-                e.printStackTrace();
-            }
-        } else {
+        try {
             Map m = gameClient.getMap();
             speedometerView.updateSpeedLevel(currentShip.getVelocity().length());
 
             if(engAI != null) {
                 radarView.updateMap(m);
             }
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	// Seems the UI hasn't been initialised yet
         }
 
         for(String inst : pressedKeys){
