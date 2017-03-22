@@ -99,7 +99,14 @@ public class TargetingBot extends AbstractBot {
         // Get ETA until target lies in the bot's x-z plane, in seconds.
         double timeToTarget = pathToTarget.getY() / ship.getVelocity().getY();
         
-        if (timeToTarget < 4) {
+        if (pathToTarget.length() < 100) {
+            if (timeToTarget < 1) {
+                ship.thrustReverse();
+            } else if (timeToTarget > 3) {
+                ship.thrustForward();
+            }
+        }
+        if (timeToTarget < 4 && ship.getVelocity().length() < ) {
             ship.thrustReverse();
         } else if (timeToTarget > 5) {
             ship.thrustForward();
