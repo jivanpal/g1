@@ -385,18 +385,24 @@ public class Screen extends JPanel{
 	 */
 	public void setMap(Map map){
 		this.map = map;
-		for(Body b : map.bodies()) {
-			if(b.getClass() == Ship.class) {
-				Ship s = (Ship)b;
-				if(s.getPilotName().equals(nickname) || s.getEngineerName().equals(nickname)){
-					shipIndex = b.getID();
-					if(s.getResource(Resource.Type.HEALTH).get() <= 10){
-						selfDestruct = true;
+		
+		if(map.bodies().size() <= 0){
+			shipIndex = null;
+		}
+		else{
+			for(Body b : map.bodies()) {
+				if(b.getClass() == Ship.class) {
+					Ship s = (Ship)b;
+					if(s.getPilotName().equals(nickname) || s.getEngineerName().equals(nickname)){
+						shipIndex = b.getID();
+						if(s.getResource(Resource.Type.HEALTH).get() <= 10){
+							selfDestruct = true;
+						}
+						else{
+							selfDestruct = false;
+						}
+						break;
 					}
-					else{
-						selfDestruct = false;
-					}
-					break;
 				}
 			}
 		}
