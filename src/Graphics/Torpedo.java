@@ -8,7 +8,7 @@ import Geometry.Vector;
 public class Torpedo{
 	
 	private double x, y, z, size;
-	private Vector[] vertices = new Vector[6];
+	private Vector[] vertices = new Vector[25];
 	private int[][] sides = {{0, 6, 1},
 							 {0, 1, 2},
 							 {0, 2, 3},
@@ -34,7 +34,7 @@ public class Torpedo{
 							 {21, 23, 24},
 							 {22, 24, 23},
 							 {21, 24, 22}};
-	private Color[] colors = new Color[8];
+	private Color[] colors = new Color[sides.length];
 	private Rotation orientation;
 	
 	

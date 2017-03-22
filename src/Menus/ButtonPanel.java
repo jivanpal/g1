@@ -123,7 +123,7 @@ public class ButtonPanel extends JPanel {
 	 * 
 	 * @return A JPanel which will contain those buttons in BorderLayout.
 	 */
-	public JPanel createButtons() {
+	private JPanel createButtons() {
 		JPanel panel = new JPanel();
 		MyButton play = new MyButton("Play");
 		play.addActionListener(e -> {

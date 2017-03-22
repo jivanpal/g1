@@ -26,7 +26,6 @@ import GameLogic.GameOptions;
  * 
  * @author Jaren Chin-Hao Liu
  */
-// TODO Make controls work Arrow keys
 
 public class ControlsPanel extends JPanel {
 	private boolean pressed;
@@ -56,8 +55,8 @@ public class ControlsPanel extends JPanel {
 		c.anchor = GridBagConstraints.SOUTH;
 		MyButton apply = new MyButton("Apply");
 		apply.addActionListener(e -> {
-			changebuttons(false);
-			changebuttons(true);
+			changeButtons(false);
+			changeButtons(true);
 			GameOptions.saveKeyBindingsInFile();
 			JOptionPane.showMessageDialog(this, "Changes have been applied!", "Changes Applied",
 					JOptionPane.INFORMATION_MESSAGE);
@@ -72,7 +71,7 @@ public class ControlsPanel extends JPanel {
 				GameOptions.resetKeysToDefaults();
 				GameOptions.saveKeyBindingsInFile();
 				AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-				changebuttons(true);
+				changeButtons(true);
 
 			}
 			requestFocus();
@@ -97,7 +96,7 @@ public class ControlsPanel extends JPanel {
 	 * 
 	 * @return A JPanel which contains those buttons in GridLayout.
 	 */
-	public JPanel createButtons() {
+	private JPanel createButtons() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 4, 20, 20));
 		panel = createBwL(panel, "Thrust Fwd");
@@ -113,17 +112,9 @@ public class ControlsPanel extends JPanel {
 		panel = createBwL(panel, "Roll Right");
 		panel = createBwL(panel, "Manual Next");
 		panel = createBwL(panel, "Overdrive");
-		changebuttons(true);
+		changeButtons(true);
 		return panel;
 
-	}
-
-	/**
-	 * Displays a message stating the key has already been taken
-	 */
-	public void displaykeyerror() {
-		JOptionPane.showMessageDialog(this, "Key is already being used. Please use another one!", "Key Bind Error",
-				JOptionPane.ERROR_MESSAGE);
 	}
 
 	/**
@@ -136,7 +127,7 @@ public class ControlsPanel extends JPanel {
 	 *            The name of the control
 	 * @return The JPanel which the button and label have been added.
 	 */
-	public JPanel createBwL(JPanel panel, String name) {
+	private JPanel createBwL(JPanel panel, String name) {
 		JLabel label = new JLabel(name);
 		label.setOpaque(false);
 		label.setFont(GameOptions.REGULAR_TEXT_FONT);
@@ -226,7 +217,7 @@ public class ControlsPanel extends JPanel {
 	 * @param button
 	 *            The button to be painted
 	 */
-	public void repaintkey(String currentkey, JButton button) {
+	private void repaintKey(String currentkey, JButton button) {
 		int keybind = GameOptions.getCurrentKeyValueByDefault(currentkey);
 		if (keybind == KeyEvent.VK_ENTER) {
 			button.setText("Enter");
@@ -246,7 +237,7 @@ public class ControlsPanel extends JPanel {
 	 * @param button
 	 *            The button where we get the new value from
 	 */
-	public void changekey(String currentkey, JButton button) {
+	private void changeKey(String currentkey, JButton button) {
 		String btext = button.getText();
 		if (btext.equals("Enter")) {
 			GameOptions.changeKeyByDefaultValue(currentkey, KeyEvent.VK_ENTER);
@@ -269,11 +260,11 @@ public class ControlsPanel extends JPanel {
 	 * @param repaint
 	 *            Boolean indicating whether to repaint or change the key
 	 */
-	public void changerepaint(String key, JButton button, boolean repaint) {
+	private void changeRepaint(String key, JButton button, boolean repaint) {
 		if (repaint) {
-			repaintkey(key, button);
+			repaintKey(key, button);
 		} else {
-			changekey(key, button);
+			changeKey(key, button);
 		}
 	}
 
@@ -285,47 +276,47 @@ public class ControlsPanel extends JPanel {
 	 *            The panel which the control buttons are on
 	 * @return The exact JPanel but with the text on the buttons changed.
 	 */
-	public void changebuttons(boolean repaint) {
+	private void changeButtons(boolean repaint) {
 		for (JButton b : controlButtons) {
 			switch (b.getName()) {
 			case "Thrust Fwd":
-				changerepaint(GameOptions.DEFAULT_ACCELERATE_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_ACCELERATE_BUTTON, b, repaint);
 				break;
 			case "Fire 1":
-				changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON, b, repaint);
 				break;
 			case "Thrust Rev":
-				changerepaint(GameOptions.DEFAULT_DECELERATE_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_DECELERATE_BUTTON, b, repaint);
 				break;
 			case "Fire 2":
-				changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON, b, repaint);
 				break;
 			case "Pitch Down":
-				changerepaint(GameOptions.DEFAULT_PITCH_DOWN_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_PITCH_DOWN_BUTTON, b, repaint);
 				break;
 			case "Fire 3":
-				changerepaint(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON, b, repaint);
 				break;
 			case "Pitch Up":
-				changerepaint(GameOptions.DEFAULT_PITCH_UP_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_PITCH_UP_BUTTON, b, repaint);
 				break;
 			case "Manual":
-				changerepaint(GameOptions.DEFAULT_MANUAL_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_MANUAL_BUTTON, b, repaint);
 				break;
 			case "Roll Left":
-				changerepaint(GameOptions.DEFAULT_ROLL_LEFT_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_ROLL_LEFT_BUTTON, b, repaint);
 				break;
 			case "Manual Prev":
-				changerepaint(GameOptions.DEFAULT_MANUAL_PREV_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_MANUAL_PREV_BUTTON, b, repaint);
 				break;
 			case "Roll Right":
-				changerepaint(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON, b, repaint);
 				break;
 			case "Manual Next":
-				changerepaint(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON, b, repaint);
 				break;
 			case "Overdrive":
-				changerepaint(GameOptions.DEFAULT_OVERDRIVE_BUTTON, b, repaint);
+				changeRepaint(GameOptions.DEFAULT_OVERDRIVE_BUTTON, b, repaint);
 				break;
 			}
 		}

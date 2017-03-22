@@ -44,7 +44,6 @@ public class MainMenu {
 			e.printStackTrace();
 		}
 		client = new Client(name);
-		String nickname = client.name;
 		frame = new JFrame();
 		client.updateList();
 		ButtonPanel comp = new ButtonPanel(this);
@@ -69,6 +68,7 @@ public class MainMenu {
 	 * @param panel
 	 *            The JPanel to change to.
 	 */
+	
 	public void changeFrame(JPanel panel) {
 		frame.setContentPane(panel);
 		frame.repaint();
