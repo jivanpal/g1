@@ -106,7 +106,7 @@ public class TargetingBot extends AbstractBot {
                 ship.thrustForward();
             }
         }
-        if (timeToTarget < 4 && ship.getVelocity().length() < ) {
+        if (timeToTarget < 4) {
             ship.thrustReverse();
         } else if (timeToTarget > 5) {
             ship.thrustForward();
