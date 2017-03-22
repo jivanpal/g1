@@ -19,7 +19,6 @@ import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
 
 import Audio.AudioPlayer;
-import ClientNetworking.Client;
 import GameLogic.GameOptions;
 
 /**
@@ -30,16 +29,12 @@ import GameLogic.GameOptions;
 // TODO Make controls work Arrow keys
 
 public class ControlsPanel extends JPanel {
-	private MainMenu menu;
 	private boolean pressed;
 	private ArrayList<JButton> controlButtons;
-	public Client client;
 	public static JPanel cpanel;
 
 	public ControlsPanel(MainMenu menu) {
 		super();
-		this.menu = menu;
-		this.client = menu.client;
 		controlButtons = new ArrayList<JButton>();
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -50,9 +45,6 @@ public class ControlsPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtomenu = new MyButton("Back");
 		backtomenu.addActionListener(e -> {
-			//SettingsPanel spanel = new SettingsPanel(menu);
-			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			//menu.changeFrame(spanel);
 			PanelsManager.changePanel(cpanel, SettingsPanel.spanel, backtomenu);
 		});
 		add(backtomenu, c);
@@ -90,13 +82,13 @@ public class ControlsPanel extends JPanel {
 		add(resettodefault, c);
 
 		c.anchor = GridBagConstraints.NORTH;
-		JLabel name = new JLabel("<html><b><font size='20'>Player:     <font color='#66e0ff'>" + client.name
+		JLabel name = new JLabel("<html><b><font size='20'>Player:     <font color='#66e0ff'>" + menu.client.name
 				+ "</font></font></b></html>");
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
 		setOpaque(false);
-		//setBackground(Color.BLACK);
+
 		ControlsPanel.cpanel = this;
 	}
 

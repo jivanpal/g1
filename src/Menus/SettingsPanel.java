@@ -19,7 +19,6 @@ import GameLogic.GameOptions;
  */
 public class SettingsPanel extends JPanel {
 	private MainMenu menu;
-	public Client client;
 	public static JPanel spanel;
 
 	/**
@@ -29,7 +28,6 @@ public class SettingsPanel extends JPanel {
 	public SettingsPanel(MainMenu menu) {
 		super();
 		this.menu = menu;
-		this.client = menu.client;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTHWEST;
@@ -39,11 +37,7 @@ public class SettingsPanel extends JPanel {
 		c.gridy = 0;
 		MyButton backtomenu = new MyButton("Back");
 		backtomenu.addActionListener(e -> {
-			//ButtonPanel bpanel = new ButtonPanel(menu);
 			PanelsManager.changePanel(spanel, ButtonPanel.menuPanel, backtomenu);
-			//menu.changeFrame(bpanel);
-			//bpanel.makeUI();
-			
 		});
 		add(backtomenu, c);
 		JPanel bpanel = createButtons();
@@ -52,14 +46,13 @@ public class SettingsPanel extends JPanel {
 		add(bpanel, c);
 
 		c.anchor = GridBagConstraints.NORTH;
-		JLabel name = new JLabel("<html><b><font size='16'>Player:     <font color='#66e0ff'>" + client.name
+		JLabel name = new JLabel("<html><b><font size='16'>Player:     <font color='#66e0ff'>" + menu.client.name
 				+ "</font></font></b></html>");
 		name.setFont(GameOptions.REGULAR_TEXT_FONT);
 		name.setForeground(Color.WHITE);
 		add(name, c);
 		setOpaque(false);
 		SettingsPanel.spanel = this;
-		//setBackground(Color.BLACK);
 	}
 
 	/**
@@ -73,15 +66,11 @@ public class SettingsPanel extends JPanel {
 		MyButton gotosound = new MyButton("Sound");
 		gotosound.addActionListener(e -> {
 			SoundPanel soundpanel = new SoundPanel(menu);
-			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			//menu.changeFrame(spanel);
 			PanelsManager.changePanel(spanel, soundpanel, gotosound);
 		});
 		MyButton gotocontrols = new MyButton("Controls");
 		gotocontrols.addActionListener(e -> {
 			ControlsPanel cpanel = new ControlsPanel(menu);
-			//AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-			//menu.changeFrame(cpanel);
 			PanelsManager.changePanel(spanel, cpanel, gotocontrols);
 		});
 		panel.setLayout(new BorderLayout());

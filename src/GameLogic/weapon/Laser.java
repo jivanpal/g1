@@ -1,8 +1,8 @@
 package GameLogic.weapon;
 
+import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
-import Geometry.Vector;
-import Physics.Body;
+import Geometry.*;
 
 /**
  * A class of objects representing laser blaster weapons attached to some ship.
@@ -10,38 +10,35 @@ import Physics.Body;
  */
 public class Laser extends Weapon {
 // Weapon constants
-    private static final int    AMMO_MAX        = 100;
-    private static final int    AMMO_INIT       = 100;
-    private static final int    DAMAGE_SHIELDS  = 5;
-    private static final int    DAMAGE_SHIP     = 10;
-    private static final double COOLDOWN        = 0.1;
+    private static final int    MAX_AMMO        = 100;
+    private static final int    INIT_AMMO       = 100;
+    private static final double COOLDOWN        = 0.1;  // s
     
 // Bullet constants
+    private static final double MASS            = 0.1;  // kg
+    private static final double RADIUS          = 1;    // m
+    private static final double SPEED           = 500;  // m/s
     private static final int    SHIP_DAMAGE     = 10;
     private static final int    SHIELD_DAMAGE   = 5;
-    private static final double TIME_TO_LIVE    = 0.3;
-    private static final double MASS            = 0.1;
-    private static final double RADIUS          = 1;
-    private static final double SPEED           = 300;
+    private static final double MAP_SPAN_FRAC   = 0.98; // fraction of map to travel across
+    private static final double TIME_TO_LIVE    = MapContainer.MAP_SIZE * MAP_SPAN_FRAC / SPEED; // s (says span the map, less 5 meters)
     
     private static final Bullet BULLET = new Bullet(
-        SHIP_DAMAGE,
-        SHIELD_DAMAGE,
-        TIME_TO_LIVE,
         MASS,
         RADIUS,
         Vector.J.scale(SPEED),
-        Vector.ZERO
+        Vector.ZERO,
+        SHIP_DAMAGE,
+        SHIELD_DAMAGE,
+        TIME_TO_LIVE
     );
     
     public Laser(Ship parent) {
         super(
             parent,
             BULLET,
-            AMMO_MAX,
-            AMMO_INIT,
-            DAMAGE_SHIELDS,
-            DAMAGE_SHIP,
+            MAX_AMMO,
+            INIT_AMMO,
             COOLDOWN
         );
     }

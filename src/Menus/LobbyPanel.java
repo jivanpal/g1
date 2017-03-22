@@ -35,8 +35,8 @@ public class LobbyPanel extends JPanel implements Observer {
 	public Client client;
 	public Player player;
 	private JPanel lpanel;
-	private boolean leftserver;
-	private boolean ishost;
+	private boolean leftServer;
+	private boolean isHost;
 	private GridBagConstraints c;
 	public static JPanel lobbypanel;
 
@@ -56,8 +56,8 @@ public class LobbyPanel extends JPanel implements Observer {
 		if (player != null) {
 			this.player = player;
 		}
-		leftserver = false;
-		this.ishost = ishost;
+		leftServer = false;
+		this.isHost = ishost;
 		setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.NORTH;
@@ -90,9 +90,7 @@ public class LobbyPanel extends JPanel implements Observer {
 					"Leave Lobby", JOptionPane.YES_NO_OPTION);
 			if (confirm == JOptionPane.YES_OPTION) {
 				client.send(new Action(client.getLobby().getID(), this.player, this.player, Action.KICK));
-				leftserver = true;
-				//PlayPanel ppanel = new PlayPanel(menu);
-				//menu.changeFrame(ppanel);
+				leftServer = true;
 				PanelsManager.changePanel(LobbyPanel.lobbypanel, PlayPanel.ppanel, backtostart);
 				client.setLobby(null);
 			}
@@ -138,7 +136,6 @@ public class LobbyPanel extends JPanel implements Observer {
 		add(name, c);
 		setOpaque(false);
 		LobbyPanel.lobbypanel = this;
-		//setBackground(Color.BLACK);
 
 	}
 
@@ -192,7 +189,7 @@ public class LobbyPanel extends JPanel implements Observer {
 			kick.addActionListener(e -> {
 				client.send(new Action(client.getLobby().getID(), player, players[position], Action.KICK));
 			});
-			if (ishost) {
+			if (isHost) {
 				if (p == null) {
 					kick.setEnabled(false);
 				} else if (this.player.nickname.equals(p.nickname)) {
@@ -236,16 +233,14 @@ public class LobbyPanel extends JPanel implements Observer {
 				break;
 			}
 		}
-		if (inlobby == false && leftserver == false) {
+		if (inlobby == false && leftServer == false) {
 			JOptionPane.showMessageDialog(this, "You have been kicked from the lobby!", "Kicked From Lobby",
 					JOptionPane.INFORMATION_MESSAGE);
 			client.deleteLobbyObserver(this);
 			client.setLobby(null);
-			//PlayPanel ppanel = new PlayPanel(menu);
-			//menu.changeFrame(ppanel);
 			PanelsManager.changePanel(LobbyPanel.lobbypanel, PlayPanel.ppanel, null);
 			
-		} else if (leftserver) {
+		} else if (leftServer) {
 			client.deleteLobbyObserver(this);
 			client.setLobby(null);
 			return;
@@ -253,7 +248,6 @@ public class LobbyPanel extends JPanel implements Observer {
 			player.isHost = true;
 			client.deleteLobbyObserver(this);
 			LobbyPanel lpanel = new LobbyPanel(menu, l.getID(), player, true);
-			//menu.changeFrame(lpanel);
 			PanelsManager.changePanel(LobbyPanel.lobbypanel, lpanel, null);
 		} else if (l.started) {
 			int pos = 0;

@@ -4,75 +4,37 @@ import Geometry.*;
 import Physics.*;
 
 public class Bullet extends Body implements Cloneable {
-/// DEFAULTS
-    public static double DEFAULT_TIME_TO_LIVE = 3.0;
-    
 /// FIELDS
     private int shipDamage;
     private int shieldDamage;
     private double timeToLive;
     
-/// CONSTRUCTORS
+/// CONSTRUCTOR
     
     /**
      * Construct a bullet instance.
-     * @param shipDamage the amount of damage this instance deals directly to ships. 
-     * @param shieldDamage the amount of damage this instance deals to a ship's shields.
-     * @param timeToLive the amount of time this instance should live for, in seconds.
      * @param mass the mass of this instance.
      * @param radius the radius of this instance.
      * @param velocity the velocity of this instance.
      * @param angularVelocity the angular velocity of this instance.
+     * @param shipDamage the amount of damage this instance deals directly to ships. 
+     * @param shieldDamage the amount of damage this instance deals to a ship's shields.
+     * @param timeToLive the amount of time this instance should live for, in seconds.
      */
     public Bullet (
-        int     shipDamage,
-        int     shieldDamage,
-        double  timeToLive,
         double  mass,
         double  radius,
         Vector  velocity,
-        Vector  angularVelocity
+        Vector  angularVelocity,
+        int     shipDamage,
+        int     shieldDamage,
+        double  timeToLive
     ) {
         super(mass, radius, Vector.ZERO, Rotation.NONE, velocity, angularVelocity);
         
-        this.shipDamage = shipDamage;
-        this.shieldDamage = shieldDamage;
-        this.timeToLive = timeToLive;
-    }
-    
-    public Bullet (int shipDamage, int shieldDamage, double timeToLive, Body body) {
-        this(
-            shipDamage,
-            shieldDamage,
-            timeToLive,
-            body.getMass(),
-            body.getRadius(),
-            body.getVelocity(),
-            body.getAngularVelocity()
-        );
-    }
-    
-    public Bullet (
-        int     shipDamage,
-        int     shieldDamage,
-        double  mass,
-        double  radius,
-        Vector  velocity,
-        Vector  angularVelocity
-    ) {
-        this(shipDamage, shieldDamage, DEFAULT_TIME_TO_LIVE, mass, radius, velocity, angularVelocity);
-    }
-    
-    public Bullet (int shipDamage, int shieldDamage, Body body) {
-        this(
-            shipDamage,
-            shieldDamage,
-            DEFAULT_TIME_TO_LIVE,
-            body.getMass(),
-            body.getRadius(),
-            body.getVelocity(),
-            body.getAngularVelocity()
-        );
+        this.timeToLive     = timeToLive;
+        this.shipDamage     = shipDamage;
+        this.shieldDamage   = shieldDamage;
     }
     
 /// INSTANCE METHODS
@@ -102,9 +64,10 @@ public class Bullet extends Body implements Cloneable {
     /**
      * Get the time remaining before this instance should be
      * removed from the map.
-     * @return the time to live, in seconds.
+     * @return the remaining amount of time that this instance
+     *      should remain on the map, in seconds.
      */
-    public double timeToLive() {
+    public double getTimeToLive() {
         return timeToLive;
     }
     
