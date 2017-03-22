@@ -1,0 +1,1679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>AI</OriginalElement>
+  <nodes>
+    <node x="8854.177888479184" y="6704.0">Utils.Tuple</node>
+    <node x="6751.916959045246" y="2599.0">Physics.Body</node>
+    <node x="11465.31578291379" y="6716.0">Graphics.GameEngine</node>
+    <node x="4547.622076620084" y="6716.0">Views.MyJTableModel</node>
+    <node x="8808.927888479184" y="7020.0">Views.RadarView</node>
+    <node x="7156.542909953418" y="8559.0">Views.PilotView</node>
+    <node x="1188.1165210645286" y="3838.5">ClientNetworking.ClientSender</node>
+    <node x="2797.6117850525707" y="7811.0">ClientNetworking.GameHost.GameClock</node>
+    <node x="505.50374933828425" y="7799.0">ServerNetworking.ServerSender</node>
+    <node x="10092.19078291379" y="7788.0">Views.ShipState</node>
+    <node x="3766.0823078047943" y="3802.5">Menus.HoverMouseListener</node>
+    <node x="6092.143797570092" y="5000.5">GameLogic.weapon.Torpedo</node>
+    <node x="6677.143797570092" y="3754.0">GameLogic.Bullet</node>
+    <node x="5735.934576620084" y="6607.5">ClientNetworking.GameHost.MapContainer</node>
+    <node x="6856.291959045246" y="787.0">Geometry.Quaternion</node>
+    <node x="205.7912440074797" y="2112.5">GeneralNetworking.Lobby</node>
+    <node x="5456.602130903426" y="4229.0">GameLogic.Weapon</node>
+    <node x="5002.0" y="10256.0">ServerNetworking.ServerVariables</node>
+    <node x="328.62457734081363" y="1664.5">GeneralNetworking.Player</node>
+    <node x="8616.677888479184" y="7571.0">Views.AbstractPlayerView</node>
+    <node x="4318.005290244084" y="9656.0">Menus.JoinPanel.MyTableRenderer</node>
+    <node x="6384.143797570092" y="5000.5">GameLogic.weapon.Plasma</node>
+    <node x="10984.927888479184" y="4988.0">Graphics.AsteroidModel</node>
+    <node x="11233.756244759532" y="0.0">Geometry.Vector</node>
+    <node x="2922.2845766200853" y="9535.0">Menus.LobbyPanel</node>
+    <node x="12053.496069043556" y="2971.5">Graphics.PolygonObj</node>
+    <node x="11648.412735710222" y="2960.0">Graphics.Calculations</node>
+    <node x="4741.0" y="10256.0">ClientNetworking.IpGetter</node>
+    <node x="10047.927888479184" y="5060.5">ClientNetworking.GameClient.MapContainer</node>
+    <node x="6680.791959045246" y="2077.0">Geometry.Basis</node>
+    <node x="10356.927888479184" y="4964.0">Graphics.Torpedo</node>
+    <node x="2194.0" y="10256.0">Menus.MuteItemListener</node>
+    <node x="2344.273669252477" y="5782.5">Menus.SettingsPanel</node>
+    <node x="8318.847834195843" y="5759.0">Views.JLayeredPaneLayoutManager</node>
+    <node x="1609.1634251647192" y="3056.0">ClientNetworking.LobbyContainer</node>
+    <node x="2733.026243286752" y="9913.0">Menus.JoinPanel</node>
+    <node x="11967.06578291379" y="7690.5">Views.WeaponView</node>
+    <node x="2299.641071428571" y="7128.0">Menus.MainMenu</node>
+    <node x="11602.56578291379" y="5374.0">Graphics.Screen</node>
+    <node x="8418.927888479184" y="7068.5">Views.GameChat</node>
+    <node x="11067.496069043556" y="4349.5">Graphics.GraphicalModel</node>
+    <node x="2556.0802902440846" y="3031.5">GeneralNetworking.LobbyList</node>
+    <node x="3250.0" y="10256.0">Menus.PanelsManager</node>
+    <node x="7085.643797570092" y="5807.0">GameLogic.Asteroid</node>
+    <node x="2642.0802902440846" y="2233.5">GeneralNetworking.LobbyInfo</node>
+    <node x="11032.412735710222" y="2828.0">Graphics.Matrix</node>
+    <node x="4027.005290244085" y="6667.5">Menus.ButtonPanel</node>
+    <node x="2942.0" y="10256.0">GameLogic.Global</node>
+    <node x="4626.602130903426" y="4398.5">GameLogic.Resource.Type</node>
+    <node x="7298.001243286752" y="6704.0">ClientNetworking.GameHost.ChatMessage</node>
+    <node x="2183.0" y="10460.0">Menus.MyCheckBox</node>
+    <node x="6150.559576620084" y="7811.0">Views.SpeedometerView</node>
+    <node x="12356.496069043556" y="3008.0">Graphics.Plane</node>
+    <node x="5551.559576620084" y="7008.0">Views.ManualInstructionsView</node>
+    <node x="1622.0825396825403" y="7787.0">ServerNetworking.ServerReceiver</node>
+    <node x="5207.602130903426" y="4373.0">GameLogic.resource.Engines</node>
+    <node x="725.8856473869419" y="8847.5">ServerNetworking.Server</node>
+    <node x="4998.602130903426" y="4398.0">GameLogic.resource.Health</node>
+    <node x="11518.06578291379" y="7750.5">Views.KeySequenceManager</node>
+    <node x="12798.721069043555" y="3863.0">Graphics.Star</node>
+    <node x="4558.0" y="10256.0">ClientNetworking.ClientVariables</node>
+    <node x="1399.0" y="10256.0">Audio.AudioPlayer</node>
+    <node x="6216.372076620084" y="6716.0">Views.MyJTable</node>
+    <node x="10670.927888479184" y="4964.0">Graphics.Plasma</node>
+    <node x="5656.059576620084" y="7751.0">Views.ManualView</node>
+    <node x="8100.847834195842" y="5782.5">GameLogic.BotManager</node>
+    <node x="3818.0823078047943" y="4422.5">Menus.MyButton</node>
+    <node x="5189.0" y="10256.0">ClientNetworking.GameClient.GameVariables</node>
+    <node x="4874.834576620085" y="5386.0">GameLogic.Ship</node>
+    <node x="707.1875" y="7140.5">ServerNetworking.ClientTable</node>
+    <node x="5652.602130903426" y="4928.5">GameLogic.weapon.Laser</node>
+    <node x="4199.0" y="10256.0">Views.ViewConstants</node>
+    <node x="2494.273669252477" y="5000.0">Menus.SoundPanel</node>
+    <node x="7046.666959045246" y="1520.0">Geometry.Rotation</node>
+    <node x="7546.191343245151" y="4999.5">GameLogic.BotManager.AbstractBot</node>
+    <node x="7524.001243286752" y="6667.0">GameLogic.BotManager.TargetingBot</node>
+    <node x="1192.3516660049518" y="2971.5">GeneralNetworking.Action</node>
+    <node x="889.5037493382843" y="7799.0">ClientNetworking.GameHost.GameHostSender</node>
+    <node x="2558.0" y="10256.0">Views.InstructionGenerator</node>
+    <node x="7327.542909953418" y="7116.5">AI.EngineerAI</node>
+    <node x="11758.496069043556" y="2172.5">Graphics.Point</node>
+    <node x="12144.971069043555" y="3694.0">Graphics.Poly3D</node>
+    <node x="11305.927888479184" y="4964.0">Graphics.ShipModel</node>
+    <node x="12406.721069043555" y="4964.0">Graphics.Laser</node>
+    <node x="4812.7807023319965" y="3766.0">GameLogic.Resource</node>
+    <node x="4788.602130903426" y="4398.0">GameLogic.resource.Shields</node>
+    <node x="9839.927888479184" y="5060.5">ClientNetworking.GameClient.ChatContainer</node>
+    <node x="123.00374933828516" y="3044.0">GeneralNetworking.Invite</node>
+    <node x="3431.072692420179" y="4952.0">Graphics.Icosahedron</node>
+    <node x="3597.0" y="10256.0">Utils.Utils</node>
+    <node x="1370.9974993382848" y="4241.0">ClientNetworking.Client</node>
+    <node x="12471.06578291379" y="7116.5">Views.ResourcesView.ResourceComponent</node>
+    <node x="11710.31578291379" y="7165.5">Views.KeySequenceResponder</node>
+    <node x="3087.6117850525707" y="7799.0">Menus.PlayPanel</node>
+    <node x="8050.032216229703" y="4193.0">GameLogic.Map</node>
+    <node x="9463.127888479183" y="6595.0">ClientNetworking.GameClient.GameClient</node>
+    <node x="9385.927888479184" y="5794.5">ClientNetworking.GameClient.GameClientSender</node>
+    <node x="5387.560464236759" y="5049.0">GameLogic.Weapon.Type</node>
+    <node x="12471.06578291379" y="7667.0">Views.ResourcesView</node>
+    <node x="2897.2052902440846" y="5770.0">ClientNetworking.GameHost.KeySequence</node>
+    <node x="2064.273669252477" y="4928.0">Menus.ControlsPanel</node>
+    <node x="2799.909576620085" y="8763.0">ClientNetworking.GameHost.GameHost</node>
+    <node x="9821.927888479184" y="5722.0">ClientNetworking.GameClient.GameClientReceiver</node>
+    <node x="0.0" y="10256.0">GameLogic.GameOptions</node>
+    <node x="11399.56578291379" y="8331.0">Views.EngineerView</node>
+    <node x="1558.8300918313853" y="3766.0">ClientNetworking.ClientReceiver</node>
+    <node x="3357.6117850525707" y="7715.0">ClientNetworking.GameHost.GameHostReceiver</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ClientNetworking.GameHost.GameHost" target="GeneralNetworking.Lobby">
+      <point x="-125.0" y="-125.0" />
+      <point x="2812.409576620085" y="8271.0" />
+      <point x="361.75374933828425" y="8271.0" />
+      <point x="361.75374933828425" y="2579.0" />
+      <point x="477.71981543605125" y="2579.0" />
+      <point x="60.42857142857156" y="185.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHostSender" target="ServerNetworking.ClientTable">
+      <point x="0.0" y="-77.0" />
+      <point x="1065.5037493382843" y="7551.0" />
+      <point x="1058.75" y="7551.0" />
+      <point x="39.0625" y="89.0" />
+    </edge>
+    <edge source="Views.PilotView" target="Views.AbstractPlayerView">
+      <point x="249.4545454545455" y="-329.0" />
+      <point x="7748.997455407964" y="8301.0" />
+      <point x="8778.177888479184" y="8301.0" />
+      <point x="-161.5" y="305.0" />
+    </edge>
+    <edge source="Menus.SoundPanel" target="ClientNetworking.Client">
+      <point x="-72.5" y="-101.0" />
+      <point x="2566.773669252477" y="4748.0" />
+      <point x="1755.3863882271735" y="4748.0" />
+      <point x="180.8888888888887" y="209.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.MapContainer" target="GameLogic.Ship">
+      <point x="-59.57142857142844" y="-149.0" />
+      <point x="5884.8631480486565" y="6435.0" />
+      <point x="5184.134576620085" y="6435.0" />
+      <point x="-206.20000000000005" y="473.5" />
+    </edge>
+    <edge source="GameLogic.weapon.Laser" target="GameLogic.Weapon">
+      <point x="-134.66666666666652" y="-172.5" />
+      <point x="5719.935464236759" y="4798.0" />
+      <point x="5792.018797570092" y="4798.0" />
+      <point x="47.916666666666515" y="221.5" />
+    </edge>
+    <edge source="Views.RadarView" target="Utils.Tuple">
+      <point x="-130.75" y="-209.5" />
+      <point x="0.0" y="52.5" />
+    </edge>
+    <edge source="GameLogic.BotManager.AbstractBot" target="Physics.Body">
+      <point x="0.0" y="-101.5" />
+      <point x="7690.691343245151" y="3654.0" />
+      <point x="7248.566959045245" y="3654.0" />
+      <point x="45.149999999999864" y="497.5" />
+    </edge>
+    <edge source="Views.ResourcesView" target="Views.EngineerView">
+      <point x="145.33333333333394" y="209.0" />
+      <point x="12834.399116247125" y="8301.0" />
+      <point x="12385.02732137533" y="8301.0" />
+      <point x="428.461538461539" y="-557.0" />
+    </edge>
+    <edge source="Menus.JoinPanel" target="Menus.JoinPanel.MyTableRenderer">
+      <point x="129.5" y="-149.0" />
+      <point x="3047.526243286752" y="9883.0" />
+      <point x="4481.505290244084" y="9883.0" />
+      <point x="-163.5" y="28.0" />
+    </edge>
+    <edge source="GameLogic.Weapon" target="GameLogic.Resource">
+      <point x="0.0" y="-221.5" />
+      <point x="5744.102130903426" y="4133.0" />
+      <point x="5081.13784518914" y="4133.0" />
+      <point x="123.85714285714289" y="137.5" />
+    </edge>
+    <edge source="Menus.JoinPanel" target="Menus.LobbyPanel">
+      <point x="18.5" y="-149.0" />
+      <point x="2936.526243286752" y="9853.0" />
+      <point x="3107.2845766200853" y="9853.0" />
+      <point x="0.0" y="149.0" />
+    </edge>
+    <edge source="GameLogic.BotManager.TargetingBot" target="GameLogic.BotManager.AbstractBot">
+      <point x="27.125" y="-89.5" />
+      <point x="7659.626243286752" y="6385.0" />
+      <point x="7466.503843245151" y="6385.0" />
+      <point x="7466.503843245151" y="5354.0" />
+      <point x="7594.358009911817" y="5354.0" />
+      <point x="-96.33333333333303" y="101.5" />
+    </edge>
+    <edge source="Graphics.Poly3D" target="Graphics.Point">
+      <point x="-160.80000000000018" y="-209.5" />
+      <point x="12185.171069043554" y="3674.0" />
+      <point x="11950.912735710222" y="3674.0" />
+      <point x="11950.912735710222" y="2579.0" />
+      <point x="11918.32940237689" y="2579.0" />
+      <point x="22.83333333333394" y="125.5" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Geometry.Rotation">
+      <point x="-40.5" y="-89.0" />
+      <point x="4121.505290244085" y="6515.0" />
+      <point x="3420.572692420179" y="6515.0" />
+      <point x="3420.572692420179" y="3664.0" />
+      <point x="3825.8399056287" y="3664.0" />
+      <point x="3825.8399056287" y="2007.0" />
+      <point x="7065.936189814476" y="2007.0" />
+      <point x="-231.23076923076906" y="233.5" />
+    </edge>
+    <edge source="Menus.SettingsPanel" target="Menus.SoundPanel">
+      <point x="31.25" y="-77.0" />
+      <point x="2500.523669252477" y="5344.0" />
+      <point x="2566.773669252477" y="5344.0" />
+      <point x="-72.5" y="101.0" />
+    </edge>
+    <edge source="Views.ManualInstructionsView" target="Views.MyJTable">
+      <point x="144.5" y="-221.5" />
+      <point x="5985.059576620084" y="6988.0" />
+      <point x="6292.872076620084" y="6988.0" />
+      <point x="0.0" y="40.5" />
+    </edge>
+    <edge source="Views.EngineerView" target="Views.WeaponView">
+      <point x="171.38461538461524" y="-557.0" />
+      <point x="12127.950398298406" y="8271.0" />
+      <point x="12330.06578291379" y="8271.0" />
+      <point x="121.0" y="185.5" />
+    </edge>
+    <edge source="GameLogic.BotManager.TargetingBot" target="GameLogic.Ship">
+      <point x="-81.375" y="-89.5" />
+      <point x="7551.126243286752" y="6405.0" />
+      <point x="5802.734576620085" y="6405.0" />
+      <point x="412.4000000000001" y="473.5" />
+    </edge>
+    <edge source="Graphics.ShipModel" target="Geometry.Rotation">
+      <point x="-110.25" y="-137.0" />
+      <point x="11342.677888479184" y="4758.0" />
+      <point x="10813.662735710222" y="4758.0" />
+      <point x="10813.662735710222" y="2017.0" />
+      <point x="7489.859266737553" y="2017.0" />
+      <point x="192.69230769230762" y="233.5" />
+    </edge>
+    <edge source="ClientNetworking.ClientReceiver" target="ClientNetworking.LobbyContainer">
+      <point x="-37.33333333333303" y="-137.5" />
+      <point x="1745.4967584980523" y="3674.0" />
+      <point x="1757.6634251647192" y="3674.0" />
+      <point x="49.5" y="40.5" />
+    </edge>
+    <edge source="Views.EngineerView" target="Views.KeySequenceResponder">
+      <point x="0.0" y="-557.0" />
+      <point x="11956.56578291379" y="7551.0" />
+      <point x="11911.31578291379" y="7551.0" />
+      <point x="67.0" y="64.0" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.Poly3D">
+      <point x="170.0" y="-485.5" />
+      <point x="12240.06578291379" y="5324.0" />
+      <point x="12711.221069043555" y="5324.0" />
+      <point x="12711.221069043555" y="4173.0" />
+      <point x="12496.721069043555" y="4173.0" />
+      <point x="150.75" y="209.5" />
+    </edge>
+    <edge source="AI.EngineerAI" target="ClientNetworking.GameHost.ChatMessage">
+      <point x="-88.75" y="-113.0" />
+      <point x="7416.292909953418" y="6988.0" />
+      <point x="7401.001243286752" y="6988.0" />
+      <point x="0.0" y="52.5" />
+    </edge>
+    <edge source="Menus.ControlsPanel" target="Menus.MainMenu">
+      <point x="-102.5" y="173.0" />
+      <point x="2166.773669252477" y="5354.0" />
+      <point x="2226.158928571428" y="5354.0" />
+      <point x="2226.158928571428" y="6968.0" />
+      <point x="2415.355357142857" y="6968.0" />
+      <point x="-46.28571428571422" y="-101.5" />
+    </edge>
+    <edge source="ServerNetworking.Server" target="ServerNetworking.ServerReceiver">
+      <point x="99.19999999999982" y="-40.5" />
+      <point x="949.0856473869417" y="8311.0" />
+      <point x="1793.5825396825403" y="8311.0" />
+      <point x="0.0" y="89.0" />
+    </edge>
+    <edge source="GameLogic.weapon.Laser" target="GameLogic.Bullet">
+      <point x="0.0" y="-172.5" />
+      <point x="5854.602130903426" y="4768.0" />
+      <point x="6748.793797570092" y="4768.0" />
+      <point x="6748.793797570092" y="4173.0" />
+      <point x="6819.943797570092" y="4173.0" />
+      <point x="-95.20000000000005" y="149.5" />
+    </edge>
+    <edge source="Graphics.ShipModel" target="Graphics.GraphicalModel">
+      <point x="-36.75" y="-137.0" />
+      <point x="11416.177888479184" y="4748.0" />
+      <point x="11283.496069043556" y="4748.0" />
+      <point x="72.0" y="101.0" />
+    </edge>
+    <edge source="ServerNetworking.Server" target="ServerNetworking.ServerSender">
+      <point x="49.600000000000364" y="-40.5" />
+      <point x="899.4856473869422" y="8281.0" />
+      <point x="681.5037493382843" y="8281.0" />
+      <point x="0.0" y="77.0" />
+    </edge>
+    <edge source="Menus.JoinPanel" target="GeneralNetworking.Action">
+      <point x="-129.5" y="-149.0" />
+      <point x="2788.526243286752" y="9883.0" />
+      <point x="389.25374933828425" y="9883.0" />
+      <point x="389.25374933828425" y="6958.0" />
+      <point x="1148.6425918313853" y="6958.0" />
+      <point x="1148.6425918313853" y="3664.0" />
+      <point x="1225.9766660049518" y="3664.0" />
+      <point x="-100.875" y="125.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ClientNetworking.GameHost.GameHostReceiver">
+      <point x="75.0" y="-125.0" />
+      <point x="3012.409576620085" y="8291.0" />
+      <point x="3588.1117850525707" y="8291.0" />
+      <point x="0.0" y="161.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameClock" target="ClientNetworking.GameHost.MapContainer">
+      <point x="67.5" y="-65.0" />
+      <point x="3000.1117850525707" y="6978.0" />
+      <point x="5788.059576620084" y="6978.0" />
+      <point x="-156.375" y="149.0" />
+    </edge>
+    <edge source="ClientNetworking.GameClient.GameClientReceiver" target="ClientNetworking.GameClient.ChatContainer">
+      <point x="-168.0" y="-137.5" />
+      <point x="9877.927888479184" y="5354.0" />
+      <point x="9886.927888479184" y="5354.0" />
+      <point x="-47.0" y="40.5" />
+    </edge>
+    <edge source="GameLogic.Bullet" target="Physics.Body">
+      <point x="0.0" y="-149.5" />
+      <point x="6915.143797570092" y="3674.0" />
+      <point x="6977.666959045246" y="3674.0" />
+      <point x="-225.75" y="497.5" />
+    </edge>
+    <edge source="Views.ResourcesView.ResourceComponent" target="Views.ResourcesView">
+      <point x="145.33333333333394" y="113.0" />
+      <point x="145.33333333333394" y="-209.0" />
+    </edge>
+    <edge source="GameLogic.BotManager" target="GameLogic.Map">
+      <point x="0.0" y="-77.0" />
+      <point x="8199.847834195842" y="4798.0" />
+      <point x="8289.941307138793" y="4798.0" />
+      <point x="-137.090909090909" y="257.5" />
+    </edge>
+    <edge source="Graphics.Matrix" target="Graphics.Point">
+      <point x="148.75" y="-268.5" />
+      <point x="11478.662735710222" y="2579.0" />
+      <point x="11781.32940237689" y="2579.0" />
+      <point x="-114.16666666666652" y="125.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ClientNetworking.GameHost.GameHostSender">
+      <point x="-50.0" y="-125.0" />
+      <point x="2887.409576620085" y="8241.0" />
+      <point x="1065.5037493382843" y="8241.0" />
+      <point x="0.0" y="77.0" />
+    </edge>
+    <edge source="ServerNetworking.ServerReceiver" target="GeneralNetworking.LobbyList">
+      <point x="42.875" y="-89.0" />
+      <point x="1836.4575396825403" y="7551.0" />
+      <point x="1808.652637506446" y="7551.0" />
+      <point x="1808.652637506446" y="5354.0" />
+      <point x="2000.0415263953346" y="5354.0" />
+      <point x="2000.0415263953346" y="4173.0" />
+      <point x="2670.9136235774176" y="4173.0" />
+      <point x="2670.9136235774176" y="3674.0" />
+      <point x="2785.246956910751" y="3674.0" />
+      <point x="91.66666666666652" y="65.0" />
+    </edge>
+    <edge source="GeneralNetworking.Invite" target="GeneralNetworking.Lobby">
+      <point x="0.0" y="-52.5" />
+      <point x="212.00374933828516" y="2569.0" />
+      <point x="417.2912440074797" y="2569.0" />
+      <point x="0.0" y="185.5" />
+    </edge>
+    <edge source="Menus.JoinPanel" target="ClientNetworking.Client">
+      <point x="-92.5" y="-149.0" />
+      <point x="2825.526243286752" y="9873.0" />
+      <point x="411.25374933828425" y="9873.0" />
+      <point x="411.25374933828425" y="6978.0" />
+      <point x="1291.3856473869419" y="6978.0" />
+      <point x="1291.3856473869419" y="4898.0" />
+      <point x="1393.608610449396" y="4898.0" />
+      <point x="-180.8888888888887" y="209.5" />
+    </edge>
+    <edge source="Menus.SettingsPanel" target="Menus.ControlsPanel">
+      <point x="-31.25" y="-77.0" />
+      <point x="2438.023669252477" y="5334.0" />
+      <point x="2371.773669252477" y="5334.0" />
+      <point x="102.5" y="173.0" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Menus.PlayPanel">
+      <point x="90.0" y="89.0" />
+      <point x="4252.005290244085" y="6968.0" />
+      <point x="4268.497692420178" y="6968.0" />
+      <point x="4268.497692420178" y="7531.0" />
+      <point x="3306.3617850525707" y="7531.0" />
+      <point x="93.75" y="-77.0" />
+    </edge>
+    <edge source="ClientNetworking.GameClient.GameClient" target="ClientNetworking.GameClient.GameClientReceiver">
+      <point x="65.40000000000009" y="-161.5" />
+      <point x="9692.027888479184" y="6525.0" />
+      <point x="9933.927888479184" y="6525.0" />
+      <point x="-112.0" y="137.5" />
+    </edge>
+    <edge source="Views.GameChat" target="ClientNetworking.GameClient.GameClient">
+      <point x="92.5" y="-161.0" />
+      <point x="8696.427888479184" y="6968.0" />
+      <point x="9585.752888479183" y="6968.0" />
+      <point x="-40.875" y="161.5" />
+    </edge>
+    <edge source="GameLogic.Asteroid" target="Physics.Body">
+      <point x="0.0" y="-52.5" />
+      <point x="7163.643797570092" y="3674.0" />
+      <point x="7067.966959045246" y="3674.0" />
+      <point x="-135.45000000000005" y="497.5" />
+    </edge>
+    <edge source="Menus.SettingsPanel" target="ClientNetworking.Client">
+      <point x="-93.75" y="-77.0" />
+      <point x="2375.523669252477" y="5344.0" />
+      <point x="2011.0415263953346" y="5344.0" />
+      <point x="2011.0415263953346" y="4868.0" />
+      <point x="1664.9419437827291" y="4868.0" />
+      <point x="90.44444444444434" y="209.5" />
+    </edge>
+    <edge source="GameLogic.Ship" target="GameLogic.weapon.Laser">
+      <point x="237.9230769230769" y="-473.5" />
+      <point x="5628.257653543162" y="5324.0" />
+      <point x="5854.602130903426" y="5324.0" />
+      <point x="0.0" y="172.5" />
+    </edge>
+    <edge source="Menus.ControlsPanel" target="Menus.MyButton">
+      <point x="102.5" y="-173.0" />
+      <point x="2371.773669252477" y="4788.0" />
+      <point x="3830.8680220905085" y="4788.0" />
+      <point x="-76.71428571428578" y="28.0" />
+    </edge>
+    <edge source="Geometry.Rotation" target="Geometry.Vector">
+      <point x="167.0" y="-233.5" />
+      <point x="7464.166959045246" y="1495.0" />
+      <point x="7563.791959045246" y="1495.0" />
+      <point x="7563.791959045246" y="687.0" />
+      <point x="11383.922911426198" y="687.0" />
+      <point x="-141.33333333333303" y="293.5" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="GameLogic.Ship">
+      <point x="13.5" y="-89.0" />
+      <point x="4175.505290244085" y="6465.0" />
+      <point x="4977.934576620084" y="6465.0" />
+      <point x="-412.4" y="473.5" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="Menus.PlayPanel">
+      <point x="46.25" y="-149.0" />
+      <point x="3153.5345766200853" y="9475.0" />
+      <point x="3373.9095766200853" y="9475.0" />
+      <point x="3373.9095766200853" y="8271.0" />
+      <point x="3212.6117850525707" y="8271.0" />
+      <point x="0.0" y="77.0" />
+    </edge>
+    <edge source="Graphics.Plasma" target="Geometry.Rotation">
+      <point x="-110.25" y="-137.0" />
+      <point x="10707.677888479184" y="4788.0" />
+      <point x="10592.927888479184" y="4788.0" />
+      <point x="10592.927888479184" y="2047.0" />
+      <point x="7374.2438821221685" y="2047.0" />
+      <point x="77.07692307692287" y="233.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameClock" target="ServerNetworking.ClientTable">
+      <point x="-67.5" y="-65.0" />
+      <point x="2865.1117850525707" y="7531.0" />
+      <point x="1215.0" y="7531.0" />
+      <point x="195.3125" y="89.0" />
+    </edge>
+    <edge source="ClientNetworking.LobbyContainer" target="GeneralNetworking.Lobby">
+      <point x="0.0" y="-40.5" />
+      <point x="1708.1634251647192" y="2569.0" />
+      <point x="598.5769582931935" y="2569.0" />
+      <point x="181.28571428571422" y="185.5" />
+    </edge>
+    <edge source="GameLogic.weapon.Plasma" target="GameLogic.Bullet">
+      <point x="68.0" y="-100.5" />
+      <point x="6588.143797570092" y="4798.0" />
+      <point x="6907.666959045246" y="4798.0" />
+      <point x="6907.666959045246" y="4173.0" />
+      <point x="7105.543797570092" y="4173.0" />
+      <point x="190.39999999999986" y="149.5" />
+    </edge>
+    <edge source="Graphics.AsteroidModel" target="Geometry.Vector">
+      <point x="25.08333333333303" y="-113.0" />
+      <point x="11160.511221812518" y="4848.0" />
+      <point x="11546.427888479184" y="4848.0" />
+      <point x="11546.427888479184" y="4153.0" />
+      <point x="11637.912735710222" y="4153.0" />
+      <point x="11637.912735710222" y="767.0" />
+      <point x="11542.922911426198" y="767.0" />
+      <point x="17.66666666666697" y="293.5" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="GeneralNetworking.Player">
+      <point x="-138.75" y="-149.0" />
+      <point x="2968.5345766200853" y="9505.0" />
+      <point x="378.25374933828425" y="9505.0" />
+      <point x="378.25374933828425" y="6948.0" />
+      <point x="1121.0800918313853" y="6948.0" />
+      <point x="1121.0800918313853" y="2047.0" />
+      <point x="483.7912440074797" y="2047.0" />
+      <point x="22.16666666666606" y="89.0" />
+    </edge>
+    <edge source="ClientNetworking.GameClient.GameClient" target="ClientNetworking.GameClient.GameClientSender">
+      <point x="-65.40000000000009" y="-161.5" />
+      <point x="9561.227888479183" y="6365.0" />
+      <point x="9489.927888479184" y="6365.0" />
+      <point x="-104.0" y="65.0" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="GameLogic.Map">
+      <point x="67.5" y="-89.0" />
+      <point x="4229.505290244085" y="6495.0" />
+      <point x="7535.691343245151" y="6495.0" />
+      <point x="7535.691343245151" y="4768.0" />
+      <point x="8084.30494350243" y="4768.0" />
+      <point x="-342.72727272727275" y="257.5" />
+    </edge>
+    <edge source="Views.AbstractPlayerView" target="Views.RadarView">
+      <point x="92.28571428571422" y="-305.0" />
+      <point x="9031.963602764898" y="7521.0" />
+      <point x="9201.177888479184" y="7521.0" />
+      <point x="130.75" y="209.5" />
+    </edge>
+    <edge source="Menus.MyButton" target="Menus.HoverMouseListener">
+      <point x="0.0" y="-28.0" />
+      <point x="0.0" y="101.0" />
+    </edge>
+    <edge source="GeneralNetworking.Lobby" target="GeneralNetworking.Player">
+      <point x="105.75" y="-185.5" />
+      <point x="523.0412440074797" y="2057.0" />
+      <point x="439.45791067414757" y="2057.0" />
+      <point x="-22.166666666666515" y="89.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHostReceiver" target="ClientNetworking.GameHost.MapContainer">
+      <point x="57.625" y="-161.0" />
+      <point x="3645.7367850525707" y="7541.0" />
+      <point x="5541.059576620084" y="7541.0" />
+      <point x="5541.059576620084" y="6988.0" />
+      <point x="5892.309576620084" y="6988.0" />
+      <point x="-52.125" y="149.0" />
+    </edge>
+    <edge source="Graphics.Poly3D" target="Graphics.PolygonObj">
+      <point x="0.0" y="-209.5" />
+      <point x="12345.971069043555" y="3654.0" />
+      <point x="12265.746069043556" y="3654.0" />
+      <point x="70.75" y="125.0" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="GeneralNetworking.Lobby">
+      <point x="-169.58333333333303" y="-149.0" />
+      <point x="2937.7012432867523" y="9515.0" />
+      <point x="83.75" y="9515.0" />
+      <point x="83.75" y="2539.0" />
+      <point x="236.00552972176592" y="2539.0" />
+      <point x="-181.28571428571377" y="185.5" />
+    </edge>
+    <edge source="Views.ResourcesView" target="Views.ResourcesView.ResourceComponent">
+      <point x="-145.33333333333348" y="-209.0" />
+      <point x="-145.33333333333348" y="113.0" />
+    </edge>
+    <edge source="Menus.JoinPanel" target="Menus.MyButton">
+      <point x="92.5" y="-149.0" />
+      <point x="3010.526243286752" y="9873.0" />
+      <point x="4307.505290244085" y="9873.0" />
+      <point x="4307.505290244085" y="4778.0" />
+      <point x="3984.29659351908" y="4778.0" />
+      <point x="76.71428571428578" y="28.0" />
+    </edge>
+    <edge source="Graphics.GraphicalModel" target="Geometry.Vector">
+      <point x="-96.0" y="-101.0" />
+      <point x="11115.496069043556" y="4173.0" />
+      <point x="11021.912735710222" y="4173.0" />
+      <point x="11021.912735710222" y="757.0" />
+      <point x="11507.589578092866" y="757.0" />
+      <point x="-17.66666666666606" y="293.5" />
+    </edge>
+    <edge source="Graphics.Plane" target="Geometry.Vector">
+      <point x="27.5" y="-88.5" />
+      <point x="12493.996069043556" y="2579.0" />
+      <point x="12515.996069043556" y="2579.0" />
+      <point x="12515.996069043556" y="727.0" />
+      <point x="11613.589578092866" y="727.0" />
+      <point x="88.33333333333394" y="293.5" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="Menus.MainMenu">
+      <point x="-46.25" y="-149.0" />
+      <point x="3061.0345766200853" y="9475.0" />
+      <point x="2421.141071428571" y="9475.0" />
+      <point x="-40.5" y="101.5" />
+    </edge>
+    <edge source="Physics.Body" target="Geometry.Basis">
+      <point x="-112.875" y="-497.5" />
+      <point x="7090.541959045246" y="2579.0" />
+      <point x="7083.541959045246" y="2579.0" />
+      <point x="134.25" y="221.0" />
+    </edge>
+    <edge source="Physics.Body" target="Geometry.Rotation">
+      <point x="112.875" y="-497.5" />
+      <point x="7316.291959045246" y="2579.0" />
+      <point x="7297.166959045246" y="2579.0" />
+      <point x="0.0" y="233.5" />
+    </edge>
+    <edge source="GameLogic.Ship" target="Geometry.Vector">
+      <point x="-475.8461538461536" y="-473.5" />
+      <point x="4914.488422773931" y="5344.0" />
+      <point x="3398.572692420179" y="5344.0" />
+      <point x="3398.572692420179" y="627.0" />
+      <point x="11277.922911426198" y="627.0" />
+      <point x="-247.33333333333303" y="293.5" />
+    </edge>
+    <edge source="Graphics.Icosahedron" target="Graphics.GraphicalModel">
+      <point x="117.75" y="-149.0" />
+      <point x="3705.822692420179" y="4808.0" />
+      <point x="11091.496069043556" y="4808.0" />
+      <point x="-120.0" y="101.0" />
+    </edge>
+    <edge source="GameLogic.Ship" target="GameLogic.weapon.Torpedo">
+      <point x="396.53846153846143" y="-473.5" />
+      <point x="5786.8730381585465" y="5344.0" />
+      <point x="6228.143797570092" y="5344.0" />
+      <point x="0.0" y="100.5" />
+    </edge>
+    <edge source="GameLogic.BotManager.TargetingBot" target="GameLogic.BotManager">
+      <point x="81.375" y="-89.5" />
+      <point x="7713.876243286752" y="6525.0" />
+      <point x="8199.847834195842" y="6525.0" />
+      <point x="0.0" y="77.0" />
+    </edge>
+    <edge source="ServerNetworking.ServerReceiver" target="GeneralNetworking.LobbyInfo">
+      <point x="128.625" y="-89.0" />
+      <point x="1922.2075396825403" y="7551.0" />
+      <point x="2022.0415263953346" y="7551.0" />
+      <point x="2022.0415263953346" y="4768.0" />
+      <point x="2841.5802902440846" y="4768.0" />
+      <point x="2841.5802902440846" y="2579.0" />
+      <point x="2770.8302902440846" y="2579.0" />
+      <point x="25.75" y="64.5" />
+    </edge>
+    <edge source="Menus.PlayPanel" target="Menus.MyButton">
+      <point x="31.25" y="-77.0" />
+      <point x="3243.8617850525707" y="6948.0" />
+      <point x="3900.29659351908" y="6948.0" />
+      <point x="3900.29659351908" y="4798.0" />
+      <point x="3907.5823078047943" y="4798.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="Views.PilotView" target="GameLogic.Ship">
+      <point x="-62.36363636363649" y="-329.0" />
+      <point x="7437.179273589782" y="8251.0" />
+      <point x="6575.372076620084" y="8251.0" />
+      <point x="6575.372076620084" y="6425.0" />
+      <point x="5390.334576620085" y="6425.0" />
+      <point x="0.0" y="473.5" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="ClientNetworking.GameHost.GameHost">
+      <point x="-15.416666666666515" y="-149.0" />
+      <point x="3091.867909953419" y="9465.0" />
+      <point x="2937.409576620085" y="9465.0" />
+      <point x="0.0" y="125.0" />
+    </edge>
+    <edge source="GameLogic.BotManager" target="GameLogic.BotManager.AbstractBot">
+      <point x="-79.19999999999982" y="-77.0" />
+      <point x="8120.647834195843" y="5354.0" />
+      <point x="7690.691343245151" y="5354.0" />
+      <point x="0.0" y="101.5" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="Views.EngineerView">
+      <point x="169.58333333333303" y="-149.0" />
+      <point x="3276.8679099534183" y="9515.0" />
+      <point x="11956.56578291379" y="9515.0" />
+      <point x="0.0" y="557.0" />
+    </edge>
+    <edge source="Views.AbstractPlayerView" target="Graphics.Screen">
+      <point x="276.8571428571431" y="-305.0" />
+      <point x="9216.535031336327" y="7541.0" />
+      <point x="9353.427888479184" y="7541.0" />
+      <point x="9353.427888479184" y="6988.0" />
+      <point x="11454.81578291379" y="6988.0" />
+      <point x="11454.81578291379" y="6555.0" />
+      <point x="11883.06578291379" y="6555.0" />
+      <point x="-187.0" y="485.5" />
+    </edge>
+    <edge source="Views.KeySequenceManager" target="Views.KeySequenceResponder">
+      <point x="0.0" y="-125.5" />
+      <point x="11732.06578291379" y="7551.0" />
+      <point x="11777.31578291379" y="7551.0" />
+      <point x="-67.0" y="64.0" />
+    </edge>
+    <edge source="Views.EngineerView" target="Views.ResourcesView">
+      <point x="342.76923076923094" y="-557.0" />
+      <point x="12299.335013683021" y="8291.0" />
+      <point x="12689.06578291379" y="8291.0" />
+      <point x="0.0" y="209.0" />
+    </edge>
+    <edge source="Graphics.GameEngine" target="Graphics.Screen">
+      <point x="0.0" y="-40.5" />
+      <point x="11577.31578291379" y="6565.0" />
+      <point x="12070.06578291379" y="6565.0" />
+      <point x="0.0" y="485.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHostReceiver" target="ClientNetworking.GameHost.KeySequence">
+      <point x="-57.625" y="-161.0" />
+      <point x="3530.4867850525707" y="6575.0" />
+      <point x="3051.9052902440844" y="6575.0" />
+      <point x="44.19999999999982" y="89.5" />
+    </edge>
+    <edge source="Views.AbstractPlayerView" target="Views.GameChat">
+      <point x="-92.28571428571422" y="-305.0" />
+      <point x="8847.392174193468" y="7471.0" />
+      <point x="8727.261221812518" y="7471.0" />
+      <point x="123.33333333333348" y="161.0" />
+    </edge>
+    <edge source="GameLogic.Weapon.Type" target="GameLogic.Weapon">
+      <point x="0.0" y="-52.0" />
+      <point x="5449.560464236759" y="4798.0" />
+      <point x="5504.518797570092" y="4798.0" />
+      <point x="-239.58333333333326" y="221.5" />
+    </edge>
+    <edge source="Graphics.Calculations" target="Graphics.Point">
+      <point x="0.0" y="-136.5" />
+      <point x="11794.412735710222" y="2579.0" />
+      <point x="11826.996069043556" y="2579.0" />
+      <point x="-68.5" y="125.5" />
+    </edge>
+    <edge source="Graphics.Laser" target="Geometry.Vector">
+      <point x="110.25" y="-137.0" />
+      <point x="12663.971069043555" y="4908.0" />
+      <point x="12766.221069043555" y="4908.0" />
+      <point x="12766.221069043555" y="657.0" />
+      <point x="11737.256244759532" y="657.0" />
+      <point x="212.0" y="293.5" />
+    </edge>
+    <edge source="Views.AbstractPlayerView" target="Menus.MainMenu">
+      <point x="-276.85714285714266" y="-305.0" />
+      <point x="8662.82074562204" y="7491.0" />
+      <point x="2583.141071428571" y="7491.0" />
+      <point x="121.5" y="101.5" />
+    </edge>
+    <edge source="Graphics.Screen" target="Geometry.Vector">
+      <point x="340.0" y="-485.5" />
+      <point x="12410.06578291379" y="5344.0" />
+      <point x="12788.221069043555" y="5344.0" />
+      <point x="12788.221069043555" y="637.0" />
+      <point x="11772.589578092866" y="637.0" />
+      <point x="247.33333333333394" y="293.5" />
+    </edge>
+    <edge source="GameLogic.BotManager.AbstractBot" target="GameLogic.BotManager">
+      <point x="96.33333333333303" y="101.5" />
+      <point x="7787.024676578483" y="5344.0" />
+      <point x="8160.247834195841" y="5344.0" />
+      <point x="-39.600000000000364" y="-77.0" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Menus.SettingsPanel">
+      <point x="-94.5" y="-89.0" />
+      <point x="4067.505290244085" y="6535.0" />
+      <point x="2531.773669252477" y="6535.0" />
+      <point x="62.5" y="77.0" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Views.JLayeredPaneLayoutManager">
+      <point x="94.5" y="-89.0" />
+      <point x="4256.505290244085" y="6535.0" />
+      <point x="8390.847834195843" y="6535.0" />
+      <point x="-144.0" y="100.5" />
+    </edge>
+    <edge source="ClientNetworking.ClientReceiver" target="GeneralNetworking.LobbyList">
+      <point x="112.0" y="-137.5" />
+      <point x="1894.8300918313853" y="3654.0" />
+      <point x="2601.913623577418" y="3654.0" />
+      <point x="-91.66666666666652" y="65.0" />
+    </edge>
+    <edge source="ServerNetworking.Server" target="GeneralNetworking.Lobby">
+      <point x="-49.600000000000364" y="-40.5" />
+      <point x="800.2856473869415" y="8301.0" />
+      <point x="105.75" y="8301.0" />
+      <point x="105.75" y="2559.0" />
+      <point x="356.86267257890813" y="2559.0" />
+      <point x="-60.42857142857156" y="185.5" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="GameLogic.Asteroid">
+      <point x="40.5" y="-89.0" />
+      <point x="4202.505290244085" y="6475.0" />
+      <point x="7124.643797570092" y="6475.0" />
+      <point x="-39.0" y="52.5" />
+    </edge>
+    <edge source="Views.EngineerView" target="Views.JLayeredPaneLayoutManager">
+      <point x="-342.7692307692305" y="-557.0" />
+      <point x="11613.79655214456" y="8271.0" />
+      <point x="9364.427888479184" y="8271.0" />
+      <point x="9364.427888479184" y="6535.0" />
+      <point x="8678.847834195843" y="6535.0" />
+      <point x="144.0" y="100.5" />
+    </edge>
+    <edge source="Views.PilotView" target="AI.EngineerAI">
+      <point x="62.36363636363649" y="-329.0" />
+      <point x="7561.906546317055" y="8311.0" />
+      <point x="7510.542909953418" y="8311.0" />
+      <point x="7510.542909953418" y="7551.0" />
+      <point x="7593.792909953418" y="7551.0" />
+      <point x="88.75" y="113.0" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="ClientNetworking.GameClient.GameClient">
+      <point x="138.75" y="-149.0" />
+      <point x="3246.0345766200853" y="9505.0" />
+      <point x="10285.69078291379" y="9505.0" />
+      <point x="10285.69078291379" y="6978.0" />
+      <point x="9749.252888479183" y="6978.0" />
+      <point x="122.625" y="161.5" />
+    </edge>
+    <edge source="Graphics.Laser" target="Graphics.GraphicalModel">
+      <point x="-110.25" y="-137.0" />
+      <point x="12443.471069043555" y="4738.0" />
+      <point x="11331.496069043556" y="4738.0" />
+      <point x="120.0" y="101.0" />
+    </edge>
+    <edge source="Graphics.Icosahedron" target="Geometry.Rotation">
+      <point x="39.25" y="-149.0" />
+      <point x="3627.322692420179" y="4778.0" />
+      <point x="3755.5823078047943" y="4778.0" />
+      <point x="3755.5823078047943" y="3674.0" />
+      <point x="3836.8399056287" y="3674.0" />
+      <point x="3836.8399056287" y="2017.0" />
+      <point x="7104.474651352938" y="2017.0" />
+      <point x="-192.69230769230762" y="233.5" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Menus.MyButton">
+      <point x="-13.5" y="-89.0" />
+      <point x="4148.505290244085" y="4788.0" />
+      <point x="3958.7251649476516" y="4788.0" />
+      <point x="51.14285714285734" y="28.0" />
+    </edge>
+    <edge source="GameLogic.Map" target="Physics.Body">
+      <point x="-282.75" y="-257.5" />
+      <point x="8144.282216229703" y="4173.0" />
+      <point x="8186.157216229703" y="4173.0" />
+      <point x="8186.157216229703" y="3634.0" />
+      <point x="7429.166959045246" y="3634.0" />
+      <point x="225.74999999999977" y="497.5" />
+    </edge>
+    <edge source="Graphics.Plasma" target="Graphics.GraphicalModel">
+      <point x="110.25" y="-137.0" />
+      <point x="10928.177888479184" y="4828.0" />
+      <point x="11187.496069043556" y="4828.0" />
+      <point x="-24.0" y="101.0" />
+    </edge>
+    <edge source="GameLogic.weapon.Plasma" target="GameLogic.Weapon">
+      <point x="-68.0" y="-100.5" />
+      <point x="6452.143797570092" y="4748.0" />
+      <point x="5983.685464236759" y="4748.0" />
+      <point x="239.58333333333326" y="221.5" />
+    </edge>
+    <edge source="Menus.PlayPanel" target="ClientNetworking.Client">
+      <point x="-93.75" y="-77.0" />
+      <point x="3118.8617850525707" y="7521.0" />
+      <point x="1676.1276375064454" y="7521.0" />
+      <point x="1676.1276375064454" y="4908.0" />
+      <point x="1484.0530548938405" y="4908.0" />
+      <point x="-90.44444444444434" y="209.5" />
+    </edge>
+    <edge source="Graphics.Star" target="Physics.Body">
+      <point x="-62.33333333333337" y="-40.5" />
+      <point x="12829.887735710221" y="3614.0" />
+      <point x="7609.766959045245" y="3614.0" />
+      <point x="406.3499999999997" y="497.5" />
+    </edge>
+    <edge source="ServerNetworking.Server" target="ServerNetworking.ClientTable">
+      <point x="0.0" y="-40.5" />
+      <point x="849.8856473869419" y="8291.0" />
+      <point x="495.00374933828425" y="8291.0" />
+      <point x="495.00374933828425" y="7541.0" />
+      <point x="746.25" y="7541.0" />
+      <point x="-273.4375" y="89.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ServerNetworking.ClientTable">
+      <point x="-100.0" y="-125.0" />
+      <point x="2837.409576620085" y="8261.0" />
+      <point x="868.0037493382843" y="8261.0" />
+      <point x="868.0037493382843" y="7541.0" />
+      <point x="902.5" y="7541.0" />
+      <point x="-117.1875" y="89.0" />
+    </edge>
+    <edge source="GameLogic.Ship" target="GameLogic.resource.Shields">
+      <point x="-237.92307692307668" y="-473.5" />
+      <point x="5152.4114996970075" y="5314.0" />
+      <point x="4883.102130903426" y="5314.0" />
+      <point x="0.0" y="52.5" />
+    </edge>
+    <edge source="Menus.MainMenu" target="ClientNetworking.Client">
+      <point x="-92.57142857142844" y="-101.5" />
+      <point x="2369.0696428571428" y="6978.0" />
+      <point x="1797.652637506446" y="6978.0" />
+      <point x="1797.652637506446" y="4888.0" />
+      <point x="1574.4974993382848" y="4888.0" />
+      <point x="0.0" y="209.5" />
+    </edge>
+    <edge source="GameLogic.Ship" target="Geometry.Rotation">
+      <point x="-396.53846153846143" y="-473.5" />
+      <point x="4993.796115081623" y="5334.0" />
+      <point x="4605.102130903426" y="5334.0" />
+      <point x="4605.102130903426" y="2037.0" />
+      <point x="7181.551574429861" y="2037.0" />
+      <point x="-115.61538461538476" y="233.5" />
+    </edge>
+    <edge source="GameLogic.Weapon" target="GameLogic.Ship">
+      <point x="-47.91666666666674" y="221.5" />
+      <point x="5696.185464236759" y="4798.0" />
+      <point x="5642.102130903426" y="4798.0" />
+      <point x="5642.102130903426" y="5314.0" />
+      <point x="5548.949961235469" y="5314.0" />
+      <point x="158.61538461538453" y="-473.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHostReceiver" target="ServerNetworking.ClientTable">
+      <point x="-172.875" y="-161.0" />
+      <point x="3415.2367850525707" y="7501.0" />
+      <point x="1293.125" y="7501.0" />
+      <point x="273.4375" y="89.0" />
+    </edge>
+    <edge source="GameLogic.Ship" target="GameLogic.resource.Health">
+      <point x="-79.30769230769238" y="-473.5" />
+      <point x="5311.026884312392" y="5294.0" />
+      <point x="5093.102130903426" y="5294.0" />
+      <point x="0.0" y="52.5" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.Star">
+      <point x="425.0" y="-485.5" />
+      <point x="12495.06578291379" y="5354.0" />
+      <point x="12892.221069043555" y="5354.0" />
+      <point x="0.0" y="40.5" />
+    </edge>
+    <edge source="GameLogic.resource.Shields" target="GameLogic.Resource">
+      <point x="0.0" y="-52.5" />
+      <point x="4883.102130903426" y="4173.0" />
+      <point x="4874.709273760568" y="4173.0" />
+      <point x="-82.57142857142867" y="137.5" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.Laser">
+      <point x="85.0" y="-485.5" />
+      <point x="12155.06578291379" y="5314.0" />
+      <point x="12553.721069043555" y="5314.0" />
+      <point x="0.0" y="137.0" />
+    </edge>
+    <edge source="Graphics.Icosahedron" target="Geometry.Vector">
+      <point x="-39.25" y="-149.0" />
+      <point x="3548.822692420179" y="4778.0" />
+      <point x="3571.572692420179" y="4778.0" />
+      <point x="3571.572692420179" y="647.0" />
+      <point x="11313.256244759532" y="647.0" />
+      <point x="-212.0" y="293.5" />
+    </edge>
+    <edge source="Graphics.Screen" target="GameLogic.Map">
+      <point x="-340.0" y="-485.5" />
+      <point x="11730.06578291379" y="5324.0" />
+      <point x="10335.427888479184" y="5324.0" />
+      <point x="10335.427888479184" y="4768.0" />
+      <point x="8701.214034411521" y="4768.0" />
+      <point x="274.181818181818" y="257.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ClientNetworking.GameHost.MapContainer">
+      <point x="100.0" y="-125.0" />
+      <point x="3037.409576620085" y="8301.0" />
+      <point x="6140.059576620084" y="8301.0" />
+      <point x="6140.059576620084" y="6978.0" />
+      <point x="5996.559576620084" y="6978.0" />
+      <point x="52.125" y="149.0" />
+    </edge>
+    <edge source="Physics.Body" target="Geometry.Vector">
+      <point x="338.625" y="-497.5" />
+      <point x="7542.041959045246" y="2579.0" />
+      <point x="10871.560805860805" y="2579.0" />
+      <point x="10871.560805860805" y="697.0" />
+      <point x="11401.589578092866" y="697.0" />
+      <point x="-123.66666666666697" y="293.5" />
+    </edge>
+    <edge source="Menus.SoundPanel" target="Menus.MainMenu">
+      <point x="72.5" y="101.0" />
+      <point x="2711.773669252477" y="5344.0" />
+      <point x="2691.398669252477" y="5344.0" />
+      <point x="2691.398669252477" y="6948.0" />
+      <point x="2507.9267857142854" y="6948.0" />
+      <point x="46.28571428571422" y="-101.5" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="GeneralNetworking.Action">
+      <point x="-107.91666666666652" y="-149.0" />
+      <point x="2999.367909953419" y="9495.0" />
+      <point x="400.25374933828425" y="9495.0" />
+      <point x="400.25374933828425" y="6968.0" />
+      <point x="1177.6165210645286" y="6968.0" />
+      <point x="1177.6165210645286" y="3674.0" />
+      <point x="1293.2266660049518" y="3674.0" />
+      <point x="-33.625" y="125.0" />
+    </edge>
+    <edge source="Graphics.AsteroidModel" target="Graphics.GraphicalModel">
+      <point x="-25.08333333333303" y="-113.0" />
+      <point x="11110.34455514585" y="4838.0" />
+      <point x="11235.496069043556" y="4838.0" />
+      <point x="24.0" y="101.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.MapContainer" target="GameLogic.Map">
+      <point x="119.14285714285734" y="-149.0" />
+      <point x="6063.577433762942" y="6505.0" />
+      <point x="7856.691343245151" y="6505.0" />
+      <point x="7856.691343245151" y="4778.0" />
+      <point x="8152.8503980478845" y="4778.0" />
+      <point x="-274.18181818181824" y="257.5" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="ClientNetworking.Client">
+      <point x="-121.5" y="-89.0" />
+      <point x="4040.505290244085" y="6545.0" />
+      <point x="1819.652637506446" y="6545.0" />
+      <point x="1819.652637506446" y="4878.0" />
+      <point x="1619.7197215605074" y="4878.0" />
+      <point x="45.222222222222626" y="209.5" />
+    </edge>
+    <edge source="Menus.PlayPanel" target="Menus.JoinPanel">
+      <point x="83.33333333333348" y="77.0" />
+      <point x="3295.945118385904" y="8261.0" />
+      <point x="3384.9095766200853" y="8261.0" />
+      <point x="3384.9095766200853" y="9863.0" />
+      <point x="2973.526243286752" y="9863.0" />
+      <point x="55.5" y="-149.0" />
+    </edge>
+    <edge source="GameLogic.Resource.Type" target="GameLogic.Resource">
+      <point x="0.0" y="-52.0" />
+      <point x="4697.602130903426" y="4173.0" />
+      <point x="4833.423559474854" y="4173.0" />
+      <point x="-123.85714285714289" y="137.5" />
+    </edge>
+    <edge source="Graphics.Plasma" target="Geometry.Vector">
+      <point x="36.75" y="-137.0" />
+      <point x="10854.677888479184" y="4798.0" />
+      <point x="10987.162735710222" y="4798.0" />
+      <point x="10987.162735710222" y="747.0" />
+      <point x="11489.922911426198" y="747.0" />
+      <point x="-35.33333333333303" y="293.5" />
+    </edge>
+    <edge source="Graphics.Laser" target="Geometry.Rotation">
+      <point x="-36.75" y="-137.0" />
+      <point x="12516.971069043555" y="4728.0" />
+      <point x="11749.177888479184" y="4728.0" />
+      <point x="11749.177888479184" y="4143.0" />
+      <point x="10851.176190476192" y="4143.0" />
+      <point x="10851.176190476192" y="2007.0" />
+      <point x="7528.397728276015" y="2007.0" />
+      <point x="231.2307692307695" y="233.5" />
+    </edge>
+    <edge source="Menus.JoinPanel" target="GeneralNetworking.Player">
+      <point x="-166.5" y="-149.0" />
+      <point x="2751.526243286752" y="9893.0" />
+      <point x="28.0" y="9893.0" />
+      <point x="28.0" y="2047.0" />
+      <point x="350.7912440074797" y="2047.0" />
+      <point x="-110.83333333333394" y="89.0" />
+    </edge>
+    <edge source="Graphics.Torpedo" target="Geometry.Rotation">
+      <point x="-36.75" y="-137.0" />
+      <point x="10467.177888479184" y="2057.0" />
+      <point x="7335.705420583707" y="2057.0" />
+      <point x="38.53846153846143" y="233.5" />
+    </edge>
+    <edge source="Menus.SettingsPanel" target="Menus.MyButton">
+      <point x="93.75" y="-77.0" />
+      <point x="2563.023669252477" y="5354.0" />
+      <point x="3889.29659351908" y="5354.0" />
+      <point x="3889.29659351908" y="4798.0" />
+      <point x="3882.010879233366" y="4798.0" />
+      <point x="-25.57142857142844" y="28.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ClientNetworking.GameHost.GameClock">
+      <point x="50.0" y="-125.0" />
+      <point x="2987.409576620085" y="8201.0" />
+      <point x="2932.6117850525707" y="8201.0" />
+      <point x="0.0" y="65.0" />
+    </edge>
+    <edge source="Graphics.Plane" target="Graphics.Point">
+      <point x="-82.5" y="-88.5" />
+      <point x="12383.996069043556" y="2579.0" />
+      <point x="11963.996069043556" y="2579.0" />
+      <point x="68.5" y="125.5" />
+    </edge>
+    <edge source="GameLogic.Ship" target="GameLogic.resource.Engines">
+      <point x="0.0" y="-473.5" />
+      <point x="5390.334576620085" y="5354.0" />
+      <point x="5322.102130903426" y="5354.0" />
+      <point x="0.0" y="77.5" />
+    </edge>
+    <edge source="GameLogic.resource.Health" target="GameLogic.Resource">
+      <point x="0.0" y="-52.5" />
+      <point x="5093.102130903426" y="4163.0" />
+      <point x="4957.2807023319965" y="4163.0" />
+      <point x="0.0" y="137.5" />
+    </edge>
+    <edge source="Views.EngineerView" target="Views.KeySequenceManager">
+      <point x="-85.69230769230762" y="-557.0" />
+      <point x="11870.873475221484" y="8311.0" />
+      <point x="11839.06578291379" y="8311.0" />
+      <point x="107.0" y="125.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.MapContainer" target="Geometry.Vector">
+      <point x="-178.71428571428578" y="-149.0" />
+      <point x="5765.720290905799" y="6455.0" />
+      <point x="3387.572692420179" y="6455.0" />
+      <point x="3387.572692420179" y="617.0" />
+      <point x="11260.256244759532" y="617.0" />
+      <point x="-265.0" y="293.5" />
+    </edge>
+    <edge source="Graphics.Calculations" target="Geometry.Vector">
+      <point x="-97.33333333333303" y="-136.5" />
+      <point x="11697.07940237689" y="2569.0" />
+      <point x="11678.227472527473" y="2569.0" />
+      <point x="11678.227472527473" y="757.0" />
+      <point x="11560.589578092866" y="757.0" />
+      <point x="35.33333333333394" y="293.5" />
+    </edge>
+    <edge source="ClientNetworking.GameClient.GameClient" target="ClientNetworking.GameHost.KeySequence">
+      <point x="-130.80000000000018" y="-161.5" />
+      <point x="9495.827888479183" y="6375.0" />
+      <point x="3096.1052902440847" y="6375.0" />
+      <point x="88.40000000000009" y="89.5" />
+    </edge>
+    <edge source="Menus.MyCheckBox" target="Menus.MuteItemListener">
+      <point x="0.0" y="-28.0" />
+      <point x="0.0" y="77.0" />
+    </edge>
+    <edge source="GeneralNetworking.LobbyList" target="GeneralNetworking.LobbyInfo">
+      <point x="-68.75" y="-65.0" />
+      <point x="2624.8302902440846" y="2579.0" />
+      <point x="2667.8302902440846" y="2579.0" />
+      <point x="-77.25" y="64.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHost" target="ClientNetworking.GameHost.KeySequence">
+      <point x="25.0" y="-125.0" />
+      <point x="2962.409576620085" y="8211.0" />
+      <point x="2787.1117850525707" y="8211.0" />
+      <point x="2787.1117850525707" y="6575.0" />
+      <point x="3007.7052902440846" y="6575.0" />
+      <point x="0.0" y="89.5" />
+    </edge>
+    <edge source="GameLogic.BotManager.TargetingBot" target="Physics.Body">
+      <point x="-27.125" y="-89.5" />
+      <point x="7605.376243286752" y="6395.0" />
+      <point x="7455.503843245151" y="6395.0" />
+      <point x="7455.503843245151" y="3664.0" />
+      <point x="7158.266959045246" y="3664.0" />
+      <point x="-45.15000000000009" y="497.5" />
+    </edge>
+    <edge source="Menus.SoundPanel" target="Menus.MyButton">
+      <point x="72.5" y="-101.0" />
+      <point x="2711.773669252477" y="4798.0" />
+      <point x="3856.4394506619374" y="4798.0" />
+      <point x="-51.14285714285711" y="28.0" />
+    </edge>
+    <edge source="Graphics.ShipModel" target="Geometry.Vector">
+      <point x="36.75" y="-137.0" />
+      <point x="11489.677888479184" y="4878.0" />
+      <point x="12733.221069043555" y="4878.0" />
+      <point x="12733.221069043555" y="687.0" />
+      <point x="11684.256244759532" y="687.0" />
+      <point x="159.0" y="293.5" />
+    </edge>
+    <edge source="Views.PilotView" target="Views.GameChat">
+      <point x="187.090909090909" y="-329.0" />
+      <point x="7686.6338190443275" y="8291.0" />
+      <point x="8450.011221812516" y="8291.0" />
+      <point x="8450.011221812516" y="7551.0" />
+      <point x="8480.59455514585" y="7551.0" />
+      <point x="-123.33333333333348" y="161.0" />
+    </edge>
+    <edge source="Views.PilotView" target="Graphics.Screen">
+      <point x="311.818181818182" y="-329.0" />
+      <point x="7811.3610917716" y="8311.0" />
+      <point x="9273.177888479184" y="8311.0" />
+      <point x="9273.177888479184" y="7551.0" />
+      <point x="11699.81578291379" y="7551.0" />
+      <point x="11699.81578291379" y="6575.0" />
+      <point x="12257.06578291379" y="6575.0" />
+      <point x="187.0" y="485.5" />
+    </edge>
+    <edge source="Views.PilotView" target="Views.SpeedometerView">
+      <point x="-187.090909090909" y="-329.0" />
+      <point x="7312.4520008625095" y="8271.0" />
+      <point x="6223.309576620084" y="8271.0" />
+      <point x="-72.75" y="65.0" />
+    </edge>
+    <edge source="Graphics.Poly3D" target="Graphics.Plane">
+      <point x="80.39999999999964" y="-209.5" />
+      <point x="12426.371069043555" y="3674.0" />
+      <point x="12466.496069043556" y="3674.0" />
+      <point x="0.0" y="88.5" />
+    </edge>
+    <edge source="Menus.MainMenu" target="Menus.ButtonPanel">
+      <point x="92.57142857142856" y="-101.5" />
+      <point x="2554.2124999999996" y="6958.0" />
+      <point x="4072.005290244085" y="6958.0" />
+      <point x="-90.0" y="89.0" />
+    </edge>
+    <edge source="Geometry.Basis" target="Geometry.Vector">
+      <point x="-134.25" y="-221.0" />
+      <point x="6815.041959045246" y="667.0" />
+      <point x="11348.589578092866" y="667.0" />
+      <point x="-176.66666666666697" y="293.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.MapContainer" target="Geometry.Rotation">
+      <point x="-119.14285714285734" y="-149.0" />
+      <point x="5825.291719477227" y="6445.0" />
+      <point x="4534.871361672656" y="6445.0" />
+      <point x="4534.871361672656" y="2027.0" />
+      <point x="7143.0131128914" y="2027.0" />
+      <point x="-154.1538461538462" y="233.5" />
+    </edge>
+    <edge source="ServerNetworking.ServerReceiver" target="GeneralNetworking.Lobby">
+      <point x="-42.875" y="-89.0" />
+      <point x="1750.7075396825403" y="7541.0" />
+      <point x="1369.7849993382843" y="7541.0" />
+      <point x="1369.7849993382843" y="6938.0" />
+      <point x="1002.8397353502442" y="6938.0" />
+      <point x="1002.8397353502442" y="2579.0" />
+      <point x="538.1483868646228" y="2579.0" />
+      <point x="120.85714285714312" y="185.5" />
+    </edge>
+    <edge source="ServerNetworking.ServerReceiver" target="ServerNetworking.ClientTable">
+      <point x="-128.625" y="-89.0" />
+      <point x="1664.9575396825403" y="7551.0" />
+      <point x="1136.875" y="7551.0" />
+      <point x="117.1875" y="89.0" />
+    </edge>
+    <edge source="Graphics.AsteroidModel" target="Geometry.Rotation">
+      <point x="-75.25" y="-113.0" />
+      <point x="11060.177888479184" y="4768.0" />
+      <point x="10766.09455514585" y="4768.0" />
+      <point x="10766.09455514585" y="2027.0" />
+      <point x="7451.320805199091" y="2027.0" />
+      <point x="154.1538461538462" y="233.5" />
+    </edge>
+    <edge source="Views.ManualInstructionsView" target="Views.MyJTableModel">
+      <point x="-144.5" y="-221.5" />
+      <point x="5696.059576620084" y="6968.0" />
+      <point x="4708.122076620084" y="6968.0" />
+      <point x="0.0" y="40.5" />
+    </edge>
+    <edge source="Views.ManualView" target="Views.ManualInstructionsView">
+      <point x="-92.25" y="-125.0" />
+      <point x="5748.309576620084" y="7541.0" />
+      <point x="5696.059576620084" y="7541.0" />
+      <point x="-144.5" y="221.5" />
+    </edge>
+    <edge source="ClientNetworking.ClientReceiver" target="GeneralNetworking.Player">
+      <point x="37.33333333333303" y="-137.5" />
+      <point x="1820.1634251647183" y="3674.0" />
+      <point x="1817.6634251647192" y="3674.0" />
+      <point x="1817.6634251647192" y="2027.0" />
+      <point x="572.4579106741476" y="2027.0" />
+      <point x="110.83333333333394" y="89.0" />
+    </edge>
+    <edge source="Menus.PlayPanel" target="Menus.LobbyPanel">
+      <point x="-83.33333333333348" y="77.0" />
+      <point x="3129.278451719237" y="8281.0" />
+      <point x="3283.8679099534193" y="8281.0" />
+      <point x="3283.8679099534193" y="9465.0" />
+      <point x="3122.7012432867523" y="9465.0" />
+      <point x="15.41666666666697" y="-149.0" />
+    </edge>
+    <edge source="GameLogic.resource.Engines" target="GameLogic.Resource">
+      <point x="0.0" y="-77.5" />
+      <point x="5322.102130903426" y="4153.0" />
+      <point x="4998.566416617711" y="4153.0" />
+      <point x="41.28571428571422" y="137.5" />
+    </edge>
+    <edge source="Views.GameChat" target="ClientNetworking.GameHost.ChatMessage">
+      <point x="-92.5" y="-161.0" />
+      <point x="8511.427888479184" y="6948.0" />
+      <point x="7469.667909953418" y="6948.0" />
+      <point x="68.66666666666652" y="52.5" />
+    </edge>
+    <edge source="Views.EngineerView" target="Views.ShipState">
+      <point x="-257.07692307692287" y="-557.0" />
+      <point x="11699.488859836867" y="8261.0" />
+      <point x="10183.69078291379" y="8261.0" />
+      <point x="0.0" y="88.0" />
+    </edge>
+    <edge source="Geometry.Basis" target="Geometry.Rotation">
+      <point x="134.25" y="-221.0" />
+      <point x="7083.541959045246" y="2057.0" />
+      <point x="7258.628497506785" y="2057.0" />
+      <point x="-38.53846153846143" y="233.5" />
+    </edge>
+    <edge source="Graphics.Poly3D" target="Geometry.Vector">
+      <point x="160.80000000000018" y="-209.5" />
+      <point x="12506.771069043556" y="3674.0" />
+      <point x="12586.996069043556" y="3674.0" />
+      <point x="12586.996069043556" y="707.0" />
+      <point x="11648.922911426198" y="707.0" />
+      <point x="123.66666666666697" y="293.5" />
+    </edge>
+    <edge source="Geometry.Rotation" target="Geometry.Quaternion">
+      <point x="-167.0" y="-233.5" />
+      <point x="7130.166959045246" y="1495.0" />
+      <point x="7030.541959045246" y="1495.0" />
+      <point x="-174.25" y="341.5" />
+    </edge>
+    <edge source="GameLogic.Ship" target="GameLogic.weapon.Plasma">
+      <point x="475.8461538461538" y="-473.5" />
+      <point x="5866.180730466238" y="5354.0" />
+      <point x="6520.143797570092" y="5354.0" />
+      <point x="0.0" y="100.5" />
+    </edge>
+    <edge source="GameLogic.Ship" target="Physics.Body">
+      <point x="317.2307692307693" y="-473.5" />
+      <point x="5707.565345850854" y="5334.0" />
+      <point x="6081.643797570092" y="5334.0" />
+      <point x="6081.643797570092" y="3664.0" />
+      <point x="6797.066959045245" y="3664.0" />
+      <point x="-406.3499999999999" y="497.5" />
+    </edge>
+    <edge source="Graphics.Screen" target="Physics.Body">
+      <point x="-425.0" y="-485.5" />
+      <point x="11645.06578291379" y="5334.0" />
+      <point x="7845.691343245151" y="5334.0" />
+      <point x="7845.691343245151" y="3644.0" />
+      <point x="7338.8669590452455" y="3644.0" />
+      <point x="135.44999999999982" y="497.5" />
+    </edge>
+    <edge source="Graphics.Point" target="Geometry.Vector">
+      <point x="0.0" y="-125.5" />
+      <point x="11895.496069043556" y="747.0" />
+      <point x="11578.256244759532" y="747.0" />
+      <point x="53.0" y="293.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.MapContainer" target="Physics.Body">
+      <point x="0.0" y="-149.0" />
+      <point x="5944.434576620084" y="6465.0" />
+      <point x="6666.643797570092" y="6465.0" />
+      <point x="6666.643797570092" y="3674.0" />
+      <point x="6887.3669590452455" y="3674.0" />
+      <point x="-316.04999999999995" y="497.5" />
+    </edge>
+    <edge source="Menus.PlayPanel" target="Menus.MainMenu">
+      <point x="-31.25" y="-77.0" />
+      <point x="3181.3617850525707" y="7511.0" />
+      <point x="2502.141071428571" y="7511.0" />
+      <point x="40.5" y="101.5" />
+    </edge>
+    <edge source="Graphics.GraphicalModel" target="Graphics.Poly3D">
+      <point x="96.0" y="-101.0" />
+      <point x="11307.496069043556" y="4173.0" />
+      <point x="12295.721069043555" y="4173.0" />
+      <point x="-50.25" y="209.5" />
+    </edge>
+    <edge source="Views.EngineerView" target="Views.AbstractPlayerView">
+      <point x="-428.46153846153857" y="-557.0" />
+      <point x="11528.104244452252" y="8281.0" />
+      <point x="9101.177888479184" y="8281.0" />
+      <point x="161.5" y="305.0" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="ClientNetworking.Client">
+      <point x="-77.08333333333303" y="-149.0" />
+      <point x="3030.2012432867523" y="9485.0" />
+      <point x="422.25374933828425" y="9485.0" />
+      <point x="422.25374933828425" y="6988.0" />
+      <point x="1302.3856473869419" y="6988.0" />
+      <point x="1302.3856473869419" y="4908.0" />
+      <point x="1438.8308326716178" y="4908.0" />
+      <point x="-135.66666666666697" y="209.5" />
+    </edge>
+    <edge source="Views.AbstractPlayerView" target="ClientNetworking.GameClient.GameClient">
+      <point x="184.57142857142844" y="-305.0" />
+      <point x="9124.249317050611" y="7531.0" />
+      <point x="9342.427888479184" y="7531.0" />
+      <point x="9342.427888479184" y="6978.0" />
+      <point x="9667.502888479183" y="6978.0" />
+      <point x="40.875" y="161.5" />
+    </edge>
+    <edge source="ClientNetworking.Client" target="ClientNetworking.ClientSender">
+      <point x="-162.80000000000018" y="-209.5" />
+      <point x="1411.6974993382846" y="4173.0" />
+      <point x="1268.8665210645286" y="4173.0" />
+      <point x="-80.75" y="65.0" />
+    </edge>
+    <edge source="ClientNetworking.Client" target="ClientNetworking.ClientReceiver">
+      <point x="162.80000000000018" y="-209.5" />
+      <point x="1737.297499338285" y="4173.0" />
+      <point x="1894.8300918313853" y="4173.0" />
+      <point x="112.0" y="137.5" />
+    </edge>
+    <edge source="Menus.ControlsPanel" target="ClientNetworking.Client">
+      <point x="-102.5" y="-173.0" />
+      <point x="2166.773669252477" y="4758.0" />
+      <point x="1710.1641660049518" y="4758.0" />
+      <point x="135.66666666666697" y="209.5" />
+    </edge>
+    <edge source="Views.PilotView" target="Views.JLayeredPaneLayoutManager">
+      <point x="124.72727272727298" y="-329.0" />
+      <point x="7624.2701826806915" y="8281.0" />
+      <point x="8408.427888479182" y="8281.0" />
+      <point x="8408.427888479182" y="6535.0" />
+      <point x="8534.847834195843" y="6535.0" />
+      <point x="0.0" y="100.5" />
+    </edge>
+    <edge source="GameLogic.Ship" target="GameLogic.Weapon">
+      <point x="79.30769230769238" y="-473.5" />
+      <point x="5469.642268927777" y="5354.0" />
+      <point x="5522.060464236759" y="5354.0" />
+      <point x="5522.060464236759" y="4798.0" />
+      <point x="5600.352130903426" y="4798.0" />
+      <point x="-143.75" y="221.5" />
+    </edge>
+    <edge source="Graphics.Torpedo" target="Geometry.Vector">
+      <point x="36.75" y="-137.0" />
+      <point x="10540.677888479184" y="4798.0" />
+      <point x="10603.927888479184" y="4798.0" />
+      <point x="10603.927888479184" y="4173.0" />
+      <point x="10904.560805860805" y="4173.0" />
+      <point x="10904.560805860805" y="727.0" />
+      <point x="11454.589578092866" y="727.0" />
+      <point x="-70.66666666666697" y="293.5" />
+    </edge>
+    <edge source="Graphics.Matrix" target="Geometry.Vector">
+      <point x="-148.75" y="-268.5" />
+      <point x="11181.162735710222" y="767.0" />
+      <point x="11525.256244759532" y="767.0" />
+      <point x="0.0" y="293.5" />
+    </edge>
+    <edge source="ClientNetworking.Client" target="GeneralNetworking.Action">
+      <point x="0.0" y="-209.5" />
+      <point x="1574.4974993382848" y="4173.0" />
+      <point x="1521.6165210645286" y="4173.0" />
+      <point x="1521.6165210645286" y="3674.0" />
+      <point x="1360.4766660049518" y="3674.0" />
+      <point x="33.625" y="125.0" />
+    </edge>
+    <edge source="ClientNetworking.GameClient.GameClientReceiver" target="ClientNetworking.GameClient.MapContainer">
+      <point x="56.0" y="-137.5" />
+      <point x="10101.927888479184" y="5354.0" />
+      <point x="10094.427888479184" y="5354.0" />
+      <point x="-46.5" y="40.5" />
+    </edge>
+    <edge source="Views.RadarView" target="GameLogic.Map">
+      <point x="130.75" y="-209.5" />
+      <point x="9201.177888479184" y="6948.0" />
+      <point x="9375.427888479184" y="6948.0" />
+      <point x="9375.427888479184" y="4798.0" />
+      <point x="8495.577670775157" y="4798.0" />
+      <point x="68.5454545454545" y="257.5" />
+    </edge>
+    <edge source="ClientNetworking.ClientReceiver" target="GeneralNetworking.Action">
+      <point x="-186.66666666666697" y="-137.5" />
+      <point x="1596.1634251647183" y="3664.0" />
+      <point x="1427.7266660049518" y="3664.0" />
+      <point x="100.875" y="125.0" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="Views.PilotView">
+      <point x="107.91666666666697" y="-149.0" />
+      <point x="3215.2012432867523" y="9495.0" />
+      <point x="7499.542909953418" y="9495.0" />
+      <point x="0.0" y="329.0" />
+    </edge>
+    <edge source="Geometry.Quaternion" target="Geometry.Vector">
+      <point x="0.0" y="-341.5" />
+      <point x="7204.791959045246" y="677.0" />
+      <point x="11366.256244759532" y="677.0" />
+      <point x="-159.0" y="293.5" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.GameHostReceiver" target="ClientNetworking.GameHost.ChatMessage">
+      <point x="172.875" y="-161.0" />
+      <point x="3760.9867850525707" y="7551.0" />
+      <point x="7317.042909953418" y="7551.0" />
+      <point x="7317.042909953418" y="6988.0" />
+      <point x="7332.334576620085" y="6988.0" />
+      <point x="-68.66666666666652" y="52.5" />
+    </edge>
+    <edge source="Menus.LobbyPanel" target="Menus.MyButton">
+      <point x="77.08333333333303" y="-149.0" />
+      <point x="3184.3679099534183" y="9485.0" />
+      <point x="4016.505290244085" y="9485.0" />
+      <point x="4016.505290244085" y="4798.0" />
+      <point x="3933.1537363762227" y="4798.0" />
+      <point x="25.57142857142844" y="28.0" />
+    </edge>
+    <edge source="Views.EngineerView" target="Views.GameChat">
+      <point x="-514.1538461538457" y="-557.0" />
+      <point x="11442.411936759945" y="8291.0" />
+      <point x="8547.761221812516" y="8291.0" />
+      <point x="8547.761221812516" y="7551.0" />
+      <point x="8603.927888479184" y="7551.0" />
+      <point x="0.0" y="161.0" />
+    </edge>
+    <edge source="GameLogic.Weapon" target="GameLogic.Bullet">
+      <point x="191.66666666666674" y="-221.5" />
+      <point x="5935.768797570092" y="4173.0" />
+      <point x="6724.743797570092" y="4173.0" />
+      <point x="-190.4" y="149.5" />
+    </edge>
+    <edge source="GameLogic.Ship" target="GameLogic.Resource">
+      <point x="-158.61538461538453" y="-473.5" />
+      <point x="5231.7191920047" y="5304.0" />
+      <point x="4988.102130903426" y="5304.0" />
+      <point x="4988.102130903426" y="4173.0" />
+      <point x="4915.994988046283" y="4173.0" />
+      <point x="-41.28571428571422" y="137.5" />
+    </edge>
+    <edge source="Menus.SettingsPanel" target="Menus.MainMenu">
+      <point x="-62.5" y="77.0" />
+      <point x="2406.773669252477" y="6958.0" />
+      <point x="2461.641071428571" y="6958.0" />
+      <point x="0.0" y="-101.5" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Geometry.Vector">
+      <point x="-67.5" y="-89.0" />
+      <point x="4094.505290244085" y="6525.0" />
+      <point x="3376.572692420179" y="6525.0" />
+      <point x="3376.572692420179" y="4738.0" />
+      <point x="2545.5802902440846" y="4738.0" />
+      <point x="2545.5802902440846" y="607.0" />
+      <point x="11242.589578092866" y="607.0" />
+      <point x="-282.66666666666697" y="293.5" />
+    </edge>
+    <edge source="Views.EngineerView" target="Graphics.Screen">
+      <point x="514.1538461538457" y="-557.0" />
+      <point x="12470.719629067637" y="8311.0" />
+      <point x="12917.56578291379" y="8311.0" />
+      <point x="12917.56578291379" y="6575.0" />
+      <point x="12444.06578291379" y="6575.0" />
+      <point x="374.0" y="485.5" />
+    </edge>
+    <edge source="GeneralNetworking.Action" target="GeneralNetworking.Player">
+      <point x="0.0" y="-125.0" />
+      <point x="1326.8516660049518" y="2037.0" />
+      <point x="528.1245773408136" y="2037.0" />
+      <point x="66.5" y="89.0" />
+    </edge>
+    <edge source="Menus.JoinPanel" target="Menus.MainMenu">
+      <point x="-18.5" y="-149.0" />
+      <point x="2899.526243286752" y="9853.0" />
+      <point x="2410.141071428571" y="9853.0" />
+      <point x="2410.141071428571" y="7551.0" />
+      <point x="2340.141071428571" y="7551.0" />
+      <point x="-121.5" y="101.5" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Menus.MainMenu">
+      <point x="0.0" y="89.0" />
+      <point x="4162.005290244085" y="6968.0" />
+      <point x="2600.4982142857143" y="6968.0" />
+      <point x="138.85714285714312" y="-101.5" />
+    </edge>
+    <edge source="ClientNetworking.GameClient.MapContainer" target="GameLogic.Map">
+      <point x="46.5" y="-40.5" />
+      <point x="10187.427888479184" y="4778.0" />
+      <point x="8632.668579866066" y="4778.0" />
+      <point x="205.6363636363635" y="257.5" />
+    </edge>
+    <edge source="GameLogic.Map" target="GameLogic.BotManager">
+      <point x="0.0" y="257.5" />
+      <point x="8427.032216229703" y="4798.0" />
+      <point x="8361.191307138793" y="4798.0" />
+      <point x="8361.191307138793" y="5354.0" />
+      <point x="8279.047834195842" y="5354.0" />
+      <point x="79.19999999999982" y="-77.0" />
+    </edge>
+    <edge source="ClientNetworking.GameHost.MapContainer" target="GameLogic.Asteroid">
+      <point x="59.57142857142844" y="-149.0" />
+      <point x="6004.006005191513" y="6485.0" />
+      <point x="7202.643797570092" y="6485.0" />
+      <point x="39.0" y="52.5" />
+    </edge>
+    <edge source="Views.PilotView" target="Views.ManualView">
+      <point x="-311.818181818182" y="-329.0" />
+      <point x="7187.724728135236" y="8291.0" />
+      <point x="5748.309576620084" y="8291.0" />
+      <point x="-92.25" y="125.0" />
+    </edge>
+    <edge source="GameLogic.weapon.Torpedo" target="GameLogic.Weapon">
+      <point x="-68.0" y="-100.5" />
+      <point x="6160.143797570092" y="4758.0" />
+      <point x="5887.852130903426" y="4758.0" />
+      <point x="143.75" y="221.5" />
+    </edge>
+    <edge source="AI.EngineerAI" target="ClientNetworking.GameClient.GameClient">
+      <point x="88.75" y="-113.0" />
+      <point x="7593.792909953418" y="6958.0" />
+      <point x="9504.002888479183" y="6958.0" />
+      <point x="-122.625" y="161.5" />
+    </edge>
+    <edge source="Menus.JoinPanel.MyTableRenderer" target="Menus.JoinPanel">
+      <point x="163.5" y="28.0" />
+      <point x="4808.505290244084" y="9893.0" />
+      <point x="3084.526243286752" y="9893.0" />
+      <point x="166.5" y="-149.0" />
+    </edge>
+    <edge source="Views.AbstractPlayerView" target="GameLogic.Ship">
+      <point x="-184.57142857142844" y="-305.0" />
+      <point x="8755.106459907754" y="7481.0" />
+      <point x="6586.372076620084" y="7481.0" />
+      <point x="6586.372076620084" y="6415.0" />
+      <point x="5596.534576620084" y="6415.0" />
+      <point x="206.20000000000005" y="473.5" />
+    </edge>
+    <edge source="ServerNetworking.ServerSender" target="ServerNetworking.ClientTable">
+      <point x="0.0" y="-77.0" />
+      <point x="681.5037493382843" y="7551.0" />
+      <point x="824.375" y="7551.0" />
+      <point x="-195.3125" y="89.0" />
+    </edge>
+    <edge source="Graphics.Star" target="Geometry.Vector">
+      <point x="0.0" y="-40.5" />
+      <point x="12892.221069043555" y="3674.0" />
+      <point x="12917.887735710223" y="3674.0" />
+      <point x="12917.887735710223" y="627.0" />
+      <point x="11790.256244759532" y="627.0" />
+      <point x="265.0" y="293.5" />
+    </edge>
+    <edge source="GameLogic.weapon.Torpedo" target="GameLogic.Bullet">
+      <point x="68.0" y="-100.5" />
+      <point x="6296.143797570092" y="4788.0" />
+      <point x="6896.666959045246" y="4788.0" />
+      <point x="6896.666959045246" y="4163.0" />
+      <point x="7010.343797570092" y="4163.0" />
+      <point x="95.19999999999993" y="149.5" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.ShipModel">
+      <point x="-85.0" y="-485.5" />
+      <point x="11985.06578291379" y="5294.0" />
+      <point x="11452.927888479184" y="5294.0" />
+      <point x="0.0" y="137.0" />
+    </edge>
+    <edge source="Menus.JoinPanel" target="GeneralNetworking.LobbyInfo">
+      <point x="-55.5" y="-149.0" />
+      <point x="2862.526243286752" y="9863.0" />
+      <point x="2033.0415263953346" y="9863.0" />
+      <point x="2033.0415263953346" y="4778.0" />
+      <point x="2852.5802902440846" y="4778.0" />
+      <point x="2852.5802902440846" y="2569.0" />
+      <point x="2822.3302902440846" y="2569.0" />
+      <point x="77.25" y="64.5" />
+    </edge>
+    <edge source="Graphics.Screen" target="Graphics.AsteroidModel">
+      <point x="-170.0" y="-485.5" />
+      <point x="11900.06578291379" y="5304.0" />
+      <point x="11135.427888479184" y="5304.0" />
+      <point x="0.0" y="113.0" />
+    </edge>
+    <edge source="Menus.ButtonPanel" target="Graphics.Screen">
+      <point x="121.5" y="-89.0" />
+      <point x="4283.505290244085" y="6545.0" />
+      <point x="11696.06578291379" y="6545.0" />
+      <point x="-374.0" y="485.5" />
+    </edge>
+    <edge source="Graphics.Torpedo" target="Graphics.GraphicalModel">
+      <point x="110.25" y="-137.0" />
+      <point x="10614.177888479184" y="4818.0" />
+      <point x="11139.496069043556" y="4818.0" />
+      <point x="-72.0" y="101.0" />
+    </edge>
+    <edge source="GameLogic.Map" target="Geometry.Vector">
+      <point x="282.75" y="-257.5" />
+      <point x="8709.782216229703" y="4163.0" />
+      <point x="10893.560805860805" y="4163.0" />
+      <point x="10893.560805860805" y="717.0" />
+      <point x="11436.922911426198" y="717.0" />
+      <point x="-88.33333333333303" y="293.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.05106641234610716" x="6493.0" y="5757.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Inner Classes</Category>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -31,6 +31,7 @@ public class MapContainer {
 	}
 
 	public void generateTerrain() {
+		Random r = new Random();
 		for (int i = 0; i < ASTEROID_NUMBER; i++) {
 			Asteroid a = new Asteroid(new Vector(r.nextDouble() * gameMap.getDimensions().getX(),
 					r.nextDouble() * gameMap.getDimensions().getY(), r.nextDouble() * gameMap.getDimensions().getZ()),

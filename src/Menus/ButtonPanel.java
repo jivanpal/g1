@@ -66,24 +66,6 @@ public class ButtonPanel extends JPanel {
 					r.nextDouble() * map.getDimensions().getY(), r.nextDouble() * map.getDimensions().getZ()),
 					new Rotation(r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2));
 			map.add(a);
-
-//			boolean overlaps = true;
-//			while (overlaps) {
-//				overlaps = false;
-//
-//				for (int bID : map.bodyIDs()) {
-//					if (map.overlaps(a.getID(), bID) && bID != a.getID()) {
-//						overlaps = true;
-//							a.setPosition(new Vector(r.nextDouble() * map.getDimensions().getX(),
-//									r.nextDouble() * map.getDimensions().getY(), r.nextDouble() * map.getDimensions().getZ()));
-//							a.setOrientation(
-//									new Rotation(r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2));
-//						break;
-//					}
-//				}
-//			}
-			
-//			System.out.println(a.getPosition());
 		}
 		screen.setBounds(rect);
 		PanelsManager.UILayers.add(screen, JLayeredPane.DEFAULT_LAYER);

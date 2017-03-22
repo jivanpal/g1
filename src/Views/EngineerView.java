@@ -446,28 +446,23 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	public void update(Observable observable, Object o) {
 		super.update(observable, o);
 
-		if (!UIinitialised) {
+		if (gameActive) {
 			try {
-				keySequences = gameClient.keySequence.getAllKeys();
+				Map m = gameClient.getMap();
+				radarView.updateMap(m);
+
+				laserBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel());
+				plasmaBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel());
+				torpedosView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel());
+				resourcesView.updateResourceLevels(ResourcesView.ENGINE,
+						currentShip.getResource(Resource.Type.ENGINES).get());
+				resourcesView.updateResourceLevels(ResourcesView.SHIELDS,
+						currentShip.getResource(Resource.Type.SHIELDS).get());
+				resourcesView.updateResourceLevels(ResourcesView.HULL, currentShip.getResource(Resource.Type.HEALTH).get());
 			} catch (Exception e) {
-				// Should never get here
+				// UI probably not initialised yet
+				System.err.println("Caught exception in UPDATE");
 			}
-
-			initialiseUI();
-			UIinitialised = true;
-		} else if (gameActive) {
-
-			Map m = gameClient.getMap();
-			radarView.updateMap(m);
-
-			laserBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel());
-			plasmaBlasterView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.PLASMA).getAmmoLevel());
-			torpedosView.updateWeaponAmmoLevel(currentShip.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel());
-			resourcesView.updateResourceLevels(ResourcesView.ENGINE,
-					currentShip.getResource(Resource.Type.ENGINES).get());
-			resourcesView.updateResourceLevels(ResourcesView.SHIELDS,
-					currentShip.getResource(Resource.Type.SHIELDS).get());
-			resourcesView.updateResourceLevels(ResourcesView.HULL, currentShip.getResource(Resource.Type.HEALTH).get());
 		}
 	}
 
