@@ -10,7 +10,11 @@ import java.util.Observer;
 import javax.swing.*;
 
 import GameLogic.GameOptions;
-
+/**
+ * Class which displays the manual in the pilot view
+ * @author Ivan Panchev
+ *
+ */
 public class ManualView extends JPanel{
 	private JButton previousPage;
 	private JButton nextPage;
@@ -47,6 +51,9 @@ public class ManualView extends JPanel{
 		
 	}
 	
+	/**
+	 * Applies the styling of the buttons used throughout the project 
+	 */
 	private void styleButton(JButton button){
 		button.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);
 		button.setOpaque(false);
@@ -55,17 +62,26 @@ public class ManualView extends JPanel{
 		button.setFocusable(false);
 		button.setForeground(Color.BLACK);
 	}
-
+	
+	/**
+	 * Turns the manual to the next page
+	 */
 	public void goToNextPage() {
 		instuctions.pageUp();
 		update();
 	}
 
+	/**
+	 * Turns the manual to the previous page
+	 */
 	public void goToPreviousPage() {
 		instuctions.pageDown();
 		update();
 	}
-
+	
+	/**
+	 * Repaint the manual
+	 */
 	private void update(){
 		this.validate();
 		this.repaint();

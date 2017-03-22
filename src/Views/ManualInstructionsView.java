@@ -22,7 +22,9 @@ public class ManualInstructionsView extends JPanel {
 	public static final int MIN_PAGE = 1;
 	public static final int MAX_PAGE = 11;
 
+	//default column names for the table header
 	public static final String[] columnNames = { "Number", "Instruction", "Key Seq" };
+	//the data that populates the table
 	private Object[][] data;
 
 	private int pageNumber;
@@ -57,7 +59,13 @@ public class ManualInstructionsView extends JPanel {
 		add(headers, BorderLayout.NORTH);
 		add(manual, BorderLayout.CENTER);
 	}
-
+	
+	/**
+	 * Styling the JTable consistently with the rest of the UI
+	 * @param table The JTable to style
+	 * @param height The Height of the component
+	 * @param pageNumber Current page number of the table
+	 */
 	private void styleTable(JTable table, int height, int pageNumber) {
 		table.setShowGrid(false);
 		table.setShowHorizontalLines(true);
@@ -83,6 +91,9 @@ public class ManualInstructionsView extends JPanel {
 		renderer.setHorizontalAlignment(JLabel.CENTER);
 	}
 
+	/**
+	 * Updates the views
+	 */
 	private void update() {
 		leftPage.setModel(new MyJTableModel(getDataForPage(pageNumber), columnNames));
 		rightPage.setModel(new MyJTableModel(getDataForPage(pageNumber + 1), columnNames));
@@ -90,33 +101,54 @@ public class ManualInstructionsView extends JPanel {
 		this.repaint();
 	}
 
+	/**
+	 * Turns the manual to the next page
+	 */
 	public void pageDown() {
 		if (pageNumber > MIN_PAGE) {
 			this.pageNumber -= 2;
 			update();
 		}
 	}
-
+	
+	/**
+	 * Turns the manual to the previous page
+	 */
 	public void pageUp() {
 		if (pageNumber < MAX_PAGE) {
 			this.pageNumber += 2;
 			update();
 		}
 	}
-
+	
+	/**
+	 * Gets the data for a specific page number from the whole data
+	 * @param page Page number that you want the data for
+	 * @return The data for the specific page in the required format
+	 */
 	private Object[][] getDataForPage(int page) {
 		Object[][] o = new Object[INSTRUCTIONS_PER_PAGE + 1][columnNames.length];
 		int num = (page - 1) * INSTRUCTIONS_PER_PAGE;
 		System.arraycopy(data, 0 + num, o, 0, INSTRUCTIONS_PER_PAGE);
 		return o;
 	}
-
+	
+	/**
+	 * Method which sets the data got from the server
+	 * This method is needed because of inconsistencies in the formats
+	 * @param data
+	 */
 	private void setData(ArrayList<String> data) {
 		for (int j = 0; j < data.size(); j++) {
 			addToData(j, data.get(j));
 		}
 	}
-
+	
+	/**
+	 * Helper method for adding the data from the server to the one that can be used in JTable
+	 * @param realPos
+	 * @param keySeq
+	 */
 	private void addToData(int realPos, String keySeq) {
 		String[] split = keySeq.split(":");
 		int pos = Integer.valueOf(split[0]) - 1;
@@ -125,6 +157,11 @@ public class ManualInstructionsView extends JPanel {
 		data[pos][2] = split[1];
 	}
 
+	/**
+	 * Getting instruction string based on the position of instruction in the date provided from the server
+	 * @param pos The position of the instruction
+	 * @return The instruction string
+	 */
 	private String getInstructionStringByPos(int pos) {
 		String replenish = "";
 		if (pos < 7) {
@@ -150,7 +187,7 @@ public class ManualInstructionsView extends JPanel {
 		}
 		return ("If you want to " + replenish + ", do this key sequence:");
 	}
-
+	
 	public int getPage() {
 		return this.pageNumber;
 	}
