@@ -71,14 +71,14 @@ public class TargetingBot extends AbstractBot {
 // Evolution
     
     public void update() {
+        if (ship.getVelocity().length() < 1) {
+            ship.setVelocity(ship.getFrontVector().scale(2));
+        }
         // Get the direction vector towards the target in the local basis.
         Vector pathToTarget = ship.getBasis().localiseDirection(getMap().shortestPath(ship.getID(), target.getID()));
         
         // If the target is in range, fire.
-        if (
-                Vector.J.angleWith(pathToTarget) < IN_RANGE_ANGLE
-            &&  pathToTarget.length() < IN_RANGE_DISTANCE
-        ) {
+        if (Vector.J.angleWith(pathToTarget) < IN_RANGE_ANGLE    &&     pathToTarget.length() < IN_RANGE_DISTANCE) {
             ship.fire(Weapon.Type.LASER);
         }
         
@@ -99,16 +99,11 @@ public class TargetingBot extends AbstractBot {
         // Get ETA until target lies in the bot's x-z plane, in seconds.
         double timeToTarget = pathToTarget.getY() / ship.getVelocity().getY();
         
-        if (pathToTarget.length() < 100) {
-            if (timeToTarget < 1) {
-                ship.thrustReverse();
-            } else if (timeToTarget > 3) {
-                ship.thrustForward();
-            }
-        }
-        if (timeToTarget < 4) {
+        if (timeToTarget < 2) {
             ship.thrustReverse();
-        } else if (timeToTarget > 5) {
+        } else if (timeToTarget < 4) {
+            // Do nothing
+        } else if (timeToTarget < 10) {
             ship.thrustForward();
         }
     }
