@@ -50,6 +50,8 @@ public class GraphicalModel {
 		}
 
 		Collections.addAll(Screen.poly3Ds, polys);
+		
+		screenTest();
 	}
 	
 	public void screenTest(){
