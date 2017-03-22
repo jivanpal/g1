@@ -31,30 +31,25 @@ public class MapContainer {
 	}
 
 	public void generateTerrain() {
-		Random r = new Random();
 		for (int i = 0; i < ASTEROID_NUMBER; i++) {
-			int aID = gameMap.add(Asteroid.random(gameMap.getDimensions()));
+			Asteroid a = new Asteroid(new Vector(r.nextDouble() * gameMap.getDimensions().getX(),
+					r.nextDouble() * gameMap.getDimensions().getY(), r.nextDouble() * gameMap.getDimensions().getZ()),
+					new Rotation(r.nextDouble() * Math.PI * 2, r.nextDouble() * Math.PI, r.nextDouble() * Math.PI * 2));
+
+			gameMap.add(a);
 
 			boolean overlaps = true;
 			while (overlaps) {
 				overlaps = false;
 
 				for (int bID : gameMap.bodyIDs()) {
-					if (gameMap.overlaps(aID, bID) && bID != aID) {
+					if (gameMap.overlaps(a.getID(), bID) && bID != a.getID()) {
 						overlaps = true;
-						i--;
-						gameMap.remove(aID);
+						generateNewAsteroidPosition(a);
 						break;
 					}
 				}
 			}
-
-			/*
-			 * boolean overlaps = false; for (int bID : gameMap.bodyIDs()) { if
-			 * (gameMap.overlaps(a.getID(), bID)) { overlaps = true; break; } }
-			 * 
-			 * if (overlaps) { i--; } else { gameMap.add(a); }
-			 */
 		}
 	}
 
@@ -130,7 +125,12 @@ public class MapContainer {
 	public synchronized void updateMap() {
 		gameMap.update();
 	}
-	
+
+	public void addDummyBody() {
+		boolean x = gameMap.add(new Body());
+		System.out.println("Bot added is " + x);
+	}
+
 	public void delete(int ID) {
 		gameMap.get(ID).destroy();
 	}

@@ -47,14 +47,14 @@ public class Map implements Serializable {
      * Add a new body to the map.
      * @param newBody the body to add to the map. If a body with the same ID already exists
      *      on the map, this one won't be added.
-     * @return the ID of the newly added body, or -1 if the body to be added conflicts with one already present.
+     * @return `true` if the body was added, else `false`.
      */
-    public int add(Body newBody) {
+    public boolean add(Body newBody) {
         if (newBody == null || this.contains(newBody.getID())) {
-            return -1;
+            return false;
         } else {
             bodies.put(newBody.getID(), newBody);
-            return newBody.getID();
+            return true;
         }
     }
     
