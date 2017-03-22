@@ -64,6 +64,17 @@ public class Vector implements Serializable {
     private static Vector _sum(Vector[] v, int n) {
         return n == 0 ? Vector.ZERO : v[n - 1].plus(_sum(v, n - 1));
     }
+    
+    /**
+     * Get the determinant of the 3x3 matrix whose columns are described by the given vectors.
+     * @param col1 the vector describing the first column.
+     * @param col2 the vector describing the second column.
+     * @param col3 the vector describing the third column.
+     * @return the determinant of the matrix described by the vectors.
+     */
+    public static double det(Vector col1, Vector col2, Vector col3) {
+    	return col1.x*(col2.y*col3.z - col2.z*col3.y) + col1.y*(col2.z*col3.x - col2.x*col3.z) + col1.z*(col2.x*col3.y - col2.y*col3.x);
+    }
 
 /// INSTANCE METHODS
 

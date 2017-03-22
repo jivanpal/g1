@@ -330,6 +330,98 @@ public class Map implements Serializable {
         }
     }
     
+    private static final double PARALLEL_TOLERANCE = 0;
+    
+    /**
+    * Return the shortest possible path between two bodies in the next tick, as if
+    * positions truly changed continuously rather than discretely.
+    * @param aID the ID of the first body.
+    * @param bID the ID of the second body.
+    * @return the shortest distance between the two bodies in the next tick, in seconds.
+    * Note that this method is commutative.
+    */
+    public double leastDistanceThisTick(int aID, int bID) {
+	    Body a, b;
+	    if ( (a = get(aID)) != null && (b = get(bID)) != null ) {
+		    // Insane linear algebra stuff, optimised.
+		    // Get position vectors of line-segment endpoints, with a0 implicitly at origin,
+		    // i.e. as if `Vector a0 = Vector.ZERO`.
+		    Vector a1 = a.getVelocity().scale(Global.REFRESH_PERIOD);
+		    Vector b0 = shortestPath(aID,bID);
+		    Vector b1 = b0.plus(b.getVelocity().scale(Global.REFRESH_PERIOD));
+		
+		    // Get unit vectors directed along trajectories of A and B;
+		    Vector aUnit = a.getVelocity().normalise();
+		    Vector bUnit = b.getVelocity().normalise();
+		
+		    // Get distances that A and B travel this tick
+		    double aDist = a1.length();
+		    double bDist = b1.minus(b0).length();
+		
+		    Vector normal = aUnit.cross(bUnit);
+		    double nDOTn = normal.dot(normal);
+		
+		    if (nDOTn <= PARALLEL_TOLERANCE) { // If trajectories are PARALLEL
+			    double d0 = aUnit.dot(b0); // aUnit . (b0 - a0)
+			    double d1 = aUnit.dot(b1); // aUnit . (b1 - a0)
+			
+			    if (d0 < 0 && d1 < 0) {
+				    if (d0 > d1) { // |d0| < |d1|; d0 and d1 are guaranteed to be -ve
+				    	return b0.length(); // b0 - a0;
+				    }
+				    return b1.length(); // b1 - a0;
+			    } else if (d0 >= aDist && d1 >= aDist) {
+			    	if (d0 < d1) { // |d0| < |d1|; d0 and d1 are guaranteed to be +ve
+			    		return b0.minus(a1).length();
+			    	}
+			    	return b1.minus(a1).length();
+			    }
+			    return aUnit.scale(d0).minus(b0).length(); // |a0 + d0(aUnit) - b0|
+		    	}
+		
+		    // Trajectories are NOT PARALLEL
+		
+		    // t := b0 - a0 = b0, so we can use b0 in place of t...
+		
+		    double detA = Vector.det(b0, bUnit, normal);
+		    double detB = Vector.det(b0, aUnit, normal);
+		
+		    double tA = detA / nDOTn;
+		    double tB = detB = nDOTn;
+		
+		    Vector pA = aUnit.scale(tA); // a0 + tA(aUnit)
+		    Vector pB = b0.plus(bUnit.scale(tB));
+		
+		    if (tA < 0) {
+		    	pA = Vector.ZERO; // pA = a0
+		    } else if (tA > aDist) {
+		    	pA = a1;
+		    }
+		
+		    if (tB < 0) {
+		    	pB = b0;
+		    } else if (tB > bDist) {
+		    	pB = b1;
+		    }
+		
+		    if (tA < 0 || tA > aDist) {
+			    double dotProd = bUnit.dot(pA.minus(b0));
+			    dotProd = dotProd < 0 ? 0 : dotProd > bDist ? bDist : dotProd;
+			    pB = b0.plus(bUnit.scale(dotProd));
+		    }
+		
+		    if (tB < 0 || tB > bDist) {
+			    double dotProd = aUnit.dot(pB); // = aUnit . (pB - a0)
+			    dotProd = dotProd < 0 ? 0 : dotProd > aDist ? aDist : dotProd;
+			    pA = aUnit.scale(dotProd); // = a0 + dotProd(aUnit)
+		    }
+		
+		    return pB.minus(pA).length();
+	    } else {
+	    	throw new IllegalArgumentException("shortestTickDistance: body with ID "+(a==null ? aID : bID)+" doesn't exist on map.");
+	    }
+    }
+    
     /**
      * Determine whether two bodies on this map overlap / are touching.
      * @param aID the ID of one body involved
@@ -446,51 +538,52 @@ public class Map implements Serializable {
             for (int bID : bodyIDs()) {
                 Body b = get(bID);
                 Vector lineOfAction = shortestPath(aID, bID);
+                double leastDist = leastDistanceThisTick(aID, bID);
                 
                 // If A and B are touching, then they rebound.
-                if (aID < bID && lineOfAction.length() < aRadius + b.getRadius()) {
-                    // a.destroy();
-                    // b.destroy();
+                if (aID < bID && leastDist < aRadius + b.getRadius()) {
+                    a.destroy();
+                    b.destroy();
                 	
-                	if(a instanceof Ship) {
-                		Ship s = (Ship) a;
-                		
-                		if(b instanceof Bullet) {
-                			Bullet bullet = (Bullet) b;
-                			s.takeDamage(bullet.getShipDamage(), bullet.getShieldDamage());
-                			
-                			// Destroy the bullet now that it has collided
-                			b.destroy();
-                		} else if (b instanceof Asteroid) {
-                			if(s.isAllowedToTakeDamageOnCollision()) {
-                				s.takeDamage(Asteroid.DAMAGE_TO_SHIP, Asteroid.DAMAGE_TO_SHIP);
-                				s.collided();
-                				
-                				// Destroy the asteroid
-                    			b.destroy();
-                			}	
-                		} else if (b instanceof Ship) {
-                			if(s.isAllowedToTakeDamageOnCollision()) {
-                				s.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
-                				s.collided();
-                			}
-                			
-                			// Make sure to damage the other ship as well
-                			Ship s2 = (Ship) b;
-                			if(s2.isAllowedToTakeDamageOnCollision()){
-                				((Ship) b).takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
-                				s2.collided();
-                				if(s2.getResource(Resource.Type.HEALTH).get() <= 0) {
-                					s2.destroy();
-                				}
-                			}
-                		}
-                		
-                		if(s.getResource(Resource.Type.HEALTH).get() <= 0) {
-                			s.destroy();
-                		}
-                		
-                	}
+//                	if(a instanceof Ship) {
+//                		Ship s = (Ship) a;
+//                		
+//                		if(b instanceof Bullet) {
+//                			Bullet bullet = (Bullet) b;
+//                			s.takeDamage(bullet.getShipDamage(), bullet.getShieldDamage());
+//                			
+//                			// Destroy the bullet now that it has collided
+//                			b.destroy();
+//                		} else if (b instanceof Asteroid) {
+//                			if(s.isAllowedToTakeDamageOnCollision()) {
+//                				s.takeDamage(Asteroid.DAMAGE_TO_SHIP, Asteroid.DAMAGE_TO_SHIP);
+//                				s.collided();
+//                				
+//                				// Destroy the asteroid
+//                    			b.destroy();
+//                			}	
+//                		} else if (b instanceof Ship) {
+//                			if(s.isAllowedToTakeDamageOnCollision()) {
+//                				s.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+//                				s.collided();
+//                			}
+//                			
+//                			// Make sure to damage the other ship as well
+//                			Ship s2 = (Ship) b;
+//                			if(s2.isAllowedToTakeDamageOnCollision()){
+//                				((Ship) b).takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+//                				s2.collided();
+//                				if(s2.getResource(Resource.Type.HEALTH).get() <= 0) {
+//                					s2.destroy();
+//                				}
+//                			}
+//                		}
+//                		
+//                		if(s.getResource(Resource.Type.HEALTH).get() <= 0) {
+//                			s.destroy();
+//                		}
+//                		
+//                	}
                     
                     
                     

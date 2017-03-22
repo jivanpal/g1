@@ -14,7 +14,7 @@ public class Ship extends Body{
 /// CONSTANTS
 	
 	private static final double MASS 	= 100;
-    private static final double RADIUS 	= 12;
+    private static final double RADIUS 	= 8;
     
     public static final int DAMAGE_TO_OTHER_SHIPS = 40;
 	
