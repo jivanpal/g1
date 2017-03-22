@@ -11,7 +11,12 @@ import GameLogic.resource.*;
  * @author jivan
  */
 public class Ship extends Body{
-    // Decay rates and velocity bounds
+/// CONSTANTS
+	
+	private static final double MASS 	= 100;
+    private static final double RADIUS 	= 2;
+	
+	// Decay rates and velocity bounds
     private static final double NONPLANAR_SPIN_DECAY        = 0.95; // radians per radian
     private static final double NONPLANAR_SPIN_MIN          = 0.02; // radians per sec
     private static final double ORTHOGONAL_VELOCITY_DECAY   = 0.95; // ratio
@@ -34,6 +39,8 @@ public class Ship extends Body{
     private Weapon laser, plasma, torpedo;
     private Resource engines, shields, health;
     
+/// CONSTRUCTOR
+    
     /**
      * Create a ship belonging to a specified pilot and engineer. 
      * @param pilotName the nickname of this instance's pilot.
@@ -41,7 +48,7 @@ public class Ship extends Body{
      */
     public Ship(String pilotName, String engineerName){
         // Set mass and radius
-        super(100, 2);
+        super(MASS, RADIUS);
         
         // Initialising ship weapons
         laser   = new Laser(this);
@@ -58,6 +65,8 @@ public class Ship extends Body{
         this.engineerName = engineerName;
     }	
     
+/// GETTERS
+    
     public String getPilotName() {
         return pilotName;
     }
@@ -65,8 +74,6 @@ public class Ship extends Body{
     public String getEngineerName() {
         return engineerName;
     }
-    
-/// GETTERS
     
     public Weapon getWeapon(Weapon.Type type) {
         switch (type) {
@@ -168,7 +175,7 @@ public class Ship extends Body{
         }
     }
     
-// Modified `update` method to affect all ship fields
+/// UPDATE METHOD
     
     public void update() {
         // Update physical parameters
@@ -179,7 +186,7 @@ public class Ship extends Body{
         plasma.update();
         torpedo.update();
         
-    // Decay and bound velocities
+    // Now decay and bound velocities
         Vector w            = getAngularVelocity();
         Vector planarSpin   = w.proj(getUpVector());
         Vector nonplanarSpin= w.minus(planarSpin);
