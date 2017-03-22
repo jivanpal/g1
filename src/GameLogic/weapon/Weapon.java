@@ -1,6 +1,10 @@
-package GameLogic;
+package GameLogic.weapon;
 
 import java.io.Serializable;
+
+import GameLogic.Global;
+import GameLogic.Resource;
+import GameLogic.Ship;
 import Geometry.*;
 import Physics.*;
 

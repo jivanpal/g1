@@ -8,7 +8,7 @@ import java.util.List;
 
 import GameLogic.Resource;
 import GameLogic.Ship;
-import GameLogic.Weapon;
+import GameLogic.weapon.Weapon;
 import ServerNetworking.ClientTable;
 
 public class GameHostReceiver extends Thread

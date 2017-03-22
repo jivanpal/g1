@@ -6,9 +6,9 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 import GameLogic.Asteroid;
-import GameLogic.Bullet;
 import GameLogic.Map;
 import GameLogic.Ship;
+import GameLogic.weapon.Bullet;
 import Physics.Body;
 import jdk.nashorn.internal.objects.Global;
 import Geometry.Vector;

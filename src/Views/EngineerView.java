@@ -12,6 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import GameLogic.*;
+import GameLogic.weapon.Weapon;
 import Graphics.Screen;
 import Menus.ButtonPanel;
 import Menus.MainMenu;

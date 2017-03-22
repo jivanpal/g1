@@ -1,8 +1,8 @@
 package JUnit;
 
-import GameLogic.Bullet;
 import GameLogic.Ship;
-import GameLogic.Weapon;
+import GameLogic.weapon.Bullet;
+import GameLogic.weapon.Weapon;
 import Geometry.Vector;
 import org.junit.After;
 import org.junit.Before;
