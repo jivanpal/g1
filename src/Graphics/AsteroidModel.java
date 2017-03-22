@@ -23,6 +23,12 @@ public class AsteroidModel {
         {1, 2, 3}
     };
     
+    /**
+     * Creates a new Asteroid graphical model
+     * @param position The central position of the asteroid
+     * @param radius The radius of the asteroid
+     * @param orientation The orientation of the asteroid
+     */
     public AsteroidModel(Vector position, double radius, Rotation orientation){
 	    this.position = position;
 	    this.radius = radius;
@@ -38,6 +44,9 @@ public class AsteroidModel {
 		g.create();
 	}
 	
+    /**
+     * Creates the correct vertices for the asteroid, given the position and rotation
+     */
     private void createPoints() {
     	
     	vertices[0] = (                                                                                                        Vector.K.scale(radius));

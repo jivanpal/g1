@@ -42,6 +42,7 @@ public class Icosahedron{
 	 * Creates the new icosahedron, and adds it to the screen
 	 * @param v x, y and z coordinates of its position
 	 * @param size Size of the object
+	 * @param orientation The orientation of the object
 	 */
 	public Icosahedron(Vector v, double size, Rotation orientation) {
 		this.x = v.getX();
