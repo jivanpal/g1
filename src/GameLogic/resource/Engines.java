@@ -10,7 +10,7 @@ public class Engines extends Resource {
     private static final int MAXIMUM = 1000;
     private static final int INITIAL = 800;
     
-    private boolean isWorking; // Whether or not it is working properly 
+    private boolean isWorking; // Whether or not the engine is working properly 
     
     public Engines() {
         super(MAXIMUM, INITIAL);
