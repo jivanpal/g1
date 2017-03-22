@@ -31,7 +31,7 @@ public class Plasma{
 		createPoints();
 		
 		for(int i = 0; i < sides.length; i++){
-			colors[i] = Color.BLUE;
+			colors[i] = Color.ORANGE;
 		}
 		
 		GraphicalModel g = new GraphicalModel(vertices, sides, colors);
