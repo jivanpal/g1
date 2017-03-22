@@ -16,7 +16,7 @@ import Physics.Body;
  */
 public class MapContainer {
 	//variables
-	public static int ASTEROID_NUMBER = 70;
+	public static int ASTEROID_NUMBER = 90;
 	public static final int MAP_SIZE = 500;
 	public Map gameMap = new Map(MAP_SIZE, MAP_SIZE, 100);
 
