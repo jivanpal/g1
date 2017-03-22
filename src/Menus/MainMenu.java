@@ -65,7 +65,8 @@ public class MainMenu {
 			public void componentResized(ComponentEvent e) {
 				PanelsManager.PANEL_BOUNDS = new Rectangle(0,0, getFrame().getWidth(), getFrame().getHeight());
 				PanelsManager.resizeComponents();
-				
+				frame.repaint();
+				frame.revalidate();
 			}
 
 			@Override
