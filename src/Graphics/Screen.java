@@ -248,7 +248,17 @@ public class Screen extends JPanel{
                 			pos = v;
                 		}
                 	}
-                    new Laser(pos, b.getRadius(), b.getOrientation());
+                    switch (((Bullet)b).type()) {
+                    case LASER:
+                        new Laser(pos, b.getRadius(), b.getOrientation());
+                        break;
+                    case PLASMA:
+                        // TODO
+                        break;
+                    case TORPEDO:
+                        // TODO
+                        break;
+                    }
                 }
             }
         }

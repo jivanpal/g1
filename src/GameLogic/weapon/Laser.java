@@ -28,6 +28,7 @@ public class Laser extends Weapon {
         RADIUS,
         Vector.J.scale(SPEED),
         Vector.ZERO,
+        Weapon.Type.LASER,
         SHIP_DAMAGE,
         SHIELD_DAMAGE,
         TIME_TO_LIVE
