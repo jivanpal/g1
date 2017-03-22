@@ -4,7 +4,6 @@ import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
-import GameLogic.weapon.Weapon;
 import Graphics.Screen;
 import Menus.MainMenu;
 import Physics.Body;

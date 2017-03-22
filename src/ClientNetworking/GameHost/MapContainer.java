@@ -6,7 +6,7 @@ import GameLogic.Asteroid;
 import GameLogic.Map;
 import GameLogic.Resource;
 import GameLogic.Ship;
-import GameLogic.weapon.Weapon;
+import GameLogic.Weapon;
 import Geometry.*;
 import Physics.Body;
 

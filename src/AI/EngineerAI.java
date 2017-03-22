@@ -11,7 +11,6 @@ import ClientNetworking.GameClient.GameClient;
 import ClientNetworking.GameHost.ChatMessage;
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
-import GameLogic.weapon.Weapon;
 import Physics.Body;
 import Views.ResourcesView;
 

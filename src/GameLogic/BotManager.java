@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import GameLogic.weapon.Weapon;
 import Geometry.Vector;
 import Physics.Body;
 

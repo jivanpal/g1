@@ -1,6 +1,5 @@
-package GameLogic.weapon;
+package GameLogic;
 
-import GameLogic.Global;
 import Geometry.*;
 import Physics.*;
 
