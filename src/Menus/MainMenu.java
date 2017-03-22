@@ -1,6 +1,8 @@
 package Menus;
 
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -47,14 +49,44 @@ public class MainMenu {
 		frame = new JFrame();
 		client.updateList();
 		ButtonPanel comp = new ButtonPanel(this);
-		frame.setUndecorated(true);
 		Dimension d = new Dimension(800, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		
 		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setSize(d);
+		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
 		frame.setVisible(true);
 		PanelsManager.PANEL_BOUNDS = new Rectangle(0,0, getFrame().getWidth(), getFrame().getHeight());
 		PanelsManager.UILayers = getFrame().getLayeredPane();
 		comp.makeUI();
+		frame.addComponentListener(new ComponentListener() {
+
+			@Override
+			public void componentResized(ComponentEvent e) {
+				PanelsManager.PANEL_BOUNDS = new Rectangle(0,0, getFrame().getWidth(), getFrame().getHeight());
+				PanelsManager.resizeComponents();
+				
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 		frame.setContentPane(comp);
 		frame.repaint();
 		frame.revalidate();

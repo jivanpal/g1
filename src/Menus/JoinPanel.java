@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.util.UUID;
 
 import javax.swing.BorderFactory;
@@ -158,9 +159,15 @@ public class JoinPanel extends JPanel {
 	 *         to it
 	 */
 	private JPanel createButtons() {
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel() {
+			@Override
+			public Insets getInsets() {
+				return new Insets(0,0,50,0);
+			}
+		};
 		panel.setLayout(new BorderLayout());
-
+		
+		
 		MyButton backtoplay = new MyButton("Back");
 		backtoplay.addActionListener(e -> {
 			PanelsManager.changePanel(JoinPanel.jpanel, PlayPanel.ppanel, backtoplay);
@@ -199,5 +206,4 @@ public class JoinPanel extends JPanel {
 		panel.add(refresh, BorderLayout.EAST);
 		return panel;
 	}
-
 }
