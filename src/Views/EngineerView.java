@@ -1,4 +1,4 @@
-package Views; // from the 6
+package Views;
 
 import javax.swing.*;
 
@@ -22,6 +22,7 @@ import Utils.Utils.*;
 /**
  * Created by James on 01/02/17. This View contains the entire UI for the
  * Engineer once they are in game.
+ * @author James Brown
  */
 public class EngineerView extends AbstractPlayerView implements KeySequenceResponder, Observer {
 	private static final String FAILED_SEQUENCE = "FAILED SEQUENCE";
@@ -66,11 +67,8 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
 	/**
 	 * Creates a new EngineerView Creates a new EngineerView.
-	 *
-	 * @param playerNickname
-	 *            The nickname of the player controlling this view.
-	 * @param gameClient
-	 *            The GameClient handling network connections for this player.
+	 * @param playerNickname The nickname of the player controlling this view.
+	 * @param gameClient The GameClient handling network connections for this player.
 	 */
 	public EngineerView(String playerNickname, GameClient gameClient, JFrame parent) {
 		super(playerNickname, gameClient, parent);
@@ -274,7 +272,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	}
 
 	/**
-	 * Flashes some UI elements a color for a very brief peroid of time to
+	 * Flashes some UI elements a color for a very brief period of time to
 	 * indicate that the ship has been damaged
 	 */
 	@Override
@@ -363,11 +361,8 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
 	/**
 	 * Creates the Chat Window
-	 *
-	 * @param gameClient
-	 *            The game client
-	 * @param nickname
-	 *            This players nickname
+	 * @param gameClient The game client
+	 * @param nickname This players nickname
 	 */
 	private void initialiseChatWindow(GameClient gameClient, String nickname) {
 		this.chatWindow = new GameChat(this, gameClient, nickname);
@@ -377,9 +372,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	/**
 	 * Given a Ship, this will initialise the weapon progress bars to their
 	 * initial values and set their maximum values
-	 *
-	 * @param s
-	 *            This players Ship object
+	 * @param s This players Ship object
 	 */
 	private void initialiseWeapons(Ship s) {
 		String plasmaReplenishNumber = Utils.Utils.parseNumber(keySequences.get(plasmaSequenceNum));
@@ -410,9 +403,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	/**
 	 * Given a Ship, this will initialise the resource progress bars to their
 	 * initial values and set their maximum values
-	 *
-	 * @param s
-	 *            This players Ship object
+	 * @param s This players Ship object
 	 */
 	private void initialiseResources(Ship s) {
 		System.out.println("Shield sequence: " + keySequences.get(shieldSequenceNum));
@@ -441,7 +432,10 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 		Global.SCREEN_WIDTH = this.getWidth();
 		Global.SCREEN_HEIGHT = this.getHeight() - (this.getHeight() / 5);
 	}
-
+	
+	/**
+	 * Updates all elements of the view when a new map is recieved.
+	 */
 	@Override
 	public void update(Observable observable, Object o) {
 		super.update(observable, o);
@@ -579,15 +573,14 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	 */
 	public void keySequenceHardFailure() {
 		System.out.println("Hard failure of sequence");
+		displayFullScreenMessage("HARD FAILURE OF SEQUENCE", 750, Color.red);
 		this.state = ShipState.NONE;
 		changeButton("none");
 	}
 
 	/**
 	 * Sets the current state of the ship
-	 *
-	 * @param newState
-	 *            The new state of the ship
+	 * @param newState The new state of the ship
 	 */
 	void setState(ShipState newState) {
 		this.state = newState;
@@ -619,19 +612,23 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 			break;
 		case TORPEDO_REPLENISH:
 			System.out.println("Starting a torpedo sequence");
-			sequence = Utils.Utils.parseSequence(keySequences.get(shieldSequenceNum));
+			sequence = Utils.Utils.parseSequence(keySequences.get(torpedoSequenceNum));
 			keyManager.initialiseKeySequenceManager(sequence, false);
 			changeButton("Torpedos");
 			break;
 		case PLASMA_REPLENISH:
 			System.out.println("Starting a plasma sequence");
-			sequence = Utils.Utils.parseSequence(keySequences.get(shieldSequenceNum));
-			keyManager.initialiseKeySequenceManager(sequence, false);
+			sequence = Utils.Utils.parseSequence(keySequences.get(plasmaSequenceNum));
+			keyManager.initialiseKeySequenceManager(sequence, true);
 			changeButton("Plasma Blaster");
 			break;
 		}
 	}
 
+	/**
+	 * Sets the correct button to be highlighted based on the current state of the ship
+	 * @param state The current state of the ship
+	 */
 	private void changeButton(String state) {
 		for (JButton b : replenishButtons) {
 			if (state.equals(b.getName())) {
@@ -644,7 +641,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
 	/**
 	 * Returns the current state of the Ship.
-	 *
 	 * @return Returns the current state of the Ship.
 	 */
 	ShipState getState() {
@@ -652,6 +648,10 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	}
 }
 
+/**
+ * An enumeration to hold all of the possible states of the ships
+ * @author James Brown
+ */
 enum ShipState {
 	NONE, SHIELD_REPLENISH, FUEL_REPLENISH, LASER_REPLENISH, TORPEDO_REPLENISH, PLASMA_REPLENISH
 }

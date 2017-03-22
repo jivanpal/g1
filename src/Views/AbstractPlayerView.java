@@ -191,6 +191,14 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
      * @param textColor The color of the text
      */
     protected void displayFullScreenMessage(String message, int time, Color textColor) {
+    	try {
+    		fullScreenLabel.setVisible(false);
+    		UILayeredPane.remove(fullScreenLabel);
+    		fullScreenLabel = null;
+    	} catch (Exception e) {
+    		// Oh well
+    	}
+    	
         fullScreenLabel = new JLabel(message);
         fullScreenLabel.setFont(GameOptions.FULLSCREEN_BOLD_TEXT_FONT);
         fullScreenLabel.setForeground(textColor);
@@ -211,6 +219,7 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
         Timer timer = new Timer(time, actionEvent -> {
             fullScreenLabel.setVisible(false);
             UILayeredPane.remove(fullScreenLabel);
+            fullScreenLabel = null;
         });
         timer.setRepeats(false);
         timer.start();
