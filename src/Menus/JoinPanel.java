@@ -172,7 +172,7 @@ public class JoinPanel extends JPanel {
 			LobbyInfo lInfo = lobbies[selected];
 			try {
 				Player player = new Player(client.name, IpGetter.getRealIp(), false);
-				client.send(new Action(lInfo.lobbyID, player, 9));
+				client.send(new Action(lInfo.lobbyID, player, Action.ADD));
 				LobbyPanel lpanel2 = new LobbyPanel(menu, lInfo.lobbyID, player, false);
 				PanelsManager.changePanel(JoinPanel.jpanel, lpanel2, join);
 			} catch (Exception e1) {
