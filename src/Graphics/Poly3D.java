@@ -16,7 +16,7 @@ public class Poly3D {
 	private Point calcPos;
 	PolygonObj poly;
 	public double avgDistance;
-	private boolean draw = true;
+	public boolean draw = true;
 	
 	
 	/**

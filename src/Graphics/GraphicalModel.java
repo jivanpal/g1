@@ -51,4 +51,16 @@ public class GraphicalModel {
 
 		Collections.addAll(Screen.poly3Ds, polys);
 	}
+	
+	public void screenTest(){
+		int notDrawCount = 0;
+		for(Poly3D p : polys){
+			if(!p.draw){
+				notDrawCount++;
+			}
+		}
+		if(notDrawCount != 0 && notDrawCount != polys.length){
+			System.out.println("I am an incomplete object: " + notDrawCount);
+		}
+	}
 }
