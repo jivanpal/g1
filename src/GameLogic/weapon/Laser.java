@@ -2,8 +2,7 @@ package GameLogic.weapon;
 
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.*;
-import Geometry.Vector;
-import Physics.Body;
+import Geometry.*;
 
 /**
  * A class of objects representing laser blaster weapons attached to some ship.
@@ -18,10 +17,11 @@ public class Laser extends Weapon {
 // Bullet constants
     private static final double MASS            = 0.1;  // kg
     private static final double RADIUS          = 1;    // m
-    private static final double SPEED           = 300;  // m/s
+    private static final double SPEED           = 500;  // m/s
     private static final int    SHIP_DAMAGE     = 10;
     private static final int    SHIELD_DAMAGE   = 5;
-    private static final double TIME_TO_LIVE    = (MapContainer.MAP_SIZE - 5) / SPEED; // s (says span the map, less 5 meters)
+    private static final double MAP_SPAN_FRAC   = 0.98; // fraction of map to travel across
+    private static final double TIME_TO_LIVE    = MapContainer.MAP_SIZE * MAP_SPAN_FRAC / SPEED; // s (says span the map, less 5 meters)
     
     private static final Bullet BULLET = new Bullet(
         MASS,
