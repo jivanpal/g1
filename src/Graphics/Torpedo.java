@@ -5,6 +5,11 @@ import java.awt.Color;
 import Geometry.Rotation;
 import Geometry.Vector;
 
+/**
+ * A graphical model of a torpedo bullet
+ * @author Dominic
+ *
+ */
 public class Torpedo{
 	
 	private double x, y, z, size;
@@ -36,19 +41,37 @@ public class Torpedo{
 							 {21, 24, 22}};
 	private Color[] colors = new Color[sides.length];
 	private Rotation orientation;
+	private double colourFactor;
 	
 	
-	public Torpedo(Vector v, double size, Rotation orientation) {
+	/**
+	 * Creates a new graphical representation of a torpedo
+	 * @param v The position of the torpedo
+	 * @param size The size of the torpedo
+	 * @param orientation The orientation of the torpedo
+	 * @param timeToLive The time the torpedo has left to live
+	 */
+	public Torpedo(Vector v, double size, Rotation orientation, double timeToLive) {
 		this.x = v.getX();
 		this.y = v.getY();
 		this.z = v.getZ();
 		this.size = size;
 		this.orientation = orientation;
 		
+		if(timeToLive > 2){
+			colourFactor = 1;
+		}
+		else if(timeToLive <= 0){
+			colourFactor = 0;
+		}
+		else{
+			colourFactor = timeToLive/2;
+		}
+		
 		createPoints();
 		
 		for(int i = 0; i < sides.length; i++){
-			colors[i] = Color.GRAY;
+			colors[i] = new Color((int)(Color.GRAY.getRed() * colourFactor), (int)(Color.GRAY.getGreen() * colourFactor), (int)(Color.GRAY.getBlue() * colourFactor));
 		}
 		
 		GraphicalModel g = new GraphicalModel(vertices, sides, colors);

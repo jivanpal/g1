@@ -11,7 +11,12 @@ import GameLogic.resource.*;
  * @author jivan
  */
 public class Ship extends Body{
-    // Decay rates and velocity bounds
+/// CONSTANTS
+	
+	private static final double MASS 	= 100;
+    private static final double RADIUS 	= 2;
+	
+	// Decay rates and velocity bounds
     private static final double NONPLANAR_SPIN_DECAY        = 0.95; // radians per radian
     private static final double NONPLANAR_SPIN_MIN          = 0.02; // radians per sec
     private static final double ORTHOGONAL_VELOCITY_DECAY   = 0.95; // ratio
@@ -20,19 +25,27 @@ public class Ship extends Body{
     //   Maximum values for pitch velocity, roll velocity, and forward velocity.
     //   The ship is designed under the assumption that it cannot reverse,
     // therefore the reverse-velocity maximum is assumed to be zero.
-    private static final double PITCH_VEL_MAX   = 1.0;      // radians per second
-    private static final double ROTATE_VEL_MAX  = 1.0;      // radians per second
-    private static final double FWD_VEL_MAX     = 200.0;    // meters per second
+    private static final double PITCH_VEL_MAX   = 1.0;  // radians per second
+    private static final double YAW_VEL_MAX	    = 1.0;  // radians per second
+    private static final double ROLL_VEL_MAX    = 4.0;	// radians per second 
+    private static final double FWD_VEL_MAX     = 200.0;// meters per second
     
     // Smoothness of transition from rest to maximum for each axis.
     // Higher values result in smoother transitions.
     private static final int    PITCH_SMOOTHNESS    = 10;
-    private static final int    ROLL_SMOOTHNESS     = 10;
+    private static final int    YAW_SMOOTHNESS     	= 10;
+    private static final int	ROLL_SMOOTHNESS		= 10;
     private static final int    THRUST_SMOOTHNESS   = 100;
-
+    
+    // Roll / yaw flag
+    private static final boolean ROLLING = false;
+    
+/// FIELDS
     private String engineerName, pilotName;
     private Weapon laser, plasma, torpedo;
     private Resource engines, shields, health;
+    
+/// CONSTRUCTOR
     
     /**
      * Create a ship belonging to a specified pilot and engineer. 
@@ -41,7 +54,7 @@ public class Ship extends Body{
      */
     public Ship(String pilotName, String engineerName){
         // Set mass and radius
-        super(100, 2);
+        super(MASS, RADIUS);
         
         // Initialising ship weapons
         laser   = new Laser(this);
@@ -58,6 +71,8 @@ public class Ship extends Body{
         this.engineerName = engineerName;
     }	
     
+/// GETTERS
+    
     public String getPilotName() {
         return pilotName;
     }
@@ -65,8 +80,6 @@ public class Ship extends Body{
     public String getEngineerName() {
         return engineerName;
     }
-    
-/// GETTERS
     
     public Weapon getWeapon(Weapon.Type type) {
         switch (type) {
@@ -111,16 +124,22 @@ public class Ship extends Body{
     
 /// SHIP MOVEMENT
     
-    private static final double PITCH_ACC   = PITCH_VEL_MAX / PITCH_SMOOTHNESS;
-    private static final double ROLL_ACC    = ROTATE_VEL_MAX  / ROLL_SMOOTHNESS;
+    private static final double PITCH_ACC   = PITCH_VEL_MAX	/ PITCH_SMOOTHNESS;
+    private static final double YAW_ACC   	= YAW_VEL_MAX   / YAW_SMOOTHNESS;
+    private static final double ROLL_ACC	= ROLL_VEL_MAX	/ ROLL_SMOOTHNESS;
     private static final double THRUST_ACC  = FWD_VEL_MAX   / THRUST_SMOOTHNESS;
     
-    private static final Rotation   PITCH_UP    = new Rotation(Vector.I         .scale(PITCH_ACC * Global.REFRESH_PERIOD));
-    private static final Rotation   PITCH_DOWN  = new Rotation(Vector.I.negate().scale(PITCH_ACC * Global.REFRESH_PERIOD));
-    private static final Rotation   ROTATE_RIGHT= new Rotation(Vector.K.negate().scale(ROLL_ACC  * Global.REFRESH_PERIOD));
-    private static final Rotation   ROTATE_LEFT = new Rotation(Vector.K         .scale(ROLL_ACC  * Global.REFRESH_PERIOD));
+    private static final Rotation   PITCH_UP    = new Rotation(Vector.I.scale(  PITCH_ACC * Global.REFRESH_PERIOD));
+    private static final Rotation   PITCH_DOWN  = new Rotation(Vector.I.scale(- PITCH_ACC * Global.REFRESH_PERIOD));
+    private static final Rotation   YAW_RIGHT   = new Rotation(Vector.K.scale(- YAW_ACC   * Global.REFRESH_PERIOD));
+    private static final Rotation   YAW_LEFT 	= new Rotation(Vector.K.scale(  YAW_ACC   * Global.REFRESH_PERIOD));
+    private static final Rotation 	ROLL_RIGHT	= new Rotation(Vector.J.scale(  ROLL_ACC  * Global.REFRESH_PERIOD));
+    private static final Rotation	ROLL_LEFT	= new Rotation(Vector.J.scale(- ROLL_ACC  * Global.REFRESH_PERIOD));
     private static final Vector     THRUST_FWD  = Vector.J          .scale(THRUST_ACC);
     private static final Vector     THRUST_REV  = Vector.J.negate() .scale(THRUST_ACC);
+    
+    private static final Rotation ROTATE_RIGHT	= ROLLING ? ROLL_RIGHT 	: YAW_RIGHT;
+    private static final Rotation ROTATE_LEFT	= ROLLING ? ROLL_LEFT	: YAW_LEFT; 
     
     public void pitchUp() {
         if(engines.get() > 0) {
@@ -168,7 +187,7 @@ public class Ship extends Body{
         }
     }
     
-// Modified `update` method to affect all ship fields
+/// UPDATE METHOD
     
     public void update() {
         // Update physical parameters
@@ -179,7 +198,7 @@ public class Ship extends Body{
         plasma.update();
         torpedo.update();
         
-    // Decay and bound velocities
+    // Now decay and bound velocities
         Vector w            = getAngularVelocity();
         Vector planarSpin   = w.proj(getUpVector());
         Vector nonplanarSpin= w.minus(planarSpin);

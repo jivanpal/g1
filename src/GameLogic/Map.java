@@ -3,6 +3,9 @@ package GameLogic;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentSkipListMap;
+
+import GameLogic.*;
+import AI.*;
 import Geometry.*;
 import Physics.Body;
 
@@ -15,8 +18,9 @@ import Physics.Body;
 public class Map implements Serializable {
 /// FIELDS
     private Vector dimensions;
-    private ConcurrentSkipListMap<Integer,Body> bodies = new ConcurrentSkipListMap<Integer,Body>();
-    private BotManager botManager = new BotManager(this);
+    private ConcurrentSkipListMap<Integer,Body> bodies      = new ConcurrentSkipListMap<Integer,Body>();
+    private ConcurrentSkipListMap<Integer,AbstractBot> bots = new ConcurrentSkipListMap<Integer,AbstractBot>();
+    public int nextBotID = 0;
     
 /// CONSTRUCTORS
     
@@ -41,7 +45,16 @@ public class Map implements Serializable {
     
 /// INSTANCE METHODS
     
-// Alterers
+// Getters
+    
+    /**
+     * Get the dimensions of the map.
+     */
+    public Vector getDimensions() {
+        return dimensions;
+    }
+    
+// Body management
     
     /**
      * Add a new body to the map.
@@ -69,21 +82,7 @@ public class Map implements Serializable {
         return bodies.remove(bodyID) != null;
     }
     
-// Getters
-    
-    /**
-     * Get the dimensions of the map.
-     */
-    public Vector getDimensions() {
-    	return dimensions;
-    }
-    
-    /**
-     * Get a mapping between all bots on the map and the IDs of their bodies.
-     */
-    public BotManager getBotManager() {
-        return botManager;
-    }
+
     
     /**
      * Get the body on this map that has the given ID.
@@ -95,19 +94,19 @@ public class Map implements Serializable {
     }
     
     /**
-     * Get a collection of all the bodies on the map.
-     * Useful to iterate over all bodies on the map.
-     */
-    public Collection<Body> bodies() {
-        return bodies.values();
-    }
-    
-    /**
      * Get a collection of all the IDs of bodies on the map.
      * Useful to iterate over all bodies on the map.
      */
     public Collection<Integer> bodyIDs() {
         return bodies.keySet();
+    }
+    
+    /**
+     * Get a collection of all the bodies on the map.
+     * Useful to iterate over all bodies on the map.
+     */
+    public Collection<Body> bodies() {
+        return bodies.values();
     }
     
     /**
@@ -126,13 +125,73 @@ public class Map implements Serializable {
         return bodies.containsKey(bodyID);
     }
     
+// Bot management
+    
     /**
-     * Determine whether this map contains a given body, based on that body's ID
-     * @param body the body whose ID to check the presence of.
-     * @return whether a body with that ID is present.
+     * Add a new bot to the map. 
+     * @param newBot the bot to add. If a bot with the same ID as this one already exists
+     *      on the map, this one won't be added.
+     * @return the ID of the bot that was added, or -1 if the bot object is invalid or
+     *      conflicts with an already existing bot's ID.
      */
-    public boolean contains(Body body) {
-        return this.contains(body.getID());
+    public int addBot(AbstractBot newBot) {
+        if (newBot == null || this.containsBot(newBot.getID())) {
+            return -1;
+        } else {
+            bots.put(newBot.getID(), newBot);
+            return newBot.getID();
+        }
+    }
+    
+    /**
+     * Remove a bot with a given ID from the map.
+     * @param botID the ID of the bot to remove.
+     * @return `true` if a bot with that ID was on the map, and has subsequently been
+     *      removed due to invoking this command, else `false` because no bot with the
+     *      specified ID exists on the map.
+     */
+    public boolean removeBot(int botID) {
+        return bots.remove(botID) != null;
+    }
+    
+    /**
+     * Get the bot with a given ID.
+     * @param botID the ID of the bot to get.
+     * @return the bot with that ID.
+     */
+    public AbstractBot getBot(int botID) {
+        return bots.get(botID);
+    }
+    
+    /**
+     * Get a collection of the IDs of all bots that are on the map.
+     */
+    public Collection<Integer> botIDs() {
+        return bots.keySet();
+    }
+    
+    /**
+     * Get a collection of all the bot instances that are on the map.
+     * @return
+     */
+    public Collection<AbstractBot> bots() {
+        return bots.values();
+    }
+    
+    /**
+     * Get the number of bots that are on the map.
+     */
+    public int numberOfBots() {
+        return bots.size();
+    }
+    
+    /**
+     * 
+     * @param botID
+     * @return
+     */
+    public boolean containsBot(int botID) {
+        return bots.containsKey(botID);
     }
     
 // Other methods
@@ -372,7 +431,7 @@ public class Map implements Serializable {
         }
         
         // Make bots do their thing.
-        for(BotManager.AbstractBot b : botManager.bots()) {
+        for(AbstractBot b : bots()) {
             b.update();
         }
         

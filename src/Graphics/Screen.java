@@ -91,6 +91,9 @@ public class Screen extends JPanel{
 		CM = Matrix.getCM(viewFrom, V, U, N, 2);
 	}
 	
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	public void paintComponent(Graphics g){
 		//Draw the background
 		g.setColor(Color.BLACK);
@@ -101,7 +104,7 @@ public class Screen extends JPanel{
 		setLight();
 		
 		g.setColor(Color.WHITE);
-//
+
 		starMap.bodies().parallelStream()
 				.map(Star.class::cast)
 				.forEach( s -> {
@@ -172,6 +175,10 @@ public class Screen extends JPanel{
 		sleepAndRefresh();
 	}
 	
+	/**
+	 * If the ship is about to be destroyed the screen will fade in and out a red light
+	 * @param g Graphics object to use
+	 */
 	private void warningLight(Graphics g) {
 		if(selfDestruct){
 			if(destructCount <= 10){
@@ -207,6 +214,9 @@ public class Screen extends JPanel{
 		}
 	}
 
+    /**
+     * Creates graphical representations of all the objects in a map
+     */
     private void createObjects() {
         poly3Ds.clear();
         int shipCount = 0;
@@ -228,18 +238,14 @@ public class Screen extends JPanel{
                     shipCount++;
                 }
                 else if(bClass == Asteroid.class){
-//                    Vector path = map.shortestForwardPath(shipIndex, b.getID());
-//                    Vector pos = viewFrom.plus(path);
                     
                     for(Vector v : map.getAllPositions(b.getPosition())){
                     	new AsteroidModel(v, b.getRadius(), b.getOrientation());
                     }
                     asteroidCount ++;
-//                    System.out.println(b.getID() + ": " + pos);
-//                	new AsteroidModel(pos, b.getRadius(), b.getOrientation());
                 }
                 else if(bClass == Bullet.class){
-//                	Vector path = map.shortestForwardPath(shipIndex, b.getID());
+                	Bullet bul = (Bullet) b;
                 	double distance = Integer.MAX_VALUE;
                 	Vector pos = Vector.ZERO;
                 	for(Vector v : map.getAllPositions(b.getPosition())){
@@ -248,7 +254,7 @@ public class Screen extends JPanel{
                 			pos = v;
                 		}
                 	}
-                    switch (((Bullet)b).type()) {
+                    switch (bul.type()) {
                     case LASER:
                         new Laser(pos, b.getRadius(), b.getOrientation());
                         break;
@@ -256,7 +262,7 @@ public class Screen extends JPanel{
                         new Plasma(pos, b.getRadius(), b.getOrientation());
                         break;
                     case TORPEDO:
-                        new Torpedo(pos, b.getRadius(), b.getOrientation());
+                        new Torpedo(pos, b.getRadius(), b.getOrientation(), bul.getTimeToLive());
                         break;
                     }
                 }
@@ -370,6 +376,10 @@ public class Screen extends JPanel{
 		
 	}
 	
+	/**
+	 * Sets the map that the screen should display to a new map
+	 * @param map The map that you want to display
+	 */
 	public void setMap(Map map){
 		this.map = map;
 		for(Body b : map.bodies()) {
