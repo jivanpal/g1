@@ -55,6 +55,7 @@ public class AsteroidModel {
     	
         for(int i = 0; i < vertices.length; i++){
         	vertices[i] = position.plus(vertices[i]);
+//        	System.out.println(i + ": " + vertices[i]);
         }
 	}
 }
