@@ -11,6 +11,7 @@ import GameLogic.Map;
 import GameLogic.Ship;
 import Physics.Body;
 import jdk.nashorn.internal.objects.Global;
+import Geometry.Rotation;
 import Geometry.Vector;
 import GameLogic.Resource;
 
@@ -219,6 +220,9 @@ public class Screen extends JPanel{
      * Creates graphical representations of all the objects in a map
      */
     private void createObjects() {
+    	
+    	new ShipModel(new Vector(0, 10, 0), 3, new Rotation(new Vector(0, 0, 0)), 2);
+    	
         poly3Ds.clear();
         int shipCount = 0;
         asteroidCount = 0;
@@ -235,7 +239,7 @@ public class Screen extends JPanel{
                     		pos = v;
                     	}
                     }
-                    new ShipModel(pos, 2, b.getOrientation(), b.getID());
+                    new ShipModel(pos, b.getRadius(), b.getOrientation(), b.getID());
                     shipCount++;
                 }
                 else if(bClass == Asteroid.class){
