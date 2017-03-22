@@ -212,7 +212,6 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
             fullScreenLabel.setVisible(false);
             UILayeredPane.remove(fullScreenLabel);
         });
-
         timer.setRepeats(false);
         timer.start();
     }
