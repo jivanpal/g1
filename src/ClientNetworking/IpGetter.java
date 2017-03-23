@@ -28,7 +28,7 @@ public class IpGetter
 					InetAddress ip = x.nextElement();
 					String str = ip.toString();
 					if(ip instanceof Inet4Address)
-						if(!str.contains(":") && !str.contains("/192.168.") && !str.equals("/127.0.0.1"))
+						if(!str.contains(":") && !str.contains("/192.168.") && !str.equals("/127."))
 						{
 							return ip;
 						}
