@@ -422,8 +422,8 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	private void initialiseScreen() {
 		this.screen = new Screen(playerNickname, false, true);
 		screen.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() - (this.getHeight() / 5)));
-		Global.SCREEN_WIDTH = this.getWidth();
-		Global.SCREEN_HEIGHT = this.getHeight() - (this.getHeight() / 5);
+		Global.SCREEN_WIDTH = parentFrame.getWidth();
+		Global.SCREEN_HEIGHT = parentFrame.getHeight() - (parentFrame.getHeight() / 5);
 	}
 	
 	/**
