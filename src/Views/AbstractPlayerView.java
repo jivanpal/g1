@@ -74,6 +74,7 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
         if(gameActive) {
             try {
                 Map m = gameClient.getMap();
+                screen.setMap(m);
 
                 Ship s = findPlayerShip(m);
                 previousShip = currentShip;
@@ -104,8 +105,6 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
                     t.setRepeats(false);
                     t.start();
                 }
-
-                screen.setMap(m);
 
                 // Play appropriate sound effects and flash the UI if necessary
                 if (currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.LASER).getAmmoLevel()) {
