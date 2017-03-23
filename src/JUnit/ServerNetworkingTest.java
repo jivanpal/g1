@@ -35,7 +35,7 @@ public class ServerNetworkingTest {
 		System.out.println(cp1.name+ " "+ l.getPlayers()[0].nickname);
 		cp1.send(l);
 		cp2.updateList();
-		while(cp2.getLobbyList().getLobbies()[0]==null)
+		while(cp2.getLobbyList()==null || cp2.getLobbyList().getLobbies()[0]==null)
 		{
 			try
 			{
