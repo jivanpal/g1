@@ -28,10 +28,16 @@ public class IpGetter
 					InetAddress ip = x.nextElement();
 					String str = ip.toString();
 					if(ip instanceof Inet4Address)
-						if(!str.contains(":") && !str.contains("/192.168.") && !str.contains("/127."))
+					{
+						if(str.contains("/192.168."))
 						{
 							return ip;
 						}
+						/*if(!str.contains(":") && !str.contains("/192.168.") && !str.contains("/127."))
+						{
+							return ip;
+						}*/
+					}
 					else if(ip instanceof Inet6Address)
 					{
 						return ip;
