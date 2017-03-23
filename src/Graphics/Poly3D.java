@@ -82,16 +82,18 @@ public class Poly3D {
 	 */
 	private void lighting() {
 		Plane lightPlane = new Plane(this);
-		double angle = Math.acos(((lightPlane.v3.getX() * Screen.lightDir.getZ()) +
-				(lightPlane.v3.getY() * Screen.lightDir.getY()) + (lightPlane.v3.getZ() * Screen.lightDir.getZ()))
-				/(Math.sqrt(Screen.lightDir.getX() * Screen.lightDir.getX() + Screen.lightDir.getY() * Screen.lightDir.getY() + Screen.lightDir.getZ() * Screen.lightDir.getZ())));
+		double angle = Math.acos(lightPlane.v3.length() * lightPlane.v3.length()/Screen.lightDir.length());
 		
-		poly.light = 0.3 + 1 - Math.sqrt(Math.toDegrees(angle)/180);
+		poly.light = 0.3 + 1 - Math.sqrt(Math.abs(Math.toDegrees(angle)/180));
+//		System.out.println("Radians: " + angle);
+//		System.out.println("Degrees: " + (Math.toDegrees(angle)/180));
+//		System.out.println("Abs: " + (Math.abs(Math.toDegrees(angle)/180)));
+//		System.out.println("Sqrt: " + Math.sqrt(Math.abs(Math.toDegrees(angle)/180)));
 		
 		if(poly.light > 1){
 			poly.light = 1;
 		}
-		if(poly.light < 0.3){
+		else if(poly.light < 0.3){
 			poly.light = 0.3;
 		}
 		
