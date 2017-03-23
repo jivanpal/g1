@@ -409,6 +409,5 @@ public class Screen extends JPanel{
 				}
 			}
 		}
-		System.out.println(shipIndex);
 	}
 }
