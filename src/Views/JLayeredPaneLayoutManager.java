@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * Created by James on 21/02/17.
- * @author Stack Overflow
+ * @author James Brown
  */
 public class JLayeredPaneLayoutManager implements LayoutManager {
     private Map<Component, Rectangle> bounds = new LinkedHashMap<Component, Rectangle>();

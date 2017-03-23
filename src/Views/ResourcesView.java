@@ -13,6 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by James on 27/01/17.
  * A view which shows all relevant information about the ships resources (health, shields and fuel levels).
+ * @author James Brown
  */
 public class ResourcesView extends JPanel {
     // Resource type constants
@@ -87,6 +88,11 @@ public class ResourcesView extends JPanel {
         }
     }
 
+    /**
+     * Sets the maximum value for the given resource
+     * @param type The type of resource
+     * @param level The maximum level
+     */
     public void setMaximumResourceLevel(int type, int level) {
         switch (type) {
             case SHIELDS:
@@ -103,6 +109,11 @@ public class ResourcesView extends JPanel {
         }
     }
 
+    /**
+     * Sets a new refresh number (the number for the correct sequence in the manual)
+     * @param resourceType The type of the resource to set this value for
+     * @param newNumber The new sequence number
+     */
     public void updateRefreshNumber(int resourceType, String newNumber) {
         switch (resourceType) {
             case SHIELDS:
@@ -123,7 +134,6 @@ public class ResourcesView extends JPanel {
      * Instantiates all of the components of the UI and adds them to the JPanel.
      * Must be called before displaying, otherwise nothing will showup!
      */
-
     private void makeUI(String shieldReplenishNumber, String fuelReplenishNumber, ArrayList<JButton> buttons) {
         this.setOpaque(false);
 

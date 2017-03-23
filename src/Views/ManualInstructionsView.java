@@ -16,6 +16,10 @@ import javax.swing.table.DefaultTableModel;
 
 import GameLogic.GameOptions;
 
+/**
+ * View to the Pilot's manual. Contains all the instructions neccesary to maintain the ship.
+ * @author Ivan Panchev
+ */
 public class ManualInstructionsView extends JPanel {
 	private final int INSTRUCTIONS_PER_PAGE = 5;
 
@@ -31,6 +35,12 @@ public class ManualInstructionsView extends JPanel {
 	private JTable leftPage;
 	private JTable rightPage;
 
+	/**
+	 * Creates a ManualInstructionsView
+	 * @param data A list of the instructions to display
+	 * @param size The number of key sequences to display
+	 * @param height The height of the ManualInstructionsView
+	 */
 	public ManualInstructionsView(ArrayList<String> data, int size, int height) {
 		pageNumber = 1;
 		this.data = new Object[size][columnNames.length];

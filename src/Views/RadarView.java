@@ -15,8 +15,9 @@ import java.awt.geom.Ellipse2D;
  * Created by James on 14/02/17.
  * This view shows a top down view of the entire battlefield, showing locations of enemy
  * ships and asteroids.
+ * @author James Brown
  */
-public class RadarView extends JPanel{
+public class RadarView extends JPanel {
     private final Color ASTEROID_COLOR = Color.red;
     private final Color PLAYER_SHIP_COLOR = Color.green;
     private final Color ENEMY_SHIP_COLOR = Color.blue;
@@ -57,26 +58,30 @@ public class RadarView extends JPanel{
         repaint();
     }
 
+    /**
+     * Returns whether the RadarView is currently in large view or not
+     *
+     * @return Whether the RadarView is in large view or not
+     */
     public boolean isLargeView() {
         return largeView;
     }
 
+    /**
+     * Sets whether the RadarView should be in large view or not
+     *
+     * @param inLargeView
+     */
     public void setLargeView(boolean inLargeView) {
         this.largeView = inLargeView;
     }
 
     /**
-     * Draws an equilateral triangle centered on the given coordinates
-     * @param x The x coordinate of the triangle
-     * @param y The y coordinate of the triangle
-     */
-    private void drawTriangle(int x, int y) {
-    }
-
-    /**
      * Draws a circle centered on the given coordinates
-     * @param x The x coordinate
-     * @param y The y coordinate
+     *
+     * @param g      The Graphics
+     * @param c      The color to draw this circle
+     * @param circle The circle (place and diameter) to actually draw
      */
     private synchronized void drawCircle(Graphics2D g, Color c, Ellipse2D.Double circle) {
         g.setPaint(c);
@@ -86,6 +91,7 @@ public class RadarView extends JPanel{
     /**
      * Given the center position of for a body in the map, return the position at which we should
      * draw a circle in the RadarView for the resulting circle to be centered on the same spot.
+     *
      * @param x The x coordinate of the center of the circle in the map
      * @param y The y coordinate of the center of the circle in the map
      * @return The position at which we should draw this circle
@@ -95,6 +101,11 @@ public class RadarView extends JPanel{
                 (int) (this.getHeight() - Math.round(Utils.Utils.scaleValueToRange(y, 0, MapContainer.MAP_SIZE, 0, this.getHeight()))));
     }
 
+    /**
+     * Draws the entire RadarView
+     *
+     * @param graphics The Graphics
+     */
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -105,12 +116,13 @@ public class RadarView extends JPanel{
 
         Graphics2D g = (Graphics2D) graphics;
 
+        // Process all the bodies to draw in parallel
         map.bodies().parallelStream()
                 .forEach(b -> {
                     Tuple<Integer, Integer> position = circleDrawPositionFromCenter(b.getPosition().getX(), b.getPosition().getY());
                     Ellipse2D.Double circle;
 
-                    if(largeView) {
+                    if (largeView) {
                         circle = new Ellipse2D.Double(position.getX(), position.getY(),
                                 CIRCLE_DRAW_DIAMETER_LARGE, CIRCLE_DRAW_DIAMETER_LARGE);
                     } else {
@@ -119,59 +131,23 @@ public class RadarView extends JPanel{
                     }
 
                     // Select the correct color to paint
-                    if(b instanceof Asteroid) {
+                    if (b instanceof Asteroid) {
                         drawCircle(g, ASTEROID_COLOR, circle);
 
                     } else if (b instanceof Ship) {
                         Ship s = (Ship) b;
 
                         // Check if this ship is ours so we can draw it a different color
-                        if(s.getPilotName().equals(playerName) || s.getEngineerName().equals(playerName)) {
+                        if (s.getPilotName().equals(playerName) || s.getEngineerName().equals(playerName)) {
                             drawCircle(g, PLAYER_SHIP_COLOR, circle);
                         } else {
                             drawCircle(g, ENEMY_SHIP_COLOR, circle);
                         }
 
                     } else {
-                        drawCircle(g, BULLET_COLOR, circle);
+                        // Uncomment below to draw bullets
+                        // drawCircle(g, BULLET_COLOR, circle);
                     }
                 });
-
-//        for(Body b : map.bodies()) {
-//
-//            // Select the correct color to paint
-//            if(b instanceof Asteroid) {
-//                g.setPaint(ASTEROID_COLOR);
-//
-//            } else if (b instanceof Ship) {
-//                Ship s = (Ship) b;
-//
-//                // Check if this ship is ours so we can draw it a different color
-//                if(s.getPilotName().equals(playerName) || s.getEngineerName().equals(playerName)) {
-//                    g.setPaint(PLAYER_SHIP_COLOR);
-//                } else {
-//                    g.setPaint(ENEMY_SHIP_COLOR);
-//                    g.setPaint(ENEMY_SHIP_COLOR);
-//                }
-//
-//            } else {
-//                // Ignore -- this was a bullet.
-//            }
-//
-//            // Draw the circle on the map
-//            Tuple<Integer, Integer> position = circleDrawPositionFromCenter(b.getPosition().getX(), b.getPosition().getY());
-//
-//            Ellipse2D.Double circle;
-//
-//            if(largeView) {
-//                circle = new Ellipse2D.Double(position.getX(), position.getY(),
-//                        CIRCLE_DRAW_DIAMETER_LARGE, CIRCLE_DRAW_DIAMETER_LARGE);
-//            } else {
-//                circle = new Ellipse2D.Double(position.getX(), position.getY(),
-//                        CIRCLE_DRAW_DIAMETER_SMALL, CIRCLE_DRAW_DIAMETER_SMALL);
-//            }
-//
-//            g.fill(circle);
-//        }
     }
 }

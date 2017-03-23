@@ -6,8 +6,23 @@ package Views;
  * @author James Brown
  */
 public interface KeySequenceResponder {
+    /**
+     * Single key pressed correctly
+     */
     void correctKeyPress();
+
+    /**
+     * Entire sequence passed successfully
+     */
     void keySequencePassed();
+
+    /**
+     * Key sequence failed but auto-restarted
+     */
     void keySequenceSoftFailure();
+
+    /**
+     * Key sequence failed and not auto-restarted
+     */
     void keySequenceHardFailure();
 }

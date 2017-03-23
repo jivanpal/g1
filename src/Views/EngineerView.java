@@ -25,8 +25,12 @@ import Utils.Utils.*;
  * @author James Brown
  */
 public class EngineerView extends AbstractPlayerView implements KeySequenceResponder, Observer {
-	private static final String FAILED_SEQUENCE = "FAILED SEQUENCE";
+	private static final String SOFT_FAILED_SEQUENCE = "FAILED SEQUENCE";
+	private static final String HARD_FAILED_SEQUENCE = "FAILURE - SEQUENCE STOPPED";
 	private static final String NEW_SEQUENCE = "NEW SEQUENCE";
+	private static final Color SEQUENCE_FAILED_COLOR = Color.red;
+	private static final Color SEQUENCE_NEW_COLOR = Color.blue;
+	private static final int SEQUENCE_FULL_SCREEN_MESSAGE_TIME = 750;
 
 	private boolean UIinitialised = false;
 
@@ -359,16 +363,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	}
 
 	/**
-	 * Creates the Chat Window
-	 * @param gameClient The game client
-	 * @param nickname This players nickname
-	 */
-	private void initialiseChatWindow(GameClient gameClient, String nickname) {
-		this.chatWindow = new GameChat(this, gameClient, nickname);
-		this.chatWindow.setFocusable(false);
-	}
-
-	/**
 	 * Given a Ship, this will initialise the weapon progress bars to their
 	 * initial values and set their maximum values
 	 * @param s This players Ship object
@@ -488,7 +482,9 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 				shieldSequenceNum += 1;
 				this.state = ShipState.NONE;
 				changeButton("none");
-				displayFullScreenMessage(NEW_SEQUENCE, 750, Color.blue);
+				displayFullScreenMessage(NEW_SEQUENCE,
+						SEQUENCE_FULL_SCREEN_MESSAGE_TIME,
+						SEQUENCE_NEW_COLOR);
 			}
 			resourcesView.updateRefreshNumber(ResourcesView.SHIELDS, Utils.Utils.parseNumber(keySequences.get(shieldSequenceNum)));
 
@@ -504,7 +500,9 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 				fuelSequenceNum += 1;
 				this.state = ShipState.NONE;
 				changeButton("none");
-				displayFullScreenMessage(NEW_SEQUENCE, 750, Color.blue);
+				displayFullScreenMessage(NEW_SEQUENCE,
+						SEQUENCE_FULL_SCREEN_MESSAGE_TIME,
+						SEQUENCE_NEW_COLOR);
 			}
 			resourcesView.updateRefreshNumber(ResourcesView.ENGINE, Utils.Utils.parseNumber(keySequences.get(fuelSequenceNum)));
 
@@ -520,7 +518,9 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 				laserSequenceNum += 1;
 				this.state = ShipState.NONE;
 				changeButton("none");
-				displayFullScreenMessage(NEW_SEQUENCE, 750, Color.blue);
+				displayFullScreenMessage(NEW_SEQUENCE,
+						SEQUENCE_FULL_SCREEN_MESSAGE_TIME,
+						SEQUENCE_NEW_COLOR);
 			}
 			laserBlasterView.setReplenishAmmoNumber(Utils.Utils.parseNumber(keySequences.get(laserSequenceNum)));
 
@@ -537,7 +537,9 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 				this.state = ShipState.NONE;
 				changeButton("none");
 
-				displayFullScreenMessage(NEW_SEQUENCE, 750, Color.blue);
+				displayFullScreenMessage(NEW_SEQUENCE,
+						SEQUENCE_FULL_SCREEN_MESSAGE_TIME,
+						SEQUENCE_NEW_COLOR);
 			}
 			torpedosView.setReplenishAmmoNumber(Utils.Utils.parseNumber(keySequences.get(torpedoSequenceNum)));
 
@@ -554,7 +556,9 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 				this.state = ShipState.NONE;
 				changeButton("none");
 
-				displayFullScreenMessage(NEW_SEQUENCE, 750, Color.blue);
+				displayFullScreenMessage(NEW_SEQUENCE,
+						SEQUENCE_FULL_SCREEN_MESSAGE_TIME,
+						SEQUENCE_NEW_COLOR);
 			}
 			plasmaBlasterView.setReplenishAmmoNumber(Utils.Utils.parseNumber(keySequences.get(plasmaSequenceNum)));
 
@@ -568,11 +572,10 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	 * automatically restarted.
 	 */
 	public void keySequenceSoftFailure() {
-		System.out.println("Soft failure of sequence");
-
 		AudioPlayer.playSoundEffect(AudioPlayer.KEY_SEQUENCE_FAILED);
-
-		displayFullScreenMessage(FAILED_SEQUENCE, 750, Color.red);
+		displayFullScreenMessage(SOFT_FAILED_SEQUENCE,
+				SEQUENCE_FULL_SCREEN_MESSAGE_TIME,
+				SEQUENCE_FAILED_COLOR);
 	}
 
 	/**
@@ -581,8 +584,10 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	 * may wish to show a message to the user.
 	 */
 	public void keySequenceHardFailure() {
-		System.out.println("Hard failure of sequence");
-		displayFullScreenMessage("HARD FAILURE OF SEQUENCE", 750, Color.red);
+		AudioPlayer.playSoundEffect(AudioPlayer.KEY_SEQUENCE_FAILED);
+		displayFullScreenMessage(HARD_FAILED_SEQUENCE,
+				SEQUENCE_FULL_SCREEN_MESSAGE_TIME,
+				SEQUENCE_FAILED_COLOR);
 		this.state = ShipState.NONE;
 		changeButton("none");
 	}

@@ -113,6 +113,11 @@ public class WeaponView extends JPanel{
         }
     }
 
+    /**
+     * Sets the listener for the replenish ammo button.
+     * @param parent The parent view
+     * @param state The state which we should set the parent view to
+     */
     public void setReplenishAmmo(EngineerView parent, ShipState state) {
         replenishAmmo.addActionListener(actionEvent -> {
             if(parent.getState() != state) {
@@ -124,6 +129,10 @@ public class WeaponView extends JPanel{
         replenishAmmo.setEnabled(true);
     }
 
+    /**
+     * Sets a new refresh number (the number for the correct sequence in the manual)
+     * @param number The new sequence number
+     */
     public void setReplenishAmmoNumber(String number) {
         replenishAmmo.setText("Replenish: " + number);
     }

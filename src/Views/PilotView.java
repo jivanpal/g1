@@ -2,7 +2,6 @@ package Views;
 
 import static GameLogic.GameOptions.BUTTON_FONT;
 import static Views.ViewConstants.UI_BACKGROUND_COLOR;
-import static Views.ViewConstants.UI_HEALTH_DAMAGE_COLOR;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -36,12 +35,12 @@ import ClientNetworking.GameClient.GameClient;
 import GameLogic.GameOptions;
 import GameLogic.Global;
 import GameLogic.Map;
-import GameLogic.Ship;
 import Graphics.Screen;
-import Physics.Body;
 
 /**
- * Created by James on 01/02/17.
+ * Created by James on 01/02/17. This view contains the entire UI for the
+ * Pilot once they have entered the game.
+ * @author James Brown
  */
 public class PilotView extends AbstractPlayerView implements Observer {
 
@@ -67,6 +66,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
 
     /**
      * Creates a new PilotView. This encapsulates the entire View of the Pilot player.
+     *
      * @param playerNickname The nickname of the player controlling this view.
      * @param gameClient     The GameClient handling network connections for this player.
      */
@@ -91,7 +91,8 @@ public class PilotView extends AbstractPlayerView implements Observer {
             }
 
             @Override
-            public void componentMoved(ComponentEvent componentEvent) { }
+            public void componentMoved(ComponentEvent componentEvent) {
+            }
 
             @Override
             public void componentShown(ComponentEvent componentEvent) {
@@ -106,17 +107,17 @@ public class PilotView extends AbstractPlayerView implements Observer {
 
         parentFrame.addKeyListener(new KeyListener() {
 
-        	@Override
+            @Override
             public void keyTyped(KeyEvent keyEvent) {
             }
 
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-            	if(GameOptions.checkIfKeyToBeSentToServer(keyEvent.getKeyCode())){
-            		pressedKeys.add(getKeyCodeToInstruction(keyEvent.getKeyCode()));
-            	}
+                if (GameOptions.checkIfKeyToBeSentToServer(keyEvent.getKeyCode())) {
+                    pressedKeys.add(getKeyCodeToInstruction(keyEvent.getKeyCode()));
+                }
                 /*if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
-                	if(steeringWheelAngle != -Math.PI/4){
+                    if(steeringWheelAngle != -Math.PI/4){
 	                    steeringWheelAngle = -Math.PI/4;
 	                    updateSteeringWheel();
                 	}
@@ -125,23 +126,24 @@ public class PilotView extends AbstractPlayerView implements Observer {
 	                    steeringWheelAngle = Math.PI/4;
 	                    updateSteeringWheel();
                 	}
-                } else */if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_BUTTON)) {
-                	showManual();
-   
+                } else */
+                if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_BUTTON)) {
+                    toggleManualVisible();
+
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON) && instructions.isVisible()) {
-                	instructions.goToNextPage();
+                    instructions.goToNextPage();
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_PREV_BUTTON) && instructions.isVisible()) {
-                	instructions.goToPreviousPage();
+                    instructions.goToPreviousPage();
                 } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_CLOSE_MANUAL_BUTTON)
                         && instructions.isVisible()) {
-            	    AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-            	    showManual();
+                    AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
+                    toggleManualVisible();
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
-            	pressedKeys.remove(getKeyCodeToInstruction(keyEvent.getKeyCode()));
+                pressedKeys.remove(getKeyCodeToInstruction(keyEvent.getKeyCode()));
             	/*if(keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON) || keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)){
             		steeringWheelAngle = 0;
                     updateSteeringWheel();
@@ -153,10 +155,10 @@ public class PilotView extends AbstractPlayerView implements Observer {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
-                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                if (!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
                     System.out.println("Mouse clicked outside of chat");
                     parentFrame.requestFocusInWindow();
-                    
+
                     if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
                         gameClient.send("fireWeapon1");
                     } else if (mouseEvent.getButton() == MouseEvent.BUTTON2) {
@@ -172,7 +174,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
             @Override
             public void mousePressed(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
-                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                if (!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
                     System.out.println("Mouse pressed outside of chat");
                     parentFrame.requestFocusInWindow();
                 } else {
@@ -183,7 +185,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
             @Override
             public void mouseReleased(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
-                if(!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
+                if (!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
                     System.out.println("Mouse released outside of chat");
                     parentFrame.requestFocusInWindow();
                 } else {
@@ -209,38 +211,43 @@ public class PilotView extends AbstractPlayerView implements Observer {
         AudioPlayer.stopMusic();
         AudioPlayer.playMusic(AudioPlayer.IN_GAME_TUNE);
     }
-    
-    private String getKeyCodeToInstruction(int keyCode){
-    	String inst = "";
-   	
-    	if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
-        	inst = "fireWeapon1";
+
+    /**
+     * Given a KeyCode, returns the appropriate message we should send to the server
+     * @param keyCode The KeyCode to translate
+     * @return The message we should send to the server which relates to our action
+     */
+    private String getKeyCodeToInstruction(int keyCode) {
+        String inst = "";
+
+        if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_1_BUTTON)) {
+            inst = "fireWeapon1";
         } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_2_BUTTON)) {
-        	inst = "fireWeapon2";
+            inst = "fireWeapon2";
         } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_FIRE_WEAPON_3_BUTTON)) {
-        	inst = "fireWeapon3";
+            inst = "fireWeapon3";
         } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ACCELERATE_BUTTON)) {
-        	inst = "accelerate";
+            inst = "accelerate";
         } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_DECELERATE_BUTTON)) {
-        	inst = "decelerate";
+            inst = "decelerate";
         } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_DOWN_BUTTON)) {
-        	inst = "pitchDown";
+            inst = "pitchDown";
         } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_PITCH_UP_BUTTON)) {
-        	inst = "pitchUp";
+            inst = "pitchUp";
         } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
-        	inst = "rollLeft";
+            inst = "rollLeft";
         } else if (keyCode == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
-        	inst = "rollRight";
+            inst = "rollRight";
         }
-    	
-    	return inst;
+
+        return inst;
     }
 
     /**
      * Creates all the elements of the UI and positions them on the screen. Sets all default values of the UI elements.
      */
     protected void initialiseUI() {
-        if(UIinitialised) {
+        if (UIinitialised) {
             UILayeredPane.removeAll();
             UIBaseLayer.removeAll();
         }
@@ -261,7 +268,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
         initialiseScreen();
         initialiseChatWindow(gameClient, playerNickname);
 
-        if(engAI != null) {
+        if (engAI != null) {
             initialiseRadar();
         }
 
@@ -280,7 +287,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
 
                 final Dimension screenDimension = screen.getSize();
                 final Rectangle screenBounds = new Rectangle(0, 0, (int) screenDimension.getWidth(), (int) screenDimension.getHeight());
-                 if (screenBounds.contains(x, y)) {
+                if (screenBounds.contains(x, y)) {
                     getParent().setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
                 } else {
                     getParent().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -368,51 +375,49 @@ public class PilotView extends AbstractPlayerView implements Observer {
         speedometerView.setBackground(UI_BACKGROUND_COLOR);
         UILayeredPane.add(speedometerView, JLayeredPane.PALETTE_LAYER);
 
-        if(engAI != null) {
+        if (engAI != null) {
             radarView.setBounds(parentFrame.getWidth() - parentFrame.getHeight() / 4, 0, parentFrame.getHeight() / 4, parentFrame.getHeight() / 4);
             radarView.setPreferredSize(new Dimension(parentFrame.getHeight() / 4, parentFrame.getHeight() / 4));
             UILayeredPane.add(radarView, JLayeredPane.MODAL_LAYER);
         }
     }
-    
-    private void updateSteeringWheel(){
-    	steeringWheelView.setIcon(null);
-    	steeringWheelView.revalidate();
-    	steeringWheelView.repaint();
-    	BufferedImage steeringWheelImage;
-		try {
-			steeringWheelImage = ImageIO.read(new File(System.getProperty("user.dir") + "/res/img/steeringwheel.png"));
-			AffineTransform t = new AffineTransform();
-	        t.rotate(steeringWheelAngle, steeringWheelImage.getWidth()/2, steeringWheelImage.getHeight()/2);
-	        AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
-	        steeringWheelImage = op.filter(steeringWheelImage, null);
-	        Image resizedWheel = steeringWheelImage.getScaledInstance(parentFrame.getHeight()/5, parentFrame.getHeight()/5, Image.SCALE_SMOOTH);
-	        ImageIcon imgIcon = new ImageIcon(resizedWheel);
-	        steeringWheelView = new JLabel(imgIcon);
 
-	        steeringWheelView.setMinimumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
-	        steeringWheelView.setMaximumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
-	        steeringWheelView.setPreferredSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
-	        steeringWheelView.setBounds((parentFrame.getWidth() / 2) - (parentFrame.getWidth() / 6),
-	                2 * (parentFrame.getHeight() / 3),
-	                parentFrame.getWidth() / 3,
-	                parentFrame.getHeight() / 3);
-	        
-	        steeringWheelView.revalidate();
-	    	steeringWheelView.repaint();
-	        
-	        UILayeredPane.add(steeringWheelView, JLayeredPane.PALETTE_LAYER);
-	        
+    /**
+     * Update the state of the steering wheel. Turn dependent on the current state of the ship.
+     */
+    private void updateSteeringWheel() {
+        steeringWheelView.setIcon(null);
+        steeringWheelView.revalidate();
+        steeringWheelView.repaint();
+        BufferedImage steeringWheelImage;
+        try {
+            steeringWheelImage = ImageIO.read(new File(System.getProperty("user.dir") + "/res/img/steeringwheel.png"));
+            AffineTransform t = new AffineTransform();
+            t.rotate(steeringWheelAngle, steeringWheelImage.getWidth() / 2, steeringWheelImage.getHeight() / 2);
+            AffineTransformOp op = new AffineTransformOp(t, AffineTransformOp.TYPE_BILINEAR);
+            steeringWheelImage = op.filter(steeringWheelImage, null);
+            Image resizedWheel = steeringWheelImage.getScaledInstance(parentFrame.getHeight() / 5, parentFrame.getHeight() / 5, Image.SCALE_SMOOTH);
+            ImageIcon imgIcon = new ImageIcon(resizedWheel);
+            steeringWheelView = new JLabel(imgIcon);
+
+            steeringWheelView.setMinimumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
+            steeringWheelView.setMaximumSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
+            steeringWheelView.setPreferredSize(new Dimension(parentFrame.getWidth() / 3, parentFrame.getHeight() / 3));
+            steeringWheelView.setBounds((parentFrame.getWidth() / 2) - (parentFrame.getWidth() / 6),
+                    2 * (parentFrame.getHeight() / 3),
+                    parentFrame.getWidth() / 3,
+                    parentFrame.getHeight() / 3);
+
+            steeringWheelView.revalidate();
+            steeringWheelView.repaint();
+
+            UILayeredPane.add(steeringWheelView, JLayeredPane.PALETTE_LAYER);
+
 //	        UILayeredPane.revalidate();
 //	        UILayeredPane.repaint();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    }
-
-    private void initialiseChatWindow(GameClient gameClient, String nickname) {
-        this.chatWindow = new GameChat(this, gameClient, nickname);
-        this.chatWindow.setFocusable(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -433,51 +438,69 @@ public class PilotView extends AbstractPlayerView implements Observer {
         speedometerView.setOpaque(false);
     }
 
+    /**
+     * Initialises the button which shows/hides the Pilot's manual.
+     */
     private void initialiseManualButton() {
         this.manual = new JButton("Manual");
         this.manual.addActionListener(e -> {
             AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
-            showManual();
+            toggleManualVisible();
         });
         this.manual.setFocusable(false);
     }
 
-    private void showManual() {
-    	if(this.instructions == null){
-    		initialiseManualView(getHeight() - 100);
-    		this.instructions.setBounds(50,50, getWidth() - 100, getHeight() - 100);
-    		UILayeredPane.add(instructions, JLayeredPane.DRAG_LAYER);
+    /**
+     * Toggles the visibility of the manual
+     */
+    private void toggleManualVisible() {
+        // If a manual hasn't been created, make one
+        if (this.instructions == null) {
+            initialiseManualView(getHeight() - 100);
+            this.instructions.setBounds(50, 50, getWidth() - 100, getHeight() - 100);
+            UILayeredPane.add(instructions, JLayeredPane.DRAG_LAYER);
         }
 
+        // Toggle visibility
         this.instructions.setVisible(!instructions.isVisible());
     }
 
+    /**
+     * Initialises the Pilot's manual
+     *
+     * @param height The height of the manual
+     */
     private void initialiseManualView(int height) {
-    	this.instructions = new ManualView(gameClient.keySequence.getAllKeys(), gameClient.keySequence.getKeysSize(), height);
+        this.instructions = new ManualView(gameClient.keySequence.getAllKeys(), gameClient.keySequence.getKeysSize(), height);
         this.instructions.setVisible(false);
     }
 
+    /**
+     * Update the PilotView with new values
+     * @param observable The MapContainer
+     * @param o          Unused
+     */
     @Override
     public void update(Observable observable, Object o) {
         super.update(observable, o);
-        
-        if(gameActive) {
-        try {
-            Map m = gameClient.getMap();
-            System.out.println("Vel: " + currentShip.getVelocity());
-            speedometerView.updateSpeedLevel(currentShip.getVelocity().length());
 
-            if(engAI != null) {
-                radarView.updateMap(m);
+        if (gameActive) {
+            try {
+                speedometerView.updateSpeedLevel(currentShip.getVelocity().length());
+
+                // I have an AI teammate
+                if (engAI != null) {
+                    radarView.updateMap(gameClient.getMap());
+                }
+            } catch (Exception e) {
+                // e.printStackTrace();
+                // Seems the UI hasn't been initialised yet
             }
-        } catch (Exception e) {
-        	//e.printStackTrace();
-        	// Seems the UI hasn't been initialised yet
-        }
 
-        for(String inst : pressedKeys){
-        	gameClient.send(inst);
-        }
+            // For every key we have pressed right now, send the appropriate message to the server
+            for (String inst : pressedKeys) {
+                gameClient.send(inst);
+            }
         }
     }
 }
