@@ -64,7 +64,6 @@ public class PilotView extends AbstractPlayerView implements Observer {
     private double steeringWheelAngle = 0;
 
     private final Set<String> pressedKeys = new HashSet<String>();
-    private Ship currentShip;
 
     /**
      * Creates a new PilotView. This encapsulates the entire View of the Pilot player.
@@ -465,6 +464,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
         if(gameActive) {
         try {
             Map m = gameClient.getMap();
+            System.out.println("Vel: " + currentShip.getVelocity());
             speedometerView.updateSpeedLevel(currentShip.getVelocity().length());
 
             if(engAI != null) {
