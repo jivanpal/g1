@@ -19,7 +19,7 @@ public class MapContainer {
 
 	public static int ASTEROID_NUMBER =70;
 
-	public static final int MAP_SIZE = 400;
+	public static final int MAP_SIZE = 800;
 	public Map gameMap = new Map(MAP_SIZE, MAP_SIZE, 50);
 
 	/**
