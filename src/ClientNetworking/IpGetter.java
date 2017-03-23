@@ -29,6 +29,8 @@ public class IpGetter
 					String str = ip.toString();
 					if(ip instanceof Inet4Address)
 					{/*
+					{
+
 						if(str.contains("/192.168."))
 						{
 							System.out.println(ip);
@@ -52,7 +54,6 @@ public class IpGetter
 					InetAddress ip = x.nextElement();
 					if(ip instanceof Inet6Address && !ip.toString().contains("/0:"))
 					{
-						System.out.println(ip);
 						return ip;
 					}
 				}

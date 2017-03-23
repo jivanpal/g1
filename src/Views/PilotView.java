@@ -471,7 +471,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
                 radarView.updateMap(m);
             }
         } catch (Exception e) {
-        	e.printStackTrace();
+        	//e.printStackTrace();
         	// Seems the UI hasn't been initialised yet
         }
 
