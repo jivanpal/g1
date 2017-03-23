@@ -539,59 +539,57 @@ public class Map implements Serializable {
             
             for (int bID : bodyIDs()) {
                 Body b = get(bID);
-                Vector lineOfAction = shortestPath(aID, bID);
-                double leastDist = leastDistanceThisTick(aID, bID);
                 
                 // If A and B are touching, then they rebound.
-                if (aID < bID && leastDist < aRadius + b.getRadius()) {
-                	if (!(a instanceof Bullet) && !(b instanceof Bullet)) {
-                	    rebound(a, b, lineOfAction);
-                	}
+                if (aID < bID && leastDistanceThisTick(aID,bID) < aRadius + b.getRadius()) {
                     
-                	if(a instanceof Ship) {
-                		Ship s = (Ship) a;
-                		
-                		if(b instanceof Bullet) {
-                			Bullet bullet = (Bullet) b;
-                			s.takeDamage(bullet.getShipDamage(), bullet.getShieldDamage());
-                			
-                			// Destroy the bullet now that it has collided
-                			b.destroy();
-                		} else if (b instanceof Asteroid) {
-                			if(s.isAllowedToTakeDamageOnCollision()) {
-                				s.takeDamage(Asteroid.DAMAGE_TO_SHIP, Asteroid.DAMAGE_TO_SHIP);
-                				s.collided();
-                				
-                				// Destroy the asteroid
-                    			b.destroy();
-                			}	
-                		} else if (b instanceof Ship) {
-                			if(s.isAllowedToTakeDamageOnCollision()) {
-                				s.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
-                				s.collided();
-                			}
-                			
-                			// Make sure to damage the other ship as well
-                			Ship s2 = (Ship) b;
-                			if(s2.isAllowedToTakeDamageOnCollision()){
-                				((Ship) b).takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
-                				s2.collided();
-                				if(s2.getResource(Resource.Type.HEALTH).get() <= 0) {
-                					s2.destroy();
-                				}
-                			}
+                    
+                // If there's a bullet involved ...
+                    if (a instanceof Bullet) {
+                        Bullet bulletA = (Bullet)a;
+                        if (b instanceof Bullet) {
+                            doBulletBulletCollision(bulletA, (Bullet)b);
+                        } else if (b instanceof Ship) {
+                            doBulletShipCollision(bulletA, (Ship)b);
+                        } else {
+                            doBulletAsteroidCollision(bulletA, (Asteroid)b);
+                        }
+                    } else if (b instanceof Bullet) {
+                        Bullet bulletB = (Bullet)b;
+                        if (a instanceof Ship) {
+                            doBulletShipCollision(bulletB, (Ship)a);
+                        } else {
+                            doBulletAsteroidCollision(bulletB, (Asteroid)a);
+                        }
+                    }
+                    
+                // Else if there's a ship involved ...
+                    else if (a instanceof Ship) {
+                		Ship shipA = (Ship)a;
+                		if (b instanceof Ship) {
+                		    Ship shipB = (Ship)b;
+                		    doShipShipCollision(shipA, shipB);
+                		} else { 
+                		    doShipAsteroidCollision(shipA, (Asteroid)b);
                 		}
-                		
-                		if(s.getResource(Resource.Type.HEALTH).get() <= 0) {
-                			s.destroy();
-                		}                		
+                	} else if (b instanceof Ship) {
+                	    doShipAsteroidCollision((Ship)b, (Asteroid)a);
+                	}
+                	
+                // Else it's just two asteroids ...
+                	else {
+                	    doAsteroidAsteroidCollision((Asteroid)a, (Asteroid)b);
                 	}
                 }
             }
         }
     }
     
-    public void rebound(Body a, Body b, Vector lineOfAction) {
+// Rebounding bodies
+    
+    private void rebound(Body a, Body b) {
+        Vector lineOfAction = shortestPath(a.getID(), b.getID());
+        
         // Components of velocities that lie on the line of action
         Vector aVel = a.getVelocity().proj(lineOfAction);
         Vector bVel = b.getVelocity().proj(lineOfAction);
@@ -604,4 +602,48 @@ public class Map implements Serializable {
         a.setVelocity(aVel.scale(aMass - bMass).plus(bVel.scale(2*bMass)).scale(recipMassSum));
         b.setVelocity(bVel.scale(bMass - aMass).plus(aVel.scale(2*aMass)).scale(recipMassSum));
     }
+    
+// Collision handling
+    
+    private void doBulletBulletCollision(Bullet b1, Bullet b2) {
+        // Do nothing; bullets just pass through each other.
+    }
+    
+    private void doBulletShipCollision(Bullet b, Ship s) {
+        s.takeDamage(b.getShipDamage(), b.getShieldDamage());
+        if (s.hasNoHealth()) {
+            s.destroy();
+        }
+        b.destroy();
+    }
+    
+    private void doBulletAsteroidCollision(Bullet b, Asteroid a) {
+        b.destroy();
+        a.destroy();
+    }
+    
+    private void doShipShipCollision(Ship s1, Ship s2) {
+        s1.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+        rebound(s1, s2);
+        if (s1.hasNoHealth()) {
+            s1.destroy();
+        }
+        if (s2.hasNoHealth()) {
+            s2.destroy();
+        }
+    }
+    
+    private void doShipAsteroidCollision(Ship s, Asteroid a) {
+        s.takeDamage(Asteroid.DAMAGE_TO_SHIP, Asteroid.DAMAGE_TO_SHIP);
+        rebound(s, a);
+        if (s.hasNoHealth()) {
+            s.destroy();
+        }
+        a.destroy();
+    }
+    
+    private void doAsteroidAsteroidCollision(Asteroid a, Asteroid b) {
+        rebound(a, b);
+    }
+    
 }
