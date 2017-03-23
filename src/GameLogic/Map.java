@@ -536,7 +536,6 @@ public class Map implements Serializable {
             // in an effort to optimise this procedure.
             Body a = get(aID);
             double aRadius = a.getRadius();
-            double aMass = a.getMass();
             
             for (int bID : bodyIDs()) {
                 Body b = get(bID);
@@ -545,64 +544,62 @@ public class Map implements Serializable {
                 
                 // If A and B are touching, then they rebound.
                 if (aID < bID && leastDist < aRadius + b.getRadius()) {
-                    a.destroy();
-                    b.destroy();
-                	
-//                	if(a instanceof Ship) {
-//                		Ship s = (Ship) a;
-//                		
-//                		if(b instanceof Bullet) {
-//                			Bullet bullet = (Bullet) b;
-//                			s.takeDamage(bullet.getShipDamage(), bullet.getShieldDamage());
-//                			
-//                			// Destroy the bullet now that it has collided
-//                			b.destroy();
-//                		} else if (b instanceof Asteroid) {
-//                			if(s.isAllowedToTakeDamageOnCollision()) {
-//                				s.takeDamage(Asteroid.DAMAGE_TO_SHIP, Asteroid.DAMAGE_TO_SHIP);
-//                				s.collided();
-//                				
-//                				// Destroy the asteroid
-//                    			b.destroy();
-//                			}	
-//                		} else if (b instanceof Ship) {
-//                			if(s.isAllowedToTakeDamageOnCollision()) {
-//                				s.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
-//                				s.collided();
-//                			}
-//                			
-//                			// Make sure to damage the other ship as well
-//                			Ship s2 = (Ship) b;
-//                			if(s2.isAllowedToTakeDamageOnCollision()){
-//                				((Ship) b).takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
-//                				s2.collided();
-//                				if(s2.getResource(Resource.Type.HEALTH).get() <= 0) {
-//                					s2.destroy();
-//                				}
-//                			}
-//                		}
-//                		
-//                		if(s.getResource(Resource.Type.HEALTH).get() <= 0) {
-//                			s.destroy();
-//                		}
-//                		
-//                	}
+                	rebound(a, b, lineOfAction);
                     
-                    
-                    
-//                    // Components of velocities that lie on the line of action
-//                    Vector aVel = a.getVelocity().proj(lineOfAction);
-//                    Vector bVel = b.getVelocity().proj(lineOfAction);
-//                    
-//                    // Store mass of B as it is used several times
-//                    double bMass = b.getMass();
-//                    double recipMassSum = 1/(aMass + bMass);
-//                    
-//                    // Elastic collision between A and B
-//                    a.setVelocity(aVel.scale(aMass - bMass).plus(bVel.scale(2*bMass)).scale(recipMassSum));
-//                    b.setVelocity(bVel.scale(bMass - aMass).plus(aVel.scale(2*aMass)).scale(recipMassSum));
+                	if(a instanceof Ship) {
+                		Ship s = (Ship) a;
+                		
+                		if(b instanceof Bullet) {
+                			Bullet bullet = (Bullet) b;
+                			s.takeDamage(bullet.getShipDamage(), bullet.getShieldDamage());
+                			
+                			// Destroy the bullet now that it has collided
+                			b.destroy();
+                		} else if (b instanceof Asteroid) {
+                			if(s.isAllowedToTakeDamageOnCollision()) {
+                				s.takeDamage(Asteroid.DAMAGE_TO_SHIP, Asteroid.DAMAGE_TO_SHIP);
+                				s.collided();
+                				
+                				// Destroy the asteroid
+                    			b.destroy();
+                			}	
+                		} else if (b instanceof Ship) {
+                			if(s.isAllowedToTakeDamageOnCollision()) {
+                				s.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+                				s.collided();
+                			}
+                			
+                			// Make sure to damage the other ship as well
+                			Ship s2 = (Ship) b;
+                			if(s2.isAllowedToTakeDamageOnCollision()){
+                				((Ship) b).takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+                				s2.collided();
+                				if(s2.getResource(Resource.Type.HEALTH).get() <= 0) {
+                					s2.destroy();
+                				}
+                			}
+                		}
+                		
+                		if(s.getResource(Resource.Type.HEALTH).get() <= 0) {
+                			s.destroy();
+                		}                		
+                	}
                 }
             }
         }
+    }
+    
+    public void rebound(Body a, Body b, Vector lineOfAction) {
+        // Components of velocities that lie on the line of action
+        Vector aVel = a.getVelocity().proj(lineOfAction);
+        Vector bVel = b.getVelocity().proj(lineOfAction);
+        
+        double aMass = a.getMass();
+        double bMass = b.getMass();
+        double recipMassSum = 1/(aMass + bMass);
+        
+        // Elastic collision between A and B
+        a.setVelocity(aVel.scale(aMass - bMass).plus(bVel.scale(2*bMass)).scale(recipMassSum));
+        b.setVelocity(bVel.scale(bMass - aMass).plus(aVel.scale(2*aMass)).scale(recipMassSum));
     }
 }
