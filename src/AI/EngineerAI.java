@@ -73,7 +73,7 @@ public class EngineerAI implements Observer
 
 			} else
 				cooldownTimer--;
-		} catch (NullPointerException e) {
+		} catch (IndexOutOfBoundsException e) {
 			// Game has probably ended, give up
 		}
 
