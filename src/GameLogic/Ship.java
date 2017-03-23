@@ -11,6 +11,8 @@ import GameLogic.resource.*;
  * @author jivan
  */
 public class Ship extends Body{
+
+
 /// CONSTANTS
 	
 	private static final double MASS 	= 100;
