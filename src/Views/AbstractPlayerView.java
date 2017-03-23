@@ -105,6 +105,8 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
                         System.out.println("I'm going back to the main menu.");
                         swapToMainMenu();
                     });
+                    t.setRepeats(false);
+                    t.start();
                 }
 
                 screen.setMap(m);
