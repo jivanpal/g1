@@ -38,11 +38,21 @@ public class IpGetter
 							return ip;
 						}*/
 					}
-					else if(ip instanceof Inet6Address)
+		
+						
+				}
+			}
+			Enumeration<NetworkInterface> s1 = NetworkInterface.getNetworkInterfaces();
+			while (s1.hasMoreElements())
+			{
+				Enumeration<InetAddress> x = s1.nextElement().getInetAddresses();
+				while(x.hasMoreElements())
+				{
+					InetAddress ip = x.nextElement();
+					if(ip instanceof Inet6Address && !ip.toString().contains("\0."))
 					{
 						return ip;
-					}	
-						
+					}
 				}
 			}
 		} catch (SocketException e)
