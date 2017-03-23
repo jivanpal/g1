@@ -544,7 +544,9 @@ public class Map implements Serializable {
                 
                 // If A and B are touching, then they rebound.
                 if (aID < bID && leastDist < aRadius + b.getRadius()) {
-                	rebound(a, b, lineOfAction);
+                	if (!(a instanceof Bullet) && !(b instanceof Bullet)) {
+                	    rebound(a, b, lineOfAction);
+                	}
                     
                 	if(a instanceof Ship) {
                 		Ship s = (Ship) a;
