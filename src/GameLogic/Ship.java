@@ -136,6 +136,13 @@ public class Ship extends Body{
     	}
     }
     
+    /**
+     * Determine whether this instance's health is zero or below.
+     */
+    public boolean hasNoHealth() {
+        return health.get() <= 0;
+    }
+    
 /// FIRING
     
     public Bullet fire(Weapon.Type type) {
