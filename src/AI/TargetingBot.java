@@ -113,11 +113,11 @@ public class TargetingBot extends AbstractBot {
         double timeToTarget = pathToTarget.getY() / ship.getVelocity().getY();
         
         if (timeToTarget < 2) {
-            ship.thrustReverse();
+            ship.alterVelocityLocally(Ship.THRUST_REV);
         } else if (timeToTarget < 4) {
             // Do nothing
         } else if (timeToTarget < 10) {
-            ship.thrustForward();
+            ship.alterVelocityLocally(Ship.THRUST_FWD);
         }
     }
 }
