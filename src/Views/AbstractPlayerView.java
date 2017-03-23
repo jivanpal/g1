@@ -29,7 +29,7 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
     protected final String LOSE_GAME = "DEFEAT";
     protected final String WIN_GAME = "VICTORY";
 
-    protected final int DAMAGE_FLASH_TIME = 100; // ms
+    protected final int DAMAGE_FLASH_TIME = 200; // ms
 
     protected String playerNickname;
     protected GameClient gameClient;
@@ -71,17 +71,13 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
     public void update(Observable observable, Object o) {
         if(gameActive) {
             try {
-                // long time = System.currentTimeMillis();
-
                 Map m = gameClient.getMap();
 
-                if (hasWonGame(m)) {
-/*
-                    *
-                     * TODO: Victory is temporarilly off for testing. It's annoying to join the game as a single
-                     * player and instantly win!
-*/
+                Ship s = findPlayerShip(m);
+                previousShip = currentShip;
+                currentShip = s;
 
+                if (hasWonGame(m)) {
                     // Congrats!
                     gameActive = false;
 
@@ -89,7 +85,6 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
                     displayFullScreenMessage(WIN_GAME, 5000, Color.green);
 
                     Timer t = new Timer(5000, actionEvent -> {
-                        System.out.println("I'm going back to the main menu.");
                         swapToMainMenu();
                     });
                     t.setRepeats(false);
@@ -102,7 +97,6 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
                     displayFullScreenMessage(LOSE_GAME, 5000, Color.RED);
 
                     Timer t = new Timer(5000, actionEvent -> {
-                        System.out.println("I'm going back to the main menu.");
                         swapToMainMenu();
                     });
                     t.setRepeats(false);
@@ -111,11 +105,7 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
 
                 screen.setMap(m);
 
-                Ship s = findPlayerShip(m);
-                previousShip = currentShip;
-                currentShip = s;
-
-
+                // Play appropriate sound effects and flash the UI if necessary
                 if (currentShip.getWeapon(Weapon.Type.LASER).getAmmoLevel() < previousShip.getWeapon(Weapon.Type.LASER).getAmmoLevel()) {
                     AudioPlayer.playSoundEffect(AudioPlayer.LASER_FIRE_EFFECT);
                 }
@@ -133,8 +123,6 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
                     AudioPlayer.playSoundEffect(AudioPlayer.SHIP_HEALTH_DECREASE_EFFECT);
                     flashUIDamaged(ViewConstants.UI_HEALTH_DAMAGE_COLOR);
                 }
-
-                // System.out.println("Time this frame: " + String.valueOf(System.currentTimeMillis() - time));
             } catch (NullPointerException e) {
                 System.err.println("Map seems to be null right now... let's just wait a little bit");
             }
@@ -238,7 +226,7 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
             LobbyPanel.ghost.killServer();
             LobbyPanel.ghost = null;
         } catch (Exception e) {
-    	    // I wasn't the host.
+    	    // I wasn't the host. Give up.
             e.printStackTrace();
         }
 
