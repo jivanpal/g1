@@ -652,6 +652,7 @@ public class Map implements Serializable {
         if (s.hasNoHealth()) {
             s.destroy();
         }
+        a.destroy();
     }
     
     private void doAsteroidAsteroidCollision(Asteroid a, Asteroid b) {
