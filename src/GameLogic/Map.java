@@ -622,7 +622,18 @@ public class Map implements Serializable {
     }
     
     private void doShipShipCollision(Ship s1, Ship s2) {
-        s1.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+        // Deal damage
+        if (s1.isAllowedToTakeDamageOnCollision()) {
+            s1.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+        }
+        if (s2.isAllowedToTakeDamageOnCollision()) {
+            s2.takeDamage(Ship.DAMAGE_TO_OTHER_SHIPS, Ship.DAMAGE_TO_OTHER_SHIPS);
+        }
+        
+        // Collision cooldown start
+        s1.collided();
+        s2.collided();
+        
         rebound(s1, s2);
         if (s1.hasNoHealth()) {
             s1.destroy();
@@ -633,7 +644,10 @@ public class Map implements Serializable {
     }
     
     private void doShipAsteroidCollision(Ship s, Asteroid a) {
-        s.takeDamage(Asteroid.DAMAGE_TO_SHIP, Asteroid.DAMAGE_TO_SHIP);
+        if (s.isAllowedToTakeDamageOnCollision()) {
+            s.takeDamage(Asteroid.DAMAGE_TO_SHIP, Asteroid.DAMAGE_TO_SHIP);
+        }
+        
         rebound(s, a);
         if (s.hasNoHealth()) {
             s.destroy();
