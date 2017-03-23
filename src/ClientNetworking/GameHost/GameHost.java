@@ -133,6 +133,8 @@ public class GameHost extends Thread
 						gameShouldStart = true;
 						break;
 					}
+					if(players[pos] != null)
+						System.out.println(players[pos].nickname);
 				}
 				if (!gameShouldStart)
 				{
