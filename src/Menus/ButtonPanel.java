@@ -85,7 +85,7 @@ public class ButtonPanel extends JPanel {
 		bpanel.setOpaque(false);
 		menuPanel.add(bpanel, c);
 		JLabel title = new JLabel(
-				"<html>Space Flying 101<br><br>Welcome <font color='#66e0ff'>" + menu.client.name + "</font></html>");
+				"<html>Space Flight 101<br><br>Welcome <font color='#66e0ff'>" + menu.client.name + "</font></html>");
 		title.setForeground(Color.WHITE);
 		title.setOpaque(false);
 		title.setFont(GameOptions.LARGE_BOLD_TEXT_FONT);

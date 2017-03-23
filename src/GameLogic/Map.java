@@ -521,7 +521,7 @@ public class Map implements Serializable {
                 b.update();
             }
             if (b instanceof Ship) {
-                System.err.println("Ship vel. = "+b.getVelocity());
+                //System.err.println("Ship vel. = "+b.getVelocity());
             }
         }
         
