@@ -63,7 +63,7 @@ public class GameClientReceiver extends Thread
 		{
 			System.out.println("GAME CLIENT RECEIVER: Server seems to have died " + e.getMessage());
 			running = false;
-			System.exit(1); // Give up.
+			//System.exit(1); // Give up.
 		}
 	}
 	/**
