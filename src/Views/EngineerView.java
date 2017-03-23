@@ -50,11 +50,9 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	private int torpedoSequenceNum = 24;
 	private final int TORPEDO_MAX_NUM = 29;
 
+	// Amount of key sequence passes we are allowed at this difficulty of sequence
 	private final int ALLOWED_DEFAULT = 30;
-	private int shieldAllowedNum = ALLOWED_DEFAULT; // Amount of key sequence
-													// passes we are allowed at
-													// this difficulty of
-													// sequence
+	private int shieldAllowedNum = ALLOWED_DEFAULT;
 	private int fuelAllowedNum = ALLOWED_DEFAULT;
 	private int laserAllowedNum = ALLOWED_DEFAULT;
 	private int plasmaAllowedNum = ALLOWED_DEFAULT;
@@ -229,6 +227,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 			UIBaseLayer.removeAll();
 		}
 
+		// Loop until we've successfully found our teams ship
 		currentShip = findPlayerShip(gameClient.getMap());
 		while (currentShip == null) {
 			System.out.println("ship is null");
@@ -268,7 +267,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 		screen.setMap(gameClient.getMap());
 		screen.revalidate();
 		screen.repaint();
-
 	}
 
 	/**
@@ -277,8 +275,10 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	 */
 	@Override
 	protected void flashUIDamaged(Color c) {
+		// Set the background of the UI to be the damaged color
 		UIPanel.setBackground(c);
 
+		// Wait DAMAGE_FLASH_TIME amount of milliseconds, and then set the components background color back to the default
 		Timer t = new Timer(DAMAGE_FLASH_TIME, e -> {
 			UIPanel.setBackground(ViewConstants.UI_BACKGROUND_COLOR);
 		});
@@ -330,7 +330,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 		// uiPanelConstraints.anchor = GridBagConstraints.EAST;
 		UIPanel.add(weaponPanel, uiPanelConstraints);
 
-		// TODO: Make this work.
 		UIPanel.setOpaque(true);
 		UIPanel.setForeground(ViewConstants.UI_BACKGROUND_COLOR);
 		UIPanel.setBackground(ViewConstants.UI_BACKGROUND_COLOR);
@@ -375,26 +374,25 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	 * @param s This players Ship object
 	 */
 	private void initialiseWeapons(Ship s) {
+		// Get all the manual replenish numbers to display them to the user
 		String plasmaReplenishNumber = Utils.Utils.parseNumber(keySequences.get(plasmaSequenceNum));
 		String laserReplenishNumber = Utils.Utils.parseNumber(keySequences.get(laserSequenceNum));
 		String torpedoReplenishNumber = Utils.Utils.parseNumber(keySequences.get(torpedoSequenceNum));
 
+		// Create the views
 		plasmaBlasterView = new WeaponView("Plasma Blaster", true, plasmaReplenishNumber, replenishButtons);
-
-		// default plasma blaster to be highlighted, remove at a later date!
-		// plasmaBlasterView.setHighlightWeapon(true);
-
 		laserBlasterView = new WeaponView("Laser Blaster", true, laserReplenishNumber, replenishButtons);
 		torpedosView = new WeaponView("Torpedos", true, torpedoReplenishNumber, replenishButtons);
 
+		// Set the various attributes of the view.
 		laserBlasterView.setMaxiumumAmmo(s.getWeapon(Weapon.Type.LASER).getAmmoMaximum());
 		plasmaBlasterView.setMaxiumumAmmo(s.getWeapon(Weapon.Type.PLASMA).getAmmoMaximum());
 		torpedosView.setMaxiumumAmmo(s.getWeapon(Weapon.Type.TORPEDO).getAmmoMaximum());
-
 		laserBlasterView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.LASER).getAmmoLevel());
 		plasmaBlasterView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.PLASMA).getAmmoLevel());
 		torpedosView.updateWeaponAmmoLevel(s.getWeapon(Weapon.Type.TORPEDO).getAmmoLevel());
 
+		// Tell the view what to do when it been clicked
 		laserBlasterView.setReplenishAmmo(this, ShipState.LASER_REPLENISH);
 		plasmaBlasterView.setReplenishAmmo(this, ShipState.PLASMA_REPLENISH);
 		torpedosView.setReplenishAmmo(this, ShipState.TORPEDO_REPLENISH);
@@ -409,6 +407,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 		System.out.println("Shield sequence: " + keySequences.get(shieldSequenceNum));
 		System.out.println("Fuel sequence: " + keySequences.get(fuelSequenceNum));
 
+		// Get the manual sequence numbers to display them to the user
 		String shieldSequenceNumber = Utils.Utils.parseNumber(keySequences.get(shieldSequenceNum));
 		String fuelSequenceNumber = Utils.Utils.parseNumber(keySequences.get(fuelSequenceNum));
 
@@ -441,6 +440,8 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 		super.update(observable, o);
 
 		if (gameActive) {
+			// Try and update the UI. May throw an exception if you receive a map update before the UI has been fully
+			// initialised. We catch this exception and just do nothing.
 			try {
 				Map m = gameClient.getMap();
 				radarView.updateMap(m);
@@ -454,7 +455,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 						currentShip.getResource(Resource.Type.SHIELDS).get());
 				resourcesView.updateResourceLevels(ResourcesView.HULL, currentShip.getResource(Resource.Type.HEALTH).get());
 			} catch (Exception e) {
-				// UI probably not initialised yet
+				// UI probably not initialised yet, give up.
 				System.err.println("Caught exception in UPDATE");
 			}
 		}
@@ -465,6 +466,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	 * user. Plays a sound effect of a key press.
 	 */
 	public void correctKeyPress() {
+		// Play audio feedback to the user
 		AudioPlayer.playSoundEffect(AudioPlayer.KEY_PRESS_EFFECT);
 	}
 
@@ -486,6 +488,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 				shieldSequenceNum += 1;
 				this.state = ShipState.NONE;
 				changeButton("none");
+				displayFullScreenMessage(NEW_SEQUENCE, 750, Color.blue);
 			}
 			resourcesView.updateRefreshNumber(ResourcesView.SHIELDS, Utils.Utils.parseNumber(keySequences.get(shieldSequenceNum)));
 
@@ -501,6 +504,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 				fuelSequenceNum += 1;
 				this.state = ShipState.NONE;
 				changeButton("none");
+				displayFullScreenMessage(NEW_SEQUENCE, 750, Color.blue);
 			}
 			resourcesView.updateRefreshNumber(ResourcesView.ENGINE, Utils.Utils.parseNumber(keySequences.get(fuelSequenceNum)));
 
@@ -516,6 +520,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 				laserSequenceNum += 1;
 				this.state = ShipState.NONE;
 				changeButton("none");
+				displayFullScreenMessage(NEW_SEQUENCE, 750, Color.blue);
 			}
 			laserBlasterView.setReplenishAmmoNumber(Utils.Utils.parseNumber(keySequences.get(laserSequenceNum)));
 
@@ -531,6 +536,8 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 				torpedoSequenceNum += 1;
 				this.state = ShipState.NONE;
 				changeButton("none");
+
+				displayFullScreenMessage(NEW_SEQUENCE, 750, Color.blue);
 			}
 			torpedosView.setReplenishAmmoNumber(Utils.Utils.parseNumber(keySequences.get(torpedoSequenceNum)));
 
@@ -546,6 +553,8 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 				plasmaSequenceNum += 1;
 				this.state = ShipState.NONE;
 				changeButton("none");
+
+				displayFullScreenMessage(NEW_SEQUENCE, 750, Color.blue);
 			}
 			plasmaBlasterView.setReplenishAmmoNumber(Utils.Utils.parseNumber(keySequences.get(plasmaSequenceNum)));
 
@@ -563,7 +572,7 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
 		AudioPlayer.playSoundEffect(AudioPlayer.KEY_SEQUENCE_FAILED);
 
-		displayFullScreenMessage("FAILED SEQUENCE", 750, Color.red);
+		displayFullScreenMessage(FAILED_SEQUENCE, 750, Color.red);
 	}
 
 	/**

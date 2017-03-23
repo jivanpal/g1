@@ -149,6 +149,12 @@ public class Screen extends JPanel{
 	        g.drawString("V: "+V,               40, 100);
 	        g.drawString("U: "+U,               40, 120);
 	        g.drawString("N: "+N,               40, 140);
+
+	        try {
+				g.drawString("Vel: " + map.get(shipIndex).getVelocity(), 40, 160);
+			} catch (Exception e) {
+	        	//whatever
+			}
         
 	        for(Body b : map.bodies()) {
 	            if (!(shipIndex == null) && b.getID() != shipIndex) {
