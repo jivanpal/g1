@@ -171,8 +171,8 @@ public class Ship extends Body{
     private static final Rotation   YAW_LEFT 	= new Rotation(Vector.K.scale(  YAW_ACC   * Global.REFRESH_PERIOD));
     private static final Rotation 	ROLL_RIGHT	= new Rotation(Vector.J.scale(  ROLL_ACC  * Global.REFRESH_PERIOD));
     private static final Rotation	ROLL_LEFT	= new Rotation(Vector.J.scale(- ROLL_ACC  * Global.REFRESH_PERIOD));
-    private static final Vector     THRUST_FWD  = Vector.J          .scale(THRUST_ACC);
-    private static final Vector     THRUST_REV  = Vector.J.negate() .scale(THRUST_ACC);
+    public static final Vector     THRUST_FWD  = Vector.J          .scale(THRUST_ACC);
+    public static final Vector     THRUST_REV  = Vector.J.negate() .scale(THRUST_ACC);
     
     private static final Rotation ROTATE_RIGHT	= ROLLING ? ROLL_RIGHT 	: YAW_RIGHT;
     private static final Rotation ROTATE_LEFT	= ROLLING ? ROLL_LEFT	: YAW_LEFT; 
