@@ -42,12 +42,11 @@ public class Ship extends Body{
     // Roll / yaw flag
     private static final boolean ROLLING = false;
     
-    private int collisionAllowedTick = 0;
-    
 /// FIELDS
     private String engineerName, pilotName;
     private Weapon laser, plasma, torpedo;
     private Resource engines, shields, health;
+    private int collisionAllowedTick = 0;
     
 /// CONSTRUCTOR
     
@@ -90,7 +89,10 @@ public class Ship extends Body{
     }
     
     public void collided() {
-    	collisionAllowedTick = GameLogic.Global.REFRESH_RATE;
+    	collisionAllowedTick -= GameLogic.Global.REFRESH_RATE;
+    	if (collisionAllowedTick < 0) {
+    	    collisionAllowedTick = 0;
+    	}
     }
     
     public Weapon getWeapon(Weapon.Type type) {
@@ -219,7 +221,7 @@ public class Ship extends Body{
         super.update();
         
         if(collisionAllowedTick > 0) {
-        	collisionAllowedTick--;
+        	collisionAllowedTick -= Global.REFRESH_PERIOD;
         }
         
         // Update status of weapons
