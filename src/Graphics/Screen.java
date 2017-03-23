@@ -331,7 +331,7 @@ public class Screen extends JPanel{
 	/**
 	 * Create the order that the polygons should be drawn in in order to make sure hidden sides are hidden
 	 */
-	private void setDrawOrder(){
+	private void setDrawOrder() {
 		poly3Ds.sort((poly1, poly2) -> {
 			if(poly1.avgDistance > poly2.avgDistance){
 				return -1;

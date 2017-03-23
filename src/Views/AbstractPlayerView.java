@@ -231,8 +231,15 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
      */
     protected void swapToMainMenu() {
     	String nickname = playerNickname.split("#")[0];
-    	LobbyPanel.ghost.killServer();
-    	LobbyPanel.ghost = null;
+
+    	try {
+            LobbyPanel.ghost.killServer();
+            LobbyPanel.ghost = null;
+        } catch (Exception e) {
+    	    // I wasn't the host.
+            e.printStackTrace();
+        }
+
         MainMenu menu = new MainMenu(nickname);
         parentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         parentFrame.dispatchEvent(new WindowEvent(parentFrame, WindowEvent.WINDOW_CLOSING));
