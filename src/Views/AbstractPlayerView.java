@@ -58,10 +58,14 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
         this.UILayeredPane = parent.getLayeredPane();
     }
 
-    // Initialse all the UI elements
+    /**
+     * Initialise the UI
+     */
     protected abstract void initialiseUI();
 
-    // Flash elements of the UI a certain color for a very short amount of time to indicate that the Ship has been damaged
+    /**
+     * Flash elements of the UI a certain color for a very short amount of time to indicate that the Ship has been damaged
+     */
     protected abstract void flashUIDamaged(Color color);
 
     /**
