@@ -1,7 +1,6 @@
 package Views;
 
 import GameLogic.GameOptions;
-import Interfaces.ShipPresenter;
 
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
