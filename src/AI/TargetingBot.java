@@ -44,9 +44,6 @@ public class TargetingBot extends AbstractBot {
         } else {
             throw new IllegalArgumentException("TargetingBot instantiation: FAILED: the body with ID "+shipID+" is not a Ship.");
         }
-        if (!setTarget(targetID)) {
-            throw new IllegalArgumentException("TargetingBot instantiation: FAILED: cannot set target; no body with ID "+targetID+" exists on map.");
-        }
     }
     
 /// INSTANCE METHODS
@@ -71,6 +68,7 @@ public class TargetingBot extends AbstractBot {
 // Evolution
     
     public void update() {
+        // Set the target if the current one is gone
         if (!(getMap().contains(target.getID()))) {
             for (Body b : getMap().bodies()) {
                 if (b instanceof Ship && b.getID() != getBody().getID()) {
