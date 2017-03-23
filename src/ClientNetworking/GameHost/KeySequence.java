@@ -41,6 +41,7 @@ public class KeySequence implements Serializable {
 	public ArrayList<String> getAllKeys() {
 		return this.keys;
 	}
+
 	/**
 	 * get the number of key sequences
 	 * @return the number of key sequences

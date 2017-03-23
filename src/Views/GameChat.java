@@ -17,7 +17,6 @@ import ClientNetworking.GameClient.GameClient;
 import ClientNetworking.GameHost.ChatMessage;
 
 /**
- * 
  * @author Svetlin
  * A JPanel for the in-game chat
  */
@@ -33,7 +32,12 @@ public class GameChat extends JPanel implements Observer{
 	private GameClient client;
 	private JScrollPane scroller;
 
-
+	/**
+	 * Creates the GameChat window
+	 * @param parent The parent panel
+	 * @param client The GameClient for this player
+	 * @param nickname This players nickname
+	 */
 	public GameChat(JPanel parent, GameClient client,String nickname) {
 		this.parent = parent;
 		this.nickname = nickname;
@@ -77,10 +81,10 @@ public class GameChat extends JPanel implements Observer{
 
 	}
 
-	public void enterPressed() {
-
-	}
-
+	/**
+	 * Gives the parent frame focus back. Used after sending a message to make key presses be consumed by the parent
+	 * again
+	 */
 	public void sendFocusBackToFrame() {
 		if(parent instanceof EngineerView) {
 			EngineerView p = (EngineerView) parent;
@@ -94,6 +98,9 @@ public class GameChat extends JPanel implements Observer{
 		}
 	}
 
+	/**
+	 * Update the GameChat window with any new messages recieved
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 			if(client.getMessage() == null) {

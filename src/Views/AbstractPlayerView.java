@@ -23,7 +23,9 @@ import java.util.stream.Collectors;
 
 /**
  * Created by James on 16/03/17.
- * Abstract class that both PilotView and EngineerView will extend from
+ * Abstract class that both PilotView and EngineerView will extend from. This view can handle some of the UI elements
+ * for the Pilot and the Engineer such as the screen and the chat window, as we know that regardless of role the player
+ * will have these UI elements.
  */
 public abstract class AbstractPlayerView extends JPanel implements Observer {
     protected final String LOSE_GAME = "DEFEAT";
@@ -287,4 +289,15 @@ public abstract class AbstractPlayerView extends JPanel implements Observer {
             }
         });
     }
+
+    /**
+     * Initialises the GameChat for the pilot
+     * @param gameClient The GameClient
+     * @param nickname This players nickname
+     */
+    protected void initialiseChatWindow(GameClient gameClient, String nickname) {
+        this.chatWindow = new GameChat(this, gameClient, nickname);
+        this.chatWindow.setFocusable(false);
+    }
 }
+

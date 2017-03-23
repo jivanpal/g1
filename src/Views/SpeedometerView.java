@@ -11,6 +11,7 @@ import java.text.NumberFormat;
 /**
  * Created by James on 08/02/17.
  * View which shows the current speed of the ship.
+ * @author James Brown
  */
 public class SpeedometerView extends JPanel {
     private JLabel speedometerLabel;

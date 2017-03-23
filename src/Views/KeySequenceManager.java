@@ -5,14 +5,15 @@ import java.awt.event.KeyEvent;
 /**
  * Created by James on 20/02/17.
  * Takes a sequence of keys and manages the players progress through pressing them all. Fires events back to the parent
- * for when the player succeeds / fails the sequence.
+ * for when the player succeeds / fails the sequence.]
+ * @author James Brown
  */
 public class KeySequenceManager {
-    private KeySequenceResponder parent;
-    private String keySequence;
-    private int position;
-    private boolean restart;
-    private boolean active;
+    private KeySequenceResponder parent; // parent Panel that will respond to key sequence events
+    private String keySequence;          // the sequence the user is attempting
+    private int position;                // users position through the sequence
+    private boolean restart;             // whether the sequence should auto restart or not
+    private boolean active;              // whether the manager is currently active or not
 
     /**
      * Create a new KeySequence manager
@@ -80,6 +81,10 @@ public class KeySequenceManager {
         this.position = 0;
     }
 
+    /**
+     * Returns if the KeySequenceManager is active or not
+     * @return Whether the KeySequenceManager is active
+     */
     public boolean isActive() {
         return active;
     }
