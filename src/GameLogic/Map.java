@@ -520,6 +520,9 @@ public class Map implements Serializable {
                 b.setPosition(this.normalisePosition(b.getPosition()));
                 b.update();
             }
+            if (b instanceof Ship) {
+                System.err.println("Ship vel. = "+b.getVelocity());
+            }
         }
         
         // Make bots do their thing.
