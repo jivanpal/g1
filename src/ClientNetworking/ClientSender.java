@@ -33,7 +33,8 @@ public class ClientSender extends Thread
 	 */
 	public void run()
 	{
-		while (true)
+	    boolean running = true;
+		while (running)
 		{
 			Object o;
 			try {
@@ -45,11 +46,9 @@ public class ClientSender extends Thread
 				toServer.writeObject(o);
 				toServer.flush();
 			}
-			catch (InterruptedException e1)
+			catch (InterruptedException | IOException e1)
 			{
-				e1.printStackTrace();
-			}
-			catch (IOException e1) {
+			    running = false;
 				e1.printStackTrace();
 			}
 		}
