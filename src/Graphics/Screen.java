@@ -234,15 +234,16 @@ public class Screen extends JPanel{
                 Class<? extends Body> bClass = b.getClass();
                 
                 if (bClass == Ship.class) {
-                	Vector pos = Vector.ZERO;
-                	double distance = Integer.MAX_VALUE;
+//                	Vector pos = Vector.ZERO;
+//                	double distance = Integer.MAX_VALUE;
                     for(Vector v : map.getAllPositions(b.getPosition())){
-                    	if(viewFrom.minus(v).length() < distance){
-                    		distance = viewFrom.minus(v).length();
-                    		pos = v;
-                    	}
+//                    	if(viewFrom.minus(v).length() < distance){
+//                    		distance = viewFrom.minus(v).length();
+//                    		pos = v;
+//                    	}
+                    	new ShipModel(v, b.getRadius(), b.getOrientation(), shipCount);
                     }
-                    new ShipModel(pos, b.getRadius(), b.getOrientation(), shipCount);
+//                    new ShipModel(pos, b.getRadius(), b.getOrientation(), shipCount);
                     shipCount++;
                 }
                 else if(bClass == Asteroid.class){
@@ -250,7 +251,7 @@ public class Screen extends JPanel{
                     for(Vector v : map.getAllPositions(b.getPosition())){
                     	new AsteroidModel(v, b.getRadius(), b.getOrientation());
                     }
-                    asteroidCount ++;
+                    asteroidCount++;
                 }
                 else if(bClass == Bullet.class){
                 	Bullet bul = (Bullet) b;
@@ -408,5 +409,6 @@ public class Screen extends JPanel{
 				}
 			}
 		}
+		System.out.println(shipIndex);
 	}
 }
