@@ -24,9 +24,16 @@ public class WeaponTest {
     @Before
     public void setUp() {
         ship = new Ship("test1", "test2");
-        bullet = new Bullet(10, 10, 10, 10, 10, new Vector(10, 10, 10), new Vector(10, 10, 10));
-        weaponWithAmmo = new Weapon(ship, bullet, 100, 2, 10, 10, 10);
-        weaponWithoutAmmo = new Weapon(ship, bullet, 100, 0, 10, 10, 0);
+        bullet = new Bullet(10, 10, new Vector(10, 10, 10), new Vector(10, 10, 10), Weapon.Type.LASER, 2, 1, 4);
+        weaponWithAmmo = new Weapon(ship, bullet, 100, 2, 1, 10);
+        weaponWithoutAmmo = new Weapon(ship, bullet, 100, 0, 1, 10);
+        
+        /*Ship    parent,
+        Bullet  bullet,
+        int     maxAmmo,
+        int     initAmmo,
+        int 	reloadAmount,
+        double  cooldown*/
     }
 
     @After
