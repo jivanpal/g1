@@ -29,7 +29,7 @@ public class Screen extends JPanel{
 	public static double[][] cameraSystem, worldToCamera, CM;
 	public static Vector N, U, V;
 	
-	private double lightPosition;
+	private double lightPosition = 0;
 	
 	public static int nPoly = 0, nPoly3D = 0;
 	public static ArrayList<Poly3D> poly3Ds = new ArrayList<Poly3D>();
@@ -72,7 +72,6 @@ public class Screen extends JPanel{
 		viewFrom = new Vector(0, 0, 0);
 		viewTo = new Vector(0, 0, 1);
 		lightDir = new Vector(1, 1, 1);
-		lightDir = lightDir.normalise();
 		
 		//Create camera vectors
 		N = viewTo.plus(viewFrom);
@@ -349,8 +348,10 @@ public class Screen extends JPanel{
 	 * Sets the light position
 	 */
 	private void setLight(){
-		Geometry.Vector mapSize = map.getDimensions();
+		lightPosition += 0.005;
+		Vector mapSize = map.getDimensions();
 		lightDir = new Vector (mapSize.getX()/2 - (mapSize.getX()/2 + Math.cos(lightPosition) * mapSize.getX() * 10), mapSize.getY()/2 - (mapSize.getY()/2 + Math.sin(lightPosition) * mapSize.getY() * 10), -200);
+//		System.out.println(lightDir);
 	}
 	
 	/**

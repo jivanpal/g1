@@ -9,6 +9,7 @@ import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 
+import ClientNetworking.GameHost.MapContainer;
 import GameLogic.Global;
 
 /**
