@@ -8,6 +8,9 @@ import java.io.Serializable;
  * @author jivan
  */
 public class Rotation implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+
 /// CONSTANTS
     /**
      * The rotation object that describes no rotation; the rotation that does

@@ -10,7 +10,9 @@ import Physics.*;
  * @author jivan
  */
 public class Weapon implements Serializable {
-/// CONSTANTS
+    private static final long serialVersionUID = 1L;
+
+    /// CONSTANTS
     public static final double SPAWN_SEPARATION = 0.01; // meters
     
 /// FIELDS

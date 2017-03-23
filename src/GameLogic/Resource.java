@@ -12,7 +12,9 @@ import java.io.Serializable;
  * @author jivan
  */
 public class Resource implements Serializable {
-/// FIELDS
+    private static final long serialVersionUID = 1L;
+
+    /// FIELDS
     private int level;
     private int max;
     

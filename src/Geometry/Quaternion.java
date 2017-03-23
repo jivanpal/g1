@@ -11,7 +11,10 @@ import java.io.Serializable;
  *
  */
 public class Quaternion implements Serializable {
-/// CONSTANTS
+    private static final long serialVersionUID = 1L;
+
+
+    /// CONSTANTS
     public static final Quaternion ZERO = new Quaternion (0, 0, 0, 0);
     public static final Quaternion UNIT = new Quaternion (1, 0, 0, 0);
     public static final Quaternion I    = new Quaternion (0, 1, 0, 0);

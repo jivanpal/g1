@@ -11,7 +11,7 @@ import GameLogic.resource.*;
  * @author jivan
  */
 public class Ship extends Body{
-
+    private static final long serialVersionUID = 1L;
 
 /// CONSTANTS
 	

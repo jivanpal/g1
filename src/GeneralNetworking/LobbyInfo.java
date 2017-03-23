@@ -11,6 +11,8 @@ import java.util.UUID;
  */
 public class LobbyInfo implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	public UUID lobbyID;
 	public String host;
 	public int playerCount;

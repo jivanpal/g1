@@ -13,6 +13,8 @@ import java.util.UUID;
 @SuppressWarnings("serial")
 public class Action implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	public static int ADD = Lobby.LOBBY_SIZE + 1;
 	public static int KICK = Lobby.LOBBY_SIZE + 2 ;
 	public static int START = Lobby.LOBBY_SIZE + 3;

@@ -11,6 +11,8 @@ import java.util.Observable;
 @SuppressWarnings("serial")
 public class LobbyList extends Observable implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	private LobbyInfo[] lobbyList = new LobbyInfo[1000];
 
 	/**

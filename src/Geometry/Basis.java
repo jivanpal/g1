@@ -23,6 +23,9 @@ import java.io.Serializable;
  * @author jivan
  */
 public class Basis implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+
 /// CONSTANTS
     
     // This caused a super hard-to-find bug with the physics engine, where this "constant" was

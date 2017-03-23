@@ -16,7 +16,9 @@ import Physics.Body;
  * @author jivan
  */
 public class Map implements Serializable {
-/// FIELDS
+    private static final long serialVersionUID = 1L;
+
+    /// FIELDS
     private Vector dimensions;
     private ConcurrentSkipListMap<Integer,Body> bodies      = new ConcurrentSkipListMap<Integer,Body>();
     private ConcurrentSkipListMap<Integer,AbstractBot> bots = new ConcurrentSkipListMap<Integer,AbstractBot>();

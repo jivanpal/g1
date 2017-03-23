@@ -10,7 +10,9 @@ import Physics.Body;
  * @author jivan
  */
 public abstract class AbstractBot implements Serializable {
-/// FIELDS
+    private static final long serialVersionUID = 1L;
+
+    /// FIELDS
     private Map map;
     private int ID;
     private Body body;

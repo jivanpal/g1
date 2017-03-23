@@ -15,9 +15,9 @@ import Geometry.*;
  * @author jivan
  */
 public class Body implements Cloneable, Serializable {
+    private static final long serialVersionUID = 1L;
 
-
-/// FIELDS
+    /// FIELDS
     public static int nextID = 0;
     
     private int ID;

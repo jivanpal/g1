@@ -9,6 +9,8 @@ import ClientNetworking.IpGetter;
 @SuppressWarnings("serial")
 public class Lobby implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	public static int LOBBY_SIZE = 8;
 	private UUID id;
 	public boolean started ;

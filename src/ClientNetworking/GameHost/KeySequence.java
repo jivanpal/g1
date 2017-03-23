@@ -12,6 +12,8 @@ import java.util.Collections;
  * 
  */
 public class KeySequence implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private ArrayList<String> keys = new ArrayList<String>();
 	private Random r = new Random();
 

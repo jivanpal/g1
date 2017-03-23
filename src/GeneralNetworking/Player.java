@@ -10,6 +10,8 @@ import java.net.InetAddress;
 @SuppressWarnings("serial")
 public class Player implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	public String nickname = "";
 	public InetAddress address = null;
 	public boolean isHost=false;
