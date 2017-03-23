@@ -39,42 +39,43 @@ public class EngineerAI implements Observer
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		// get the map
-		Map gameMap = gameClient.getMap();
+		try {
+			// get the map
+			Map gameMap = gameClient.getMap();
 
-		// get the ship list from the map
-		List<Ship> ships = gameMap.bodies().parallelStream().filter(b -> b instanceof Ship).map(Ship.class::cast)
-				.collect(Collectors.toList());
-
-		// get the current team's ship
-		Ship playerShip = ships.parallelStream().filter(s -> s.getPilotName().equals(nickname))
-				.collect(Collectors.toList()).get(0);
-
-		// do the "ai" things
-		aiCalculations(playerShip);
-
-		// check if a ship is nearby
-		if (cooldownTimer == 0)
-		{
-			List<Ship> nearby = ships.parallelStream()
-					.filter(s2 -> gameMap.shortestPath(playerShip.getID(), s2.getID())
-							.length() < SHIP_PROXIMITY_MESSAGE_DISTANCE && !(playerShip.equals(s2)))
+			// get the ship list from the map
+			List<Ship> ships = gameMap.bodies().parallelStream().filter(b -> b instanceof Ship).map(Ship.class::cast)
 					.collect(Collectors.toList());
 
-			if (nearby.size() > 1)
-			{
-				gameClient.send(new ChatMessage("Engineer", "There are enemy ships nearby!"));
-				cooldownTimer = coolDown;
-			} else if (nearby.size() > 0)
-			{
-				// Figure out where the ships are
-				gameClient.send(new ChatMessage("Engineer", "There is an enemy ship nearby"));
-				cooldownTimer = coolDown;
-			}
-			// reset the cooldown
+			// get the current team's ship
+			Ship playerShip = ships.parallelStream().filter(s -> s.getPilotName().equals(nickname))
+					.collect(Collectors.toList()).get(0);
 
-		} else
-			cooldownTimer--;
+			// do the "ai" things
+			aiCalculations(playerShip);
+
+			// check if a ship is nearby
+			if (cooldownTimer == 0) {
+				List<Ship> nearby = ships.parallelStream()
+						.filter(s2 -> gameMap.shortestPath(playerShip.getID(), s2.getID())
+								.length() < SHIP_PROXIMITY_MESSAGE_DISTANCE && !(playerShip.equals(s2)))
+						.collect(Collectors.toList());
+
+				if (nearby.size() > 1) {
+					gameClient.send(new ChatMessage("Engineer", "There are enemy ships nearby!"));
+					cooldownTimer = coolDown;
+				} else if (nearby.size() > 0) {
+					// Figure out where the ships are
+					gameClient.send(new ChatMessage("Engineer", "There is an enemy ship nearby"));
+					cooldownTimer = coolDown;
+				}
+				// reset the cooldown
+
+			} else
+				cooldownTimer--;
+		} catch (IndexOutOfBoundsException e) {
+			// Game has probably ended, give up
+		}
 
 	}
 

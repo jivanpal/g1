@@ -26,20 +26,22 @@ public class ServerNetworkingTest {
 
 	@Before
 	public void init(){
-
+		System.out.println(cp1.name+ " "+ l.getPlayers()[0].nickname);
+		cp1.send(l);
+		cp2.updateList();
 
 	}
 
 	@Test
 	public void test() {
-		System.out.println(cp1.name+ " "+ l.getPlayers()[0].nickname);
-		cp1.send(l);
-		cp2.updateList();
-		while(cp2.getLobbyList()==null || cp2.getLobbyList().getLobbies()[0]==null)
+
+		while(cp2.getLobbyList()==null || cp2.getLobbyList().getLobbies().length==0 || cp2.getLobbyList().getLobbies()[0]==null)
 		{
+			//System.out.println(cp2.getLobbyList().getLobbies().length);
 			try
 			{
-				Thread.sleep(50);
+				cp2.updateList();
+				Thread.sleep(500);
 			} catch (InterruptedException e)
 			{
 				// TODO Auto-generated catch block
