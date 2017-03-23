@@ -80,7 +80,7 @@ public class GameHost extends Thread
 				shipIds[i/2]=gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
 				if(p[i]==null)
 				{
-					gameMap.gameMap.addBot(new TargetingBot(gameMap.gameMap,shipIds[i/2],0));
+					gameMap.gameMap.addBot(new TargetingBot(gameMap.gameMap,shipIds[i/2],-1));
 				}
 				
 			}

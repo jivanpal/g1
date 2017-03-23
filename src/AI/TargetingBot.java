@@ -71,9 +71,19 @@ public class TargetingBot extends AbstractBot {
 // Evolution
     
     public void update() {
+        if (!(getMap().contains(target.getID()))) {
+            for (Body b : getMap().bodies()) {
+                if (b instanceof Ship && b.getID() != getBody().getID()) {
+                    setTarget(b.getID());
+                    break;
+                }
+            }
+        }
+        
         if (ship.getVelocity().length() < 1) {
             ship.setVelocity(ship.getFrontVector().scale(2));
         }
+        
         // Get the direction vector towards the target in the local basis.
         Vector pathToTarget = ship.getBasis().localiseDirection(getMap().shortestForwardPath(ship.getID(), target.getID()));
         
