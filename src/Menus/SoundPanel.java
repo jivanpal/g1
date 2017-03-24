@@ -140,19 +140,49 @@ public class SoundPanel extends JPanel {
 				GameOptions.changeSound(String.valueOf(volume));
 				GameOptions.changeMusic(String.valueOf(volume));
 				GameOptions.saveSoundValuesInFile();
+				repaintSliders(name, volume);
 			} else if (name.equals("Music Volume")) {
 				AudioPlayer.setMusicVolume(volume);
 				GameOptions.changeMusic(String.valueOf(volume));
 				GameOptions.saveSoundValuesInFile();
+				repaintSliders(name, volume);
+				
 			} else if (name.equals("Sound Effects")) {
 				AudioPlayer.setSoundEffectVolume(volume);
 				GameOptions.changeSound(String.valueOf(volume));
 				GameOptions.saveSoundValuesInFile();
+				repaintSliders(name, volume);
 			}
 		});
 		slider.setName(name);
 		sliders.add(slider);
 		panel.add(slider);
 		return panel;
+	}
+	
+	/**
+	 * Repaints the Sliders according to the changes
+	 * @param name Name of the slider
+	 * @param volume The volume which the slider has changed to
+	 */
+	private void repaintSliders(String name, float volume) {
+		JSlider masterSlider = new JSlider();
+		for (JSlider s : sliders) {
+			if (s.getName().equals("Master Volume")) {
+				masterSlider = s;
+			}
+		}
+		if (name.equals("Master Volume")) {
+			for (JSlider s : sliders) {
+				s.setValue((int) volume);
+			}
+		} else {
+			if (GameOptions.getCurrentMusicValue() == GameOptions.getCurrentSoundValue()) {
+				masterSlider.setValue((int) GameOptions.getCurrentMusicValue());
+			} else {
+				masterSlider.setValue(
+						AudioPlayer.isUsingMaster ? -40 : (Integer.valueOf(GameOptions.DEFAULT_MUSIC_VOLUME) / 2));
+			}
+		}
 	}
 }

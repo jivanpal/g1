@@ -1,6 +1,5 @@
 package Menus;
 
-
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -52,19 +51,19 @@ public class MainMenu {
 		ButtonPanel comp = new ButtonPanel(this);
 		Dimension d = new Dimension(800, 600);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		
+
 		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setSize(d);
-		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+		frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
 		frame.setVisible(true);
-		PanelsManager.PANEL_BOUNDS = new Rectangle(0,0, getFrame().getWidth(), getFrame().getHeight());
+		PanelsManager.PANEL_BOUNDS = new Rectangle(0, 0, getFrame().getWidth(), getFrame().getHeight());
 		PanelsManager.UILayers = getFrame().getLayeredPane();
 		comp.makeUI();
 		frame.addComponentListener(new ComponentListener() {
 
 			@Override
 			public void componentResized(ComponentEvent e) {
-				PanelsManager.PANEL_BOUNDS = new Rectangle(0,0, getFrame().getWidth(), getFrame().getHeight());
+				PanelsManager.PANEL_BOUNDS = new Rectangle(0, 0, getFrame().getWidth(), getFrame().getHeight());
 				PanelsManager.resizeComponents();
 				frame.repaint();
 				frame.revalidate();
@@ -73,27 +72,27 @@ public class MainMenu {
 			@Override
 			public void componentMoved(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentShown(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void componentHidden(ComponentEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
 		frame.setContentPane(comp);
 		frame.repaint();
 		frame.revalidate();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 	}
 
 	/**
@@ -102,7 +101,7 @@ public class MainMenu {
 	 * @param panel
 	 *            The JPanel to change to.
 	 */
-	
+
 	public void changeFrame(JPanel panel) {
 		frame.setContentPane(panel);
 		frame.repaint();
@@ -132,15 +131,21 @@ public class MainMenu {
 			if (name == null) {
 				System.exit(0);
 			}
-			while (name.equals("") || name.contains("#")) {
-				name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username",
-						JOptionPane.PLAIN_MESSAGE);
+			try {
+				while (name.equals("") || name.contains("#")) {
+
+					name = JOptionPane.showInputDialog(frame, "Please Enter your username: ", "Input Username",
+							JOptionPane.PLAIN_MESSAGE);
+
+				}
+			} catch (NullPointerException e) {
+				System.exit(0);
 			}
 
 		} else {
 			name = args[0];
 		}
-		
+
 		MainMenu menu = new MainMenu(name);
 		AudioPlayer.playMusic(AudioPlayer.MENU_SCREEN_TUNE);
 	}
