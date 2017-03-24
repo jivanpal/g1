@@ -9,10 +9,10 @@ import java.util.stream.Collectors;
 
 import ClientNetworking.GameClient.GameClient;
 import ClientNetworking.GameHost.ChatMessage;
-import ClientNetworking.GameHost.MapContainer;
-import GameLogic.*;
-import Physics.Body;
-import Views.ResourcesView;
+import GameLogic.Map;
+import GameLogic.Resource;
+import GameLogic.Ship;
+import GameLogic.Weapon;
 
 /**
  * 
@@ -103,7 +103,6 @@ public class EngineerAI implements Observer
 		// nerf
 		if (r.nextInt(100) < 1)
 		{
-//			System.out.println("I am doing things");
 			switch (i)
 			{
 				case 0:

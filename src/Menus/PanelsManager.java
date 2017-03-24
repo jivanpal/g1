@@ -1,12 +1,10 @@
 package Menus;
 
 import java.awt.Rectangle;
-
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
-
 import Audio.AudioPlayer;
 import Graphics.Screen;
 

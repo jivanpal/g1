@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import GameLogic.*;
-import AI.*;
-import Geometry.*;
+import AI.AbstractBot;
+import Geometry.Vector;
 import Physics.Body;
 
 /**

@@ -1,13 +1,11 @@
 package Views;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import GameLogic.GameOptions;
 /**

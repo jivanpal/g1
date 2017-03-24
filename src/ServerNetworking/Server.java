@@ -7,10 +7,6 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.UUID;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import GeneralNetworking.Action;
 import GeneralNetworking.Lobby;
 
 public class Server
@@ -34,7 +30,7 @@ public class Server
 		}
 		catch (IOException e)
 		{
-			System.err.println("Couldn't listen on port " + ServerVariables.PORT);
+			e.printStackTrace();
 			System.exit(1); // Give up.
 		}
 
@@ -60,7 +56,6 @@ public class Server
 					toClient.reset();
 					int i = 1;
 					taggedName = nickname + "#" + i;
-					System.out.println(taggedName);
 					while (true)
 					{
 						if (clientTable.getQueue(taggedName) != null)
@@ -81,7 +76,6 @@ public class Server
 				}
 
 				clientTable.add(taggedName);
-				System.out.println(taggedName);
 
 				// We create and start new threads to read from the
 				// client(this one executes the commands):
@@ -96,7 +90,7 @@ public class Server
 		}
 		catch (IOException e)
 		{
-			System.err.println("IO error " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 }

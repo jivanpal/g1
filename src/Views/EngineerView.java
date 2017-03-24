@@ -1,23 +1,33 @@
 package Views;
 
-import javax.swing.*;
-
-import Audio.AudioPlayer;
-import ClientNetworking.GameClient.GameClient;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-
-import GameLogic.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import Audio.AudioPlayer;
+import ClientNetworking.GameClient.GameClient;
+import GameLogic.Global;
+import GameLogic.Map;
+import GameLogic.Resource;
+import GameLogic.Ship;
+import GameLogic.Weapon;
 import Graphics.Screen;
-import Menus.ButtonPanel;
-import Menus.MainMenu;
-import Physics.Body;
-import sun.applet.Main;
-import Utils.Utils.*;
 
 /**
  * Created by James on 01/02/17. This View contains the entire UI for the
@@ -120,10 +130,8 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 
 			@Override
 			public void keyReleased(KeyEvent keyEvent) {
-				System.out.println("Key pressed");
 				if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					// User wishes to escape out of this sequence.
-					System.out.println("Stopping this sequence");
 					state = ShipState.NONE;
 					changeButton("none");
 					keyManager.deactivate();
@@ -138,31 +146,26 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 						String sequence = "";
 						switch (keyEvent.getKeyChar()) {
 						case 'l':
-							System.out.println("Starting a laser sequence");
 							state = ShipState.LASER_REPLENISH;
 							sequence = Utils.Utils.parseSequence(keySequences.get(laserSequenceNum));
 							keyManager.initialiseKeySequenceManager(sequence, true);
 							break;
 						case 't':
-							System.out.println("Starting a torpedo sequence");
 							state = ShipState.TORPEDO_REPLENISH;
 							sequence = Utils.Utils.parseSequence(keySequences.get(torpedoSequenceNum));
 							keyManager.initialiseKeySequenceManager(sequence, false);
 							break;
 						case 'p':
-							System.out.println("Starting a plasma sequence");
 							state = ShipState.PLASMA_REPLENISH;
 							sequence = Utils.Utils.parseSequence(keySequences.get(plasmaSequenceNum));
 							keyManager.initialiseKeySequenceManager(sequence, false);
 							break;
 						case 's':
-							System.out.println("Starting a shield sequence");
 							state = ShipState.SHIELD_REPLENISH;
 							sequence = Utils.Utils.parseSequence(keySequences.get(shieldSequenceNum));
 							keyManager.initialiseKeySequenceManager(sequence, true);
 							break;
 						case 'f':
-							System.out.println("Starting a fuel sequence");
 							state = ShipState.FUEL_REPLENISH;
 							sequence = Utils.Utils.parseSequence(keySequences.get(fuelSequenceNum));
 							keyManager.initialiseKeySequenceManager(sequence, true);
@@ -234,7 +237,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 		// Loop until we've successfully found our teams ship
 		currentShip = findPlayerShip(gameClient.getMap());
 		while (currentShip == null) {
-			System.out.println("ship is null");
 			try {
 				Thread.sleep(250);
 			} catch (InterruptedException e) {
@@ -262,7 +264,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 		UILayeredPane.repaint();
 
 		this.UIinitialised = true;
-		System.out.println("Done initialising the UI. I am the Engineer");
 
 		parentFrame.requestFocusInWindow();
 		parentFrame.setFocusable(true);
@@ -398,8 +399,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 	 * @param s This players Ship object
 	 */
 	private void initialiseResources(Ship s) {
-		System.out.println("Shield sequence: " + keySequences.get(shieldSequenceNum));
-		System.out.println("Fuel sequence: " + keySequences.get(fuelSequenceNum));
 
 		// Get the manual sequence numbers to display them to the user
 		String shieldSequenceNumber = Utils.Utils.parseNumber(keySequences.get(shieldSequenceNum));
@@ -474,7 +473,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 		case NONE:
 			break;
 		case SHIELD_REPLENISH:
-			System.out.println("Sending shieldReplenish");
 			shieldAllowedNum--;
 			if (shieldAllowedNum <= 0 && (shieldSequenceNum <= SHIELD_MAX_NUM)) {
 				keyManager.deactivate();
@@ -491,7 +489,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 			gameClient.send("shieldReplenish");
 			break;
 		case FUEL_REPLENISH:
-			System.out.println("Sending fuelReplenish");
 
 			fuelAllowedNum--;
 			if (fuelAllowedNum <= 0 && (fuelSequenceNum <= FUEL_MAX_NUM)) {
@@ -509,8 +506,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 			gameClient.send("fuelReplenish");
 			break;
 		case LASER_REPLENISH:
-			System.out.println("Sending laserReplenish");
-
 			laserAllowedNum--;
 			if (laserAllowedNum <= 0 && (laserSequenceNum <= LASER_MAX_NUM)) {
 				keyManager.deactivate();
@@ -527,7 +522,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 			gameClient.send("laserReplenish");
 			break;
 		case TORPEDO_REPLENISH:
-			System.out.println("Sending torpedoReplenish");
 
 			torpedoAllowedNum--;
 			if (torpedoAllowedNum <= 0 && (torpedoSequenceNum <= TORPEDO_MAX_NUM)) {
@@ -546,7 +540,6 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 			gameClient.send("torpedoReplenish");
 			break;
 		case PLASMA_REPLENISH:
-			System.out.println("Sending plasmaReplenish");
 
 			plasmaAllowedNum--;
 			if (plasmaAllowedNum <= 0 && (plasmaSequenceNum <= PLASMA_MAX_NUM)) {
@@ -607,31 +600,26 @@ public class EngineerView extends AbstractPlayerView implements KeySequenceRespo
 			changeButton("none");
 			break;
 		case SHIELD_REPLENISH:
-			System.out.println("Starting a shield sequence");
 			sequence = Utils.Utils.parseSequence(keySequences.get(shieldSequenceNum));
 			keyManager.initialiseKeySequenceManager(sequence, true);
 			changeButton("Shields");
 			break;
 		case FUEL_REPLENISH:
-			System.out.println("Starting a fuel sequence");
 			sequence = Utils.Utils.parseSequence(keySequences.get(fuelSequenceNum));
 			keyManager.initialiseKeySequenceManager(sequence, true);
 			changeButton("Engines");
 			break;
 		case LASER_REPLENISH:
-			System.out.println("Starting a laser sequence");
 			sequence = Utils.Utils.parseSequence(keySequences.get(laserSequenceNum));
 			keyManager.initialiseKeySequenceManager(sequence, true);
 			changeButton("Laser Blaster");
 			break;
 		case TORPEDO_REPLENISH:
-			System.out.println("Starting a torpedo sequence");
 			sequence = Utils.Utils.parseSequence(keySequences.get(torpedoSequenceNum));
 			keyManager.initialiseKeySequenceManager(sequence, false);
 			changeButton("Torpedos");
 			break;
 		case PLASMA_REPLENISH:
-			System.out.println("Starting a plasma sequence");
 			sequence = Utils.Utils.parseSequence(keySequences.get(plasmaSequenceNum));
 			keyManager.initialiseKeySequenceManager(sequence, true);
 			changeButton("Plasma Blaster");

@@ -1,12 +1,18 @@
 package Views;
 
-import GameLogic.GameOptions;
-
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicProgressBarUI;
-import java.awt.*;
-import java.awt.event.MouseListener;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.plaf.basic.BasicProgressBarUI;
+import GameLogic.GameOptions;
 
 /**
  * Created by James on 08/02/17.

@@ -1,12 +1,8 @@
 package JUnit;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-
 import ClientNetworking.Client;
 import ClientNetworking.IpGetter;
 import GeneralNetworking.Action;

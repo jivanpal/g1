@@ -4,12 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import Audio.AudioPlayer;
-import ClientNetworking.Client;
 import GameLogic.GameOptions;
 
 /**

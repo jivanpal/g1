@@ -5,17 +5,12 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.Random;
-
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
 import Audio.AudioPlayer;
-import ClientNetworking.Client;
 import GameLogic.Asteroid;
 import GameLogic.GameOptions;
 import GameLogic.Global;
@@ -61,7 +56,6 @@ public class ButtonPanel extends JPanel {
 		Ship ship = new Ship("", "");
 		
 		map.add(ship);
-		System.out.println(Global.SCREEN_WIDTH + ", " + Global.SCREEN_WIDTH);
 		Random r = new Random();
 		for (int i = 0; i < 50; i++) {
 			Asteroid a = new Asteroid(new Vector(r.nextDouble() * map.getDimensions().getX(),

@@ -28,14 +28,7 @@ public class IpGetter
 					InetAddress ip = x.nextElement();
 					String str = ip.toString();
 					if(ip instanceof Inet4Address)
-					{/*
 					{
-
-						if(str.contains("/192.168."))
-						{
-							System.out.println(ip);
-							return ip;
-						}*/
 						if(!str.contains(":") && !str.contains("/192.168.") && !str.contains("/127."))
 						{
 							return ip;
@@ -65,7 +58,6 @@ public class IpGetter
 		}
 		try
 		{
-			//System.out.println(java.net.Inet6Address.getAllByName("localhost")());
 			return Inet6Address.getLocalHost();
 		}
 		catch (UnknownHostException e)

@@ -4,14 +4,12 @@ package ClientNetworking.GameHost;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
 import AI.TargetingBot;
 import ClientNetworking.IpGetter;
-import GameLogic.Ship;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
 import Physics.Body;
@@ -52,7 +50,7 @@ public class GameHost extends Thread
 			serverSocket = new ServerSocket(PORT, 8, IpGetter.getRealIp());
 		} catch (IOException e)
 		{
-			System.err.println("Couldn't listen on port " + PORT);
+			e.printStackTrace();
 		}
 		//Key sequence variables
 		int minLength = 2;
@@ -70,13 +68,11 @@ public class GameHost extends Thread
 		for (int i = 0; i < Lobby.LOBBY_SIZE; i += 2)
 		{
 			if (p[i]==null && p[i + 1]==null){
-				System.out.println("Added dummy "+Body.nextID);
 				Body.nextID++;
 				shipIds[i/2]=-1;
 			}
 			else
 			{
-				System.out.println("Added ship "+Body.nextID);
 				shipIds[i/2]=gameMap.addShip(i, p[i] == null ? "" : p[i].nickname, p[i + 1] == null ? "" : p[i + 1].nickname);
 				if(p[i]==null)
 				{
@@ -89,7 +85,6 @@ public class GameHost extends Thread
 	//	int botId = gameMap.addShip(2, "", "");
 	//	gameMap.gameMap.addBot(new TargetingBot(gameMap.gameMap,botId,0));
 		gameMap.generateTerrain();
-		System.out.println("I HAVE STARTED THE SERVER");
 	}
 
 	public void run()
@@ -100,7 +95,6 @@ public class GameHost extends Thread
 			{
 				// Listen to the socket, accepting connections from new clients:
 				Socket socket = serverSocket.accept();
-				System.out.println("SOMEONE JOINED");
 
 				//create streams
 				ObjectOutputStream toClient = new ObjectOutputStream(socket.getOutputStream());
@@ -133,12 +127,9 @@ public class GameHost extends Thread
 						gameShouldStart = true;
 						break;
 					}
-					if(players[pos] != null)
-						System.out.println(players[pos].nickname);
 				}
 				if (!gameShouldStart)
 				{
-					System.out.println("I CLOSED THE SOCKET FOR UNAUTHORISED PLAYER: " + clientName);
 					socket.close();
 				} else
 				{

@@ -68,11 +68,6 @@ public class TargetingBot extends AbstractBot {
 // Evolution
     
     public void update() {
-    	if (getMap() == null) {
-    		System.out.println("Map is null accoridng to bot");
-    	}
-    	
-    	
         // Set the target if the current one is gone
         if (target == null || getMap().get(target.getID()) == null) {
             for (Body b : getMap().bodies()) {
