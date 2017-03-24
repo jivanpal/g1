@@ -64,8 +64,8 @@ public class GraphicalModel {
 				notDrawCount++;
 			}
 		}
-		if(notDrawCount != 0 && notDrawCount != polys.length){
+		/*if(notDrawCount != 0 && notDrawCount != polys.length){
 			System.out.println("I am an incomplete object: " + notDrawCount);
-		}
+		}*/
 	}
 }

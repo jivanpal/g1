@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.util.UUID;
-
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -14,7 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
 import ClientNetworking.IpGetter;
@@ -142,7 +140,6 @@ public class JoinPanel extends JPanel {
 			if (lobby == null) {
 				break;
 			}
-			System.out.println("lobby not null");
 			UUID id = lobby.lobbyID;
 			String host = lobby.host;
 			int number = lobby.playerCount;

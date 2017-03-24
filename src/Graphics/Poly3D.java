@@ -1,6 +1,5 @@
 package Graphics;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.Global;
@@ -61,14 +60,6 @@ public class Poly3D {
 				notDrawCount++;
 			}
 		}
-		
-//		if(notDrawCount != 0 && notDrawCount != 3){
-//			System.out.println("I am an incomplete asteroid: " + notDrawCount);
-//			for(int i = 0; i < newX.length; i++){
-//				System.out.println(i + " before: " + x[i] + ", " + y[i]);
-//				System.out.println(i + " after: " + newX[i] + ", " + newY[i]);
-//			}
-//		}
 		
 		lighting();
 		

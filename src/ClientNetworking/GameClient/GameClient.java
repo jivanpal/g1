@@ -36,8 +36,6 @@ public class GameClient
 	{
 		//get the host's address
 		this.hostname = lobby.getHostAddress();
-		System.out.println("Left for loop");
-		System.out.println(hostname + " CLIENT ");
 		
 		// Create the socket and the streams
 		ObjectOutputStream toServer = null;
@@ -50,23 +48,17 @@ public class GameClient
 			server = new Socket(hostname,port);
 			toServer = new ObjectOutputStream(server.getOutputStream());
 			toServer.flush();
-			System.out.println("writing nickname to server");
 			toServer.writeObject(player.nickname);
 			fromServer = new ObjectInputStream(server.getInputStream());
-			System.err.println("Created `fromServer` and 'toServer'");
 			//receive the KeySequences from the server
 			keySequence = (KeySequence)fromServer.readObject();
 		}
 		catch (UnknownHostException e)
 		{
-			System.out.println("Unknown host exception");
-			System.err.println("Unknown host: " + hostname);
 			System.exit(1);
 		}
 		catch (IOException e)
 		{
-			System.out.println("IO exception");
-			System.err.println("The server doesn't seem to be running " + e.getMessage());
 			e.printStackTrace();
 			System.exit(1);
 		} catch (ClassNotFoundException e) {
@@ -77,7 +69,6 @@ public class GameClient
 		receiver = new GameClientReceiver(fromServer);
 		sender.start();
 		receiver.start();
-		System.out.println("end of gameclient const");
 	}
 
 	/**

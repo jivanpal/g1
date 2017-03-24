@@ -1,8 +1,9 @@
 package Graphics;
 
 import java.awt.Color;
-import java.util.Random;
-import Geometry.*;
+
+import Geometry.Rotation;
+import Geometry.Vector;
 
 /**
  * Creates an Asteroid Model
@@ -64,7 +65,6 @@ public class AsteroidModel {
     	
         for(int i = 0; i < vertices.length; i++){
         	vertices[i] = position.plus(vertices[i]);
-//        	System.out.println(i + ": " + vertices[i]);
         }
 	}
 }

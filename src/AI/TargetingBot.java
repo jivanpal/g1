@@ -1,9 +1,11 @@
 package AI;
 
 import ClientNetworking.GameHost.MapContainer;
-import GameLogic.*;
-import Geometry.*;
-import Physics.*;
+import GameLogic.Map;
+import GameLogic.Ship;
+import GameLogic.Weapon;
+import Geometry.Vector;
+import Physics.Body;
 
 /**
  * A class of bots that have a relatively simple implementation of targeting. A bot of
@@ -68,11 +70,6 @@ public class TargetingBot extends AbstractBot {
 // Evolution
     
     public void update() {
-    	if (getMap() == null) {
-    		System.out.println("Map is null accoridng to bot");
-    	}
-    	
-    	
         // Set the target if the current one is gone
         if (target == null || getMap().get(target.getID()) == null) {
             for (Body b : getMap().bodies()) {

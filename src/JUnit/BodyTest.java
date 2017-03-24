@@ -1,17 +1,15 @@
 package JUnit;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import java.util.Random;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import Geometry.Quaternion;
 import Geometry.Rotation;
 import Geometry.Vector;
 import Physics.Body;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.notification.RunListener;
-
-import static org.junit.Assert.*;
-
-import java.util.Random;
 
 /**
  * Created by James on 22/03/17.
@@ -59,7 +57,12 @@ public class BodyTest {
             body[2*i] = randomBody();
         }
         for (int i = 0; i < body.length / 2; i++) {
-            body[2*i+1] = (Body)(body[2*i].clone());
+            try {
+				body[2*i+1] = (Body)(body[2*i].clone());
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
         for (int i = 0; i < body.length; i++) {
             for (int j = 0; j < i; j++) {

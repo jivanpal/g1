@@ -1,12 +1,6 @@
 package ClientNetworking.GameHost;
 
-import GameLogic.Map;
-import GameLogic.Ship;
-import Physics.Body;
 import ServerNetworking.ClientTable;
-
-import java.util.List;
-import java.util.stream.Collectors;
 /**
  * A server sided game clock, sending map state to all players every 1/GameLogic.Global.REFRESH_RATE seconds
  * @author Svetlin

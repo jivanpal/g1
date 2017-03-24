@@ -1,12 +1,12 @@
 package Views;
 
-import GameLogic.GameOptions;
-
-import javax.swing.*;
-import javax.swing.text.NumberFormatter;
-import java.awt.*;
+import java.awt.Color;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import GameLogic.GameOptions;
 
 /**
  * Created by James on 08/02/17.

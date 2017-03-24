@@ -1,6 +1,7 @@
 package AI;
 
 import java.io.Serializable;
+
 import GameLogic.Map;
 import Physics.Body;
 
