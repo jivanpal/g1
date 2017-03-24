@@ -1,9 +1,11 @@
 package AI;
 
 import ClientNetworking.GameHost.MapContainer;
-import GameLogic.*;
-import Geometry.*;
-import Physics.*;
+import GameLogic.Map;
+import GameLogic.Ship;
+import GameLogic.Weapon;
+import Geometry.Vector;
+import Physics.Body;
 
 /**
  * A class of bots that have a relatively simple implementation of targeting. A bot of
