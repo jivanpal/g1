@@ -30,7 +30,7 @@ public class RadarView extends JPanel {
     private Map map;
     private String playerName;
 
-    private boolean largeView;
+    private boolean isLargeView;
 
     /**
      * Creates a new RadarView
@@ -44,7 +44,7 @@ public class RadarView extends JPanel {
         this.setBackground(BACKGROUND_COLOR);
         this.setBorder(BorderFactory.createLineBorder(Color.red));
 
-        this.largeView = false;
+        this.isLargeView = false;
     }
 
     /**
@@ -64,7 +64,7 @@ public class RadarView extends JPanel {
      * @return Whether the RadarView is in large view or not
      */
     public boolean isLargeView() {
-        return largeView;
+        return isLargeView;
     }
 
     /**
@@ -73,7 +73,7 @@ public class RadarView extends JPanel {
      * @param inLargeView
      */
     public void setLargeView(boolean inLargeView) {
-        this.largeView = inLargeView;
+        this.isLargeView = inLargeView;
     }
 
     /**
@@ -97,8 +97,13 @@ public class RadarView extends JPanel {
      * @return The position at which we should draw this circle
      */
     private Tuple<Integer, Integer> circleDrawPositionFromCenter(double x, double y) {
-        return new Tuple<Integer, Integer>((int) Math.round(Utils.Utils.scaleValueToRange(x, 0, MapContainer.MAP_SIZE, 0, this.getWidth())),
-                (int) (this.getHeight() - Math.round(Utils.Utils.scaleValueToRange(y, 0, MapContainer.MAP_SIZE, 0, this.getHeight()))));
+        if(isLargeView) {
+            return new Tuple<Integer, Integer>((int) Math.round(Utils.Utils.scaleValueToRange(x, 0, MapContainer.MAP_SIZE, 0, this.getWidth() - CIRCLE_DRAW_DIAMETER_LARGE)),
+                    (int) (this.getHeight() - Math.round(Utils.Utils.scaleValueToRange(y, 0, MapContainer.MAP_SIZE, 0, this.getHeight() - CIRCLE_DRAW_DIAMETER_LARGE))));
+        } else {
+            return new Tuple<Integer, Integer>((int) Math.round(Utils.Utils.scaleValueToRange(x, 0, MapContainer.MAP_SIZE, 0, this.getWidth() - CIRCLE_DRAW_DIAMETER_SMALL)),
+                    (int) (this.getHeight() - Math.round(Utils.Utils.scaleValueToRange(y, 0, MapContainer.MAP_SIZE, 0, this.getHeight() - CIRCLE_DRAW_DIAMETER_SMALL))));
+        }
     }
 
     /**
@@ -122,7 +127,7 @@ public class RadarView extends JPanel {
                     Tuple<Integer, Integer> position = circleDrawPositionFromCenter(b.getPosition().getX(), b.getPosition().getY());
                     Ellipse2D.Double circle;
 
-                    if (largeView) {
+                    if (isLargeView) {
                         circle = new Ellipse2D.Double(position.getX(), position.getY(),
                                 CIRCLE_DRAW_DIAMETER_LARGE, CIRCLE_DRAW_DIAMETER_LARGE);
                     } else {
