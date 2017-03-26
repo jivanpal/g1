@@ -9,12 +9,10 @@ import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
 import ClientNetworking.IpGetter;
@@ -227,7 +225,6 @@ public class LobbyPanel extends JPanel implements Observer {
 			return;
 		} else {
 			l = client.getLobby();
-			System.out.println("Lobby has started is " + l.started);
 		}
 		Player[] players = l.getPlayers();
 		boolean inlobby = false;
@@ -251,7 +248,6 @@ public class LobbyPanel extends JPanel implements Observer {
 			client.setLobby(null);
 			return;
 		} else if (inlobby && l.getHost().nickname.equals(player.nickname) && !l.started) {
-			System.out.println("Is a host");
 			player.isHost = true;
 			client.deleteLobbyObserver(this);
 			JPanel templpanel = LobbyPanel.lobbypanel;
@@ -264,9 +260,7 @@ public class LobbyPanel extends JPanel implements Observer {
 					break;
 				pos++;
 			}
-			System.out.println(pos);
 			GameClient gameClient = new GameClient(client.getLobby(), player);
-			System.out.println("Pos: " + String.valueOf(pos % 2 == 0));
 
 			client.disconnect();
 			JFrame gameFrame = newFrame();
@@ -275,19 +269,14 @@ public class LobbyPanel extends JPanel implements Observer {
 			JPanel gameView;
 			if (pos % 2 == 0) // i.e. if player is pilot
 			{
-				System.out.println("Player is a pilot");
-				
 				if (players[pos + 1] == null) {
 					gameView= new PilotView(client.name, gameClient, gameFrame, true);
 				} else {
 					gameView = new PilotView(client.name, gameClient, gameFrame, false);
 				}
-				System.out.println("Swapping to PilotView");
 			} else { // else player is engineer
 				//PanelsManager.removeAll();
-				System.out.println("Player is an Engineer");
 				gameView = new EngineerView(client.name, gameClient, gameFrame);
-				System.out.println("Swapping to EngineerView");
 			}
 			gameFrame.setContentPane(gameView);
 			gameFrame.repaint();

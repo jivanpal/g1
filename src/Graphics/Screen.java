@@ -4,16 +4,13 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
-
 import GameLogic.Asteroid;
 import GameLogic.Bullet;
 import GameLogic.Map;
-import GameLogic.Ship;
-import Physics.Body;
-import jdk.nashorn.internal.objects.Global;
-import Geometry.Rotation;
-import Geometry.Vector;
 import GameLogic.Resource;
+import GameLogic.Ship;
+import Geometry.Vector;
+import Physics.Body;
 
 /**
  * The viewport of the ship, contains the camera and all objects to be rendered by it
@@ -126,9 +123,6 @@ public class Screen extends JPanel{
 		for(Poly3D p : poly3Ds){
 			p.poly.drawPoly(g);
 		}
-		
-//		System.out.println("Predicted Polygons: " + asteroidCount * 4 * 27);
-//		System.out.println("Actual Number: " + poly3Ds.size());
 		
 		warningLight(g);
 		
@@ -277,39 +271,6 @@ public class Screen extends JPanel{
                 }
             }
         }
-        
-//        map.bodies().parallelStream()
-//		.forEach( b -> {
-//			if (!(shipIndex == null) && b.getID() != shipIndex) {
-//                Class<? extends Body> bClass = b.getClass();
-//                if (bClass == Ship.class) {
-//                	Vector pos = new Vector(0, 0, 0);
-//                	double distance = Integer.MAX_VALUE;
-//                    for(Vector v : map.getAllPositions(b.getPosition())){
-////                         System.out.println("Drawing Ship: " + b.getID() + ", " + shipIndex);
-//                    	if(viewFrom.minus(v).length() < distance){
-//                    		distance = viewFrom.minus(v).length();
-//                    		pos = v;
-//                    	}
-//                    }
-//                    new ShipModel(pos, 2, b.getOrientation(), b.getID());
-//                }
-//                else if(bClass == Asteroid.class){
-////                	System.out.println(b.getID() + ": " + b.getPosition());
-//                    for(Vector v : map.getAllPositions(b.getPosition())){
-////                    	System.out.println(v);
-//                    	new AsteroidModel(v, 2, b.getOrientation());
-//                    }
-//                }
-//                else if(bClass == Bullet.class){
-//                    for(Vector v : map.getAllPositions(b.getPosition())){
-////                    	System.out.println("Laser orientation: " + b.getBasis());
-//                        new Laser(v, 0.05, b.getOrientation());
-//                    }
-//                }
-//            }
-//		});
-//        System.out.println("Completed createObjects()");
 	}
 
 	/**
@@ -358,7 +319,6 @@ public class Screen extends JPanel{
 		lightPosition += 0.005;
 		Vector mapSize = map.getDimensions();
 		lightDir = new Vector (mapSize.getX()/2 - (mapSize.getX()/2 + Math.cos(lightPosition) * mapSize.getX() * 10), mapSize.getY()/2 - (mapSize.getY()/2 + Math.sin(lightPosition) * mapSize.getY() * 10), -200);
-//		System.out.println(lightDir);
 	}
 	
 	/**

@@ -2,7 +2,6 @@ package ServerNetworking;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class ServerSender extends Thread
 {
@@ -44,7 +43,6 @@ public class ServerSender extends Thread
 			catch (IOException e)
 			{
 				runs = false;
-				System.out.println("A client disconnected");
 			}
 		}
 	}

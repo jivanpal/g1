@@ -114,7 +114,6 @@ public class ControlsPanel extends JPanel {
 		panel = createBwL(panel, "Manual Prev");
 		panel = createBwL(panel, "Roll Right");
 		panel = createBwL(panel, "Manual Next");
-		panel = createBwL(panel, "Overdrive");
 		changeButtons(true);
 		return panel;
 
@@ -169,11 +168,6 @@ public class ControlsPanel extends JPanel {
 							break;
 						}
 					}
-					/**
-					 * if (GameOptions.checkIfKeyTaken(e.getKeyCode())) {
-					 * displaykeyerror(); button.setText(btext); pressed =
-					 * false; return; }
-					 */
 					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 						button.setText("Enter");
 						pressed = false;
@@ -317,9 +311,6 @@ public class ControlsPanel extends JPanel {
 				break;
 			case "Manual Next":
 				changeRepaint(GameOptions.DEFAULT_MANUAL_NEXT_BUTTON, b, repaint);
-				break;
-			case "Overdrive":
-				changeRepaint(GameOptions.DEFAULT_OVERDRIVE_BUTTON, b, repaint);
 				break;
 			}
 		}

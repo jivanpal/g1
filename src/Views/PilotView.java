@@ -2,7 +2,6 @@ package Views;
 
 import static GameLogic.GameOptions.BUTTON_FONT;
 import static Views.ViewConstants.UI_BACKGROUND_COLOR;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -25,16 +24,19 @@ import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-
 import javax.imageio.ImageIO;
-import javax.swing.*;
-
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 import AI.EngineerAI;
 import Audio.AudioPlayer;
 import ClientNetworking.GameClient.GameClient;
 import GameLogic.GameOptions;
 import GameLogic.Global;
-import GameLogic.Map;
 import Graphics.Screen;
 
 /**
@@ -116,17 +118,6 @@ public class PilotView extends AbstractPlayerView implements Observer {
                 if (GameOptions.checkIfKeyToBeSentToServer(keyEvent.getKeyCode())) {
                     pressedKeys.add(getKeyCodeToInstruction(keyEvent.getKeyCode()));
                 }
-                /*if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON)) {
-                    if(steeringWheelAngle != -Math.PI/4){
-	                    steeringWheelAngle = -Math.PI/4;
-	                    updateSteeringWheel();
-                	}
-                } else if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)) {
-                	if(steeringWheelAngle != Math.PI/4){
-	                    steeringWheelAngle = Math.PI/4;
-	                    updateSteeringWheel();
-                	}
-                } else */
                 if (keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_MANUAL_BUTTON)) {
                     toggleManualVisible();
 
@@ -144,10 +135,6 @@ public class PilotView extends AbstractPlayerView implements Observer {
             @Override
             public void keyReleased(KeyEvent keyEvent) {
                 pressedKeys.remove(getKeyCodeToInstruction(keyEvent.getKeyCode()));
-            	/*if(keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_LEFT_BUTTON) || keyEvent.getKeyCode() == GameOptions.getCurrentKeyValueByDefault(GameOptions.DEFAULT_ROLL_RIGHT_BUTTON)){
-            		steeringWheelAngle = 0;
-                    updateSteeringWheel();
-            	}*/
             }
         });
 
@@ -156,7 +143,6 @@ public class PilotView extends AbstractPlayerView implements Observer {
             public void mouseClicked(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
                 if (!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
-                    System.out.println("Mouse clicked outside of chat");
                     parentFrame.requestFocusInWindow();
 
                     if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
@@ -166,8 +152,6 @@ public class PilotView extends AbstractPlayerView implements Observer {
                     } else if (mouseEvent.getButton() == MouseEvent.BUTTON3) {
                         gameClient.send("fireWeapon3");
                     }
-                } else {
-                    System.out.println("Mouse clicked inside chat");
                 }
             }
 
@@ -175,10 +159,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
             public void mousePressed(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
                 if (!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
-                    System.out.println("Mouse pressed outside of chat");
                     parentFrame.requestFocusInWindow();
-                } else {
-                    System.out.println("Mouse pressed inside chat");
                 }
             }
 
@@ -186,12 +167,8 @@ public class PilotView extends AbstractPlayerView implements Observer {
             public void mouseReleased(MouseEvent mouseEvent) {
                 // If we click anywhere other than the chat window, send focus back to the game.
                 if (!chatWindow.getBounds().contains(mouseEvent.getPoint())) {
-                    System.out.println("Mouse released outside of chat");
                     parentFrame.requestFocusInWindow();
-                } else {
-                    System.out.println("Mouse released inside chat");
                 }
-
             }
 
             @Override
@@ -306,7 +283,6 @@ public class PilotView extends AbstractPlayerView implements Observer {
         UILayeredPane.revalidate();
 
         this.UIinitialised = true;
-        System.out.println("Done initialising the UI. I am the Pilot");
 
         parentFrame.requestFocus();
         parentFrame.setFocusable(true);
@@ -493,8 +469,7 @@ public class PilotView extends AbstractPlayerView implements Observer {
                     radarView.updateMap(gameClient.getMap());
                 }
             } catch (Exception e) {
-                // e.printStackTrace();
-                // Seems the UI hasn't been initialised yet
+                e.printStackTrace();
             }
 
             // For every key we have pressed right now, send the appropriate message to the server

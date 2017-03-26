@@ -1,7 +1,13 @@
 package Audio;
 
 import java.io.File;
-import javax.sound.sampled.*;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
 
 import GameLogic.GameOptions;
 
@@ -66,7 +72,6 @@ public class AudioPlayer {
 			soundEffectVolumeControl.setValue(GameOptions.getCurrentSoundValue());
 			soundEffectClip.start();
 		} catch (Exception ex) {
-			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
 		}
 	}
@@ -107,7 +112,6 @@ public class AudioPlayer {
 			musicVolumeControl.setValue(GameOptions.getCurrentMusicValue());
 			musicClip.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (Exception ex) {
-			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
 		}
 	}

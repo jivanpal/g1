@@ -1,15 +1,16 @@
 package Views;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
 import ClientNetworking.GameHost.MapContainer;
 import GameLogic.Asteroid;
 import GameLogic.Map;
 import GameLogic.Ship;
-import Physics.Body;
 import Utils.Tuple;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.Ellipse2D;
 
 /**
  * Created by James on 14/02/17.

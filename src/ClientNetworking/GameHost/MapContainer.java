@@ -41,7 +41,6 @@ public class MapContainer {
 			ship.setPosition(new Vector(position % 4 == 0 ? 0 : gameMap.getDimensions().getX() / 2,
 					position < 4 ? 0 : gameMap.getDimensions().getY() / 2, 0));
 			gameMap.add(ship);
-			System.out.println("added ship" + position / 2);
 			return ship.getID();
 		}
 		return -1;
@@ -142,7 +141,6 @@ public class MapContainer {
 					throw new IllegalArgumentException("You done sent the wrong string yo");
 				}
 			} catch (Exception e) {
-				System.out.println("error in updateMap()");
 				e.printStackTrace();
 			}
 		}
@@ -159,7 +157,6 @@ public class MapContainer {
 	 */
 	public void addDummyBody() {
 		boolean x = gameMap.add(new Body());
-		System.out.println("Bot added is " + x);
 	}
 	/**
 	 * Destroy an object from the map based on id

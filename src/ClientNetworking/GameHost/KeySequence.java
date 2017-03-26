@@ -68,7 +68,6 @@ public class KeySequence implements Serializable {
 	 * @return the shuffled set
 	 */
 	private ArrayList<Integer> generateRandomNumber(int num){
-		System.out.println("number of inst. " + num);
 		ArrayList<Integer> a = new ArrayList<>();
 		for(int i= 1; i<= num;i++){
 			a.add(i);

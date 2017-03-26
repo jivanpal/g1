@@ -74,7 +74,6 @@ public class KeySequenceManager {
      * @param restart Whether the key sequence should automatically restart once complete/failed.
      */
     public void initialiseKeySequenceManager(String sequence, boolean restart) {
-        System.out.println("Initialised with " + sequence);
         this.keySequence = sequence;
         this.restart = restart;
         this.active = true;

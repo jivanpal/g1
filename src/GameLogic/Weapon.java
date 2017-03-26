@@ -1,8 +1,6 @@
 package GameLogic;
 
 import java.io.Serializable;
-import Geometry.*;
-import Physics.*;
 
 /**
  * A class of objects that describe weapons to be added to a ship.

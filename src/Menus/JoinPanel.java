@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.util.UUID;
-
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -14,7 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
 import Audio.AudioPlayer;
 import ClientNetworking.Client;
 import ClientNetworking.IpGetter;
@@ -142,7 +140,6 @@ public class JoinPanel extends JPanel {
 			if (lobby == null) {
 				break;
 			}
-			System.out.println("lobby not null");
 			UUID id = lobby.lobbyID;
 			String host = lobby.host;
 			int number = lobby.playerCount;
@@ -162,12 +159,11 @@ public class JoinPanel extends JPanel {
 		JPanel panel = new JPanel() {
 			@Override
 			public Insets getInsets() {
-				return new Insets(0,0,50,0);
+				return new Insets(0, 0, 50, 0);
 			}
 		};
 		panel.setLayout(new BorderLayout());
-		
-		
+
 		MyButton backtoplay = new MyButton("Back");
 		backtoplay.addActionListener(e -> {
 			PanelsManager.changePanel(JoinPanel.jpanel, PlayPanel.ppanel, backtoplay);
@@ -176,18 +172,23 @@ public class JoinPanel extends JPanel {
 		join.addActionListener(e -> {
 			AudioPlayer.playSoundEffect(AudioPlayer.MOUSE_CLICK_EFFECT);
 			int selected = table.getSelectedRow();
-			LobbyInfo lInfo = lobbies[selected];
-			try {
-				Player player = new Player(client.name, IpGetter.getRealIp(), false);
-				client.send(new Action(lInfo.lobbyID, player, Action.ADD));
-				LobbyPanel lpanel2 = new LobbyPanel(menu, lInfo.lobbyID, player, false);
-				PanelsManager.changePanel(JoinPanel.jpanel, lpanel2, join);
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(this, "Joining Lobby failed. Please check your connection!",
-						"Join Lobby Error", JOptionPane.ERROR_MESSAGE);
-				JoinPanel jpanel = new JoinPanel(menu);
-				PanelsManager.changePanel(JoinPanel.jpanel, jpanel, join);
-				e1.printStackTrace();
+			if (selected == -1) {
+				JOptionPane.showMessageDialog(this, "No Lobby have been selected!", "Join Lobby Error",
+						JOptionPane.ERROR_MESSAGE);
+			} else {
+				LobbyInfo lInfo = lobbies[selected];
+				try {
+					Player player = new Player(client.name, IpGetter.getRealIp(), false);
+					client.send(new Action(lInfo.lobbyID, player, Action.ADD));
+					LobbyPanel lpanel2 = new LobbyPanel(menu, lInfo.lobbyID, player, false);
+					PanelsManager.changePanel(JoinPanel.jpanel, lpanel2, join);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(this, "Joining Lobby failed. Please check your connection!",
+							"Join Lobby Error", JOptionPane.ERROR_MESSAGE);
+					JoinPanel jpanel = new JoinPanel(menu);
+					PanelsManager.changePanel(JoinPanel.jpanel, jpanel, join);
+					e1.printStackTrace();
+				}
 			}
 		});
 		MyButton refresh = new MyButton("Refresh");
@@ -196,7 +197,7 @@ public class JoinPanel extends JPanel {
 			client.updateList();
 			keepUpdatingTime();
 			repaintLobbies();
-			
+
 		});
 		join.setPreferredSize(new Dimension(500, 50));
 		refresh.setPreferredSize(new Dimension(230, 50));

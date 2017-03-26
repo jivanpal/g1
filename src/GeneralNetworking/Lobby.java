@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.UUID;
 
-import ClientNetworking.IpGetter;
-
 @SuppressWarnings("serial")
 public class Lobby implements Serializable
 {
@@ -46,10 +44,6 @@ public class Lobby implements Serializable
 			}
 			i++;
 		}
-		if (i == LOBBY_SIZE)
-		{
-			System.out.println("ROOM IS FULL");
-		}
 	}
 
 	/**
@@ -61,8 +55,9 @@ public class Lobby implements Serializable
 	 */
 	public void move(Player p, int pos)
 	{
-		if (pos > LOBBY_SIZE-1 || pos < 0)
-			System.out.println("INVALID POSITION NUMBER");
+		if (pos > LOBBY_SIZE-1 || pos < 0){
+			
+		}
 		else
 		{
 			for (int i = 0; i < LOBBY_SIZE; i++)
@@ -74,10 +69,6 @@ public class Lobby implements Serializable
 						players[pos] = p;
 						players[i] = null;
 						break;
-					}
-					else
-					{
-						System.out.println("INVALID MOVING SPOT");
 					}
 				}
 			}
@@ -91,7 +82,6 @@ public class Lobby implements Serializable
 	{
 		if (p.isHost)
 		{
-			System.out.println("Lobby class, started is true");
 			started = true;
 		}
 	}

@@ -102,7 +102,6 @@ public class GameOptions {
 			keyBindings.load(fileReader);
 			GameOptions.fileReader.close();
 		} catch (Exception e) {
-			System.out.println("exception caught");
 			resetKeysToDefaults();
 			saveKeyBindingsInFile();
 		}

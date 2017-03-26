@@ -1,14 +1,12 @@
 package JUnit;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
-
 import ClientNetworking.Client;
 import ClientNetworking.IpGetter;
+import ClientNetworking.GameClient.GameClient;
+import ClientNetworking.GameHost.GameHost;
 import GeneralNetworking.Action;
 import GeneralNetworking.Lobby;
 import GeneralNetworking.Player;
@@ -60,6 +58,34 @@ public class ServerNetworkingTest {
 			e.printStackTrace();
 		}
 		assertEquals(cp2.name, cp1.getLobby().getPlayers()[1].nickname);
+		
+		
+		cp1.send(new Action(cp1.getLobby().getID(),cp1.getLobby().getPlayers()[0],Action.START));
+		GameHost ghost = new GameHost(cp1.getLobby());
+		while(!cp1.getLobby().started || !cp2.getLobby().started)
+		{
+			try
+			{
+				Thread.sleep(200);
+			} catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		GameClient gc1 = new GameClient(cp1.getLobby(),new Player(cp1.name,IpGetter.getRealIp(),true));
+		GameClient gc2 = new GameClient(cp2.getLobby(),new Player(cp2.name,IpGetter.getRealIp(),false));
+		try
+		{
+			Thread.sleep(5000);
+		}
+		catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertTrue(gc1.getMap().bodies().size()>0 && gc2.getMap().bodies().size()>0);
+		
 	}
 
 }

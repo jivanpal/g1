@@ -1,25 +1,30 @@
 package Views;
 
-import Audio.AudioPlayer;
-import ClientNetworking.GameClient.GameClient;
-import ClientNetworking.GameHost.MapContainer;
-import GameLogic.*;
-import Graphics.Screen;
-import Menus.LobbyPanel;
-import Menus.MainMenu;
-import Physics.Body;
-
-import javax.swing.*;
-import javax.swing.text.View;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import Audio.AudioPlayer;
+import ClientNetworking.GameClient.GameClient;
+import GameLogic.GameOptions;
+import GameLogic.Map;
+import GameLogic.Resource;
+import GameLogic.Ship;
+import GameLogic.Weapon;
+import Graphics.Screen;
+import Menus.LobbyPanel;
+import Menus.MainMenu;
 
 /**
  * Created by James on 16/03/17.

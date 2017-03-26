@@ -1,14 +1,13 @@
 package JUnit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
 import org.junit.Before;
-import Audio.AudioPlayer;
-import GameLogic.GameOptions;
-
 import org.junit.Test;
+
+import Audio.AudioPlayer;
 
 public class AudioPlayerTest {
 	

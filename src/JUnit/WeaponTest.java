@@ -1,16 +1,14 @@
 package JUnit;
 
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import GameLogic.Bullet;
 import GameLogic.Ship;
 import GameLogic.Weapon;
 import Geometry.Vector;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Created by James on 21/03/17.
